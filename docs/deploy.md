@@ -1,53 +1,81 @@
-# Deployment status and retained Pages preparation
+# Deployment
 
-## Nova publication attempt — 2026-09-14
+The demo is live at <https://inpractise.cristiandeluxe.dev>, served by a Node
+origin on nova (`cristiandev` cPanel account) behind Phusion Passenger under the
+CloudLinux Node selector. The source is the public repository
+[CristianDeluxe/inpractise-demo](https://github.com/CristianDeluxe/inpractise-demo).
 
-Briefing D1 authorizes a public `CristianDeluxe/inpractise-demo` repository and
-the intended URL `https://inpractise.cristiandeluxe.dev`, hosted on nova under
-the `cristiandev` account with a document root inside `public_html`. This
-supersedes the Pages proposal below. **No publication or deployment occurred.**
-The intended URL is not a verified live demo URL.
+## Topology
 
-`pnpm check:security` exited 1 with six findings. Three are SHA-256 file hashes
-in `corpus/generated/briefing-i/before-hashes.json`; recomputation against
-`countTokens.mjs`, `tokenizer.mjs` and `loadApiKey.mjs` matched all three. Two
-are the permitted Supabase publishable key in the ignored browser build. The
-remaining finding is an actual OpenAI key in ignored `.env.functions.remote`.
-That file has never been tracked. The briefing requires stopping on an actual
-credential finding, so creation and upload were not attempted. No secret value
-was printed or copied into this record.
+| Piece         | Value                                                           |
+| ------------- | --------------------------------------------------------------- |
+| DNS           | `A inpractise.cristiandeluxe.dev -> 46.4.179.175`, not proxied  |
+| TLS           | cPanel AutoSSL, Let's Encrypt, issued 2026-09-14                |
+| Account       | `cristiandev` on nova.nubenode.com                              |
+| Application   | `/home/cristiandev/apps/inpractise-demo`, Node 24, `server.js`  |
+| Document root | `/home/cristiandev/inpractise.cristiandeluxe.dev` (Passenger)   |
+| Backend       | the existing Supabase research endpoint; nothing else is hosted |
 
-`git check-ignore .env.remote .env.local dist/ .env.functions.remote` confirms
-all four paths are ignored.
-`gitleaks git --config .gitleaks.toml --no-banner --redact` scanned ten commits
-and reported only the three checksum matches. An in-memory comparison of local
-private environment values against 717 Git history blobs and 20 existing build
-files found no matches. The project reference embedded in the permitted public
-Supabase URL is public metadata, not a separate leaked credential. These checks
-establish no observed exposure; they do not turn the failing security command
-into a passing gate.
+`server.js` and `server/` are the origin: they serve `dist/` and return
+`index.html` for any path that is not a file, so a reloaded deep route reaches
+the client router. Fingerprinted `assets/` are served immutable, the entry
+document `no-cache`, and every response carries
+`X-Robots-Tag: noindex, nofollow`.
 
-The prescribed connection also failed:
+## Build
 
 ```sh
-ssh -o BatchMode=yes -o ConnectTimeout=10 -p 6922 -i ~/.ssh/busirocket root@nova.nubenode.com
+pnpm install --frozen-lockfile
+pnpm build
 ```
 
-Observed result: exit 255, `No route to host`. No remote command executed.
-`gh api user --jq .login` confirmed `CristianDeluxe`;
-`gh repo view CristianDeluxe/inpractise-demo --json name,visibility,url`
-reported that the repository could not be resolved. No remote is configured
-locally.
+`VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` must be in the local
+environment or ignored `.env.local` before building; Vite embeds them in the
+artifact, so a change to either requires a rebuild. Nothing else public may
+enter the bundle: never copy `.env.remote`, `.env.functions.remote`, the corpus
+or evaluation reports into `dist`.
 
-Resume by clarifying the expected ignored credential under the briefing's stop
-rule and restoring the existing SSH route. Then inspect the zone's actual DNS
-records before choosing the new record's target and proxy state; create only the
-authorized subdomain; configure Apache SPA fallback and noindex; establish TLS;
-build with only the two public variables; upload through the restricted rsync
-key; purge this account's ea-nginx cache; and verify the public origin. The DNS
-record, exact document root, rsync destination, cache purge and public HTTP,
-browser, TLS, CORS and served-asset checks remain unexecuted. The demo script
-retains local URLs until a live deployment is verified.
+## Deploy
+
+```sh
+rsync -az --delete --exclude '.env' --exclude 'node_modules' --exclude 'tmp' \
+  -e 'ssh -p 6922 -i ~/.ssh/busirocket' \
+  dist server server.js root@nova.nubenode.com:/home/cristiandev/apps/inpractise-demo/
+
+ssh -p 6922 -i ~/.ssh/busirocket root@nova.nubenode.com '
+  chown -R cristiandev:cristiandev /home/cristiandev/apps/inpractise-demo
+  cloudlinux-selector restart --json --interpreter nodejs \
+    --domain inpractise.cristiandeluxe.dev --app-root apps/inpractise-demo'
+```
+
+`--exclude '.env'` is required: the server-side environment file is not in the
+repository and `--delete` would otherwise remove it.
+
+## Verification performed on 2026-09-14
+
+Against `https://inpractise.cristiandeluxe.dev`: `/`, `/method`, `/connect`,
+`/login`, `/app`, `/inspect` and a full immutable reader path each returned 200
+with the HTML shell; the entry document carries `no-cache` and the noindex
+header; `/assets/index-*.js` returned `text/javascript` with
+`public, max-age=31536000, immutable`; `robots.txt` disallows everything; and an
+`OPTIONS` preflight to the Supabase research function from this origin, with
+`apikey, authorization, content-type`, returned 204. The only secret-shaped
+match in the served bundle is supabase-js's own `sb_secret_` prefix check, not a
+key.
+
+Noindex discourages indexing; it is not access control. Authenticated evidence
+stays behind Supabase authorization.
+
+## Two AutoSSL notes
+
+cPanel created the subdomain with both `inpractise.cristiandeluxe.dev` and
+`www.` on the account's AutoSSL exclusion list
+(`/var/cpanel/ssl/autossl/excludes/cristiandev.json`), so the first
+`autossl_check` skipped the domain entirely and HTTPS served a self-signed
+certificate. Clearing that list and rerunning
+`/usr/local/cpanel/bin/autossl_check --user=cristiandev` issued the certificate.
+The `www.` host has no DNS record and fails DCV by design; the certificate
+covers the bare host only.
 
 ## Historical Cloudflare Pages preparation
 
