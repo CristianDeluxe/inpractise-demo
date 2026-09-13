@@ -4,10 +4,14 @@ title = "Research evidence demo history scan"
 useDefault = true
 
 [allowlist]
-description = "Dependency lockfile integrity hashes and one exact non-secret research phrase"
+description = "Integrity hashes and one exact non-secret research phrase"
+# before-hashes.json records SHA-256 digests of corpus generator sources; every
+# entry recomputes to the file it names, so the generic-api-key matches there
+# are checksums, not credentials.
 paths = [
   '''(^|/)pnpm-lock\.yaml$''',
   '''(^|/)package-lock\.json$''',
+  '''^corpus/generated/[^/]+/before-hashes\.json$''',
 ]
 # The frozen research plan's "token, stale/tampered/foreign cursor" is prose.
 regexTarget = 'secret'

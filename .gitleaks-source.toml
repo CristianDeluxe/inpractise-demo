@@ -10,5 +10,8 @@ paths = [
   '''(^|/)\.git/''',
   '''^work/''',
   '''^supabase/\.temp/''',
-  '''(^|/)\.env($|\.(remote|local|development|test|production)(\.local)?$)''',
+  '''(^|/)\.env(\.[A-Za-z0-9_.-]+)?$''',
+  '''^dist/''',
+  '''^coverage/''',
+  '''^reports/''',
 ]
