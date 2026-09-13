@@ -48,16 +48,10 @@ plan wins.
 
 ## MCP
 
-- [ ] **Local stdio MCP server with exactly two tools**, `search_research` and
-      `fetch_passage`, signing in as a dedicated basic member through the same
-      Edge endpoint the browser uses. It never receives a service key and never
-      accepts org, user or role arguments. stdout stays protocol-only.
-
-- [ ] **Parity test**: the same principal must get identical authorization
-      outcomes through the browser and through MCP, including the denial case.
-
-- [ ] **One real Claude Code session against the server**, with the negotiated
-      protocol version recorded. An example transcript is not delivery.
+- [ ] **Give the MCP server its own member.** It currently signs in as the
+      seeded basic persona, which the browser tests also use, so a quota or
+      lockout in one surface is felt by the other. Seed a dedicated MCP member
+      in the same org and tier and point `.mcp.json` at it.
 
 ## Testing
 

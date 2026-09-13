@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "research-evidence": {
+      "command": "node",
+      "args": ["--import", "tsx", "mcp/start.ts"],
+      "env": {
+        "RESEARCH_URL": "${RESEARCH_URL}",
+        "RESEARCH_PUBLISHABLE_KEY": "${RESEARCH_PUBLISHABLE_KEY}",
+        "RESEARCH_EMAIL": "${RESEARCH_EMAIL}",
+        "RESEARCH_PASSWORD": "${RESEARCH_PASSWORD}",
+        "RESEARCH_HANDSHAKE_LOG": "${RESEARCH_HANDSHAKE_LOG}"
+      }
+    }
+  }
+}
