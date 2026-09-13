@@ -354,9 +354,41 @@
   *,
   *::before,
   *::after {
-    animation-duration: 0.001ms !important;
-    transition-duration: 0.001ms !important;
+    animation: none !important;
+    transition: none !important;
     scroll-behavior: auto !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-fade,
+  .reveal,
+  .beam::before {
+    opacity: 1 !important;
+  }
+  .intro-line > span,
+  .reveal,
+  .ticker-track,
+  .parallax-art {
+    transform: none !important;
+  }
+  .intro-wipe {
+    clip-path: none !important;
+  }
+  .parallax-art {
+    inset-block: 0;
+    will-change: auto !important;
+  }
+  .ticker-track {
+    display: flex;
+    flex-wrap: wrap;
+    white-space: normal;
+  }
+  .ticker-track > span {
+    flex-wrap: wrap;
+  }
+  .ticker-track > span + span {
+    display: none;
   }
 }
 

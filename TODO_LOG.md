@@ -1,5 +1,25 @@
 # TODO Log
 
+- 2026-09-14 — **Owner-approved Lovable presentation values.** The owner
+  superseded the earlier corpus-backed hero statistics and ticker requirements:
+  restored Lovable's exact labels, values and middle-dot punctuation, removed
+  the statistics framing and manifest drift tests. All other application changes
+  are preserved. Verification commands: `pnpm type-check`, `pnpm lint`,
+  `pnpm format:check`, `pnpm build`, `pnpm test:ci`, `pnpm knip`, `pnpm dupes`.
+  Results are appended to the Lovable2 briefing's `FINDINGS.md` and recorded in
+  `work/lovable2/owner-*.log`.
+
+- 2026-09-14 — **Calm protected-route sign-in and restored landing motion.**
+  Missing sessions show a sign-in invitation with the requested URL; rejected
+  sessions retain the existing alert and request ID. Restored hero choreography,
+  decorative particles, scroll reveals, the running-index ticker and the four
+  hero statistics, desk parallax, and link underlines. Reduced motion disables
+  motion work and keeps content visible; mobile hero columns no longer clip
+  copy. Evidence: `pnpm type-check`, `pnpm lint`, `pnpm format:check`,
+  `pnpm build`, `pnpm test:ci`, `pnpm knip`, `pnpm dupes`; raw logs and a
+  repeatable browser probe are in ignored `work/lovable2/`. The Lovable2
+  briefing's `FINDINGS.md` records results and deliberate design adaptations.
+
 - 2026-09-14 — **Revoked evidence can no longer leave prose behind.**
   `buildAskResult` dropped the citation of a passage the caller had lost access
   to but kept the claim text. It now drops the claim, and an answer that loses
