@@ -17,6 +17,7 @@ export function validateCitation(input: unknown): Citation {
       title: z.string(),
       company: z.string(),
       origin: z.enum(['synthetic', 'public']),
+      kind: z.enum(['synthetic_interview', 'sec_filing']),
       speaker: z.string().nullable(),
       speakerRole: z.string().nullable(),
       interviewDate: z.string().nullable(),
