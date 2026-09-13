@@ -4,6 +4,7 @@ import { assertAnswerGate } from './assertAnswerGate.ts'
 import type { CaseResult } from './CaseResult.ts'
 import { loadGold } from './loadGold.ts'
 import { printLine } from './printLine.ts'
+import { reportPath } from './reportPath.ts'
 import { runCase } from './runCase.ts'
 import { writeReport } from './writeReport.ts'
 
@@ -23,7 +24,7 @@ export async function runEvaluation() {
       `${result.caseId} ${result.actualStatus} (expected ${result.expectedStatus}) recall@10=${String(result.goldRecallAt10)} grounded=${String(result.verdict.grounded)}`,
     )
   }
-  const summary = writeReport(results)
+  const summary = writeReport(results, reportPath(process.argv))
   printLine(JSON.stringify(summary))
   assertAnswerGate(summary)
   printLine('PASS: answer gate')
