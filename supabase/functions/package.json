@@ -1,0 +1,9 @@
+{
+  "name": "inpractise-demo-functions",
+  "private": true,
+  "description": "Dependency manifest for the Deno Edge functions: Supabase resolves npm specifiers from this directory's node_modules, and the root workspace install does not reach here.",
+  "dependencies": {
+    "@supabase/supabase-js": "2.116.0",
+    "zod": "4.6.4"
+  }
+}

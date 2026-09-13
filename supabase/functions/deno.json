@@ -13,5 +13,6 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitOverride": true,
     "useUnknownInCatchVariables": true
-  }
+  },
+  "lock": false
 }
