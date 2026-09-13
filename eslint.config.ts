@@ -15,6 +15,7 @@ export default defineConfig([
       'scripts/**/*.{ts,mjs}',
       'tests/**/*.ts',
       'evals/**/*.ts',
+      'mcp/**/*.ts',
       '*.config.{ts,mjs,cjs}',
       '.dependency-cruiser.cjs',
     ],
@@ -32,6 +33,7 @@ export default defineConfig([
       'scripts/db/**/*.ts',
       'tests/**/*.ts',
       'evals/**/*.ts',
+      'mcp/**/*.ts',
       'vite.config.ts',
     ],
     languageOptions: {
@@ -77,6 +79,12 @@ export default defineConfig([
   // This syntactic rule cannot follow those checks. Runtime request code stays covered.
   {
     files: ['scripts/corpus/**/*.mjs', 'scripts/db/**/*.ts', 'evals/**/*.ts'],
+    rules: { 'security/detect-non-literal-fs-filename': 'off' },
+  },
+  // The handshake log is an operator-chosen path from the environment, written
+  // outside request handling. Every other MCP unit stays covered by the rule.
+  {
+    files: ['mcp/recordHandshake.ts'],
     rules: { 'security/detect-non-literal-fs-filename': 'off' },
   },
   // The baseline size layer omits .mjs; corpus code follows the same budgets.
