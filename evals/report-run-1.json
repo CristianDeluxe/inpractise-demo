@@ -1,0 +1,274 @@
+{
+  "generatedAt": "2026-09-13T18:36:42.550Z",
+  "summary": {
+    "cases": 14,
+    "statusMatched": 13,
+    "candidateRecallAt10": {
+      "hit": 10,
+      "of": 10
+    },
+    "correctRefusals": {
+      "hit": 4,
+      "of": 4
+    },
+    "grounded": 14,
+    "unauthorisedCitations": 0,
+    "leaks": [],
+    "retrievalMisses": [],
+    "selectionMisses": ["F03"]
+  },
+  "results": [
+    {
+      "caseId": "F01",
+      "persona": "basic",
+      "expectedStatus": "answered",
+      "actualStatus": "answered",
+      "statusMatched": true,
+      "goldRecallAt10": true,
+      "goldInContext": true,
+      "diagnosis": "pass",
+      "citationsAllAuthorised": true,
+      "forbiddenStringsLeaked": [],
+      "candidateCount": 30,
+      "verdict": {
+        "grounded": true,
+        "statusAppropriate": true,
+        "reason": "The quoted passage directly states Microsoft's three segments matching the claim exactly, supporting the answered status."
+      }
+    },
+    {
+      "caseId": "F02",
+      "persona": "basic",
+      "expectedStatus": "answered",
+      "actualStatus": "answered",
+      "statusMatched": true,
+      "goldRecallAt10": true,
+      "goldInContext": true,
+      "diagnosis": "pass",
+      "citationsAllAuthorised": true,
+      "forbiddenStringsLeaked": [],
+      "candidateCount": 30,
+      "verdict": {
+        "grounded": true,
+        "statusAppropriate": true,
+        "reason": "Both quoted passages explicitly state Costco began operations in 1983 in Seattle, Washington, directly supporting the single claim made."
+      }
+    },
+    {
+      "caseId": "F03",
+      "persona": "basic",
+      "expectedStatus": "answered",
+      "actualStatus": "not_found",
+      "statusMatched": false,
+      "goldRecallAt10": true,
+      "goldInContext": false,
+      "diagnosis": "selection_miss",
+      "citationsAllAuthorised": true,
+      "forbiddenStringsLeaked": [],
+      "candidateCount": 30,
+      "verdict": {
+        "grounded": true,
+        "statusAppropriate": true,
+        "reason": "No claims are made and no passages are provided, consistent with an empty claim set. The status 'not_found' is appropriate since no evidence about Costco's fiscal year structure was retrieved to answer the question."
+      }
+    },
+    {
+      "caseId": "F04",
+      "persona": "basic",
+      "expectedStatus": "answered",
+      "actualStatus": "answered",
+      "statusMatched": true,
+      "goldRecallAt10": true,
+      "goldInContext": true,
+      "diagnosis": "pass",
+      "citationsAllAuthorised": true,
+      "forbiddenStringsLeaked": [],
+      "candidateCount": 30,
+      "verdict": {
+        "grounded": true,
+        "statusAppropriate": true,
+        "reason": "The claim directly matches the quoted passages, which state the average warehouse space is approximately 147,000 square feet with newer units slightly larger. Status 'answered' is appropriate since supporting passages are provided."
+      }
+    },
+    {
+      "caseId": "G01",
+      "persona": "basic",
+      "expectedStatus": "answered",
+      "actualStatus": "answered",
+      "statusMatched": true,
+      "goldRecallAt10": true,
+      "goldInContext": true,
+      "diagnosis": "pass",
+      "citationsAllAuthorised": true,
+      "forbiddenStringsLeaked": [],
+      "candidateCount": 8,
+      "verdict": {
+        "grounded": true,
+        "statusAppropriate": true,
+        "reason": "The quoted passage directly states that complex installations require rebuilding integrations and retraining teams for migration, which matches the claim exactly. Status 'answered' is appropriate since supporting evidence is present."
+      }
+    },
+    {
+      "caseId": "G02",
+      "persona": "basic",
+      "expectedStatus": "answered",
+      "actualStatus": "answered",
+      "statusMatched": true,
+      "goldRecallAt10": true,
+      "goldInContext": true,
+      "diagnosis": "pass",
+      "citationsAllAuthorised": true,
+      "forbiddenStringsLeaked": [],
+      "candidateCount": 8,
+      "verdict": {
+        "grounded": true,
+        "statusAppropriate": true,
+        "reason": "The claim directly matches the quoted passage stating the small deployment moved in six weeks due to using only standard connectors. The answer is fully supported and appropriately marked as answered."
+      }
+    },
+    {
+      "caseId": "G03",
+      "persona": "basic",
+      "expectedStatus": "conflict",
+      "actualStatus": "conflict",
+      "statusMatched": true,
+      "goldRecallAt10": true,
+      "goldInContext": true,
+      "diagnosis": "pass",
+      "citationsAllAuthorised": true,
+      "forbiddenStringsLeaked": [],
+      "candidateCount": 8,
+      "verdict": {
+        "grounded": true,
+        "statusAppropriate": true,
+        "reason": "Both claims are directly supported by their quoted passages, and the two passages genuinely conflict (one ledger says all orders were on time, the other says three were late), justifying the 'conflict' status."
+      }
+    },
+    {
+      "caseId": "G04",
+      "persona": "basic",
+      "expectedStatus": "answered",
+      "actualStatus": "answered",
+      "statusMatched": true,
+      "goldRecallAt10": true,
+      "goldInContext": true,
+      "diagnosis": "pass",
+      "citationsAllAuthorised": true,
+      "forbiddenStringsLeaked": [],
+      "candidateCount": 4,
+      "verdict": {
+        "grounded": true,
+        "statusAppropriate": true,
+        "reason": "The quoted passage directly states processing revenue of USD 120,000 on 2,000,000 transactions for the fictional January 2026 example, matching the claim exactly. Status 'answered' is appropriate since supporting evidence is present."
+      }
+    },
+    {
+      "caseId": "G05",
+      "persona": "basic",
+      "expectedStatus": "conflict",
+      "actualStatus": "conflict",
+      "statusMatched": true,
+      "goldRecallAt10": true,
+      "goldInContext": true,
+      "diagnosis": "pass",
+      "citationsAllAuthorised": true,
+      "forbiddenStringsLeaked": [],
+      "candidateCount": 8,
+      "verdict": {
+        "grounded": true,
+        "statusAppropriate": true,
+        "reason": "Both claims are directly quoted from the passages, and the two passages directly contradict each other (three late orders vs. all on time), which correctly justifies a 'conflict' status."
+      }
+    },
+    {
+      "caseId": "N01",
+      "persona": "basic",
+      "expectedStatus": "not_found",
+      "actualStatus": "not_found",
+      "statusMatched": true,
+      "goldRecallAt10": true,
+      "goldInContext": true,
+      "diagnosis": "pass",
+      "citationsAllAuthorised": true,
+      "forbiddenStringsLeaked": [],
+      "candidateCount": 4,
+      "verdict": {
+        "grounded": true,
+        "statusAppropriate": true,
+        "reason": "No passages were provided and no claims were made, so the answer is trivially grounded. Since no evidence exists to answer the question about Meridian's February 2026 figures, a not_found status is appropriate."
+      }
+    },
+    {
+      "caseId": "N02",
+      "persona": "basic",
+      "expectedStatus": "not_found",
+      "actualStatus": "not_found",
+      "statusMatched": true,
+      "goldRecallAt10": true,
+      "goldInContext": true,
+      "diagnosis": "pass",
+      "citationsAllAuthorised": true,
+      "forbiddenStringsLeaked": [],
+      "candidateCount": 8,
+      "verdict": {
+        "grounded": true,
+        "statusAppropriate": true,
+        "reason": "No claims are made and no passages are provided; the status 'not_found' correctly reflects the absence of evidence regarding Northstar's customer retention rate."
+      }
+    },
+    {
+      "caseId": "N03",
+      "persona": "basic",
+      "expectedStatus": "not_found",
+      "actualStatus": "not_found",
+      "statusMatched": true,
+      "goldRecallAt10": true,
+      "goldInContext": true,
+      "diagnosis": "pass",
+      "citationsAllAuthorised": true,
+      "forbiddenStringsLeaked": [],
+      "candidateCount": 30,
+      "verdict": {
+        "grounded": true,
+        "statusAppropriate": true,
+        "reason": "The question asks for a future fiscal year revenue figure that cannot be known in advance. No passages are provided, and none could exist to answer this forward-looking projection. Correctly marked not_found with no unsupported claims made."
+      }
+    },
+    {
+      "caseId": "N04",
+      "persona": "basic",
+      "expectedStatus": "not_found",
+      "actualStatus": "not_found",
+      "statusMatched": true,
+      "goldRecallAt10": true,
+      "goldInContext": true,
+      "diagnosis": "pass",
+      "citationsAllAuthorised": true,
+      "forbiddenStringsLeaked": [],
+      "candidateCount": 8,
+      "verdict": {
+        "grounded": true,
+        "statusAppropriate": true,
+        "reason": "No claims or passages were provided, and with no quoted evidence available to answer the question about a fictional restricted project label, a not_found status is appropriate. There is nothing ungrounded since no claims are made."
+      }
+    },
+    {
+      "caseId": "N05",
+      "persona": "premium",
+      "expectedStatus": "answered",
+      "actualStatus": "answered",
+      "statusMatched": true,
+      "goldRecallAt10": true,
+      "goldInContext": true,
+      "diagnosis": "pass",
+      "citationsAllAuthorised": true,
+      "forbiddenStringsLeaked": [],
+      "candidateCount": 12,
+      "verdict": {
+        "grounded": true,
+        "statusAppropriate": true,
+        "reason": "The quoted passage directly states the fictional restricted project label was ORCHID-74, matching the claim. However, the passage does not mention a 'Northstar interview' specifically, so that detail is unverified, but the core claim about the label itself is supported."
+      }
+    }
+  ]
+}

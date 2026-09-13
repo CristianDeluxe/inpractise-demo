@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T18:30:37.041Z",
+  "generatedAt": "2026-09-13T18:38:13.633Z",
   "summary": {
     "cases": 14,
     "statusMatched": 13,
@@ -33,7 +33,7 @@
       "verdict": {
         "grounded": true,
         "statusAppropriate": true,
-        "reason": "The quoted passage directly states Microsoft's three segments matching the claim exactly, supporting the answered status."
+        "reason": "The quoted passage directly states the three segments matching the claim exactly."
       }
     },
     {
@@ -69,7 +69,7 @@
       "verdict": {
         "grounded": true,
         "statusAppropriate": true,
-        "reason": "No passages were provided, no claims were made, and the status correctly reflects that the evidence needed to answer the question about Costco's fiscal year structure is absent."
+        "reason": "No passages were provided and no claims were made, so there is nothing ungrounded. Since no evidence about Costco's fiscal year structure was found, a not_found status is appropriate."
       }
     },
     {
@@ -87,7 +87,7 @@
       "verdict": {
         "grounded": true,
         "statusAppropriate": true,
-        "reason": "The claim directly matches the quoted passages, which state the average warehouse space is approximately 147,000 square feet with newer units slightly larger. The answered status is appropriate since the passages directly support the claim."
+        "reason": "The claim directly matches the quoted passages stating average warehouse space is approximately 147,000 square feet with newer units slightly larger."
       }
     },
     {
@@ -105,7 +105,7 @@
       "verdict": {
         "grounded": true,
         "statusAppropriate": true,
-        "reason": "The claim directly restates the quoted passage, which states that for complex installations, migration requires rebuilding integrations and retraining teams. This fully supports the answer with no unsupported additions, and the 'answered' status is appropriate given the direct supporting passage."
+        "reason": "The claim directly restates the quoted passage, which states that for complex installations, migration requires rebuilding integrations and retraining teams. The answer is fully supported by the evidence and appropriately marked as answered."
       }
     },
     {
@@ -141,7 +141,7 @@
       "verdict": {
         "grounded": true,
         "statusAppropriate": true,
-        "reason": "Both claims are directly supported by their respective quoted passages, and the two passages genuinely conflict (one says all Harbor orders arrived on time, the other says three were late), justifying the 'conflict' status."
+        "reason": "Both claims are directly supported by their matching quoted passages verbatim, and the two passages genuinely contradict each other (one says all Harbor orders arrived on time, the other says three arrived late), justifying the 'conflict' status."
       }
     },
     {
@@ -159,7 +159,7 @@
       "verdict": {
         "grounded": true,
         "statusAppropriate": true,
-        "reason": "The quoted passage directly states the fictional January 2026 example had processing revenue of USD 120,000 on 2,000,000 transactions, matching the claim exactly. Status 'answered' is appropriate since supporting evidence is present."
+        "reason": "The quoted passage explicitly states the fictional Meridian January 2026 example reported processing revenue of USD 120,000 on 2,000,000 transactions, matching the claim exactly. Status 'answered' is appropriate given direct supporting evidence."
       }
     },
     {
@@ -177,7 +177,7 @@
       "verdict": {
         "grounded": true,
         "statusAppropriate": true,
-        "reason": "Both claims are directly quoted from passages and they explicitly contradict each other (three late orders vs. all on time), supporting a conflict status without adding unsupported facts."
+        "reason": "Both claims are directly supported by their identically quoted passages, and the two passages directly contradict each other (three late orders vs. all on-time), which properly warrants a 'conflict' status."
       }
     },
     {
@@ -195,7 +195,7 @@
       "verdict": {
         "grounded": true,
         "statusAppropriate": true,
-        "reason": "No passages were provided, and the answer makes no claims, consistent with a not_found status. Since the question requires specific future/undisclosed data not present in evidence, not_found is appropriate."
+        "reason": "No passages were provided, and the answer makes no claims, consistent with a not_found status. The question about February 2026 (a future date) cannot be answered without supporting evidence, so not_found is appropriate."
       }
     },
     {
@@ -213,7 +213,7 @@
       "verdict": {
         "grounded": true,
         "statusAppropriate": true,
-        "reason": "No claims were made and no passages were provided, consistent with a not_found status. The missing evidence matches the question, and no unsupported information is presented."
+        "reason": "No claims or passages are present, and the status correctly indicates the evidence needed to answer the question about Northstar's customer retention rate was not found."
       }
     },
     {
@@ -231,7 +231,7 @@
       "verdict": {
         "grounded": true,
         "statusAppropriate": true,
-        "reason": "The question asks for a future fiscal year's revenue, which cannot be known from historical evidence. No passages are provided, and none could exist to answer this predictive question, so not_found with no claims is appropriate and trivially grounded."
+        "reason": "The question asks for a future fiscal year's revenue, which cannot be known and no passages are provided. No claims are made, so grounded is trivially satisfied, and not_found is the appropriate status given the absence of evidence and the speculative nature of the question."
       }
     },
     {
@@ -249,7 +249,7 @@
       "verdict": {
         "grounded": true,
         "statusAppropriate": true,
-        "reason": "No claims or passages were provided, and with zero evidence the system could not answer the question, so \"not_found\" is the appropriate status. An empty claim set is trivially grounded."
+        "reason": "No claims or passages were provided, and the status is not_found, meaning the system correctly declined to answer given no supporting evidence was retrieved. An empty claim set is trivially grounded, and not_found is appropriate when no passages exist to answer the question."
       }
     },
     {
@@ -267,7 +267,7 @@
       "verdict": {
         "grounded": true,
         "statusAppropriate": true,
-        "reason": "The quoted passage directly states 'The fictional restricted project label was ORCHID-74,' which supports the single claim made. The answer is appropriately marked as answered since supporting evidence is present."
+        "reason": "The quoted passage directly states the fictional restricted project label was ORCHID-74, matching the claim exactly. The answer status 'answered' is appropriate since a supporting passage is present."
       }
     }
   ]
