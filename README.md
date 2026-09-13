@@ -5,6 +5,10 @@ standalone questions, and opening the exact document revision and passage behind
 an answer. A local MCP server exposes the same search and passage reader through
 two read-only tools.
 
+Live demo: <https://inpractise.cristiandeluxe.dev> — sign-in is by privately
+provisioned member account; public signup is disabled. See
+[deployment](docs/deploy.md).
+
 ## Scope
 
 This is an independent engineering demo for a hiring conversation, not an In
