@@ -1,7 +1,7 @@
 # TODO
 
 > Consolidated from the accessible Claude, Codex, Cursor, and Antigravity
-> project history. Last reviewed: 2026-09-13. History coverage: Partial.
+> project history. Last reviewed: 2026-09-14. History coverage: Partial.
 >
 > States: `[ ]` pending · `[~]` partial or unverified · `[!]` blocked · `[x]`
 > verified complete · `[-]` obsolete or superseded. Closed work moves to
@@ -78,15 +78,18 @@ plan wins.
 
 ## Infrastructure
 
-- [!] **Working-tree secret scan flags historical SHA-256 values.** Briefing K
-  ran `pnpm check:security`; gitleaks exited 1 with three `generic-api-key`
-  matches in `corpus/generated/briefing-i/before-hashes.json` at lines 64, 77
-  and 131. Each value was independently recomputed and matches the file hash for
-  `countTokens.mjs`, `tokenizer.mjs` or `loadApiKey.mjs`; none is a credential.
-  The smallest next step is a narrowly scoped checksum false-positive policy
-  that retains credential detection, followed by `pnpm check:security`. No
-  scanner rule or exclusion was weakened. Redacted evidence is in
-  `work/briefing-k/gitleaks-redacted.json`.
+- [!] **D1 publication stopped at the credential gate.** `pnpm check:security`
+  exited 1 with six findings: three recomputed SHA-256 checksums in
+  `corpus/generated/briefing-i/before-hashes.json`, two allowed Supabase
+  publishable-key occurrences in ignored `dist/`, and one actual OpenAI key in
+  ignored `.env.functions.remote`. That credential file has never been tracked;
+  known private environment values were absent from 717 historical Git blobs and
+  20 build files. No credential exposure was established. The briefing
+  explicitly requires stopping on an actual credential finding. The smallest
+  next step is owner clarification that this ignored credential is an expected
+  local input and publication may resume. No scanner rule was changed. Redacted
+  evidence: `/tmp/lovable-work/d1-source-redacted.json` and
+  `/tmp/lovable-work/d1-history-redacted.json`.
 
 - [~] **Upstream ESLint 10 peer metadata.** Strict runtime lint passes, but
   `pnpm peers check` exits 1 for `eslint-plugin-import@2.32.0`,
@@ -98,15 +101,19 @@ plan wins.
 - [ ] **Run the prepared CI workflow on a remote once one is authorized.** Local
       `check:ci`, `check:quality` and conformance gates pass; the separate
       security scan has the checksum findings recorded above. This repository
-      still has no remote or commits; no GitHub job has executed. Full corpus
-      replay additionally needs the ignored raw snapshots, while CI
-      intentionally runs the corpus unit/tamper tests without those snapshots.
+      still has no remote; no GitHub job has executed. Full corpus replay
+      additionally needs the ignored raw snapshots, while CI intentionally runs
+      the corpus unit/tamper tests without those snapshots.
 
-- [ ] **Owner-authorized Cloudflare Pages publication.** Preparation is in
-      `docs/deploy.md`; explicit static routing and noindex are configured.
-      Owner must resolve the signup and claim-revocation findings, choose the
-      account/project, and authorize creation/upload. No deployed URL is
-      assigned by this task; no DNS dependency is required.
+- [!] **Owner-authorized nova publication (D1).** Publish the public repository
+  `CristianDeluxe/inpractise-demo` and serve
+  `https://inpractise.cristiandeluxe.dev` under `<account>/public_html`. These
+  owner decisions replace the earlier Pages proposal. Publication stopped at the
+  credential gate above. The prescribed SSH command also exited 255 with
+  `No route to host` on port 6922. The smallest access step is to restore the
+  existing nova SSH route; do not change the firewall or choose another host. No
+  repository, DNS record, document root, TLS certificate or deployment was
+  created. See `docs/deploy.md`.
 
 - [ ] **Pin the Supabase CLI to 2.75.0** and confirm the flags the plan relies
       on (`functions deploy --project-ref`, `--no-verify-jwt`,
@@ -122,11 +129,6 @@ plan wins.
       no deployed rehearsal is claimed.
 
 ## Pending Decisions
-
-- [ ] **Whether this repository gets a remote.** It has none. Creating one is
-      the owner's call, and the repository carries an ignored `.env.remote` with
-      live credentials, so the decision includes confirming nothing secret is
-      tracked before any push.
 
 - [ ] **Reranking stays off by default.** Enable the Voyage `rerank-2.5`
       experiment only if the core gates already pass, and only if the same gold
