@@ -1,4 +1,55 @@
-# Cloudflare Pages deployment preparation
+# Deployment status and retained Pages preparation
+
+## Nova publication attempt — 2026-09-14
+
+Briefing D1 authorizes a public `CristianDeluxe/inpractise-demo` repository and
+the intended URL `https://inpractise.cristiandeluxe.dev`, hosted on nova under
+the `<account>` account with a document root inside `public_html`. This
+supersedes the Pages proposal below. **No publication or deployment occurred.**
+The intended URL is not a verified live demo URL.
+
+`pnpm check:security` exited 1 with six findings. Three are SHA-256 file hashes
+in `corpus/generated/briefing-i/before-hashes.json`; recomputation against
+`countTokens.mjs`, `tokenizer.mjs` and `loadApiKey.mjs` matched all three. Two
+are the permitted Supabase publishable key in the ignored browser build. The
+remaining finding is an actual OpenAI key in ignored `.env.functions.remote`.
+That file has never been tracked. The briefing requires stopping on an actual
+credential finding, so creation and upload were not attempted. No secret value
+was printed or copied into this record.
+
+`git check-ignore .env.remote .env.local dist/ .env.functions.remote` confirms
+all four paths are ignored.
+`gitleaks git --config .gitleaks.toml --no-banner --redact` scanned ten commits
+and reported only the three checksum matches. An in-memory comparison of local
+private environment values against 717 Git history blobs and 20 existing build
+files found no matches. The project reference embedded in the permitted public
+Supabase URL is public metadata, not a separate leaked credential. These checks
+establish no observed exposure; they do not turn the failing security command
+into a passing gate.
+
+The prescribed connection also failed:
+
+```sh
+ssh -o BatchMode=yes -o ConnectTimeout=10 -p <port> -i ~/.ssh/busirocket root@<host>
+```
+
+Observed result: exit 255, `No route to host`. No remote command executed.
+`gh api user --jq .login` confirmed `CristianDeluxe`;
+`gh repo view CristianDeluxe/inpractise-demo --json name,visibility,url`
+reported that the repository could not be resolved. No remote is configured
+locally.
+
+Resume by clarifying the expected ignored credential under the briefing's stop
+rule and restoring the existing SSH route. Then inspect the zone's actual DNS
+records before choosing the new record's target and proxy state; create only the
+authorized subdomain; configure Apache SPA fallback and noindex; establish TLS;
+build with only the two public variables; upload through the restricted rsync
+key; purge this account's ea-nginx cache; and verify the public origin. The DNS
+record, exact document root, rsync destination, cache purge and public HTTP,
+browser, TLS, CORS and served-asset checks remain unexecuted. The demo script
+retains local URLs until a live deployment is verified.
+
+## Historical Cloudflare Pages preparation
 
 This repository produces a static Vite SPA. Its backend is the existing Supabase
 research endpoint; Pages needs no Worker, Function, database binding or backend
