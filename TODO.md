@@ -98,22 +98,14 @@ plan wins.
   compatible upstream releases when available. No metadata override or lint
   suppression masks this. See `docs/baseline.md`.
 
-- [ ] **Run the prepared CI workflow on a remote once one is authorized.** Local
-      `check:ci`, `check:quality` and conformance gates pass; the separate
-      security scan has the checksum findings recorded above. This repository
-      still has no remote; no GitHub job has executed. Full corpus replay
-      additionally needs the ignored raw snapshots, while CI intentionally runs
-      the corpus unit/tamper tests without those snapshots.
-
-- [!] **Owner-authorized nova publication (D1).** Publish the public repository
-  `CristianDeluxe/inpractise-demo` and serve
-  `https://inpractise.cristiandeluxe.dev` under `cristiandev/public_html`. These
-  owner decisions replace the earlier Pages proposal. Publication stopped at the
-  credential gate above. The prescribed SSH command also exited 255 with
-  `No route to host` on port 6922. The smallest access step is to restore the
-  existing nova SSH route; do not change the firewall or choose another host. No
-  repository, DNS record, document root, TLS certificate or deployment was
-  created. See `docs/deploy.md`.
+- [ ] **Run the prepared CI workflow now that the remote exists.** Local
+      `check:ci`, `check:quality` and conformance gates pass, and the repository
+      is published at `CristianDeluxe/inpractise-demo`, but no GitHub job has
+      executed yet. Installation needs private `@busirocket` package access and
+      the `file:../max-lane` dependency, so the workflow cannot run on a clean
+      runner as written. Full corpus replay additionally needs the ignored raw
+      snapshots, while CI intentionally runs the corpus unit/tamper tests
+      without those snapshots.
 
 - [ ] **Pin the Supabase CLI to 2.75.0** and confirm the flags the plan relies
       on (`functions deploy --project-ref`, `--no-verify-jwt`,
@@ -125,8 +117,8 @@ plan wins.
 - [ ] **Rehearse the two-minute script against an authorized deployment.**
       `docs/demo-script.md` contains a 120-second sequence, exact local URLs,
       live questions, refusal/premium-denial steps and timed failure fallback.
-      Replace the local origin with the actual deployed URL after publication;
-      no deployed rehearsal is claimed.
+      The script now targets `https://inpractise.cristiandeluxe.dev`, which is
+      live and route-verified, but no timed rehearsal against it has been run.
 
 ## Pending Decisions
 

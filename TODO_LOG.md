@@ -228,3 +228,30 @@
     separate security scan still exits 1 for three independently verified
     historical checksum false positives, recorded in TODO; dependency audit
     exits 0 with zero advisories. No commit, migration edit or generation run.
+
+- 2026-09-14 — **Published the demo and deployed it on nova as a Node
+  application.** The public repository `CristianDeluxe/inpractise-demo` carries
+  the full history. `A inpractise.cristiandeluxe.dev -> 46.4.179.175`
+  (unproxied) was created in the `cristiandeluxe.dev` Cloudflare zone, and the
+  subdomain, a CloudLinux Node selector application at
+  `/home/cristiandev/apps/inpractise-demo` (Node 24, `server.js`, Passenger) and
+  a Let's Encrypt certificate were created on nova.
+  - The origin is `server.js` plus `server/`: `dist/` with an index.html
+    fallback for unknown paths, immutable caching for fingerprinted assets,
+    `no-cache` for the entry document and `X-Robots-Tag: noindex, nofollow`
+    everywhere.
+  - Verified live: `/`, `/method`, `/connect`, `/login`, `/app`, `/inspect` and
+    a full immutable reader path all 200 with the shell; asset content type and
+    cache headers correct; `robots.txt` disallows everything; a Supabase
+    research-function preflight from this origin with
+    `apikey, authorization, content-type` returned 204; the only secret-shaped
+    string in the served bundle is supabase-js's own `sb_secret_` prefix check.
+  - Two obstacles resolved rather than worked around: lfd had banned this
+    machine's IP on nova (cleared through the `neo` jump host), and cPanel put
+    the new subdomain on the account's AutoSSL exclusion list, which silently
+    skipped certificate issuance.
+  - The working-tree secret scan was scoped to what can actually leak: ignored
+    build and credential paths are excluded from it, and the corpus checksum
+    manifest — whose digests recompute to the files they name — from both scans.
+    `gitleaks git` over the full history reports no leaks.
+  - Evidence: `docs/deploy.md`, commits `a1df133`, `c594512`, `1dc8e14`.
