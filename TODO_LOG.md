@@ -6,6 +6,38 @@
 
 ### 2026-09
 
+- [x] 2026-09-13 — **Live browser verification after the owner CORS fix:**
+      Production Vite build served locally passed real basic-member sign-in,
+      nine authorized documents, ten hybrid-ranked passages, an answered Ask
+      with one cited claim and a not-found Ask with no claims or citations.
+      Exactly two live Ask requests were used. Source dialogs, server-built
+      reader links and full refresh pass. Premium S6/P2 returns a plain 404 with
+      no restricted title or label in the DOM or basic research payloads. Basic
+      inspection denies access; reviewer inspection shows nine documents, nine
+      revisions, 958 passages and 958 vectors, with no report connected.
+      Sign-out clears evidence and aborts a pending live search. Six routes and
+      source dialogs fit 1440/390/320px; visible keyboard focus, source-dialog
+      focus return and selectable quotations pass. No response interception or
+      UI fix was used. The earlier fixture-only/CORS backlog entries are closed.
+      Evidence: `/tmp/lovable-work/FINDINGS.md`, `live-browser.mjs`,
+      `live-browser.log`, `live-attempt-1-browser-results.json`,
+      `live-browser-results.json`, `live-accessibility-results.json` and
+      `live-*.png`. The extended keyboard path reaches the form at all three
+      widths, and a real pointer drag selects the complete quote. Verification:
+      `node /tmp/lovable-work/live-browser.mjs --surfaces-only` exits 0 against
+      the local preview; `sh /tmp/lovable-work/verify.sh` exits 0 with 134 full
+      tests and 114 offline tests. The initial run's reader timing assertion was
+      corrected in the probe; its two successful Ask responses are retained. No
+      commit, push, deployment or backend/test modification was performed.
+
+- [x] 2026-09-13 — **Product method and local MCP pages:** Ported the Lovable
+      editorial presentation with accurate public/synthetic provenance, evidence
+      rejection rules, authorization and retrieval limitations, and the actual
+      `search_research` / `fetch_passage` tools. Removed invented connection
+      claims and unsupported flows. Evidence: `src/app/public.test.tsx` and
+      `/tmp/lovable-work/browser-fixture.log`; `pnpm test` exercises the
+      public-route tests. No publication was performed.
+
 - [x] 2026-09-13 — **Research:** Market, competitive and reuse research for the
       In Practise demo completed before any code was written.
   - Result: Seven documents covering the public surface of inpractise.com, 21
