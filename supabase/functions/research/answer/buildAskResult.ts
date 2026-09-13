@@ -1,11 +1,13 @@
 import { buildCitation } from '../citations/buildCitation.ts'
 import type { Citation } from '../citations/Citation.ts'
 import type { CitationSource } from '../citations/CitationSource.ts'
+import { authorisedClaims } from './authorisedClaims.ts'
 import type { ProviderAnswer } from './ProviderAnswer.ts'
 
 /**
  * Maps the model's numeric source labels back onto citations, dropping every
- * claim reference whose evidence the caller may no longer read.
+ * claim whose evidence the caller may no longer read. An answer that loses all
+ * of its evidence mid-request becomes a refusal rather than unsourced prose.
  */
 export function buildAskResult(
   answer: ProviderAnswer,
@@ -13,21 +15,19 @@ export function buildAskResult(
   stillAuthorised: ReadonlySet<string>,
 ) {
   const citations: Citation[] = sources.map(buildCitation)
-  const cited = new Set(answer.claims.flatMap((claim) => claim.sources))
+  const claims = authorisedClaims(answer, citations, stillAuthorised)
+  const cited = new Set(claims.flatMap((claim) => claim.citationIds))
+  if (!claims.length)
+    return {
+      status: 'not_found' as const,
+      claims: [],
+      missingEvidence: ['Access to the supporting evidence changed.'],
+      citations: [],
+    }
   return {
     status: answer.status,
-    claims: answer.claims.map((claim) => ({
-      text: claim.text,
-      citationIds: claim.sources
-        .map((source) => citations[source - 1]?.citationId)
-        .filter(
-          (id): id is string => id !== undefined && stillAuthorised.has(id),
-        ),
-    })),
+    claims,
     missingEvidence: answer.missingEvidence,
-    citations: citations.filter(
-      (citation, index) =>
-        cited.has(index + 1) && stillAuthorised.has(citation.citationId),
-    ),
+    citations: citations.filter((citation) => cited.has(citation.citationId)),
   }
 }

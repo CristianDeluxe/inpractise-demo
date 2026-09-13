@@ -1,0 +1,13 @@
+/method / 200
+/method/ / 200
+/connect / 200
+/connect/ / 200
+/login / 200
+/login/ / 200
+/auth / 200
+/reset-password / 200
+/app / 200
+/inspect / 200
+/inspect/ / 200
+/app/* / 200
+/read/* / 200

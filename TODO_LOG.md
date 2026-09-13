@@ -1,10 +1,53 @@
 # TODO Log
 
+- 2026-09-14 — **Revoked evidence can no longer leave prose behind.**
+  `buildAskResult` dropped the citation of a passage the caller had lost access
+  to but kept the claim text. It now drops the claim, and an answer that loses
+  all of its evidence becomes `not_found` with "Access to the supporting
+  evidence changed." Regression: `tests/unit/revokedEvidence.test.ts`, two
+  cases. Deployed.
+
+- 2026-09-14 — **Public signup disabled on the demo project.** Remote
+  `disable_signup` was `false`; set to `true` through the Management API and
+  confirmed from the client: `POST /auth/v1/signup` answers 422
+  `signup_disabled`. Only provisioned accounts remain.
+
+- 2026-09-14 — **CORS refused the browser.** The function allowed only
+  `authorization, content-type`, so every browser request failed its preflight.
+  It now allows `apikey, authorization, content-type, x-client-info`; verified
+  with a live OPTIONS probe returning 204.
+
+- 2026-09-14 — **Research documents moved out of the career knowledge base.**
+  `docs/research/` here is the single copy; the portfolio keeps a pointer at
+  `career/applications/2026-09-inpractise-fullstack-product-engineer/code-project.md`
+  (commit 7e89c6b there).
+
 > Searchable record of closed project work. Active work lives in `TODO.md`.
 
 ## 2026
 
 ### 2026-09
+
+- [x] 2026-09-13 — **Presentation and deployment preparation (U4):** Rewrote
+      README around the running workflow, disclosed SEC/synthetic scope,
+      measured 14-case evaluation and F03 selection miss, negotiated MCP
+      protocol and tested security boundaries. Updated method copy without
+      changing its design. Added a 120-second demo script with exact local URLs,
+      two failure demonstrations and a timed historical-evidence fallback. Added
+      Pages documentation, explicit rewrites and a noindex 404 page that
+      disables automatic SPA fallback. Local Pages serving passes 18 direct
+      routes, asset identity/type, noindex and a real 404; removing rewrites in
+      a separate copy makes method/app/reader return 404. Method reflows at
+      1440/390/320px. All five briefing gates pass (134 tests); the extra
+      offline suite passes 114 tests. A local synthetic probe confirms retained
+      claim prose after citation revocation; the backend fix and deployed
+      rehearsal remain active backlog items. Verification:
+      `sh /tmp/lovable-work/verify.sh`,
+      `python3 /tmp/lovable-work/verify-pages.py`,
+      `node /tmp/lovable-work/u4-browser.mjs`, and
+      `node /tmp/lovable-work/u4-integrity.mjs`. Full commands, limitations and
+      local evidence are in `/tmp/lovable-work/FINDINGS.md`. No commit, push,
+      deployment, provider generation or backend/test/validator edit.
 
 - [x] 2026-09-13 — **Live browser verification after the owner CORS fix:**
       Production Vite build served locally passed real basic-member sign-in,

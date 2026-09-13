@@ -1,56 +1,138 @@
 # Research evidence demo
 
-An independent engineering demo for a hiring conversation with In Practise. It
-is not an In Practise product and uses none of their private systems or
-research. The accepted corpus is six disclosed synthetic interviews about
-invented companies; acquired public SEC filings remain pending boundary review.
+A signed-in research workspace for searching a caller-authorized corpus, asking
+standalone questions, and opening the exact document revision and passage behind
+an answer. A local MCP server exposes the same search and passage reader through
+two read-only tools.
 
-The implemented foundations are immutable source identity, database-enforced
-authorization, caller-scoped retrieval, a typed browser API client, and corpus
-verification. The HTTP research handler, answer generation, connected React UI,
-MCP transport, and deployment remain unfinished. Client contract tests use
-mocked HTTP responses; database integration tests exercise the actual demo
-database.
+## Scope
 
-## Setup and verification
+This is an independent engineering demo for a hiring conversation, not an In
+Practise product. It contains four public SEC filings and six synthetic
+interviews about invented companies and fictional speakers. It uses no private
+In Practise data, research library or systems. Source-bearing screens disclose
+public or synthetic provenance. See [corpus provenance](docs/corpus.md).
 
-Use pnpm 12.4.1. The lockfile pins repository-local Node 24.20.0 and Deno 2.9.6.
+## Run locally
+
+Use Node 24.20.0 and pnpm 12.4.1. Installation needs access to the private
+`@busirocket` packages and the local `../max-lane` dependency declared in
+`package.json`; this checkout is not a self-contained public install.
 
 ```sh
 pnpm install --frozen-lockfile
-pnpm check:ci
-pnpm check:quality
 ```
 
-For the complete local gate, the existing ignored credentials, database link
-metadata, embedding artifacts, and raw SEC snapshots must already be present:
+Put only `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` in ignored
+`.env.local`, using the existing demo project's public configuration supplied by
+the owner. These values are embedded in the browser build. Never put a service
+key, provider key or password in a `VITE_` variable.
 
 ```sh
-pnpm verify
+pnpm dev --host 127.0.0.1 --port 5173 --strictPort
 ```
 
-It runs strict typing, lint, formatting, offline tests, coverage, corpus tests,
-duplicate/dependency/type-coverage checks, the full integration suite, corpus
-replay, a live database audit, and baseline conformance. It does not seed users,
-apply migrations, acquire sources, generate interviews, or create embeddings.
+Open `http://127.0.0.1:5173/`, then `/login` with a privately provisioned member
+account. `/app` contains the library, passage search and Ask. `/method` explains
+the measurement limits; `/connect` describes local MCP. No signup or database
+provisioning is needed for the existing demo.
+[Frontend setup](docs/frontend-port.md) records the browser contract and live
+verification.
 
-With gitleaks installed, run the independent security gate:
+For the production artifact:
 
 ```sh
-pnpm check:security
+pnpm build
+pnpm preview --host 127.0.0.1 --port 4173 --strictPort
 ```
 
-Never copy the complete corpus or tenant-isolation fixtures into a public build.
-Every source-bearing screen must disclose whether it is synthetic or public.
+See the [two-minute walkthrough](docs/demo-script.md) and
+[Cloudflare Pages preparation](docs/deploy.md). Preview alone does not verify
+Pages routing.
 
-## Project references
+## Measured results
 
-- [Execution plan](docs/research/07-one-day-execution-plan.md): build authority.
-- [Baseline and actual verification](docs/baseline.md): presets, commands, UI
-  integration, and limits.
-- [Backend](docs/backend.md): authorization, immutable evidence, and retrieval.
-- [Corpus](docs/corpus.md): provenance, normalization, and public-review
-  blocker.
-- [Frontend contract](docs/frontend-contract.md): typed client and transport
-  contract.
-- [Active backlog](TODO.md) and [closed work](TODO_LOG.md).
+The [answer evaluation](docs/evals.md) records two retained live repetitions on
+2026-09-13 against the deployed Edge function, with identical summaries:
+
+| Measure                                   | Recorded result per repetition |
+| ----------------------------------------- | ------------------------------ |
+| Cases                                     | 14                             |
+| Expected status matched                   | 13/14                          |
+| Candidate recall at ten, before selection | 10/10 evidence cases           |
+| Correct refusals                          | 4/4 negative controls          |
+| Independently judged grounded             | 14/14                          |
+| Unauthorized citations                    | 0                              |
+| Restricted-string leaks                   | 0                              |
+| Retrieval misses                          | 0                              |
+| Selection misses                          | 1: F03                         |
+
+F03 asks “How is Costco's fiscal year structured?” The answering passages were
+retrieved at ranks 5 and 6. The two-passages-per-document cap selected ranks 1–4
+from the two Costco documents, excluding the answer from the model's context.
+The result was `not_found`: grounded in the supplied context, but the wrong
+status for the corpus. The failure is retained to expose the selection-cap
+limitation; tuning that cap solely to improve this case would conceal the
+measured tradeoff. These fourteen cases do not establish general accuracy.
+
+The [browser verification](docs/frontend-port.md) separately records two live
+Ask requests, exact-reader refresh, basic-member premium denial, reviewer counts
+and responsive checks. The reviewer endpoint currently returns no connected
+evaluation report; it does not display an induced retrieval miss.
+
+## MCP surface
+
+`pnpm mcp` starts the local stdio server configured by `.mcp.json`:
+
+- `search_research(query, company?, limit?)`: ranked passages with immutable
+  citations.
+- `fetch_passage(documentId, revisionId, passageId)`: a passage and adjacent
+  passage IDs.
+
+Supply `RESEARCH_URL`, `RESEARCH_PUBLISHABLE_KEY`, `RESEARCH_EMAIL` and
+`RESEARCH_PASSWORD` through the process environment. The server uses an ordinary
+member and the same research endpoint as the browser; tools accept no
+organization, user or role override. The recorded Claude Code session negotiated
+protocol **2025-11-25**, as retained in
+[the handshake log](docs/mcp-handshake.jsonl).
+[MCP evidence and configuration](docs/mcp.md) includes the real session and
+parity tests.
+
+## Tested security properties and limits
+
+`pnpm test` runs the existing integration suite with ignored demo credentials,
+linked SQL metadata and embedding artifacts. Its database fixtures roll back.
+The suite exercises:
+
+- Row level security: anonymous denial, tenant isolation, membership and
+  basic/premium access through caller credentials.
+- Immutable published evidence: privileged passage insert, update and delete
+  rejection, plus publication integrity and retained revisions.
+- Service-only publication: members cannot execute the publication function;
+  invalid publication inputs fail.
+- Browser/MCP parity: identical ordered search citation IDs, basic-member denial
+  and a premium positive control.
+
+The live evaluation additionally re-reads every returned citation as its caller
+and recorded zero unauthorized citations. The answer handler also re-reads
+selected evidence after generation. **Mid-request revocation is not established
+as safe for claim text:** the response builder removes unauthorized citation
+references but can retain the associated prose. This source-inspection finding
+is recorded in [the active backlog](TODO.md); no race test or complete
+revocation guarantee is claimed.
+
+Run the presentation gates with:
+
+```sh
+pnpm type-check
+pnpm lint
+pnpm format:check
+pnpm build
+pnpm test
+```
+
+[The engineering baseline](docs/baseline.md) describes the broader `pnpm verify`
+gate and its local prerequisites. The separate `pnpm check:security` scan has
+recorded checksum false positives in [TODO.md](TODO.md); the five commands above
+do not establish a clean security scan. No UI deployment or remote CI execution
+is claimed here.

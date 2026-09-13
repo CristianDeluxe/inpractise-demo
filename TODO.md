@@ -27,9 +27,6 @@ plan wins.
       than a silent answer. A provider failure must render as an error, never as
       `no_evidence`.
 
-- [ ] **Final authorization recheck before evidence leaves the response**, so a
-      passage that became unauthorized mid-request cannot be returned.
-
 - [ ] **Request allowances.** Debit a fixed per-principal allowance before the
       provider call, including calls that then fail. Persist real usage totals
       and mark missing usage unknown.
@@ -105,15 +102,11 @@ plan wins.
       replay additionally needs the ignored raw snapshots, while CI
       intentionally runs the corpus unit/tamper tests without those snapshots.
 
-- [ ] **Set remote Auth signup policy before publishing login.** The original
-      backend inspection found remote `disable_signup=false`; local Supabase
-      config does not change the remote setting. Inspect and configure the
-      remote policy when the public login flow is authorized. Unseeded users
-      have no membership.
-
-- [ ] **Cloudflare Pages direct upload** for the static build, on the assigned
-      `pages.dev` URL with no custom DNS dependency. Publish a noindex shell
-      early rather than at the end.
+- [ ] **Owner-authorized Cloudflare Pages publication.** Preparation is in
+      `docs/deploy.md`; explicit static routing and noindex are configured.
+      Owner must resolve the signup and claim-revocation findings, choose the
+      account/project, and authorize creation/upload. No deployed URL is
+      assigned by this task; no DNS dependency is required.
 
 - [ ] **Pin the Supabase CLI to 2.75.0** and confirm the flags the plan relies
       on (`functions deploy --project-ref`, `--no-verify-jwt`,
@@ -122,14 +115,11 @@ plan wins.
 
 ## Documentation
 
-- [ ] **Move the research documents out of the career knowledge base.** They now
-      live at `docs/research/` here; the copies under
-      `career/applications/2026-09-inpractise-fullstack-product-engineer/code-project/`
-      in the portfolio repository still need removing, with a pointer left in
-      their place. Deferred while the running Codex lanes still read them as
-      authority.
-
-- [ ] **Two-minute demo script** rehearsed against the deployed build.
+- [ ] **Rehearse the two-minute script against an authorized deployment.**
+      `docs/demo-script.md` contains a 120-second sequence, exact local URLs,
+      live questions, refusal/premium-denial steps and timed failure fallback.
+      Replace the local origin with the actual deployed URL after publication;
+      no deployed rehearsal is claimed.
 
 ## Pending Decisions
 
