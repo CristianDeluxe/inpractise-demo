@@ -1,0 +1,17 @@
+Northstar: a small customer's migration
+Synthetic interview — fictional company and speaker. Generated for testing; not investment evidence.
+synthetic: true
+Fictional company: Northstar Workflow
+Fictional interview date: 2026-08-12
+
+[P1] Rowan Inkvale (fictional moderator) — Moderator
+How did your small Northstar deployment migrate?
+
+[P2] Elian Corvessa (fictional) — Small-business customer
+Our small deployment moved in six weeks because we used only standard connectors.
+
+[P3] Elian Corvessa (fictional) — Small-business customer
+We had twelve users and did not maintain custom integrations. This was one migration, not a representative survey.
+
+[P4] Elian Corvessa (fictional) — Small-business customer
+I cannot estimate how an enterprise deployment would compare.

@@ -1,0 +1,36 @@
+{
+  "selectors": [
+    {
+      "documentId": "msft-2024",
+      "company": "Microsoft",
+      "cik": "0000789019",
+      "form": "10-K",
+      "reportDate": "2024-06-30"
+    },
+    {
+      "documentId": "msft-2025",
+      "company": "Microsoft",
+      "cik": "0000789019",
+      "form": "10-K",
+      "reportDate": "2025-06-30"
+    },
+    {
+      "documentId": "cost-2024",
+      "company": "Costco",
+      "cik": "0000909832",
+      "form": "10-K",
+      "reportDate": "2024-09-01"
+    },
+    {
+      "documentId": "cost-2025",
+      "company": "Costco",
+      "cik": "0000909832",
+      "form": "10-K",
+      "reportDate": "2025-08-31"
+    }
+  ],
+  "userAgent": "Cristian Quintanilla info@busirocket.com",
+  "policyUrl": "https://www.sec.gov/about/webmaster-frequently-asked-questions",
+  "maxRequestsPerSecond": 2,
+  "acquisitionDeadlineSeconds": 900
+}

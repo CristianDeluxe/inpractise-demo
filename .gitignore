@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+*.log
+work/
+corpus/raw/
+.DS_Store
+supabase/.temp/
+coverage/
+*.tsbuildinfo
+reports/

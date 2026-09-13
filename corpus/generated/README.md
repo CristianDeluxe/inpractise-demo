@@ -1,0 +1,3 @@
+# Rejected synthetic drafts
+
+Synthetic interview — fictional company and speaker. These raw provider outputs are acquisition records, not approved interview documents. Every attempt is covered by its source-specific generation sidecar, including its raw SHA-256, model, prompt hash, actual generation timestamp and usage. The provider response schema uses origin="synthetic" and an explicit disclosure; the accepted document schema additionally uses synthetic=true. Do not import these drafts. See audit.json for the exact word count and first validation failure. The ten-attempt budget is exhausted; rerunning generate.mjs reuses the checkpoints and makes no new requests.

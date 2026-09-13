@@ -1,0 +1,16 @@
+✔ generation stops at source and global budgets and preserves provider stops (0.462042ms)
+✔ provider response replay preserves the generation gate and usage (20.308917ms)
+▶ corpus failure detection and source boundaries
+  ✔ single-speaker Unicode fragments retain every code point (6.237042ms)
+  ✔ SEC source selection rejects guesses and hostile URLs (0.590041ms)
+  ✔ narrative boundaries exclude TOC, hidden content and tables (5.821583ms)
+  ✔ tampered file bytes, offsets, speaker and omitted passages are rejected (7.60925ms)
+✔ corpus failure detection and source boundaries (22.0055ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 359.250542

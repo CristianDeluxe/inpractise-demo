@@ -1,0 +1,13 @@
+{
+  "extends": "@busirocket/tsconfig/vite-react.json",
+  "compilerOptions": {
+    "types": ["react", "react-dom", "vite/client"],
+    "allowImportingTsExtensions": true,
+    "tsBuildInfoFile": "./node_modules/.cache/tsconfig.app.tsbuildinfo",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules"]
+}
