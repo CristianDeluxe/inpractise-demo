@@ -24,7 +24,7 @@
     "type-check": "tsc -p tsconfig.node.json --noEmit && tsc -p tsconfig.app.json --noEmit && tsc -p supabase/functions/tsconfig.json --noEmit",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix",
-    "lint:fast": "oxlint --deny-warnings src scripts tests supabase/functions evals",
+    "lint:fast": "oxlint --deny-warnings src scripts tests supabase/functions evals mcp",
     "format": "prettier --write . --list-different",
     "format:check": "prettier --check .",
     "fix": "pnpm lint:fix && pnpm format",
@@ -33,9 +33,9 @@
     "check:quality": "pnpm deps:graph && pnpm type-coverage",
     "test:corpus": "node --test scripts/corpus/checks.test.mjs",
     "corpus:verify": "node scripts/corpus/verify.mjs",
-    "dupes": "baseline-dupes src scripts tests supabase/functions evals",
+    "dupes": "baseline-dupes src scripts tests supabase/functions evals mcp",
     "knip": "knip",
-    "deps:graph": "depcruise src scripts tests supabase/functions evals",
+    "deps:graph": "depcruise src scripts tests supabase/functions evals mcp",
     "type-coverage": "baseline-type-coverage",
     "prepare": "lefthook install",
     "lint:suppress": "eslint . --suppress-all",
@@ -46,9 +46,11 @@
     "conformance": "create-baseline --check",
     "test:ci": "vitest run --config vitest.ci.config.ts --coverage",
     "check:deno": "DENO_DIR=node_modules/.cache/deno deno check --config supabase/functions/deno.json \"supabase/functions/**/*.ts\"",
-    "eval:answers": "node --import tsx evals/run.ts"
+    "eval:answers": "node --import tsx evals/run.ts",
+    "mcp": "node --import tsx mcp/start.ts"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
     "@supabase/supabase-js": "2.116.0",
     "js-tiktoken": "1.0.21",
     "postgres": "3.4.7",
