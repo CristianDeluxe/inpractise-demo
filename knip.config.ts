@@ -20,6 +20,7 @@ export default {
         'supabase/functions/*/index.ts',
         'evals/run.ts',
         'mcp/start.ts',
+        'server.js',
       ],
       project: [
         'src/**/*.{ts,tsx}',
@@ -29,6 +30,7 @@ export default {
         'mcp/**/*.ts',
         'supabase/functions/**/*.ts',
         '*.config.{ts,mjs}',
+        'server/**/*.mjs',
       ],
     },
     'scripts/corpus': {

@@ -13,6 +13,8 @@ export default defineConfig([
   {
     files: [
       'scripts/**/*.{ts,mjs}',
+      'server.js',
+      'server/**/*.mjs',
       'tests/**/*.ts',
       'evals/**/*.ts',
       'mcp/**/*.ts',
