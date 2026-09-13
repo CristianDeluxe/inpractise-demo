@@ -117,6 +117,9 @@ passing. Use the repository's Node 24.20.0 runtime and the wrapper's local
 cache/temp environment when repeating these commands within the briefing's write
 boundaries.
 
-The output directory is `dist/`, with no top-level `404.html`, worker or server
-runtime. Noindex metadata, `robots.txt` and `_headers` are included. The static
-artifact has been built locally; no deployment, commit or push was performed.
+The output directory is `dist/`, with no worker or server runtime. U4 adds
+explicit `_redirects` and a top-level `404.html` to disable implicit SPA
+fallback and make missing rewrite rules observable. Noindex metadata,
+`robots.txt` and `_headers` are included. See
+[deployment preparation](deploy.md) for the local Pages static-server checks. No
+deployment, commit or push was performed.
