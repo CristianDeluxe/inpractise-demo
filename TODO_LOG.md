@@ -28,6 +28,18 @@
 
 ### 2026-09
 
+- [x] 2026-09-14 — **Publication decisions resolved by Briefing D1.** The owner
+      authorized public `CristianDeluxe/inpractise-demo` and nova hosting at
+      `https://inpractise.cristiandeluxe.dev`. This closes the remote-ownership
+      decision and supersedes Pages hosting. D1's read-only preflight verified
+      the GitHub identity, ignored credential/build paths and three checksum
+      false positives. Publication remains blocked in `TODO.md`: the working
+      scan found a real key in an ignored, never-tracked file, triggering the
+      briefing's stop rule, and nova SSH returned `No route to host`.
+      `pnpm check:security` exited 1; no passing security or deployment claim is
+      made. Evidence: `docs/deploy.md` and the D1 redacted reports under
+      `/tmp/lovable-work/`.
+
 - [x] 2026-09-13 — **Presentation and deployment preparation (U4):** Rewrote
       README around the running workflow, disclosed SEC/synthetic scope,
       measured 14-case evaluation and F03 selection miss, negotiated MCP
