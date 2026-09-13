@@ -3,6 +3,7 @@ import { RequestFeedback } from '@/components/RequestFeedback'
 import { WorkspaceLayout } from '@/workspace/WorkspaceLayout'
 import { Outlet } from '@tanstack/react-router'
 import { AccessContext } from './AccessContext'
+import { SignInInvitation } from './SignInInvitation'
 
 export function AccessGate() {
   const access = useAccess()
@@ -19,6 +20,7 @@ export function AccessGate() {
         />
       </main>
     )
+  if (access.state.data === null) return <SignInInvitation />
   return (
     <AccessContext value={access.state.data.data}>
       <WorkspaceLayout>

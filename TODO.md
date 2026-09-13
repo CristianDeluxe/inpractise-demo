@@ -78,6 +78,12 @@ plan wins.
 
 ## Infrastructure
 
+- [ ] **Reconcile Knip configuration hints.** `pnpm knip` exits 0 but reports
+      four hints for top-level entry/project fields, the dependency-cruiser
+      ignore and CSS import coverage. Inspect `knip.config.ts` against the
+      installed configuration schema and preserve actual source coverage.
+      Evidence: `work/lovable2/final-knip.log`.
+
 - [!] **D1 publication stopped at the credential gate.** `pnpm check:security`
   exited 1 with six findings: three recomputed SHA-256 checksums in
   `corpus/generated/briefing-i/before-hashes.json`, two allowed Supabase

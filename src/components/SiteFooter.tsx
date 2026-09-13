@@ -14,9 +14,15 @@ export function SiteFooter() {
           aria-label="Footer"
           className="flex flex-wrap items-start gap-6 text-sm"
         >
-          <Link to="/app">Workspace</Link>
-          <Link to="/method">Standards</Link>
-          <Link to="/connect">Local MCP</Link>
+          <Link to="/app" className="hover-underline">
+            Workspace
+          </Link>
+          <Link to="/method" className="hover-underline">
+            Standards
+          </Link>
+          <Link to="/connect" className="hover-underline">
+            Local MCP
+          </Link>
         </nav>
         <p className="text-xs text-ink-muted md:col-span-2">
           An independent engineering demonstration. No affiliation with In
