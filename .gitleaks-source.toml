@@ -1,0 +1,14 @@
+title = "Research evidence demo working-tree scan"
+
+[extend]
+path = ".gitleaks.toml"
+
+[allowlist]
+description = "Ignored local credentials and working artifacts; never used for committed history"
+paths = [
+  '''(^|/)node_modules/''',
+  '''(^|/)\.git/''',
+  '''^work/''',
+  '''^supabase/\.temp/''',
+  '''(^|/)\.env($|\.(remote|local|development|test|production)(\.local)?$)''',
+]

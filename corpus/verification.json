@@ -1,0 +1,18 @@
+{
+  "runtime": "v24.18.0",
+  "commands": [
+    {
+      "command": "/Users/cristiandeluxe/.nvm/versions/node/v24.18.0/bin/node scripts/corpus/verify.mjs",
+      "exitStatus": 0,
+      "stdout": "PASS: 6 accepted documents; 24 passages; 24/24 immutable gold paragraphs.\nPASS: raw/canonical hashes, deterministic replay, Unicode offsets, attribution, token bounds and S1/S2-only sample.\nPASS: 2 isolated revision/access fixtures; 4 acquired SEC candidates; 938 candidate passages replayed from raw HTML.\nPASS: 10/10 generation attempts accounted for; indexMode=lexical_only; vectorCount=0.\nMODE: synthetic_only; public accepted=0; public excluded=4; short synthetic fixtures.\n",
+      "stderr": ""
+    },
+    {
+      "command": "/Users/cristiandeluxe/.nvm/versions/node/v24.18.0/bin/node --test scripts/corpus/checks.test.mjs",
+      "exitStatus": 0,
+      "stdout": "\u25b6 corpus failure detection and source boundaries\n  \u2714 single-speaker Unicode fragments retain every code point (9.626292ms)\n  \u2714 SEC source selection rejects guesses and hostile URLs (0.520625ms)\n  \u2714 narrative boundaries exclude TOC, hidden content and tables (7.647416ms)\n  \u2714 tampered file bytes, offsets, speaker and omitted passages are rejected (14.445667ms)\n\u2714 corpus failure detection and source boundaries (37.641834ms)\n\u2139 tests 5\n\u2139 suites 0\n\u2139 pass 5\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 268.315875\n",
+      "stderr": ""
+    }
+  ],
+  "syntaxCheckedFiles": 34
+}

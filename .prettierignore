@@ -1,0 +1,14 @@
+node_modules/
+work/
+coverage/
+dist/
+# Evidence bytes and research input hashes are immutable, not formatting targets.
+/corpus/
+docs/research/
+supabase/migrations/
+supabase/.temp/
+.env*
+!.env.example
+pnpm-lock.yaml
+scripts/corpus/package-lock.json
+TODO_HISTORY_INDEX.jsonl

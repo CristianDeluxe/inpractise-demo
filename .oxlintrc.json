@@ -1,0 +1,3 @@
+{
+  "extends": ["./node_modules/@busirocket/quality-config/oxlintrc.json"]
+}

@@ -1,0 +1,2 @@
+AUDIT: 12/12 attempts; 2/5 expanded drafts passed; 10 rejected drafts; no provider calls.
+USAGE: prompt=14404; completion=14634; total=29038; unknown=0.
