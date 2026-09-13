@@ -1,4 +1,4 @@
-import { loadAccess } from '@/operations/loadAccess'
+import { loadWorkspaceAccess } from '@/operations/loadWorkspaceAccess'
 import { cancelRequests } from '@/runtime/cancelRequests'
 import { useRequest } from '@/runtime/hooks/useRequest'
 import { useRuntime } from '@/runtime/hooks/useRuntime'
@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 
 export function useAccess() {
   const runtime = useRuntime()
-  const request = useRequest(loadAccess)
+  const request = useRequest(loadWorkspaceAccess)
   const { run, cancel } = request
   useEffect(() => {
     let mounted = true

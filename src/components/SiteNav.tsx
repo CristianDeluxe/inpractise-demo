@@ -6,10 +6,18 @@ export function SiteNav() {
       aria-label="Primary"
       className="flex flex-wrap items-center gap-5 text-xs font-medium uppercase tracking-widest"
     >
-      <Link to="/app">Library</Link>
-      <a href="/#evidence">Evidence</a>
-      <Link to="/connect">Connect</Link>
-      <Link to="/method">Standards</Link>
+      <Link to="/app" className="hover-underline">
+        Library
+      </Link>
+      <a href="/#evidence" className="hover-underline">
+        Evidence
+      </a>
+      <Link to="/connect" className="hover-underline">
+        Connect
+      </Link>
+      <Link to="/method" className="hover-underline">
+        Standards
+      </Link>
       <Link to="/login" className="action">
         Log in
       </Link>

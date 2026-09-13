@@ -8,6 +8,10 @@ import { uiPayloadFixture } from './uiPayloadFixture'
 
 export function uiRuntimeFixture() {
   const auth = authClientFixture()
+  const getSession = vi.spyOn(auth, 'getSession').mockResolvedValue({
+    data: { session: sessionFixture },
+    error: null,
+  })
   const requests: Record<string, unknown>[] = []
   const fetcher = vi.fn<typeof fetch>(async (_url, init) => {
     const body = typeof init?.body === 'string' ? init.body : '{}'
@@ -46,5 +50,5 @@ export function uiRuntimeFixture() {
     events: new EventTarget(),
     controllers: new Set(),
   }
-  return { runtime, requests, fetcher, signOut, authChange }
+  return { runtime, requests, fetcher, signOut, authChange, getSession }
 }

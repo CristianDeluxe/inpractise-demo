@@ -1,4 +1,5 @@
 import { PublicLayout } from '@/components/PublicLayout'
+import { CorpusTicker } from './CorpusTicker'
 import { DeskInterlude } from './DeskInterlude'
 import { EvidenceExample } from './EvidenceExample'
 import { LandingHero } from './LandingHero'
@@ -9,6 +10,7 @@ export function LandingPage() {
     <PublicLayout>
       <main id="main-content">
         <LandingHero />
+        <CorpusTicker />
         <ResearchPillars />
         <DeskInterlude />
         <EvidenceExample />
