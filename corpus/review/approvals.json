@@ -1,0 +1,39 @@
+{
+  "approvalSource": "BRIEFING_I: owner explicitly approves all four parsed Item 1 Business and Item 1A Risk Factors sections",
+  "recordedAt": "2026-09-13T17:30:00.466986Z",
+  "timestampBasis": "Time the explicit briefing approval was recorded; original human review time was not supplied.",
+  "documents": [
+    {
+      "documentId": "msft-2024",
+      "revisionId": "b9620e9fd38751139d31613fa1b4904293dac8d724a7f447074d865b035f3a0f",
+      "normalisedSha256": "408c15a022dd8f1c6993ddea99a77e350889d1c2aa69a1d2f6c7e8d66d3310ad",
+      "status": "approved",
+      "reviewedBy": "owner",
+      "reviewedAt": "2026-09-13T17:30:00.466986Z"
+    },
+    {
+      "documentId": "msft-2025",
+      "revisionId": "54c830357a606cc1f1f3a7caa568106ff3a9ebd60f9ffa79bf40f84e4cb410e9",
+      "normalisedSha256": "3aea7fa18474b8b3e520e386949587a19a554e8b9c42ef7d3b55c0b606fb91c2",
+      "status": "approved",
+      "reviewedBy": "owner",
+      "reviewedAt": "2026-09-13T17:30:00.466986Z"
+    },
+    {
+      "documentId": "cost-2024",
+      "revisionId": "17576935ad003d8d5fca227b74b3e8d067a6a95235608ff8d95f96dd06296b75",
+      "normalisedSha256": "09338a7e4115fd30d29a9a14fee47de6d7efd2f528489d548604d20293fc7f16",
+      "status": "approved",
+      "reviewedBy": "owner",
+      "reviewedAt": "2026-09-13T17:30:00.466986Z"
+    },
+    {
+      "documentId": "cost-2025",
+      "revisionId": "62b1058c4bdc862c14c255b8cd29fe484a798c2438717a9eb3b6e451b15f8ff7",
+      "normalisedSha256": "a9f55720b4b327141997f07378a011b20f1e8ddb77f28efcf89144bbca223efc",
+      "status": "approved",
+      "reviewedBy": "owner",
+      "reviewedAt": "2026-09-13T17:30:00.466986Z"
+    }
+  ]
+}

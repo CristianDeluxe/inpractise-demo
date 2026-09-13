@@ -1,0 +1,17 @@
+Meridian: a dated processing example
+Synthetic interview — fictional company and speaker. Generated for testing; not investment evidence.
+synthetic: true
+Fictional company: Meridian Payments
+Fictional interview date: 2026-08-25
+
+[P1] Rowan Inkvale (fictional moderator) — Moderator
+What were the units and period in your Meridian processing example?
+
+[P2] Nila Fenquill (fictional) — Former finance operations analyst
+In the fictional January 2026 example, processing revenue was USD 120,000 on 2,000,000 transactions.
+
+[P3] Nila Fenquill (fictional) — Former finance operations analyst
+The figures exclude refunds and are not annual revenue, profit or a forecast.
+
+[P4] Nila Fenquill (fictional) — Former finance operations analyst
+I have no figures for February 2026.

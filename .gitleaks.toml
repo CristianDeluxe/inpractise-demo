@@ -1,0 +1,14 @@
+title = "Research evidence demo history scan"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Dependency lockfile integrity hashes and one exact non-secret research phrase"
+paths = [
+  '''(^|/)pnpm-lock\.yaml$''',
+  '''(^|/)package-lock\.json$''',
+]
+# The frozen research plan's "token, stale/tampered/foreign cursor" is prose.
+regexTarget = 'secret'
+regexes = ['''^stale/tampered/foreign$''']

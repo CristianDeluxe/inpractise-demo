@@ -1,0 +1,17 @@
+Northstar: implementation constraints
+Synthetic interview — fictional company and speaker. Generated for testing; not investment evidence.
+synthetic: true
+Fictional company: Northstar Workflow
+Fictional interview date: 2026-08-04
+
+[P1] Rowan Inkvale (fictional moderator) — Moderator
+What made complex Northstar installations difficult to move?
+
+[P2] Mara Vellorin (fictional) — Former implementation lead, left 2025-12-31
+For complex installations, migration requires rebuilding integrations and retraining teams.
+
+[P3] Mara Vellorin (fictional) — Former implementation lead, left 2025-12-31
+I worked on enterprise projects until December 2025. I cannot speak for product changes after I left.
+
+[P4] Mara Vellorin (fictional) — Former implementation lead, left 2025-12-31
+I did not measure customer retention or the average cost of switching.

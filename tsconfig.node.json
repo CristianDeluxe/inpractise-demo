@@ -1,0 +1,8 @@
+{
+  "extends": "@busirocket/tsconfig/node.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "tsBuildInfoFile": "./node_modules/.cache/tsconfig.node.tsbuildinfo"
+  },
+  "include": ["scripts/db/**/*.ts", "tests/**/*.ts", "vite.config.ts"]
+}

@@ -1,0 +1,17 @@
+Harbor: qualification and delivery
+Synthetic interview — fictional company and speaker. Generated for testing; not investment evidence.
+synthetic: true
+Fictional company: Harbor Components
+Fictional interview date: 2026-08-18
+
+[P1] Rowan Inkvale (fictional moderator) — Moderator
+What did you observe about Harbor's qualification process and June deliveries?
+
+[P2] Tessa Brindlewick (fictional) — Former supplier quality lead
+Qualifying a replacement component required a laboratory test and then a customer production trial.
+
+[P3] Tessa Brindlewick (fictional) — Former supplier quality lead
+In our June 2026 order ledger, every Harbor order arrived within the agreed delivery window.
+
+[P4] Tessa Brindlewick (fictional) — Former supplier quality lead
+I reviewed one supplier ledger. I did not review the distributor's records.

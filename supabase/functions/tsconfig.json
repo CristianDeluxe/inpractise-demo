@@ -1,0 +1,10 @@
+{
+  "extends": "@busirocket/tsconfig/base.json",
+  "compilerOptions": {
+    "lib": ["ES2024", "DOM", "DOM.Iterable"],
+    "types": ["deno"],
+    "allowImportingTsExtensions": true,
+    "tsBuildInfoFile": "../../node_modules/.cache/tsconfig.edge.tsbuildinfo"
+  },
+  "include": ["./**/*.ts"]
+}

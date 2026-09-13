@@ -1,0 +1,17 @@
+Northstar: restricted demo account
+Synthetic interview — fictional company and speaker. Generated for testing; not investment evidence.
+synthetic: true
+Fictional company: Northstar Workflow
+Fictional interview date: 2026-08-26
+
+[P1] Rowan Inkvale (fictional moderator) — Moderator
+Which internal test label did your fictional enterprise team use?
+
+[P2] Davin Mosswren (fictional) — Fictional enterprise customer
+The fictional restricted project label was CEDAR-29.
+
+[P3] Davin Mosswren (fictional) — Fictional enterprise customer
+Our team had no approved public statement about retention.
+
+[P4] Davin Mosswren (fictional) — Fictional enterprise customer
+This document exists solely to verify premium and organization access boundaries.
