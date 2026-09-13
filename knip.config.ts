@@ -3,16 +3,11 @@ import { createKnipConfig } from '@busirocket/quality-config/knip'
 export default {
   ...createKnipConfig({
     framework: 'vite-react',
-    project: [
-      'scripts/db/**/*.ts',
-      'tests/**/*.ts',
-      'supabase/functions/**/*.ts',
-    ],
-    entry: ['supabase/functions/*/index.ts'],
     // Installed outside npm; invoked by security gates and Git hooks.
     ignoreBinaries: ['gitleaks'],
-    // tsc consumes this ambient namespace through the separate Edge tsconfig.
-    ignoreDependencies: ['@types/deno'],
+    // tsc consumes the Deno namespace through the separate Edge tsconfig; the
+    // two CSS packages are imported by src/styles.css, which knip cannot follow.
+    ignoreDependencies: ['@types/deno', 'tailwindcss', 'tw-animate-css'],
   }),
   workspaces: {
     '.': {
@@ -23,11 +18,15 @@ export default {
         'tests/**/*.test.ts',
         'src/**/*.test.{ts,tsx}',
         'supabase/functions/*/index.ts',
+        'evals/run.ts',
+        'mcp/start.ts',
       ],
       project: [
         'src/**/*.{ts,tsx}',
         'scripts/db/**/*.ts',
         'tests/**/*.ts',
+        'evals/**/*.ts',
+        'mcp/**/*.ts',
         'supabase/functions/**/*.ts',
         '*.config.{ts,mjs}',
       ],
