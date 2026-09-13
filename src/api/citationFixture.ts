@@ -12,6 +12,7 @@ export function citationFixture(overrides: Partial<Citation> = {}): Citation {
     title: 'Synthetic interview',
     company: 'northstar',
     origin: 'synthetic',
+    kind: 'synthetic_interview',
     speaker: 'Invented speaker',
     speakerRole: 'Former operator',
     interviewDate: '2026-09-01',

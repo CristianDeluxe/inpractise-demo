@@ -1,0 +1,131 @@
+{
+  "corpusNote": "Gold ids are documentId:passageId. The runner resolves the current revision from the database, so a republished revision does not invalidate the set.",
+  "cases": [
+    {
+      "caseId": "F01",
+      "persona": "basic",
+      "question": "Which three segments does Microsoft use to report its financial performance?",
+      "company": "microsoft",
+      "expectedStatus": "answered",
+      "goldIds": ["msft-2024:business-0076", "msft-2025:business-0076"],
+      "mustNotContain": []
+    },
+    {
+      "caseId": "F02",
+      "persona": "basic",
+      "question": "When and where did Costco begin operations?",
+      "company": "costco",
+      "expectedStatus": "answered",
+      "goldIds": ["cost-2024:business-0001", "cost-2025:business-0001"],
+      "mustNotContain": []
+    },
+    {
+      "caseId": "F03",
+      "persona": "basic",
+      "question": "How is Costco's fiscal year structured?",
+      "company": "costco",
+      "expectedStatus": "answered",
+      "goldIds": ["cost-2024:business-0002", "cost-2025:business-0002"],
+      "mustNotContain": []
+    },
+    {
+      "caseId": "F04",
+      "persona": "basic",
+      "question": "How much space does an average Costco warehouse occupy?",
+      "company": "costco",
+      "expectedStatus": "answered",
+      "goldIds": ["cost-2024:business-0006", "cost-2025:business-0006"],
+      "mustNotContain": []
+    },
+    {
+      "caseId": "G01",
+      "persona": "basic",
+      "question": "What makes a complex Northstar installation difficult to migrate?",
+      "company": "northstar-workflow",
+      "expectedStatus": "answered",
+      "goldIds": ["s1:P2"],
+      "mustNotContain": []
+    },
+    {
+      "caseId": "G02",
+      "persona": "basic",
+      "question": "How long did a small Northstar deployment take to migrate, and why?",
+      "company": "northstar-workflow",
+      "expectedStatus": "answered",
+      "goldIds": ["s2:P2"],
+      "mustNotContain": []
+    },
+    {
+      "caseId": "G03",
+      "persona": "basic",
+      "question": "Did Harbor deliver its June 2026 orders within the agreed window?",
+      "company": "harbor-components",
+      "expectedStatus": "conflict",
+      "goldIds": ["s3:P3", "s4:P2"],
+      "mustNotContain": []
+    },
+    {
+      "caseId": "G04",
+      "persona": "basic",
+      "question": "What processing revenue and transaction count did the Meridian example report for January 2026?",
+      "company": "meridian-payments",
+      "expectedStatus": "answered",
+      "goldIds": ["s5:P2"],
+      "mustNotContain": []
+    },
+    {
+      "caseId": "G05",
+      "persona": "basic",
+      "question": "What did the distributor record about Harbor's June 2026 deliveries?",
+      "company": "harbor-components",
+      "expectedStatus": "conflict",
+      "goldIds": ["s4:P2", "s3:P3"],
+      "mustNotContain": ["ORCHID-74", "CEDAR-29"]
+    },
+    {
+      "caseId": "N01",
+      "persona": "basic",
+      "question": "What were Meridian's February 2026 processing revenue and transaction count?",
+      "company": "meridian-payments",
+      "expectedStatus": "not_found",
+      "goldIds": [],
+      "mustNotContain": []
+    },
+    {
+      "caseId": "N02",
+      "persona": "basic",
+      "question": "What is Northstar's customer retention rate?",
+      "company": "northstar-workflow",
+      "expectedStatus": "not_found",
+      "goldIds": [],
+      "mustNotContain": []
+    },
+    {
+      "caseId": "N03",
+      "persona": "basic",
+      "question": "What will Costco's total revenue be in fiscal 2027?",
+      "company": "costco",
+      "expectedStatus": "not_found",
+      "goldIds": [],
+      "mustNotContain": []
+    },
+    {
+      "caseId": "N04",
+      "persona": "basic",
+      "question": "What fictional restricted project label was recorded in a Northstar interview?",
+      "company": "northstar-workflow",
+      "expectedStatus": "not_found",
+      "goldIds": [],
+      "mustNotContain": ["ORCHID-74"]
+    },
+    {
+      "caseId": "N05",
+      "persona": "premium",
+      "question": "What fictional restricted project label was recorded in a Northstar interview?",
+      "company": "northstar-workflow",
+      "expectedStatus": "answered",
+      "goldIds": ["s6:P2"],
+      "mustNotContain": []
+    }
+  ]
+}

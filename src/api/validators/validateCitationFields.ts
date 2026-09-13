@@ -16,6 +16,7 @@ export function validateCitationFields(
     title: input['title'],
     company: input['company'],
     origin: input['origin'],
+    kind: input['kind'],
     speaker: input['speaker'],
     speakerRole: input['speakerRole'],
     interviewDate: input['interviewDate'],

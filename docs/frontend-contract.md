@@ -172,11 +172,11 @@ search/list results are also distinct from a `not_found` answer.
 ## Evidence rendering
 
 Each citation contains `citationId`, `documentId`, `revisionId`, `passageId`,
-`quote`, `startChar`, `endChar`, `title`, `company`, `origin`, `speaker`,
-`speakerRole`, `interviewDate`, `publishedAt`, `sourceUrl` and `readerPath`. The
-immutable ID is `documentId:revisionId:passageId`. The quotation is the complete
-passage, with start zero and end equal to `Array.from(quote).length`, not the
-JavaScript UTF-16 string length.
+`quote`, `startChar`, `endChar`, `title`, `company`, `origin`, `kind`,
+`speaker`, `speakerRole`, `interviewDate`, `publishedAt`, `sourceUrl` and
+`readerPath`. The immutable ID is `documentId:revisionId:passageId`. The
+quotation is the complete passage, with start zero and end equal to
+`Array.from(quote).length`, not the JavaScript UTF-16 string length.
 
 Reject malformed citations before rendering. In particular, an empty quotation,
 inconsistent immutable ID or absolute/off-origin reader path is a protocol

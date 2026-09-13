@@ -1,4 +1,5 @@
 import type { CitationOrigin } from './CitationOrigin.ts'
+import type { DocumentKind } from './DocumentKind.ts'
 
 export type Citation = {
   citationId: string
@@ -11,6 +12,7 @@ export type Citation = {
   title: string
   company: string
   origin: CitationOrigin
+  kind: DocumentKind
   speaker: string | null
   speakerRole: string | null
   interviewDate: string | null

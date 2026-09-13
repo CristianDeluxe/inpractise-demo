@@ -24,7 +24,7 @@
     "type-check": "tsc -p tsconfig.node.json --noEmit && tsc -p tsconfig.app.json --noEmit && tsc -p supabase/functions/tsconfig.json --noEmit",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix",
-    "lint:fast": "oxlint --deny-warnings src scripts tests supabase/functions",
+    "lint:fast": "oxlint --deny-warnings src scripts tests supabase/functions evals",
     "format": "prettier --write . --list-different",
     "format:check": "prettier --check .",
     "fix": "pnpm lint:fix && pnpm format",
@@ -33,9 +33,9 @@
     "check:quality": "pnpm deps:graph && pnpm type-coverage",
     "test:corpus": "node --test scripts/corpus/checks.test.mjs",
     "corpus:verify": "node scripts/corpus/verify.mjs",
-    "dupes": "baseline-dupes src scripts tests supabase/functions",
+    "dupes": "baseline-dupes src scripts tests supabase/functions evals",
     "knip": "knip",
-    "deps:graph": "depcruise src scripts tests supabase/functions",
+    "deps:graph": "depcruise src scripts tests supabase/functions evals",
     "type-coverage": "baseline-type-coverage",
     "prepare": "lefthook install",
     "lint:suppress": "eslint . --suppress-all",
@@ -45,7 +45,8 @@
     "check:security": "pnpm secrets:check && pnpm audit:check",
     "conformance": "create-baseline --check",
     "test:ci": "vitest run --config vitest.ci.config.ts --coverage",
-    "check:deno": "DENO_DIR=node_modules/.cache/deno deno check --config supabase/functions/deno.json \"supabase/functions/**/*.ts\""
+    "check:deno": "DENO_DIR=node_modules/.cache/deno deno check --config supabase/functions/deno.json \"supabase/functions/**/*.ts\"",
+    "eval:answers": "node --import tsx evals/run.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.116.0",
@@ -63,6 +64,7 @@
     "@busirocket/tsconfig": "0.3.0",
     "@commitlint/cli": "21.2.2",
     "@commitlint/config-conventional": "21.2.2",
+    "@cristiandeluxe/max-lane": "file:../max-lane",
     "@eslint/js": "10.0.1",
     "@types/deno": "2.7.0",
     "@types/node": "24.10.1",

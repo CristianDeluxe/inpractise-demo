@@ -14,6 +14,7 @@ export default defineConfig([
     files: [
       'scripts/**/*.{ts,mjs}',
       'tests/**/*.ts',
+      'evals/**/*.ts',
       '*.config.{ts,mjs,cjs}',
       '.dependency-cruiser.cjs',
     ],
@@ -27,7 +28,12 @@ export default defineConfig([
   ...createCodeQualityConfig(),
   codePolicy.configs.strict,
   {
-    files: ['scripts/db/**/*.ts', 'tests/**/*.ts', 'vite.config.ts'],
+    files: [
+      'scripts/db/**/*.ts',
+      'tests/**/*.ts',
+      'evals/**/*.ts',
+      'vite.config.ts',
+    ],
     languageOptions: {
       parserOptions: { projectService: false, project: './tsconfig.node.json' },
     },
@@ -70,7 +76,7 @@ export default defineConfig([
   // Corpus loaders verify containment and hashes; generated outputs use fixed roots.
   // This syntactic rule cannot follow those checks. Runtime request code stays covered.
   {
-    files: ['scripts/corpus/**/*.mjs', 'scripts/db/**/*.ts'],
+    files: ['scripts/corpus/**/*.mjs', 'scripts/db/**/*.ts', 'evals/**/*.ts'],
     rules: { 'security/detect-non-literal-fs-filename': 'off' },
   },
   // The baseline size layer omits .mjs; corpus code follows the same budgets.

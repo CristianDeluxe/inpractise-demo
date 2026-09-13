@@ -4,5 +4,10 @@
     "allowImportingTsExtensions": true,
     "tsBuildInfoFile": "./node_modules/.cache/tsconfig.node.tsbuildinfo"
   },
-  "include": ["scripts/db/**/*.ts", "tests/**/*.ts", "vite.config.ts"]
+  "include": [
+    "scripts/db/**/*.ts",
+    "tests/**/*.ts",
+    "evals/**/*.ts",
+    "vite.config.ts"
+  ]
 }
