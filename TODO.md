@@ -69,12 +69,15 @@ plan wins.
 
 ## Frontend
 
-- [ ] **Wire the Lovable UI to the backend.** The owner generates it from the P1
-      prompt in the execution plan; the adapter, request functions and types
-      stay hand-written and reviewed.
+- [!] **Freeze the frontend/backend response boundary.** Strict UI parsers
+  follow current source, while list's documented bound is ten and backend bound
+  is fifty. Owner must reconcile that bound and the still-absent first-passage
+  pointer, directional neighbors, fingerprint/usage metadata and connected
+  redacted diagnostic report. Do not fabricate these fields.
 
-- [ ] **Keyboard focus, selectable quotes, narrow-screen source reading and zoom
-      or reflow** all verified by hand before release.
+- [ ] **Reduce the shared SPA entry bundle.** Route-level chunks are split; Vite
+      still reports the shared entry above its default 500 kB warning. Inspect
+      dependency contribution before choosing a further split.
 
 ## Infrastructure
 
@@ -125,9 +128,6 @@ plan wins.
       in the portfolio repository still need removing, with a pointer left in
       their place. Deferred while the running Codex lanes still read them as
       authority.
-
-- [ ] **Product method page**, stating plainly that the corpus is public and
-      synthetic, which parts are stubbed, and what the demo does not claim.
 
 - [ ] **Two-minute demo script** rehearsed against the deployed build.
 
