@@ -66,13 +66,12 @@ plan wins.
       the backend report records no concurrency race test. Add a transactional
       integration test proving a late insert cannot change published evidence.
 
-- [ ] **Retrieval diagnosis test.** Removing a known gold source must make the
-      gate fail. Candidate recall is measured before context selection, and the
-      two are reported separately.
-
-- [ ] **Anchor evaluation**: eight questions covering supported, partial,
-      conflicting and no-evidence outcomes, run twice live, both runs retained.
-      Do not select the better run.
+- [ ] **Context selection drops a retrieved answer on a two-document company.**
+      Measured by `F03`: the two-per-document diversity cap fills all four
+      context slots at ranks 1-4, so Costco's fiscal-year passage at ranks 5-6
+      never reaches the model and the system refuses. Decide whether to backfill
+      the unused context budget by rank once every document has had its cap, or
+      to keep the cap and the refusal. Evidence in `docs/evals.md`.
 
 ## Frontend
 

@@ -45,6 +45,10 @@ canary anywhere" against a control that never had it.
 
 ## Result, 2026-09-13, against the deployed function
 
+Two live repetitions were run and both are retained as `evals/report-run-1.json`
+and `evals/report-run-2.json`; neither was discarded and their summaries are
+identical.
+
 ```json
 {
   "cases": 14,
@@ -87,9 +91,10 @@ better-looking number.
 
 ## Cost and repeatability
 
-Cases run in sequence. One full repetition costs fourteen `ask` calls against
-the demo allowance (100 per user per day) plus fourteen query embeddings; the
-judge runs on the Claude Code subscription, not on the demo's provider budget.
-The gate (`assertAnswerGate`) fails on any leaked restricted string, any
-unauthorised citation, any ungrounded answer, a wrong refusal, or a recall
-regression.
+Cases run in sequence, and `--out` names the report so a repetition never
+overwrites an earlier one. One full repetition costs fourteen `ask` calls
+against the demo allowance (100 per user per day) plus fourteen query
+embeddings; the judge runs on the Claude Code subscription, not on the demo's
+provider budget. The gate (`assertAnswerGate`) fails on any leaked restricted
+string, any unauthorised citation, any ungrounded answer, a wrong refusal, or a
+recall regression.
