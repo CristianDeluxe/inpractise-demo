@@ -10,6 +10,7 @@
   "include": [
     "scripts/db/**/*.ts",
     "tests/**/*.ts",
+    "evals/*.ts",
     "mcp/**/*.ts",
     "vite.config.ts",
     "server/api/**/*.ts",

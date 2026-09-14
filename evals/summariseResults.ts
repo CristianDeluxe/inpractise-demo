@@ -1,4 +1,5 @@
 import type { CaseResult } from './CaseResult.ts'
+import type { StatusMismatch } from './StatusMismatch.ts'
 
 /** The four numbers the demo is allowed to claim, each counted from cases. */
 export function summariseResults(results: readonly CaseResult[]) {
@@ -11,6 +12,14 @@ export function summariseResults(results: readonly CaseResult[]) {
   return {
     cases: results.length,
     statusMatched: results.filter((item) => item.statusMatched).length,
+    statusMismatches: results
+      .filter((item) => !item.statusMatched)
+      .map((item): StatusMismatch => ({
+        caseId: item.caseId,
+        expectedStatus: item.expectedStatus,
+        actualStatus: item.actualStatus,
+        diagnosis: item.diagnosis,
+      })),
     candidateRecallAt10: {
       hit: evidenceCases.filter((item) => item.goldRecallAt10).length,
       of: evidenceCases.length,

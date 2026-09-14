@@ -5,6 +5,7 @@ import { withTestEnvironment } from './withTestEnvironment.ts'
 export async function runAnswerScenario(
   handler: ResearchHandler,
   completion: () => Promise<Response>,
+  environment: Record<string, string> = {},
 ) {
   const original = globalThis.fetch
   const { fetcher, requests } = answerTransportFixture(completion)
@@ -16,6 +17,7 @@ export async function runAnswerScenario(
         SUPABASE_URL: 'https://example.supabase.co',
         SUPABASE_ANON_KEY: 'test-public-key',
         OPENAI_API_KEY: 'test-provider-key',
+        ...environment,
       },
       async () => {
         response = await handler(

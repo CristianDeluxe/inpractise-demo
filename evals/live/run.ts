@@ -1,12 +1,12 @@
 import { readMaxOAuthTokens } from '@cristiandeluxe/max-lane'
-import { loadTarget } from '../scripts/db/loadTarget.ts'
-import { assertAnswerGate } from './assertAnswerGate.ts'
-import type { CaseResult } from './CaseResult.ts'
-import { loadGold } from './loadGold.ts'
-import { printLine } from './printLine.ts'
-import { reportPath } from './reportPath.ts'
+import { loadTarget } from '../../scripts/db/loadTarget.ts'
+import { assertAnswerGate } from '../assertAnswerGate.ts'
+import type { CaseResult } from '../CaseResult.ts'
+import { loadGold } from '../loadGold.ts'
+import { printLine } from '../printLine.ts'
+import { reportPath } from '../reportPath.ts'
+import { writeReport } from '../writeReport.ts'
 import { runCase } from './runCase.ts'
-import { writeReport } from './writeReport.ts'
 
 /**
  * One live repetition of the whole gold set against the deployed function,

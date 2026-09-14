@@ -30,6 +30,35 @@ checked literally against the whole rendered answer.
 `selection_miss` (gold retrieved, then dropped by the context budget). The two
 have different fixes and are never reported as one number.
 
+## Replay without credentials
+
+`pnpm eval:replay` re-reads every retained `evals/report-run-*.json`, recomputes
+its summary from the stored case results, checks coverage against
+[gold.json](../evals/gold.json) and puts the result back through the gate. It
+needs no key, no model account and no database: a reader who clones the
+repository can confirm that the retained measurements still satisfy the gate
+they were measured under.
+
+It proves stored consistency and gate behavior, and nothing else. Retrieval does
+not run and no model judges anything, so it says nothing about today's live
+quality; only `pnpm eval:answers` does that, and it needs the deployed endpoint
+and the optional `@cristiandeluxe/max-lane` judge.
+
+## What the gate rejects
+
+A status mismatch fails in both directions. The second direction is the one
+worth stating: a refusal is grounded by construction and costs no recall, so a
+gate that counted only groundedness and retrieval would pass a system that
+answered `not_found` to every question while being useless to an analyst. The
+only tolerated mismatch is the F03 signature recorded in
+[ADR 0005](adr/0005-retain-f03-selection-miss.md) - that exact case, expected
+status, actual status and diagnosis. F03 failing a different way, or any other
+case refusing, stops the run, and so does an empty or incomplete case set.
+
+The pure evaluation modules live in `evals/`; `evals/live/` holds the parts that
+need the deployed endpoint and the judge, which is why `check:ci` type-checks
+and lints the former and skips the latter.
+
 ## The gold set
 
 Fourteen cases over the frozen corpus: four grounded in the SEC filings, five in
