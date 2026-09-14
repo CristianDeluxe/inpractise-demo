@@ -57,7 +57,10 @@
     "test:browser": "PLAYWRIGHT_BROWSERS_PATH=0 playwright test",
     "browser:install": "PLAYWRIGHT_BROWSERS_PATH=0 playwright install chromium",
     "test:edge": "DENO_DIR=node_modules/.cache/deno deno test --cached-only --allow-env --config supabase/functions/deno.json supabase/functions/tests",
-    "api:spec": "tsx --tsconfig tsconfig.node.json scripts/api/generateOpenApi.ts"
+    "api:spec": "tsx --tsconfig tsconfig.node.json scripts/api/generateOpenApi.ts",
+    "db:local:up": "node --import tsx scripts/db/local/up.ts",
+    "db:local:down": "node --import tsx scripts/db/local/down.ts",
+    "test:db:local": "pnpm db:local:up && vitest run --config vitest.local.config.ts --no-coverage"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",

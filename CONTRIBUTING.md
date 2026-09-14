@@ -85,6 +85,43 @@ claim. CI source/history/workflow security runs without project installation,
 while verify, quality and dependency advisories remain install-dependent until
 the documented package and lockfile remediation is complete.
 
+## Local authorization suite
+
+The authorization guarantees are enforced in the database, so the tests that
+matter most used to need the remote project's credentials. `pnpm test:db:local`
+runs them against real SQL on a throwaway container, with nothing but Docker:
+
+```sh
+pnpm test:db:local
+pnpm db:local:down
+```
+
+`db:local:up` starts `pgvector/pgvector:pg17` on 127.0.0.1:54399 - deliberately
+not Supabase's default 54322, so a local stack belonging to another project is
+neither used nor disturbed - then applies `scripts/db/local/bootstrap.sql`
+followed by every file in `supabase/migrations` unedited. The bootstrap is the
+smallest faithful stand-in for the Supabase primitives the migrations depend on:
+the `anon`, `authenticated` and `service_role` roles, an `extensions` schema
+with usage granted, and an `auth` schema whose `uid()` reads the same
+`request.jwt.claims` setting PostgREST sets. It grants no access of its own;
+every policy under test comes from the repository's migrations.
+
+Each case runs in a transaction that is always rolled back, and expected
+refusals run inside a savepoint - without one, the first refusal aborts the
+transaction and every later assertion reports "current transaction is aborted"
+instead of the policy message. Seven cases cover anonymous denial, organization
+isolation, premium tier gating, member write refusal, self-promotion,
+service-only publication, and the restricted search path excluding premium
+evidence before ranking.
+
+The suite was checked against a deliberate regression: disabling row level
+security on `public.passages` and granting `select` to `authenticated` fails the
+tier case, which is what makes the green run worth reading.
+
+This suite never reads `.env.remote`, and `createLocalDatabase` refuses any host
+that is not loopback. The remote guards in `scripts/db/loadTarget.ts` and
+`scripts/db/createDatabase.ts` are unchanged.
+
 ## Route test readiness
 
 Always await `renderRouteFixture(path, runtime)`. It awaits the router's lazy
