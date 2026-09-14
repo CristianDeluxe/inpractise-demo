@@ -1,7 +1,7 @@
 import { callMaxLaneTool, type MaxOAuthToken } from '@cristiandeluxe/max-lane'
-import type { AskResult } from './AskResult.ts'
-import type { JudgeVerdict } from './JudgeVerdict.ts'
-import { JudgeVerdictSchema } from './JudgeVerdictSchema.ts'
+import type { AskResult } from '../AskResult.ts'
+import type { JudgeVerdict } from '../JudgeVerdict.ts'
+import { JudgeVerdictSchema } from '../JudgeVerdictSchema.ts'
 import { judgePrompt } from './judgePrompt.ts'
 
 /**

@@ -36,6 +36,7 @@ export default defineConfig([
       'scripts/api/**/*.ts',
       'server/api/**/*.ts',
       'tests/**/*.ts',
+      'evals/*.ts',
       'mcp/**/*.ts',
       'vite.config.ts',
       'vite.api.config.ts',
@@ -47,7 +48,7 @@ export default defineConfig([
   {
     // Local-only answer-quality harness; its judge dependency is optional, so
     // the CI lint scope skips it (see the lint:ci script).
-    files: ['evals/**/*.ts'],
+    files: ['evals/live/**/*.ts'],
     languageOptions: {
       parserOptions: {
         projectService: false,
