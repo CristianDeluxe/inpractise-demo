@@ -5,7 +5,7 @@ API client. Verification command: **`pnpm verify`**. Security command:
 **`pnpm check:security`**. This is an independent demo using disclosed synthetic
 interviews and public filings; no private In Practise content is involved.
 
-The source of truth was the read-only `../baseline` repository, especially
+The source of truth was the read-only `../codeality` repository, especially
 `docs/adoption/existing-repo.md`, `docs/quality-gates.md`, the published config
 factories and the strict code-policy preset. ESLint and TypeScript were adopted
 in the same pass. No ESLint suppression file was generated. No commit was made.
