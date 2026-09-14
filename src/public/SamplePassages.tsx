@@ -10,7 +10,7 @@ export function SamplePassages({ source }: SampleCardProps) {
       </p>
       {source.passages.map((passage) => (
         <blockquote
-          className="source-text mt-4 border-l-2 border-primary pl-4"
+          className={`source-text mt-4 border-l-2 pl-4 ${passage.passageId === source.passages[0].passageId ? 'border-primary bg-accent/60 py-2' : 'border-border'}`}
           key={passage.passageId}
         >
           <span className="meta-text block">

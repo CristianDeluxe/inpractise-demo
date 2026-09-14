@@ -3,7 +3,7 @@ import { corpusTickerEntries } from './corpusTickerEntries'
 
 export function CorpusTicker() {
   return (
-    <div className="page-shell pt-12" aria-hidden="true">
+    <div className="page-shell mb-20 pt-20" aria-hidden="true">
       <div
         className="intro-fade overflow-hidden border-y border-border py-3"
         style={animationDelay(1250)}

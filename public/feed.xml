@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Independent research demo — podcast links</title>
+    <link>https://open.spotify.com/show/0pNE11TzOo3pblGfBqeFI7</link>
+    <description>A static presentation feed from an independent engineering demo, not the official IP Fieldwork episode feed. No podcast audio or private research is hosted here.</description>
+    <language>en</language>
+    <item>
+      <title>Listen to IP Fieldwork on its public platforms</title>
+      <link>https://open.spotify.com/show/0pNE11TzOo3pblGfBqeFI7</link>
+      <guid isPermaLink="true">https://open.spotify.com/show/0pNE11TzOo3pblGfBqeFI7</guid>
+      <description>Open the public Spotify show for current episodes. The landing artwork and 52-minute duration are illustrative demo presentation, not episode metadata. Apple Podcasts: https://podcasts.apple.com/us/podcast/ip-fieldwork/id1786321203</description>
+    </item>
+  </channel>
+</rss>

@@ -1,13 +1,25 @@
 import * as Dialog from '@radix-ui/react-dialog'
+import { useSampleDialog } from './hooks/useSampleDialog'
 import type { SampleCardProps } from './SampleCardProps'
-import { SamplePassages } from './SamplePassages'
+import { SampleDialog } from './SampleDialog'
 
 export function SampleCard({ source }: SampleCardProps) {
+  const { open, setOpen, openSource, restoreFocus } = useSampleDialog()
   return (
-    <Dialog.Root>
+    <Dialog.Root open={open} onOpenChange={setOpen}>
       <figure className="border-t border-border py-6">
         <blockquote className="source-text">
           “{source.passages[0].text}”
+          <button
+            type="button"
+            onClick={openSource}
+            aria-haspopup="dialog"
+            aria-expanded={open}
+            className="ml-2 inline-flex size-5 items-center justify-center rounded-full bg-primary align-middle text-[10px] font-bold text-primary-foreground transition-transform motion-safe:hover:scale-110"
+            aria-label={`Open source ${source.documentId}`}
+          >
+            {source.documentId === 's1' ? '1' : '2'}
+          </button>
         </blockquote>
         <figcaption className="mt-3 text-xs text-muted-foreground">
           {source.passages[0].speaker} · {source.passages[0].speakerRole}
@@ -16,25 +28,17 @@ export function SampleCard({ source }: SampleCardProps) {
           <br />
           {source.disclosure}
         </figcaption>
-        <Dialog.Trigger className="mt-4 text-xs font-semibold uppercase tracking-widest text-primary">
+        <button
+          type="button"
+          onClick={openSource}
+          aria-haspopup="dialog"
+          aria-expanded={open}
+          className="hover-underline mt-4 text-xs font-semibold uppercase tracking-widest text-primary transition-colors hover:text-foreground"
+        >
           Open source passage →
-        </Dialog.Trigger>
+        </button>
       </figure>
-      <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-40 bg-ink/65" />
-        <Dialog.Content className="source-dialog">
-          <Dialog.Title className="pr-8 font-serif text-2xl">
-            {source.title}
-          </Dialog.Title>
-          <Dialog.Description className="mt-3 text-sm">
-            Curated example — not a live answer. {source.disclosure}.
-          </Dialog.Description>
-          <SamplePassages source={source} />
-          <Dialog.Close className="quiet-action mt-6">
-            Close source
-          </Dialog.Close>
-        </Dialog.Content>
-      </Dialog.Portal>
+      <SampleDialog source={source} restoreFocus={restoreFocus} />
     </Dialog.Root>
   )
 }

@@ -1,5 +1,5 @@
-import { Link } from '@tanstack/react-router'
 import { animationDelay } from './animationDelay'
+import { HeroActions } from './HeroActions'
 import { HeroHeading } from './HeroHeading'
 import { HeroStatistics } from './HeroStatistics'
 import { LandingComparisonCard } from './LandingComparisonCard'
@@ -25,20 +25,7 @@ export function LandingHero() {
             Explore public filings and fictional interviews. Ask a standalone
             question, inspect the evidence, and see where an answer stops.
           </p>
-          <div
-            className="intro-fade mt-10 flex flex-wrap items-center gap-6"
-            style={animationDelay(880)}
-          >
-            <Link to="/login" className="action">
-              Log in
-            </Link>
-            <a
-              href="#evidence"
-              className="hover-underline text-xs font-bold uppercase tracking-widest"
-            >
-              Explore the evidence
-            </a>
-          </div>
+          <HeroActions />
         </div>
         <LandingComparisonCard />
       </div>
