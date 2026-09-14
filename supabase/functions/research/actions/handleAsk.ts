@@ -4,6 +4,7 @@ import { authorisedCitationIds } from '../answer/authorisedCitationIds.ts'
 import { buildAskResult } from '../answer/buildAskResult.ts'
 import { debitRequest } from '../answer/debitRequest.ts'
 import { embedQuery } from '../answer/embedQuery.ts'
+import { evidenceVintage } from '../answer/evidenceVintage.ts'
 import { generateAnswer } from '../answer/generateAnswer.ts'
 import { mayReadDiagnostics } from '../answer/mayReadDiagnostics.ts'
 import { recordDiagnostics } from '../answer/recordDiagnostics.ts'
@@ -39,9 +40,11 @@ export async function handleAsk(
   const sources = await readCitationSources(principal, selected)
   const record = retrievalDiagnostics(candidates, selected)
   await recordDiagnostics(principal, request, record)
+  const vintage = evidenceVintage(sources, new Date())
   const scope = {
     mode: diagnostics.mode,
     candidateCount: candidates.length,
+    ...(vintage === undefined ? {} : { vintage }),
     ...(mayReadDiagnostics(principal) ? { diagnostics: record } : {}),
   }
   if (!sources.length)
