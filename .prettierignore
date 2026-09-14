@@ -15,9 +15,6 @@ TODO_HISTORY_INDEX.jsonl
 
 server/build/
 
-# Vendored third-party skills are kept byte-identical to their source.
-.claude/skills/
-
 # Local tool workspaces, globally ignored by git.
 .serena/
 .superpowers/
