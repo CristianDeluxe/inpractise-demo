@@ -23,7 +23,12 @@ export async function handleAsk(
   const embedding = await embedQuery(query)
   const { candidates, diagnostics } = await retrieveCandidates(
     principal.client,
-    { query, embedding, ...(company === undefined ? {} : { company }) },
+    {
+      premium: principal.premium,
+      query,
+      embedding,
+      ...(company === undefined ? {} : { company }),
+    },
   )
   const selected = candidates.filter((candidate) =>
     diagnostics.selectedIds.includes(candidate.key),

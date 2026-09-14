@@ -10,4 +10,5 @@ export const documentSchema = z.strictObject({
   interview_date: z.string().nullable(),
   published_at: z.string().min(1),
   source_url: z.string().nullable(),
+  passage_count: z.number().int().nonnegative().optional(),
 })

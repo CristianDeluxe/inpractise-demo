@@ -13,11 +13,14 @@ export async function researchTransport<T, A extends ResearchRequest['action']>(
   options: RequestOptions = {},
 ): Promise<ResponseEnvelope<T, A>> {
   const lifecycle = new RequestLifecycle(++client.sequence, options)
+  const scopedRequest = client.viewAs
+    ? { ...request, viewAs: client.viewAs }
+    : request
   return lifecycle.start(async () => {
-    validateRequest(request)
+    validateRequest(scopedRequest)
     return performRequest<T, A>(
       client,
-      request,
+      scopedRequest,
       validate,
       lifecycle.controller.signal,
     )

@@ -3,7 +3,9 @@ import { ResponseMeta } from '@/components/ResponseMeta'
 import { ResearchPanel } from '@/research/ResearchPanel'
 import { useResearchWorkspace } from '@/workspace/hooks/useResearchWorkspace'
 import { CompanyFilter } from './CompanyFilter'
+import { CoverageOverview } from './CoverageOverview'
 import { LibraryPanel } from './LibraryPanel'
+import { RecentDocuments } from './RecentDocuments'
 
 export function WorkspacePage() {
   const { library, company, setCompany } = useResearchWorkspace()
@@ -33,6 +35,14 @@ export function WorkspacePage() {
             library={library.state.data.data}
             company={company}
             onChange={setCompany}
+          />
+          <CoverageOverview
+            library={library.state.data.data}
+            company={company}
+          />
+          <RecentDocuments
+            library={library.state.data.data}
+            company={company}
           />
           <LibraryPanel library={library.state.data.data} company={company} />
           <ResponseMeta {...library.state.data} />

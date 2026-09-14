@@ -3,15 +3,15 @@ import { callBackend } from './callBackend.ts'
 import type { createLimiter } from './createLimiter.ts'
 import { evidenceResponse } from './evidenceResponse.ts'
 import type { FacadeConfig } from './FacadeConfig.ts'
-import { FacadeError } from './FacadeError.ts'
 import { jsonResponse } from './jsonResponse.ts'
 import { matchOperation } from './matchOperation.ts'
 import type { OperationContext } from './OperationContext.ts'
 import { parseInput } from './parseInput.ts'
+import { parseOperationData } from './parseOperationData.ts'
 import { principalKey } from './principalKey.ts'
-import { projectResponse } from './projectResponse.ts'
 import { requireBearer } from './requireBearer.ts'
 import { researchPayload } from './researchPayload.ts'
+import { viewingReadScope } from './viewingReadScope.ts'
 
 export async function executeOperation(
   config: FacadeConfig,
@@ -31,33 +31,24 @@ export async function executeOperation(
       }),
       headers,
     )
-  const { authorization, identity } = await authorizeCaller(config, context)
+  const payload = researchPayload(route, input)
+  const { authorization, identity } = await authorizeCaller(
+    config,
+    context,
+    payload.viewAs,
+  )
   headers.set('x-request-id', identity.requestId)
   limit(principalKey(authorization), headers)
-  const payload = researchPayload(route, input)
   const backend =
     route.name === 'me'
       ? identity
       : await callBackend(config, { authorization, correlationId, payload })
   headers.set('x-request-id', backend.requestId)
-  let data: unknown
-  try {
-    data = route.operation.output.parse(
-      projectResponse(payload, backend.data, input),
-    )
-  } catch (cause) {
-    if (cause instanceof FacadeError) throw cause
-    throw new FacadeError(
-      502,
-      'invalid_backend_response',
-      'Research evidence failed validation.',
-      { requestId: backend.requestId },
-    )
-  }
+  const data = parseOperationData(route, payload, backend, input)
   return evidenceResponse(
     data,
     route.name === 'passage',
     context,
-    backend.readScope,
+    viewingReadScope(backend.readScope, payload.viewAs),
   )
 }

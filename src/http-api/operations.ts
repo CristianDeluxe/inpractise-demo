@@ -4,6 +4,7 @@ import { documentsInput } from './documentsInput.ts'
 import { documentsOutput } from './documentsOutput.ts'
 import { emptyInput } from './emptyInput.ts'
 import { healthOutput } from './healthOutput.ts'
+import { meInput } from './meInput.ts'
 import { meOutput } from './meOutput.ts'
 import { passageInput } from './passageInput.ts'
 import { passageOutput } from './passageOutput.ts'
@@ -50,7 +51,7 @@ export const operations = {
     method: 'GET',
     path: '/api/v1/me',
     action: 'me',
-    input: emptyInput,
+    input: meInput,
     output: meOutput,
     description:
       'Organization, role, and premium entitlement (false means basic).',

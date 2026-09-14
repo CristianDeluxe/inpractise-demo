@@ -1,4 +1,5 @@
 import { useWorkspace } from '@/workspace/hooks/useWorkspace'
+import { ViewAsSelector } from './ViewAsSelector'
 
 export function WorkspaceAccount() {
   const { access, signOut } = useWorkspace()
@@ -10,6 +11,7 @@ export function WorkspaceAccount() {
       <p className="mt-2 break-all font-mono text-xs text-sidebar-foreground/65">
         {access?.orgId}
       </p>
+      <ViewAsSelector />
       <button
         type="button"
         className="mt-5 underline"

@@ -12,14 +12,17 @@ export async function retrieveCandidates(
   client: SupabaseClient<Database>,
   input: SearchInput,
 ) {
-  const result = await client.rpc('search_candidates', {
-    query_text: input.query,
-    ...(input.embedding
-      ? { query_embedding: JSON.stringify(input.embedding) }
-      : {}),
-    ...(input.company === undefined ? {} : { company_filter: input.company }),
-    candidate_limit: 30,
-  })
+  const result = await client.rpc(
+    input.premium === false ? 'search_candidates_scoped' : 'search_candidates',
+    {
+      query_text: input.query,
+      ...(input.embedding
+        ? { query_embedding: JSON.stringify(input.embedding) }
+        : {}),
+      ...(input.company === undefined ? {} : { company_filter: input.company }),
+      candidate_limit: 30,
+    },
+  )
   if (result.error)
     throw new Error(`Candidate retrieval failed: ${result.error.code}`)
   const rows = BranchRowSchema.array().parse(result.data)
@@ -32,7 +35,7 @@ export async function retrieveCandidates(
   ).slice(0, 40)
   const candidates: Candidate[] = []
   for (const fused of ranked)
-    candidates.push(await readCandidate(client, rows, fused))
+    candidates.push(await readCandidate(client, rows, fused, input.premium))
   const selected = selectContext(candidates)
   return {
     candidates,

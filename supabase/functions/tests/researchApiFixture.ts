@@ -12,6 +12,7 @@ export function researchApiFixture(path: string): unknown {
       return { id: 'test-user' }
     case '/rest/v1/memberships':
       return { org_id: 'org-a', role: 'member', premium: false, active: true }
+    case '/rest/v1/rpc/search_candidates_scoped':
     case '/rest/v1/rpc/search_candidates':
       return [
         branchRowFixture({

@@ -1,7 +1,6 @@
-import { z } from 'zod'
+import { principalOutput } from './principalOutput.ts'
 
-export const meOutput = z.strictObject({
-  orgId: z.string().min(1),
-  role: z.enum(['member', 'reviewer']),
-  premium: z.boolean(),
+export const meOutput = principalOutput.extend({
+  realPrincipal: principalOutput.optional(),
+  effectivePrincipal: principalOutput.optional(),
 })

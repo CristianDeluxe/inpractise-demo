@@ -1,6 +1,7 @@
 import type { PublicLayoutProps } from '@/components/PublicLayoutProps'
 import { Wordmark } from '@/components/Wordmark'
 import { Link } from '@tanstack/react-router'
+import { ViewAsBanner } from './ViewAsBanner'
 import { WorkspaceAccount } from './WorkspaceAccount'
 import { WorkspaceMobileNav } from './WorkspaceMobileNav'
 import { WorkspaceNav } from './WorkspaceNav'
@@ -24,6 +25,7 @@ export function WorkspaceLayout({ children }: PublicLayoutProps) {
         <header className="border-b border-border bg-card px-6 py-4 text-xs text-muted-foreground">
           Workspace / Authorized research
         </header>
+        <ViewAsBanner />
         {children}
       </div>
     </div>

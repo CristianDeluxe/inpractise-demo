@@ -1,9 +1,13 @@
 import type { Principal } from '../Principal.ts'
+import { principalSummary } from '../principalSummary.ts'
 
-export function handleMe(principal: Principal) {
+export function handleMe(
+  principal: Principal,
+  realPrincipal: Principal = principal,
+) {
   return {
-    orgId: principal.orgId,
-    role: principal.role,
-    premium: principal.premium,
+    ...principalSummary(principal),
+    realPrincipal: principalSummary(realPrincipal),
+    effectivePrincipal: principalSummary(principal),
   }
 }

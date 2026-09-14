@@ -27,6 +27,7 @@ export type Database = {
       record_request_usage: RecordRequestUsageFunction
       inspect_corpus: InspectCorpusFunction
       publish_document: PublishDocumentFunction
+      search_candidates_scoped: SearchCandidatesFunction
       search_candidates: SearchCandidatesFunction
     }
     Enums: {
