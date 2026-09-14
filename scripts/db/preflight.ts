@@ -1,5 +1,6 @@
 import { loadTarget } from './loadTarget.ts'
 import { managementQuery } from './managementQuery.ts'
+import { personas } from './personas.ts'
 
 export async function checkDatabasePreflight() {
   const target = loadTarget()
@@ -14,12 +15,9 @@ export async function checkDatabasePreflight() {
         target: 'remote',
         projectMatch: true,
         tables: tables.map((row) => row['tablename']),
-        missingSeedVariables: [
-          'DEMO_BASIC_PASSWORD',
-          'DEMO_PREMIUM_PASSWORD',
-          'DEMO_REVIEWER_PASSWORD',
-          'DEMO_OTHER_PASSWORD',
-        ].filter((name) => !target.values[name]),
+        missingSeedVariables: personas
+          .map((persona) => persona.passwordVariable)
+          .filter((name) => !target.values[name]),
       },
       null,
       2,

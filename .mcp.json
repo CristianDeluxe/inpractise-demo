@@ -6,7 +6,7 @@
       "env": {
         "RESEARCH_URL": "${RESEARCH_URL}",
         "RESEARCH_PUBLISHABLE_KEY": "${RESEARCH_PUBLISHABLE_KEY}",
-        "RESEARCH_EMAIL": "info+inpractise-mcp@busirocket.com",
+        "RESEARCH_EMAIL": "me+mcp@cristiandeluxe.dev",
         "RESEARCH_PASSWORD": "${DEMO_MCP_PASSWORD}",
         "RESEARCH_HANDSHAKE_LOG": "${RESEARCH_HANDSHAKE_LOG:-}"
       }

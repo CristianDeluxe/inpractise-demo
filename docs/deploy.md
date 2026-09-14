@@ -38,18 +38,20 @@ or evaluation reports into `dist`.
 ## Deploy
 
 ```sh
+DEPLOY_SSH_KEY=/path/to/owner-supplied-private-key
 rsync -az --delete --exclude '.env' --exclude 'node_modules' --exclude 'tmp' \
-  -e 'ssh -p <port> -i ~/.ssh/busirocket' \
+  -e "ssh -p <port> -i \"$DEPLOY_SSH_KEY\"" \
   dist server server.js root@<host>:/home/<account>/apps/inpractise-demo/
 
-ssh -p <port> -i ~/.ssh/busirocket root@<host> '
+ssh -p <port> -i "$DEPLOY_SSH_KEY" root@<host> '
   chown -R <account>:<account> /home/<account>/apps/inpractise-demo
   cloudlinux-selector restart --json --interpreter nodejs \
     --domain inpractise.cristiandeluxe.dev --app-root apps/inpractise-demo'
 ```
 
-`--exclude '.env'` is required: the server-side environment file is not in the
-repository and `--delete` would otherwise remove it.
+Set `DEPLOY_SSH_KEY` to the user-provided private-key path. `--exclude '.env'`
+is required: the server-side environment file is not in the repository and
+`--delete` would otherwise remove it.
 
 ## Verification performed on 2026-09-14
 
@@ -119,14 +121,14 @@ with `200`.
 Against `https://inpractise.cristiandeluxe.dev/api/v1`: `/health` returned
 `{"status":"ok","scope":"facade-only"}`; `/openapi.json` returned 200;
 unauthenticated `/me` returned `401 application/problem+json` with
-`urn:inpractise-demo:problem:unauthenticated` and a `requestId`; the basic
-persona's `/me` returned `{"orgId":"org-a","role":"member","premium":false}`;
-`/documents?pageSize=2` and `POST /search` with `{"query":...,"limit":2}`
-returned corpus rows with document, revision and passage identifiers; the cited
-passage returned `200` with an `ETag`, and repeating it with `If-None-Match`
-returned `304`. The `org-b` persona received its own organization's copy and a
-`200` - not a `304` - when replaying the `org-a` `ETag`, because the read scope
-is part of the tag.
+`urn:inpractise-demo:problem:unauthenticated` and a `requestId`; the test-only
+basic fixture's `/me` returned
+`{"orgId":"org-a","role":"member","premium":false}`; `/documents?pageSize=2` and
+`POST /search` with `{"query":...,"limit":2}` returned corpus rows with
+document, revision and passage identifiers; the cited passage returned `200`
+with an `ETag`, and repeating it with `If-None-Match` returned `304`. The
+`org-b` persona received its own organization's copy and a `200` - not a `304` -
+when replaying the `org-a` `ETag`, because the read scope is part of the tag.
 
 The `x-research-org-id` header the facade needs for that scope is produced by
 `supabase/functions/research/researchResponse.ts`, which was deployed in the
@@ -256,8 +258,9 @@ pnpm dlx wrangler@4.131.1 pages deploy dist --project-name "$PAGES_PROJECT_NAME"
 
 4. Use the URL returned by that command. No custom domain or DNS change is
    needed for its assigned `pages.dev` address. Recheck noindex headers, direct
-   reader refresh, basic-member sign-in and premium denial there; rehearse the
-   two-minute script against that exact origin.
+   reader refresh and the `me@cristiandeluxe.dev` reviewer sign-in there;
+   rehearse the two-minute script against that exact origin. Keep the premium
+   denial as an integration-test check rather than a live reviewer step.
 
 These authentication, project-creation and upload commands are documented for
 the owner and were **not executed**. Their syntax follows

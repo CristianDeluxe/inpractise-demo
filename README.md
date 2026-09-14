@@ -12,9 +12,11 @@ interviews about invented companies and fictional speakers. It uses no private
 In Practise data, research library or systems. Source-bearing screens disclose
 public or synthetic provenance. See [corpus provenance](docs/corpus.md).
 
-Live demo: <https://inpractise.cristiandeluxe.dev>. Sign-in uses a privately
-provisioned member account; public signup is disabled. Hosting and the dated
-route checks are recorded in [deployment](docs/deploy.md).
+Live demo: <https://inpractise.cristiandeluxe.dev>. The reviewer login is
+`me@cristiandeluxe.dev`, backed by the owner-supplied `DEMO_PASSWORD`; public
+signup is disabled. The new identity still requires owner provisioning and live
+verification. Hosting and the dated route checks are recorded in
+[deployment](docs/deploy.md).
 
 ## Three engineering properties
 
@@ -39,10 +41,10 @@ induced-miss viewer. Use the recorded diagnostics for that part of the workflow.
 
 ## A reviewer's five-minute path
 
-Obtain a basic-member login privately before starting. This is a suggested
-review path, not a claimed timed rehearsal. Live Ask requests invoke a provider;
-submit each once and describe the actual outcome if it differs from the retained
-run.
+Obtain the `me@cristiandeluxe.dev` reviewer password privately before starting.
+This is a suggested review path, not a claimed timed rehearsal. Live Ask
+requests invoke a provider; submit each once and describe the actual outcome if
+it differs from the retained run.
 
 | Time      | Action and evidence to inspect                                                                                                                                                                                                                                        |
 | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -51,12 +53,12 @@ run.
 | 1:20–2:20 | Select Ask and submit “What makes a complex Northstar installation difficult to migrate?” Open a returned citation and follow its exact reader link; refresh the reader to check that the IDs remain stable.                                                          |
 | 2:20–3:10 | Ask “What will Northstar Workflow net retention be in 2027?” The retained result is `not_found`, with no claims or citations. Inspect the actual result rather than treating related search hits as a forecast.                                                       |
 | 3:10–4:15 | Read [method](https://inpractise.cristiandeluxe.dev/method) and [F03's recorded failure](docs/evals.md). The answer was retrieved but dropped during selection. The induced missing-gold test is in `tests/unit/ranking.test.ts`; it is a separate retrieval failure. |
-| 4:15–5:00 | Open [Connect](https://inpractise.cristiandeluxe.dev/connect) and the [MCP install guide](docs/mcp-install.md). Check how the same member and exact passage IDs reach both clients.                                                                                   |
+| 4:15–5:00 | Open [Connect](https://inpractise.cristiandeluxe.dev/connect) and the [MCP install guide](docs/mcp-install.md). Check how database authorization and exact passage IDs reach both clients.                                                                            |
 
-The [two-minute presentation script](docs/demo-script.md) adds the
-premium-denial step and a recorded-evidence fallback. A reviewer account can
-open `/inspect` for counts; a basic member cannot, and no connected report is
-promised.
+The [two-minute presentation script](docs/demo-script.md) opens a premium
+passage with the reviewer account and explains where the denied-fixture boundary
+is tested. The same account can open `/inspect` for caller-scoped counts; no
+connected report is promised.
 
 ## Run locally
 
@@ -86,11 +88,12 @@ key, provider key or password in a `VITE_` variable. See
 pnpm dev --host 127.0.0.1 --port 5173 --strictPort
 ```
 
-Open `http://127.0.0.1:5173/`, then `/login` with the provisioned member. `/app`
-contains the library, passage search and Ask; `/method` explains measurements
-and `/connect` describes MCP. No signup or database provisioning is needed for
-the existing demo. Stop with Ctrl-C. [Frontend setup](docs/frontend-port.md)
-records the browser contract and dated live checks.
+Open `http://127.0.0.1:5173/`, then `/login` as `me@cristiandeluxe.dev` with
+`DEMO_PASSWORD`. `/app` contains the library, passage search and Ask; `/method`
+explains measurements and `/connect` describes MCP. The owner must provision the
+documented identity before this login works; public signup remains disabled.
+Stop with Ctrl-C. [Frontend setup](docs/frontend-port.md) records the browser
+contract and dated live checks.
 
 To build and inspect the production artifact locally:
 

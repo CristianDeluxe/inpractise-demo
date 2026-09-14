@@ -1,8 +1,9 @@
 import { z } from 'zod'
+import { GoldPersonaSchema } from './GoldPersonaSchema.ts'
 
 export const GoldCaseSchema = z.strictObject({
   caseId: z.string().regex(/^[A-Z]\d{2}$/),
-  persona: z.enum(['basic', 'premium', 'reviewer', 'other']),
+  persona: GoldPersonaSchema,
   question: z.string().min(1).max(2000),
   company: z.string().min(1).max(80),
   expectedStatus: z.enum(['answered', 'partial', 'conflict', 'not_found']),
