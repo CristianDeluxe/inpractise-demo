@@ -195,10 +195,11 @@ positives are documented in
 
 ## Seed and password sessions
 
-The original backend lane lacked four demo-password variables. That blocker was
-resolved before baseline adoption; current verification signs in all four
-existing demo users using the ignored environment configuration. Values are
-never printed. No user or password was created or changed in the baseline pass.
+The original backend lane lacked its demo-password variables. That historical
+blocker was resolved before baseline adoption. The source now defines the four
+personas below, but their replacement Auth users and memberships await owner
+provisioning and live verification. Values are never printed. No user or
+password was created or changed in this documentation pass.
 
 `seed` uses Supabase's Admin API with confirmed email/password users, preserving
 unrelated existing accounts. Existing users must carry the seed-owned
@@ -207,16 +208,16 @@ or promotes an unrelated account. Password sign-in uses the publishable key, not
 the Admin client. These APIs were checked against the
 [Supabase JavaScript Auth reference](https://supabase.com/docs/reference/javascript/auth-admin-createuser).
 
-| Persona  | Email                                   | Organisation | Access          |
-| -------- | --------------------------------------- | ------------ | --------------- |
-| basic    | info+inpractise-basic@busirocket.com    | org-a        | member, basic   |
-| premium  | info+inpractise-premium@busirocket.com  | org-a        | member, premium |
-| reviewer | info+inpractise-reviewer@busirocket.com | org-a        | reviewer, basic |
-| other    | info+inpractise-other@busirocket.com    | org-b        | member, basic   |
+| Persona | Email                       | Organisation | Access            | Purpose             |
+| ------- | --------------------------- | ------------ | ----------------- | ------------------- |
+| demo    | me@cristiandeluxe.dev       | org-a        | reviewer, premium | Reviewer demo login |
+| basic   | me+basic@cristiandeluxe.dev | org-a        | member, basic     | Test fixture        |
+| mcp     | me+mcp@cristiandeluxe.dev   | org-a        | member, basic     | MCP test fixture    |
+| other   | me+other@cristiandeluxe.dev | org-b        | member, basic     | Test fixture        |
 
-Run `pnpm verify` to check the existing sessions and database. `pnpm seed` is an
-operator mutation command, not a verification prerequisite to rerun on every
-maintenance pass.
+After owner provisioning, run `pnpm verify` to check the password sessions and
+database. `pnpm seed` is an operator mutation command, not a verification
+prerequisite to rerun on every maintenance pass.
 
 ## Original backend-lane command record (historical)
 

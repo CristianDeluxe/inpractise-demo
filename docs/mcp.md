@@ -24,12 +24,13 @@ checks and troubleshooting. The package and server ID are `inpractise-demo`; see
 filings and synthetic interviews, with no private In Practise content.
 
 The bundled server launches as the dedicated, basic-tier `mcp` member:
-`info+inpractise-mcp@busirocket.com`. It directly accepts `RESEARCH_URL`,
-`RESEARCH_PUBLISHABLE_KEY` and `DEMO_MCP_PASSWORD`; it selects that fixed email
-and password unless a generic client explicitly supplies `RESEARCH_EMAIL` or
-`RESEARCH_PASSWORD`. Client JSON may map the direct names to resolved names. No
-credential is a tool argument or command-line flag. The optional
-`RESEARCH_HANDSHAKE_LOG` records each negotiated session.
+`me+mcp@cristiandeluxe.dev`. This is a test-only fixture, separate from the
+reviewer login advertised for the browser demo. It directly accepts
+`RESEARCH_URL`, `RESEARCH_PUBLISHABLE_KEY` and `DEMO_MCP_PASSWORD`; it selects
+that fixed email and password unless a generic client explicitly supplies
+`RESEARCH_EMAIL` or `RESEARCH_PASSWORD`. Client JSON may map the direct names to
+resolved names. No credential is a tool argument or command-line flag. The
+optional `RESEARCH_HANDSHAKE_LOG` records each negotiated session.
 
 ## Parity, including the denial
 
@@ -41,8 +42,9 @@ that member with the browser's equivalent basic-tier member and asserts:
 - the basic member is refused the premium passage `s6/P2` with the same
   `not_found` through MCP as the browser gets over HTTP (404, no title hint, no
   canary text);
-- the **premium** member receives that same passage through MCP — the control
-  that proves the canary was actually loaded rather than absent everywhere;
+- the premium `demo` reviewer receives that same passage through MCP — the
+  control that proves the canary was actually loaded rather than absent
+  everywhere;
 - a search returns the identical ordered `citationId` list through both paths.
 
 ## A real Claude Code session

@@ -6,10 +6,10 @@ import { signInPersona } from '../../scripts/db/signInPersona.ts'
 import type { Database } from '../../supabase/functions/_shared/types/Database.ts'
 
 describe('remote direct PostgREST RLS', () => {
-  it('allows the premium control and denies basic/reviewer access to its passages', async () => {
+  it('allows the premium demo and denies basic/MCP fixtures access to its passages', async () => {
     const target = loadTarget()
-    const premium = await signInPersona(target, 'premium')
-    const control = await premium.client
+    const demo = await signInPersona(target, 'demo')
+    const control = await demo.client
       .from('passages')
       .select('text_content')
       .eq('document_id', 's6')
@@ -18,7 +18,7 @@ describe('remote direct PostgREST RLS', () => {
     expect(
       control.data?.some((row) => row.text_content.includes('ORCHID-74')),
     ).toBe(true)
-    for (const persona of ['basic', 'reviewer']) {
+    for (const persona of ['basic', 'mcp']) {
       const { client } = await signInPersona(target, persona)
       const result = await client
         .from('passages')
@@ -31,6 +31,7 @@ describe('remote direct PostgREST RLS', () => {
   it('isolates both organisations and prevents self-promotion', async () => {
     const target = loadTarget()
     for (const [name, orgId, foreignOrg] of [
+      ['demo', 'org-a', 'org-b'],
       ['basic', 'org-a', 'org-b'],
       ['other', 'org-b', 'org-a'],
     ] as const) {
@@ -79,19 +80,19 @@ describe('remote direct PostgREST RLS', () => {
     })
     expect(result.error?.code).toBe('42501')
   }, 60000)
-  it('reviewer diagnostics enforce reviewer role without bypassing tier', async () => {
+  it('reviewer diagnostics reject basic members and count only demo-visible passages', async () => {
     const target = loadTarget()
     const basic = await signInPersona(target, 'basic')
     const denied = await basic.client.rpc('inspect_corpus')
     expect(denied.error?.code).toBe('42501')
-    const reviewer = await signInPersona(target, 'reviewer')
-    const allowed = await reviewer.client.rpc('inspect_corpus')
+    const demo = await signInPersona(target, 'demo')
+    const allowed = await demo.client.rpc('inspect_corpus')
     expect(allowed.error).toBeNull()
     const diagnostics = z
       .object({ diagnosis: z.string(), passages: z.number() })
       .parse(allowed.data)
     expect(diagnostics.diagnosis).toBe('unclassified')
-    const visible = await reviewer.client
+    const visible = await demo.client
       .from('passages')
       .select('*', { count: 'exact', head: true })
     expect(diagnostics.passages).toBe(visible.count)

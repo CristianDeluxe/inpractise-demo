@@ -20,11 +20,11 @@ Obtain an existing member login and project public configuration privately from
 the demo owner. Public signup is disabled. An Auth user must also have an active
 `memberships` row in an active organization; a successful password login alone
 is insufficient. [scripts/db/personas.ts](../scripts/db/personas.ts) defines the
-basic, dedicated MCP, premium, reviewer and other-organization personas, and
-[seed.ts](../scripts/db/seed.ts) associates them with memberships. The MCP
-server uses `info+inpractise-mcp@busirocket.com`, a separate basic-tier member
-in the same organization as the browser's basic persona. Those are provisioning
-sources, not installation steps to rerun.
+primary `demo` reviewer plus the `basic`, dedicated `mcp`, and
+other-organization test fixtures; [seed.ts](../scripts/db/seed.ts) associates
+them with memberships. The MCP server uses `me+mcp@cristiandeluxe.dev`, a
+separate basic-tier, test-only member in the reviewer's organization. These are
+provisioning sources, not installation steps to rerun.
 
 | Required variable          | Value supplied by the owner                                                                                                                                   |
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -71,7 +71,7 @@ checkout path:
       "env": {
         "RESEARCH_URL": "${RESEARCH_URL}",
         "RESEARCH_PUBLISHABLE_KEY": "${RESEARCH_PUBLISHABLE_KEY}",
-        "RESEARCH_EMAIL": "info+inpractise-mcp@busirocket.com",
+        "RESEARCH_EMAIL": "me+mcp@cristiandeluxe.dev",
         "RESEARCH_PASSWORD": "${DEMO_MCP_PASSWORD}"
       }
     }
@@ -128,7 +128,7 @@ and escaped backslashes in JSON, and was not tested in this pass.
       "env": {
         "RESEARCH_URL": "OWNER_SUPPLIED_PROJECT_URL",
         "RESEARCH_PUBLISHABLE_KEY": "OWNER_SUPPLIED_PUBLISHABLE_KEY",
-        "RESEARCH_EMAIL": "info+inpractise-mcp@busirocket.com",
+        "RESEARCH_EMAIL": "me+mcp@cristiandeluxe.dev",
         "RESEARCH_PASSWORD": "OWNER_SUPPLIED_MCP_MEMBER_PASSWORD"
       }
     }
@@ -159,7 +159,7 @@ in Cursor's MCP settings. See
       "env": {
         "RESEARCH_URL": "${env:RESEARCH_URL}",
         "RESEARCH_PUBLISHABLE_KEY": "${env:RESEARCH_PUBLISHABLE_KEY}",
-        "RESEARCH_EMAIL": "info+inpractise-mcp@busirocket.com",
+        "RESEARCH_EMAIL": "me+mcp@cristiandeluxe.dev",
         "RESEARCH_PASSWORD": "${env:DEMO_MCP_PASSWORD}"
       }
     }

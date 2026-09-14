@@ -57,8 +57,8 @@ describe('MCP and browser parity for equivalent basic-tier principals', () => {
     await client.close()
   }, 60000)
 
-  it('returns the premium passage to the premium member through MCP', async () => {
-    const client = await connectMcpClient(await mcpSession('premium'))
+  it('returns the premium passage to the demo reviewer through MCP', async () => {
+    const client = await connectMcpClient(await mcpSession('demo'))
     const allowed = await client.callTool({
       name: 'fetch_passage',
       arguments: premiumPassageRef,
