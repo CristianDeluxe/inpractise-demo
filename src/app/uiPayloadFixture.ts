@@ -1,4 +1,6 @@
 import { citationFixture } from '@/api/citationFixture'
+import { debugPayloadFixture } from './debugPayloadFixture'
+import { diagnosticsFixture } from './diagnosticsFixture'
 import { libraryPayloadFixture } from './libraryPayloadFixture'
 
 export function uiPayloadFixture(action: string) {
@@ -30,18 +32,10 @@ export function uiPayloadFixture(action: string) {
         missingEvidence: ['No February figures.'],
         mode: 'hybrid',
         candidateCount: 4,
+        diagnostics: diagnosticsFixture,
       }
     case 'debug':
-      return {
-        corpus: {
-          documents: 1,
-          revisions: 2,
-          passages: 4,
-          vectors: 4,
-          report: null,
-          diagnosis: 'unclassified',
-        },
-      }
+      return debugPayloadFixture()
     default:
       throw new Error('Unexpected action')
   }

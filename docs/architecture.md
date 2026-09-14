@@ -215,6 +215,31 @@ caller reports, so it is operational accounting, not a tamper-proof billing
 record. No service-role key participates in this request path. Usage metadata is
 not added to the browser response contract.
 
+## Retrieval diagnostics (reviewer-only)
+
+After ask completion,
+[recordDiagnostics.ts](../supabase/functions/research/answer/recordDiagnostics.ts)
+writes the retrieval diagnostic record to the existing ledger row. This is
+best-effort: if the write fails, the answer is already correct and must not be
+downgraded to an error. The failure is visible as a request whose diagnostics
+column stays null.
+
+`record_request_diagnostics` is a security-definer function owned by the same
+narrow `request_usage_writer` role. It takes identity from the JWT, never from
+caller arguments, so it cannot record another user's request. It refuses a
+payload over 4096 bytes, and rejects a second write to the same request. The
+diagnostic object contains `candidateAt10` (top 10 ranked passages before
+selection), `selectedIds` (passages sent to the model), `selectedTokens` (token
+budget spent on selection), and `revisionIds` (server corpus identities of
+selected passages). Together they distinguish a retrieval failure from selection
+failure: candidates not ranked high enough, or selection that rejected
+high-ranked candidates.
+
+`debug` action reads the caller's own recent ledger rows; row-level security
+already scopes `request_usage` to the authenticated principal, so there is no
+separate authorization predicate. Each row returned carries its diagnostics
+value (null when no record was written) and recorded timestamp.
+
 Verify with `pnpm test` (rolled-back database integration and provider-free
 search parity) and `pnpm test:edge` (stubbed provider ordering and usage). The
 concurrency fixture holds the last debit open on one connection and proves a

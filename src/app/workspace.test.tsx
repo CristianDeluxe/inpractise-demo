@@ -8,6 +8,7 @@ import {
   within,
 } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { diagnosticsFixture } from './diagnosticsFixture'
 import { renderRouteFixture } from './renderRouteFixture'
 import { uiRuntimeFixture } from './uiRuntimeFixture'
 
@@ -116,5 +117,26 @@ describe('authorized research workflow', () => {
     expect(requests).toHaveLength(0)
     expect(fetcher).toHaveBeenCalledTimes(1)
     expect(screen.queryByText('Source library')).toBeNull()
+  })
+  it('displays retrieval diagnostics when present in answer', async () => {
+    const { runtime } = uiRuntimeFixture()
+    await renderRouteFixture('/app', runtime)
+    await screen.findByRole('heading', { name: 'Source library' })
+    fireEvent.click(screen.getByRole('button', { name: /What makes complex/ }))
+    fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
+    expect(
+      await screen.findByText('A supported claim with limits.'),
+    ).toBeTruthy()
+    expect(
+      screen.getByRole('heading', { name: 'Retrieval diagnostics' }),
+    ).toBeTruthy()
+    const dropped = diagnosticsFixture.candidateAt10.filter(
+      (candidateId) => !diagnosticsFixture.selectedIds.includes(candidateId),
+    )
+    expect(screen.getAllByText('selected')).toHaveLength(
+      diagnosticsFixture.selectedIds.length,
+    )
+    expect(screen.getAllByText('dropped')).toHaveLength(dropped.length)
+    expect(screen.getByText(dropped[0] ?? '')).toBeTruthy()
   })
 })

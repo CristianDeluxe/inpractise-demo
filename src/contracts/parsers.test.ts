@@ -111,10 +111,16 @@ describe('source-backed action parsers', () => {
       report: null,
       diagnosis: 'unclassified',
     }
-    expect(parseDebugData({ corpus }).corpus.report).toBeNull()
+    expect(
+      parseDebugData({ corpus, recentRequests: [] }).corpus.report,
+    ).toBeNull()
     expect(() =>
-      parseDebugData({ corpus: { ...corpus, report: { passed: 100 } } }),
+      parseDebugData({
+        corpus: { ...corpus, report: { passed: 100 } },
+        recentRequests: [],
+      }),
     ).toThrow()
+    expect(() => parseDebugData({ corpus })).toThrow()
   })
   it('validates exact passages and bounded ranked search', () => {
     const citation = citationFixture()

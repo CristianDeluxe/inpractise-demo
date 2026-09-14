@@ -2,6 +2,7 @@ import { answerStatusLabel } from './answerStatusLabel'
 import type { AnswerViewProps } from './AnswerViewProps'
 import { CitationCard } from './CitationCard'
 import { ClaimRow } from './ClaimRow'
+import { DiagnosticsPanel } from './DiagnosticsPanel'
 import { notFoundExplanation } from './notFoundExplanation'
 
 export function AnswerView({ answer }: AnswerViewProps) {
@@ -28,6 +29,9 @@ export function AnswerView({ answer }: AnswerViewProps) {
           />
         ))}
       </ul>
+      {answer.diagnostics ? (
+        <DiagnosticsPanel diagnostics={answer.diagnostics} />
+      ) : null}
       {answer.missingEvidence.length > 0 ? (
         <div className="bg-warning p-4 text-sm text-warning-foreground">
           <h4 className="font-semibold">Missing evidence and limitations</h4>

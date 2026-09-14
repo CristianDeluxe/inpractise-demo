@@ -5,7 +5,10 @@ import { buildAskResult } from '../answer/buildAskResult.ts'
 import { debitRequest } from '../answer/debitRequest.ts'
 import { embedQuery } from '../answer/embedQuery.ts'
 import { generateAnswer } from '../answer/generateAnswer.ts'
+import { mayReadDiagnostics } from '../answer/mayReadDiagnostics.ts'
+import { recordDiagnostics } from '../answer/recordDiagnostics.ts'
 import { recordUsage } from '../answer/recordUsage.ts'
+import { retrievalDiagnostics } from '../answer/retrievalDiagnostics.ts'
 import { readCitationSources } from '../citations/readCitationSources.ts'
 import type { Principal } from '../Principal.ts'
 
@@ -34,7 +37,13 @@ export async function handleAsk(
     diagnostics.selectedIds.includes(candidate.key),
   )
   const sources = await readCitationSources(principal, selected)
-  const scope = { mode: diagnostics.mode, candidateCount: candidates.length }
+  const record = retrievalDiagnostics(candidates, selected)
+  await recordDiagnostics(principal, request, record)
+  const scope = {
+    mode: diagnostics.mode,
+    candidateCount: candidates.length,
+    ...(mayReadDiagnostics(principal) ? { diagnostics: record } : {}),
+  }
   if (!sources.length)
     return {
       status: 'not_found' as const,
