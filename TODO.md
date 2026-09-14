@@ -18,9 +18,11 @@ plan wins.
 ## Backend
 
 - [ ] **Edge function `research`.** One endpoint, `verify_jwt=false` only
-      because the handler validates every non-OPTIONS request through
-      `auth.getUser(token)` and forwards that token so RLS applies. Test
-      missing, forged and expired tokens.
+      because the handler validates accepted research requests through
+      `verifyToken` (`GET /auth/v1/user`) and forwards that token so RLS
+      applies. `supabase/config.toml` has no function-specific JWT setting;
+      verify the deployed setting and missing, forged and expired tokens. See
+      ADR 0002.
 
 - [ ] **Strict structured answer contract.** Model returns cited claims only;
       missing or invalid passage IDs, or malformed JSON, are an error rather
@@ -29,7 +31,11 @@ plan wins.
 
 - [ ] **Request allowances.** Debit a fixed per-principal allowance before the
       provider call, including calls that then fail. Persist real usage totals
-      and mark missing usage unknown.
+      and mark missing usage unknown. Source inspection on 2026-09-14 found no
+      debit or usage ledger in `handleAsk.ts`/`requestCompletion.ts`; older
+      allowance claims in `docs/evals.md` and `docs/demo-script.md` are not
+      implementation evidence. Reconcile those claims when implementing the
+      control.
 
 ## Corpus
 
@@ -51,6 +57,15 @@ plan wins.
       in the same org and tier and point `.mcp.json` at it.
 
 ## Testing
+
+- [ ] **Verify partial citation revocation and empty-answer messaging.**
+      `authorisedClaims.ts` retains a multi-source claim if any reference
+      remains; `buildAskResult.ts` reports access changed whenever no claims
+      survive, including an ordinary generated zero-claim refusal. Source
+      inspection on 2026-09-14; existing revocation tests cover single-source
+      claims only. Add focused cases and decide whether partial evidence loss
+      requires rejecting the whole claim; no concurrent revocation guarantee is
+      established.
 
 - [ ] **Bound cached browser-probe teardown.** The repeated
       `work/lovable2/browser.mjs` probe completed all six scenarios and Chrome

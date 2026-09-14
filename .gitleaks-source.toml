@@ -1,4 +1,4 @@
-title = "Research evidence demo working-tree scan"
+title = "In Practise Demo working-tree scan"
 
 [extend]
 path = ".gitleaks.toml"
