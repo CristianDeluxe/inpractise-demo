@@ -1,6 +1,11 @@
 import { createParticleNode } from './createParticleNode'
 import type { ParticleScene } from './ParticleScene'
 
+/**
+ * Keep simulation coordinates in CSS pixels while scaling the backing canvas.
+ * Cap pixel density at two and particle count at 90 to bound rendering work;
+ * resizing intentionally reseeds the scene instead of preserving particle paths.
+ */
 export function resizeParticleScene(
   canvas: HTMLCanvasElement,
   context: CanvasRenderingContext2D,

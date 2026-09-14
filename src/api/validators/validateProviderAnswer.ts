@@ -3,6 +3,11 @@ import type { ProviderAnswer } from '../ProviderAnswer.ts'
 import { parseProtocol } from '../parseProtocol.ts'
 import { providerAnswerWireSchema } from './providerAnswerWireSchema.ts'
 
+/**
+ * Every claim must reference supplied citation IDs; structured prose alone is
+ * insufficient. A refusal carries no claims, while every other status must carry
+ * at least one. Contradictory status/evidence combinations are protocol errors.
+ */
 export function validateProviderAnswer(
   input: unknown,
   suppliedCitationIds: ReadonlySet<string>,

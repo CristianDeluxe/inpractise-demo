@@ -5,6 +5,11 @@ import { Outlet } from '@tanstack/react-router'
 import { AccessContext } from './AccessContext'
 import { SignInInvitation } from './SignInInvitation'
 
+/**
+ * Mount protected routes only after `me` succeeds, so pending or invalidated
+ * access cannot leave the previous workspace visible. A local session alone is
+ * insufficient; evidence requests still undergo backend authorization.
+ */
 export function AccessGate() {
   const access = useAccess()
   if (access.state.status !== 'success')

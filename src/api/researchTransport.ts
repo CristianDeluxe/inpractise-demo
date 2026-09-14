@@ -6,6 +6,11 @@ import type { ResearchRequest } from './ResearchRequest.ts'
 import type { ResponseEnvelope } from './ResponseEnvelope.ts'
 import { validateRequest } from './validators/validateRequest.ts'
 
+/**
+ * A workspace viewing restriction overrides a per-request view before validation.
+ * This keeps callers from accidentally escaping the selected demo mode; the
+ * backend still owns authorization and independently enforces downgrade rules.
+ */
 export async function researchTransport<T, A extends ResearchRequest['action']>(
   client: ResearchClient,
   request: ResearchRequest & { action: A },

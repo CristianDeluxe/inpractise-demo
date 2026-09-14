@@ -7,6 +7,11 @@ import { parseSearchData } from '@/contracts/parseSearchData.ts'
 import { FacadeError } from './FacadeError.ts'
 import { paginateDocuments } from './paginateDocuments.ts'
 
+/**
+ * Validate evidence against the original action before exposing its HTTP shape.
+ * Passage output deliberately omits `isCurrentRevision`: that flag can change
+ * without a revision change and would invalidate identity-based strong ETags.
+ */
 export function projectResponse(
   payload: ResearchRequest,
   data: unknown,

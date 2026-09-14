@@ -8,6 +8,11 @@ import { effectivePrincipal } from './effectivePrincipal.ts'
 import type { Principal } from './Principal.ts'
 import type { ResearchRequest } from './ResearchRequest.ts'
 
+/**
+ * Apply viewing restrictions once before dispatch so every evidence path sees
+ * the same effective privileges. Only `me` also receives the real principal,
+ * allowing the UI to explain the downgrade without changing database identity.
+ */
 export async function routeAction(
   realPrincipal: Principal,
   request: ResearchRequest,

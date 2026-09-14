@@ -4,6 +4,11 @@ import type { ResearchRequest } from './ResearchRequest.ts'
 import type { ResponseEnvelope } from './ResponseEnvelope.ts'
 import { parseProtocol } from './parseProtocol.ts'
 
+/**
+ * Bind a success envelope to the requested action before trusting its data.
+ * The own-property check is intentional: an unknown-valued schema field alone
+ * does not establish that the server actually supplied `data`.
+ */
 export function parseEnvelope<T, A extends ResearchRequest['action']>(
   input: unknown,
   action: A,

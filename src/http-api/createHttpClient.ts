@@ -6,6 +6,11 @@ import { operations } from './operations.ts'
 import { operationUrl } from './operationUrl.ts'
 import { parseHttpResponse } from './parseHttpResponse.ts'
 
+/**
+ * Resolve the session token per call, with redirects and automatic caching disabled.
+ * Conditional reads are explicit: the caller supplies an ETag and owns the cached
+ * passage body when a 304 is returned. This client does not retry paid Ask calls.
+ */
 export function createHttpClient(options: HttpClientOptions) {
   return async <K extends OperationName>(
     name: K,

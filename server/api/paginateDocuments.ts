@@ -2,6 +2,11 @@ import { parseListData } from '@/contracts/parseListData.ts'
 import { documentsInput } from '@/http-api/documentsInput.ts'
 import { decodeCursor } from './decodeCursor.ts'
 
+/**
+ * Pagination slices a freshly authorized, bounded library, not a stored snapshot.
+ * The backend's 50-document ceiling still applies; cursors cannot retrieve beyond
+ * it. Stable document-ID ordering prevents input row order from moving the page.
+ */
 export function paginateDocuments(data: unknown, input: unknown) {
   const { items } = parseListData(data)
   const options = documentsInput.parse(input)

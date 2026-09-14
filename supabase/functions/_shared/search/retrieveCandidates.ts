@@ -8,6 +8,13 @@ import { fuseRanks } from './fuseRanks.ts'
 import { readCandidate } from './readCandidate.ts'
 import { selectContext } from './selectors/selectContext.ts'
 
+/**
+ * Basic viewing mode must narrow the SQL search before branch limits are applied;
+ * filtering an unrestricted shortlist afterward could hide relevant basic evidence.
+ * Keep candidate-at-ten diagnostics separate from selected context so the gold
+ * evaluator can distinguish retrieval loss from selection loss. Missing scoped
+ * search support fails the request instead of falling back to wider access.
+ */
 export async function retrieveCandidates(
   client: SupabaseClient<Database>,
   input: SearchInput,

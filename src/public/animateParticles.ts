@@ -4,6 +4,11 @@ import { drawParticles } from './drawParticles'
 import { resizeParticleScene } from './resizeParticleScene'
 import { subscribeParticlePointer } from './subscribeParticlePointer'
 
+/**
+ * The returned cleanup owns the animation frame, pointer listeners and resize
+ * listener, and clears the canvas when motion is disabled. Resizing replaces the
+ * scene rather than retaining particles in the old coordinate bounds.
+ */
 export function animateParticles(canvas: HTMLCanvasElement) {
   const context = canvas.getContext('2d')
   if (!context) return () => {}
