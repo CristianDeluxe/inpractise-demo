@@ -1,11 +1,12 @@
 import { Link } from '@tanstack/react-router'
+import { EvidenceSteps } from './EvidenceSteps'
 import { Reveal } from './Reveal'
 import { SampleCard } from './SampleCard'
 import { sampleSources } from './sampleSources'
 
 export function EvidenceExample() {
   return (
-    <section id="evidence" className="page-shell py-20">
+    <section id="evidence" className="page-shell mb-28">
       <Reveal className="grid gap-12 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <p className="eyebrow text-muted-foreground">
@@ -26,6 +27,7 @@ export function EvidenceExample() {
             Costco, and fictional interviews about Northstar Workflow, Harbor
             Components and Meridian Payments.
           </p>
+          <EvidenceSteps />
           <Link to="/app" className="action mt-8">
             Ask your own question
           </Link>
