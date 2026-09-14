@@ -10,7 +10,7 @@ import { search } from './search.ts'
 import { successFixture } from './successFixture.ts'
 import { validateCitation } from './validators/validateCitation.ts'
 
-describe('six action adapters with explicitly test-only response layouts', () => {
+describe('seven action adapters with explicitly test-only response layouts', () => {
   it('runs me, list and debug through required runtime parsers', async () => {
     // testValue is a test fixture property, not a proposed production contract.
     const parse = (input: unknown) =>
