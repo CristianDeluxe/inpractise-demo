@@ -13,6 +13,7 @@ import { readerRoute } from './readerRoute'
 import { resetAliasRoute } from './resetAliasRoute'
 import { rootRoute } from './rootRoute'
 import { runtimeRoute } from './runtimeRoute'
+import { standardsRoute } from './standardsRoute'
 import { workspaceRoute } from './workspaceRoute'
 
 export const routeTree = rootRoute.addChildren([
@@ -28,6 +29,7 @@ export const routeTree = rootRoute.addChildren([
     loginRoute,
     accessRoute.addChildren([
       workspaceRoute,
+      standardsRoute,
       readerRoute,
       inspectionRoute,
       provenanceRoute,

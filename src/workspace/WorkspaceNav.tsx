@@ -29,7 +29,7 @@ export function WorkspaceNav() {
           Diagnostics
         </Link>
       ) : null}
-      <Link to="/method" className="workspace-link">
+      <Link to="/app/standards" className="workspace-link">
         Research standards
       </Link>
     </nav>
