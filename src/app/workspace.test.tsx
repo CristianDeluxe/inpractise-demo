@@ -34,7 +34,9 @@ describe('authorized research workflow', () => {
     expect(
       await screen.findByText('A supported claim with limits.'),
     ).toBeTruthy()
-    expect(screen.getByRole('heading', { name: 'partial' })).toBeTruthy()
+    expect(
+      screen.getByRole('heading', { name: 'Partly answered' }),
+    ).toBeTruthy()
     expect(requests.at(-1)?.['company']).toBeUndefined()
     fireEvent.click(screen.getByRole('button', { name: 'Inspect source' }))
     expect(

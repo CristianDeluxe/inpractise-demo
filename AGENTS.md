@@ -90,5 +90,9 @@ retrieval uses caller credentials. Do not run `seed`, `db:prepare`, `db:import`,
 `db:embed`, or provider generation as a substitute for verification. Existing
 migrations and frozen corpus files are immutable during maintenance.
 
-No repository remote or deployed UI is configured. The CI workflow is prepared,
-but remote CI and deployment must not be reported as executed from local checks.
+The repository pushes to `CristianDeluxe/inpractise-demo` and the UI is deployed
+at `https://inpractise.cristiandeluxe.dev` behind a Node origin on cPanel;
+`docs/deploy.md` describes that path. GitHub Actions runs `pnpm check:ci` on
+every push. A local gate still says nothing about either: report a CI result
+only from a run you have read, and a deployment only from a request you have
+made against the live host.

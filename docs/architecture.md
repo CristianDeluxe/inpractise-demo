@@ -69,6 +69,24 @@ access. A separately, organically aged member token was accepted before `exp`
 and rejected by Auth after it, but was not replayed through the deployed
 handler.
 
+### Viewing the corpus as a lesser principal
+
+A reviewer can ask what a plain member sees without a second account. The
+request carries an optional `viewAs` object, and
+[ViewAsSchema.ts](../supabase/functions/research/ViewAsSchema.ts) is written so
+that only a downgrade is expressible: `role` accepts the literal `member` and
+`premium` accepts the literal `false`. There is no shape that asks for reviewer
+access or premium entitlement, so a forged body cannot request one.
+
+[effectivePrincipal.ts](../supabase/functions/research/effectivePrincipal.ts)
+intersects the request with the authenticated principal rather than replacing
+it: premium survives only as `real.premium && viewAs?.premium !== false`. The
+caller's JWT and organization are untouched, so RLS remains the ceiling and the
+downgrade can only lower the floor. Two viewing modes never share a cached
+response either - [viewingReadScope.ts](../server/api/viewingReadScope.ts) folds
+the mode into the ETag, so a member-view response cannot be served from a
+reviewer-view entry.
+
 ## Six actions
 
 [routeAction.ts](../supabase/functions/research/routeAction.ts) dispatches
