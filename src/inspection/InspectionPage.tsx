@@ -2,6 +2,7 @@ import { RequestFeedback } from '@/components/RequestFeedback'
 import { ResponseMeta } from '@/components/ResponseMeta'
 import { useInspection } from '@/inspection/hooks/useInspection'
 import { CorpusCounts } from './CorpusCounts'
+import { RecentRequests } from './RecentRequests'
 
 export function InspectionPage() {
   const request = useInspection()
@@ -23,6 +24,7 @@ export function InspectionPage() {
       {request.state.status === 'success' ? (
         <>
           <CorpusCounts corpus={request.state.data.data.corpus} />
+          <RecentRequests requests={request.state.data.data.recentRequests} />
           <section className="rounded-lg border border-border bg-card p-6">
             <h2 className="font-sans text-xl">No reviewed evaluation report</h2>
             <p className="mt-4 text-sm text-muted-foreground">

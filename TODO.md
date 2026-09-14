@@ -34,19 +34,16 @@ plan wins.
 
 ## Frontend
 
-- [ ] **Connect the retrieval diagnostic record.** `retrieveCandidates` already
-      computes `candidateAt10`, `selectedIds` and `selectedTokens` and throws
-      them away: `handleAsk` keeps only `mode` and `candidateCount`. Surfacing
-      them would let a reviewer see retrieval loss and selection loss apart, on
-      real data. Two shapes, and they are not equivalent: (a) return the record
-      on the `ask` response for an unrestricted reviewer, which stays per-answer
-      and needs no schema change; (b) persist it per request - a new migration
-      adding a column to `public.request_usage` plus a writer function - so
-      `debug` can return the reviewer's own recent requests and
-      `src/inspection/InspectionPage.tsx` can show them. (b) also needs
-      owner-authorized application to the remote project. Next: owner picks the
-      shape. Do not fabricate corpus fingerprints: the server-owned identity
-      available at answer time is the revision id of each selected passage.
+- [!] **Apply the diagnostics migration to the remote project.**
+  `supabase/migrations/20260914000012_request_diagnostics.sql` adds
+  `diagnostics` and `recorded_at` to `public.request_usage` plus
+  `record_request_diagnostics`, and is applied and tested only on the local
+  container (`pnpm test:db:local`, 11 cases). Until the owner applies it
+  remotely and redeploys the Edge function, the live `ask` path's diagnostic
+  write and the live `debug` action's `recentRequests` will fail against the
+  deployed schema. Next: owner-authorized migration application and Edge
+  rollout, then a live check that a reviewer sees their own record on `/inspect`
+  and a downgraded view does not.
 
 - [!] **Freeze the frontend/backend response boundary.** The remaining open
   points are the absent first-passage pointer, directional neighbors,
