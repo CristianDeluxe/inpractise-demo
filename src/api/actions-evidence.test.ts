@@ -10,7 +10,7 @@ import { search } from './search.ts'
 import { successFixture } from './successFixture.ts'
 import { validateCitation } from './validators/validateCitation.ts'
 
-describe('six action adapters with explicitly test-only response layouts', () => {
+describe('seven action adapters with explicitly test-only response layouts', () => {
   it('validates parser output and forbids fabricated or modified citation evidence', async () => {
     const client = clientFixture(async () =>
       Promise.resolve(successFixture({ testEvidence: citationFixture() })),
