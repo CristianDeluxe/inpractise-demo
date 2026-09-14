@@ -743,3 +743,19 @@
   deployed the same day made untrue.
 - The backlog entry stays `[~]`: the requests are measured, a human reading the
   narration against a clock is not something an automated run can establish.
+
+### 2026-09-14 - Lock-upgrade deadlock for transactional publishers resolved
+
+- Cause confirmed: a publisher that stages passages and then publishes in one
+  transaction holds a foreign-key key-share lock on the document row and asks to
+  upgrade it, so two of them deadlock and PostgreSQL aborts one with `40P01`.
+- Fix is an ordering rule, not a schema change: take
+  `select document_id from public.documents ... for update` before staging. No
+  migration, and the importer is unaffected because it issues separate REST
+  operations.
+- Evidence: `tests/integration/publication-concurrency.test.ts` now holds both
+  cases and passes twice in a row - the unguarded pair still aborts exactly one
+  transaction with `40P01` and leaves the prior revision intact, and the
+  parent-locked pair both publish with the follower measurably blocked on the
+  lock (~1s against a 1s hold) instead of aborted. Helper:
+  `tests/database/publishWithParentLock.ts`. Rule recorded in `docs/backend.md`.

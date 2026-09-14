@@ -21,17 +21,6 @@ plan wins.
 
 ## Testing
 
-- [ ] **Handle lock-upgrade deadlocks for transactional publishers.** The
-      synchronized staging/publication regression produces one `40P01` abort:
-      both transactions hold foreign-key key-share locks before publication
-      requests `FOR UPDATE` on the same document. Atomicity is preserved; the
-      losing transaction must retry. The current importer uses separate REST
-      operations, so this is not evidence it encounters this exact staging
-      pattern. Next: evaluate locking the parent before staging for callers that
-      combine both operations in one transaction, or add bounded
-      whole-transaction retry. Evidence:
-      `tests/integration/publication-concurrency.test.ts`.
-
 ## Frontend
 
 - [!] **Freeze the frontend/backend response boundary.** The connected redacted
