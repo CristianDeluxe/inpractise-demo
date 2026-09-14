@@ -23,6 +23,9 @@ export function conflictSides(
     const citation = claim.citationIds
       .map((id) => byId.get(id))
       .find((value) => value !== undefined)
+    // Unreachable in practice: validateProviderAnswer.ts (lines 18-26) rejects
+    // the whole answer before this runs if any claim cites an id outside the
+    // supplied citations, so every claim here already resolves to a citation.
     if (!citation) continue
     const key = citationAttribution(citation)
     const side = sides.get(key)

@@ -18,7 +18,7 @@ src/api/performRequest.ts               mcp/callResearch.ts
                                |
               caller JWT forwarded to Supabase client
                                |
-              routeAction.ts -> one of six handlers
+              routeAction.ts -> one of seven handlers
                                |
               PostgreSQL RLS -> authorized evidence only
                                |
@@ -87,20 +87,21 @@ response either - [viewingReadScope.ts](../server/api/viewingReadScope.ts) folds
 the mode into the ETag, so a member-view response cannot be served from a
 reviewer-view entry.
 
-## Six actions
+## Seven actions
 
 [routeAction.ts](../supabase/functions/research/routeAction.ts) dispatches
 exactly these actions. Every action requires an authenticated principal with
 active membership.
 
-| Action   | Input beyond `action`                                   | Handler and result                                                                                                                                             |
-| -------- | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `me`     | None                                                    | [handleMe.ts](../supabase/functions/research/actions/handleMe.ts): organization, role and premium entitlement.                                                 |
-| `list`   | Optional `company`, `kind`                              | [handleList.ts](../supabase/functions/research/actions/handleList.ts): authorized current revisions, ordered by document ID; more than 50 results is an error. |
-| `read`   | `documentId`, `revisionId`, `passageId`                 | [handleRead.ts](../supabase/functions/research/actions/handleRead.ts): exact passage citation and adjacent passage IDs; missing or denied evidence is 404.     |
-| `search` | `query`, optional `company`, `limit` (1–10, default 10) | [handleSearch.ts](../supabase/functions/research/actions/handleSearch.ts): ranked citations, actual search mode and truncation flag.                           |
-| `ask`    | `query`, optional `company`                             | [handleAsk.ts](../supabase/functions/research/actions/handleAsk.ts): standalone structured answer, mode and candidate count.                                   |
-| `debug`  | None                                                    | [handleDebug.ts](../supabase/functions/research/actions/handleDebug.ts): reviewer-only corpus counts through `inspect_corpus`; no connected evaluation report. |
+| Action       | Input beyond `action`                                   | Handler and result                                                                                                                                                           |
+| ------------ | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `me`         | None                                                    | [handleMe.ts](../supabase/functions/research/actions/handleMe.ts): organization, role and premium entitlement.                                                               |
+| `list`       | Optional `company`, `kind`                              | [handleList.ts](../supabase/functions/research/actions/handleList.ts): authorized current revisions, ordered by document ID; more than 50 results is an error.               |
+| `read`       | `documentId`, `revisionId`, `passageId`                 | [handleRead.ts](../supabase/functions/research/actions/handleRead.ts): exact passage citation and adjacent passage IDs; missing or denied evidence is 404.                   |
+| `search`     | `query`, optional `company`, `limit` (1–10, default 10) | [handleSearch.ts](../supabase/functions/research/actions/handleSearch.ts): ranked citations, actual search mode and truncation flag.                                         |
+| `ask`        | `query`, optional `company`                             | [handleAsk.ts](../supabase/functions/research/actions/handleAsk.ts): standalone structured answer, mode, candidate count and evidence vintage.                               |
+| `provenance` | `requestId`                                             | [handleProvenance.ts](../supabase/functions/research/actions/handleProvenance.ts): the caller's own past request, replayed with the current currency of each cited revision. |
+| `debug`      | None                                                    | [handleDebug.ts](../supabase/functions/research/actions/handleDebug.ts): reviewer-only corpus counts through `inspect_corpus`; no connected evaluation report.               |
 
 Success returns `{ action, data, buildId, requestId }`; errors return
 `{ error: { code, message, retryable }, requestId }`.

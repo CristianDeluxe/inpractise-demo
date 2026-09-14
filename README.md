@@ -245,7 +245,7 @@ pass.
 | [openapi.json](docs/openapi.json)                                     | Generated OpenAPI 3.1 contract, checked against runtime schemas.                           |
 | [ADR 0008](docs/adr/0008-caller-token-http-facade.md)                 | No-credentials facade decision.                                                            |
 | [ADR 0009](docs/adr/0009-scope-immutable-passage-caching.md)          | Immutable evidence versus revocable access.                                                |
-| [architecture.md](docs/architecture.md)                               | Browser/MCP request paths, six actions, RLS, retrieval and structured answers.             |
+| [architecture.md](docs/architecture.md)                               | Browser/MCP request paths, seven actions, RLS, retrieval and structured answers.           |
 | [mcp-install.md](docs/mcp-install.md)                                 | Client configuration, required environment, connection checks and troubleshooting.         |
 | [mcp.md](docs/mcp.md)                                                 | Tool behavior, parity evidence and recorded Claude session.                                |
 | [mcp-handshake.jsonl](docs/mcp-handshake.jsonl)                       | Untouched timestamps and protocol versions from the 2026-09-13 session.                    |

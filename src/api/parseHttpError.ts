@@ -2,8 +2,13 @@ import { z } from 'zod'
 import { ApiError } from './ApiError.ts'
 import type { ErrorEnvelope } from './ErrorEnvelope.ts'
 import { mapHttpStatus } from './mappers/mapHttpStatus.ts'
+import type { ResearchRequest } from './ResearchRequest.ts'
 
-export function parseHttpError(status: number, input: unknown): ApiError {
+export function parseHttpError(
+  status: number,
+  input: unknown,
+  action?: ResearchRequest['action'],
+): ApiError {
   const envelope: z.ZodSafeParseResult<ErrorEnvelope> = z
     .strictObject({
       error: z.strictObject({
@@ -15,7 +20,7 @@ export function parseHttpError(status: number, input: unknown): ApiError {
     })
     .safeParse(input)
   return new ApiError(
-    mapHttpStatus(status),
+    mapHttpStatus(status, action),
     envelope.success
       ? envelope.data.error.message
       : `The research request failed (HTTP ${String(status)}).`,
