@@ -168,13 +168,10 @@ to Pages after a direct upload cannot change that artifact. Rebuild when either
 changes. Never copy `.env.remote`, credentials, the corpus, evaluation reports
 or the MCP process into `dist`.
 
-Installation on a clean runner is still blocked on `@cristiandeluxe/max-lane`,
-which is declared as `file:../max-lane` and is not published. The five shared
-config packages resolve again under their published `@busirocket/*` scope, so a
-local `pnpm install --frozen-lockfile` succeeds. Build from a provisioned
-checkout only after the owner publishes or vendors max-lane without importing
-Keychain credentials; a clean Cloudflare Git build is not established by these
-instructions. See
+`pnpm install --frozen-lockfile` succeeds on a clean checkout. The one
+unpublished dependency, `@cristiandeluxe/max-lane`, is optional and belongs to
+the local `evals/` harness alone; pnpm skips it when the sibling directory is
+absent, and no build or runtime path imports it. See
 [Vite environment variables](https://vite.dev/guide/env-and-mode) and
 [Pages build configuration](https://developers.cloudflare.com/pages/configuration/build-configuration/).
 

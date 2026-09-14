@@ -1,8 +1,8 @@
-import { createAccessibilityConfig } from '@busirocket/eslint-config/accessibility'
-import { createBaseConfig } from '@busirocket/eslint-config/base'
-import { createCodeQualityConfig } from '@busirocket/eslint-config/code-quality'
-import { createNodeConfig } from '@busirocket/eslint-config/node'
-import { createViteReactConfig } from '@busirocket/eslint-config/vite-react'
+import { createAccessibilityConfig } from '@syntopica/eslint-config/accessibility'
+import { createBaseConfig } from '@syntopica/eslint-config/base'
+import { createCodeQualityConfig } from '@syntopica/eslint-config/code-quality'
+import { createNodeConfig } from '@syntopica/eslint-config/node'
+import { createViteReactConfig } from '@syntopica/eslint-config/vite-react'
 import codePolicy from 'eslint-plugin-code-policy'
 import { defineConfig } from 'eslint/config'
 import globals from 'globals'
@@ -36,13 +36,23 @@ export default defineConfig([
       'scripts/api/**/*.ts',
       'server/api/**/*.ts',
       'tests/**/*.ts',
-      'evals/**/*.ts',
       'mcp/**/*.ts',
       'vite.config.ts',
       'vite.api.config.ts',
     ],
     languageOptions: {
       parserOptions: { projectService: false, project: './tsconfig.node.json' },
+    },
+  },
+  {
+    // Local-only answer-quality harness; its judge dependency is optional, so
+    // the CI lint scope skips it (see the lint:ci script).
+    files: ['evals/**/*.ts'],
+    languageOptions: {
+      parserOptions: {
+        projectService: false,
+        project: './tsconfig.evals.json',
+      },
     },
   },
   {

@@ -539,3 +539,22 @@
   corpus rows; the cited passage returned 200 with an `ETag` and 304 on
   `If-None-Match`; the `org-b` persona replaying the `org-a` tag got 200,
   not 304. Documented in `docs/deploy.md`.
+
+### 2026-09-14 — Shared config scope settled on `@syntopica`, judge made optional
+
+- The five shared config packages are published under `@syntopica/*` at the
+  exact versions this repository pins (`create-baseline` 0.9.0, `eslint-config`
+  0.8.0, `tsconfig` 0.3.0, `prettier-config` 0.2.0, `quality-config` 0.11.0);
+  `@busirocket/*` is retired. Renamed every manifest, config and document and
+  regenerated the lockfile in the same commit, which is what commit `3f3dc7d`
+  had not done.
+- `@cristiandeluxe/max-lane` moved to `optionalDependencies`. It is the local
+  answer-quality judge and nothing outside `evals/` imports it, so the CI scope
+  now excludes that directory: `type-check:ci` drops it from the project list
+  (new `tsconfig.evals.json` keeps it in the full `type-check`) and `lint:ci`
+  adds `--ignore-pattern 'evals/**'` over the same ESLint configuration.
+- Evidence: `pnpm install --frozen-lockfile` exit 0; `pnpm check:ci` exit 0 both
+  normally and with `node_modules/@cristiandeluxe` unlinked to simulate a runner
+  without the sibling checkout; `pnpm check:quality` and `pnpm conformance` exit
+  0; full `pnpm type-check` and `pnpm lint`, which do cover `evals/`, exit 0
+  with the sibling present.
