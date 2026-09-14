@@ -149,15 +149,16 @@ Keep the build and request identifiers available for troubleshooting. An HTTP
 404 means missing or inaccessible evidence; it must not disclose the document
 title or distinguish those two cases.
 
-| HTTP status | `ApiError.code`        | Required UI behavior                                         |
-| ----------- | ---------------------- | ------------------------------------------------------------ |
-| 401         | `invalid_session`      | Clear evidence and request sign-in.                          |
-| 403         | `forbidden`            | Show access denied; do not downgrade to another identity.    |
-| 404         | `passage_not_found`    | Show a neutral unavailable-source state.                     |
-| 422         | `bad_input`            | Show validation feedback and allow correction.               |
-| 429         | `allowance_exhausted`  | Show the limit state; do not automatically resubmit.         |
-| 502         | `invalid_model_answer` | Show an error; render no unvalidated answer.                 |
-| 503         | `dependency_failure`   | Show an error and an explicit retry action when appropriate. |
+| HTTP status | `ApiError.code`        | Required UI behavior                                                                                                                                                                                                                 |
+| ----------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 401         | `invalid_session`      | Clear evidence and request sign-in.                                                                                                                                                                                                  |
+| 403         | `forbidden`            | Show access denied; do not downgrade to another identity.                                                                                                                                                                            |
+| 404         | `passage_not_found`    | Show a neutral unavailable-source state.                                                                                                                                                                                             |
+| 404         | `request_not_found`    | `provenance` only: show a neutral not-found state, with no alert styling and no sign-in prompt. A request belonging to another caller and a request that never existed produce the identical 404, and the UI must not separate them. |
+| 422         | `bad_input`            | Show validation feedback and allow correction.                                                                                                                                                                                       |
+| 429         | `allowance_exhausted`  | Show the limit state; do not automatically resubmit.                                                                                                                                                                                 |
+| 502         | `invalid_model_answer` | Show an error; render no unvalidated answer.                                                                                                                                                                                         |
+| 503         | `dependency_failure`   | Show an error and an explicit retry action when appropriate.                                                                                                                                                                         |
 
 `ApiError` also distinguishes `network`, `protocol`, `cancelled` and otherwise
 unmapped `http_error`. Handle its typed `code`, not substrings in a message.

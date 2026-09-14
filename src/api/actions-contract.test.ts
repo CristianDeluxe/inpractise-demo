@@ -8,7 +8,7 @@ import { me } from './me.ts'
 import { successFixture } from './successFixture.ts'
 import { validateCitation } from './validators/validateCitation.ts'
 
-describe('six action adapters with explicitly test-only response layouts', () => {
+describe('seven action adapters with explicitly test-only response layouts', () => {
   it('supports flat and nested ask fixtures without assuming a production wire layout', async () => {
     const nested = {
       testAnswer: {
