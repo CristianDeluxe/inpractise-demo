@@ -10,7 +10,7 @@ export function PodcastPlayCard() {
       rel="noreferrer"
       aria-label="Listen to IP Fieldwork on Spotify"
       aria-describedby="podcast-disclosure"
-      className="group relative block overflow-hidden border border-ink-border md:col-span-5"
+      className="group relative block overflow-hidden border border-image-outline-inverse md:col-span-5"
     >
       <img
         src={podcastCover}

@@ -7,14 +7,16 @@ export function WorkspaceNav() {
   return (
     <nav aria-label="Workspace" className="flex flex-wrap gap-2 lg:flex-col">
       <Link to="/app" hash="library" className="workspace-link">
-        <BookOpen size={16} aria-hidden="true" /> Library
+        <BookOpen size={16} strokeWidth={1.5} aria-hidden="true" /> Library
       </Link>
       <Link to="/app" hash="research" className="workspace-link">
-        <Search size={16} aria-hidden="true" /> Research workspace
+        <Search size={16} strokeWidth={1.5} aria-hidden="true" /> Research
+        workspace
       </Link>
       {access?.role === 'reviewer' ? (
         <Link to="/inspect" className="workspace-link">
-          <FlaskConical size={16} aria-hidden="true" /> Diagnostics
+          <FlaskConical size={16} strokeWidth={1.5} aria-hidden="true" />{' '}
+          Diagnostics
         </Link>
       ) : null}
       <Link to="/method" className="workspace-link">
