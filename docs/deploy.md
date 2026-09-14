@@ -284,3 +284,26 @@ These authentication, project-creation and upload commands are documented for
 the owner and were **not executed**. Their syntax follows
 [Cloudflare Direct Upload](https://developers.cloudflare.com/pages/get-started/direct-upload/);
 local serving does not establish a successful deployment.
+
+### Evidence-integrity release on 2026-09-14
+
+Frontend first, then the Edge function: `src/http-api/answerOutput.ts` extends a
+`z.strictObject`, so a client deployed before this release would have rejected
+an `ask` response carrying `vintage` as a protocol error and lost the whole
+answer. `pnpm build`, the rsync above for `dist server server.js`, then
+`cloudlinux-selector restart` returned `{"result": "success"}`;
+`supabase functions deploy research --use-api --no-verify-jwt --import-map supabase/functions/deploy-import-map.json`
+then published version 15.
+
+Re-probed live: `/`, `/method`, `/connect`, `/login`, `/app`, `/inspect` and
+`/answer/<unknown-uuid>` each returned 200, and `/api/v1/health` returned
+`{"status":"ok","scope":"facade-only","backendChecked":false}`. The lazy chunks
+were fetched individually: `/assets/ProvenancePage-83qmoxjX.js` returned 200 and
+contains `provenance`, and `/assets/WorkspacePage-DNjTE4YG.js` returned 200 and
+contains both `Sources disagree` and `vintage`. As the reviewer persona, `ask`
+returned `answered` with
+`vintage={"oldest":"2026-08-04","newest":"2026-08-26","oldestAgeDays":41,"newestAgeDays":19}`,
+the Harbor delivery question returned `status=conflict` with two claims,
+`provenance` on the caller's own request id returned 200 with the revision list
+marked `current: true`, and an unknown request id returned 404 `not_found`,
+which the client maps to `request_not_found`.

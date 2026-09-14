@@ -1,5 +1,19 @@
 # TODO Log
 
+- 2026-09-14 - **Evidence-integrity release deployed and verified live.** Four
+  deliverables shipped on `main`: passage fencing against prompt injection in
+  the retrieved text, evidence vintage on every answer, a legible two-sided view
+  when sources disagree, and a seventh action `provenance` that reopens one of
+  the caller's own answers and reports whether each cited revision is still
+  current. Deployed frontend first (`z.strictObject` on `answerOutput` would
+  have made an older client reject the new `vintage` key), then research
+  version 15. Evidence: `pnpm check:ci` exits 0; live probes of the six routes
+  plus `/answer/<id>` return 200; `/api/v1/health` is ok; the served chunks
+  contain `provenance`, `Sources disagree` and `vintage`; a live `ask` returned
+  `vintage` with four fields, the Harbor question returned `status=conflict`
+  with two claims, `provenance` returned 200 for the caller's own request and
+  404 for an unknown id. Full record in `docs/deploy.md`.
+
 - 2026-09-14 — **Restored Lovable landing sections and hover behavior.**
   Restored the library tabs/cards, podcast artwork/platform links, executives
   CTA, interlude gradient/reveal, evidence chrome, header/mobile menu and all
