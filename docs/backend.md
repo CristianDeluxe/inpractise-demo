@@ -65,6 +65,18 @@ and normalized file hash.
   metadata, passage identity/text/token counts, and hashes before changing
   current revision in one transaction. Failed publication leaves the prior
   current revision intact. A verified repeated import is a no-op.
+- A publisher that stages passages and then publishes inside one transaction
+  must take the document row's exclusive lock **before** it stages anything.
+  Staging first leaves both transactions holding a foreign-key key-share lock on
+  the same document, and publication then asks to upgrade it: PostgreSQL aborts
+  one with `40P01`. `select document_id from public.documents ... for update`
+  first turns the race into a queue, at the cost of serialising publishers of
+  the same document. The importer issues separate REST operations and is not
+  exposed to this, so the rule binds transactional callers only. Both behaviours
+  are pinned by `tests/integration/publication-concurrency.test.ts`: the
+  unguarded pair still aborts one transaction with `40P01` and interleaves
+  nothing, and the parent-locked pair both succeed with the second measurably
+  waiting for the first.
 - `search_candidates(query_text, query_embedding, company_filter, candidate_limit)`
   is `SECURITY INVOKER`. It returns separate `fts` and `vector` branch ranks,
   lexical score and cosine distance. Limits are 1–30. A null vector selects FTS
