@@ -520,3 +520,22 @@
 - Independent review found and resolved omitted tenant scope in validators and
   lost backend IDs on locally generated problems. Final broad verification is
   recorded in the task's FINDINGS.md.
+
+### 2026-09-14 — HTTP API deployed and conditional caching verified live
+
+- The origin now loads its own `.env` (`server/loadOriginEnv.mjs`), because the
+  CloudLinux Node selector starts the app without it; before that every
+  authenticated `/api/v1` call answered `503 dependency_failure` with
+  `RESEARCH_URL is not configured.`
+- Deployed `supabase functions deploy research --no-verify-jwt` so success
+  responses carry `x-research-org-id`; the facade needs it to scope the ETag.
+- nginx hides `If-None-Match` from the backend on any location with
+  `proxy_cache` enabled, which the cPanel vhost sets on `location /`. Added the
+  user include
+  `/etc/nginx/conf.d/users/<account>/inpractise.cristiandeluxe.dev/api.conf`
+  scoping `/api/v1` out of the cache and forwarding the validators.
+- Evidence against `https://inpractise.cristiandeluxe.dev/api/v1`: `/me` 200
+  `{"orgId":"org-a"}`; `/documents?pageSize=2` and `POST /search` returned
+  corpus rows; the cited passage returned 200 with an `ETag` and 304 on
+  `If-None-Match`; the `org-b` persona replaying the `org-a` tag got 200,
+  not 304. Documented in `docs/deploy.md`.
