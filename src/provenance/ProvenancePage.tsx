@@ -1,8 +1,10 @@
+import { ApiError } from '@/api/ApiError'
 import { RequestFeedback } from '@/components/RequestFeedback'
 import { ResponseMeta } from '@/components/ResponseMeta'
 import { useParams } from '@tanstack/react-router'
 import { z } from 'zod'
 import { useProvenance } from './hooks/useProvenance'
+import { ProvenanceNotFound } from './ProvenanceNotFound'
 import { RevisionCurrency } from './RevisionCurrency'
 
 export function ProvenancePage() {
@@ -10,6 +12,10 @@ export function ProvenancePage() {
     .object({ requestId: z.string().min(1) })
     .parse(useParams({ strict: false }))
   const request = useProvenance(requestId)
+  const notFound =
+    request.state.status === 'error' &&
+    request.state.error instanceof ApiError &&
+    request.state.error.code === 'request_not_found'
   return (
     <main id="main-content" className="mx-auto max-w-4xl px-5 py-10 md:px-10">
       <p className="eyebrow text-muted-foreground">Reopen this answer</p>
@@ -20,13 +26,17 @@ export function ProvenancePage() {
         This reopens one of your own answers by request id and checks each
         quoted revision against the corpus as it stands today.
       </p>
-      <RequestFeedback
-        state={request.state}
-        cancel={request.cancel}
-        retry={() => {
-          void request.run({ action: 'provenance', requestId })
-        }}
-      />
+      {notFound ? (
+        <ProvenanceNotFound />
+      ) : (
+        <RequestFeedback
+          state={request.state}
+          cancel={request.cancel}
+          retry={() => {
+            void request.run({ action: 'provenance', requestId })
+          }}
+        />
+      )}
       {request.state.status === 'success' ? (
         <>
           <RevisionCurrency revisions={request.state.data.data.revisions} />

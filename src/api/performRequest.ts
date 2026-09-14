@@ -57,8 +57,8 @@ export async function performRequest<T, A extends ResearchRequest['action']>(
     )
   }
   throwIfCancelled(signal)
-  const body = await readResponseBody(response)
+  const body = await readResponseBody(response, request.action)
   throwIfCancelled(signal)
-  if (!response.ok) throw parseHttpError(response.status, body)
+  if (!response.ok) throw parseHttpError(response.status, body, request.action)
   return parseEnvelope(body, request.action, validate)
 }

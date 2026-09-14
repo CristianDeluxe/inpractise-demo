@@ -7,6 +7,6 @@ export function validateRequest(request: ResearchRequest): void {
   if (!result.success)
     throw new ApiError(
       'bad_input',
-      'The research request does not match the six-action contract.',
+      'The research request does not match the seven-action contract.',
     )
 }
