@@ -41,13 +41,13 @@ plan wins.
 
 ## Infrastructure
 
-- [!] **HTTP conditional caching requires deployed read-owned scope metadata.**
-  The local API safely returns `no-store` 200 when the research backend omits
-  `X-Research-Org-Id`; the new `researchResponse.ts` supplies it from the
-  action's actual principal. Neither API nor backend was deployed in this task.
-  Next: explicitly authorize a release and verify the header and organization
-  isolation against the real backend before claiming remote 304 support. Public
-  immutable caching remains incompatible with revocable access (ADR 0009).
+- [ ] **Claim the `@syntopica` npm scope, or never reuse the name.** Commit
+      `3f3dc7d` renamed the five shared config packages to `@syntopica/*`, a
+      scope nobody owns: the registry answers 404 for it anonymously and with
+      the account token. The rename is reverted, but an unowned scope in a
+      manifest is a dependency-confusion foothold - whoever registers it first
+      gets installed by any future checkout that reintroduces the name. Next:
+      either register the scope on npm before any rename, or drop the name.
 
 - [~] **Upstream ESLint 10 peer metadata.** Strict runtime lint passes, but
   `pnpm peers check` exits 1 for `eslint-plugin-import@2.32.0`,
