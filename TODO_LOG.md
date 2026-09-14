@@ -586,3 +586,24 @@
 - `tests/unit/corpusVocabulary.test.ts` rehashes the raw source artifacts that
   `corpus/raw/` deliberately keeps out of the repository, so it is excluded from
   `vitest.ci.config.ts` and still runs in the local `pnpm test`.
+
+### 2026-09-14 — Server-enforced viewing modes and coverage
+
+- Implemented strict downgrade-only `viewAs` across the research service and
+  HTTP facade. Effective access intersects real membership; `me` returns both
+  principals. Restricted diagnostics refuse before querying, and passage ETags
+  include the requested mode.
+- Added the workspace selector, restriction banner and evidence cancellation on
+  mode changes. Coverage bars, company depth and recent documents derive from
+  caller-authorized database passage counts and retain company filtering.
+- Verification: `pnpm check:ci` passed (39 Vitest files / 214 tests, 14 Deno
+  tests / 24 steps; 88.76% statement coverage), `pnpm check:deno`,
+  `pnpm type-check`, `pnpm lint`, `pnpm build`, `pnpm check:security` and
+  `git diff --check` passed. The isolated component command
+  `PLAYWRIGHT_BROWSERS_PATH=0 pnpm exec tsx --tsconfig tsconfig.app.json work/viewas-visual.mts`
+  passed four 400px scenarios with no overflow or animation. Independent review
+  found no actionable defects.
+- New migration `20260914000011_scoped_search_candidates.sql` remains unapplied
+  by instruction; live SQL/count behavior and restricted search/ask await the
+  owner-authorized application and rollout recorded in TODO.md. No commit, push,
+  provisioning, provider generation or deployment was performed.

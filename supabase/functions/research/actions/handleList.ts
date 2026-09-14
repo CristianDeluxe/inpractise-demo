@@ -1,4 +1,5 @@
 import { ApiError } from '../../_shared/http/ApiError.ts'
+import { flattenLibraryItem } from '../flattenLibraryItem.ts'
 import type { Principal } from '../Principal.ts'
 
 /**
@@ -13,9 +14,10 @@ export async function handleList(
   let query = principal.client
     .from('document_revisions')
     .select(
-      'document_id,revision_id,title,company,kind,origin,interview_date,published_at,source_url',
+      'document_id,revision_id,title,company,kind,origin,interview_date,published_at,source_url,documents!inner(required_tier),passages(count)',
     )
     .eq('is_current', true)
+  if (!principal.premium) query = query.eq('documents.required_tier', 'basic')
   if (company) query = query.eq('company', company)
   if (kind) query = query.eq('kind', kind)
   const result = await query.order('document_id').limit(51)
@@ -23,5 +25,5 @@ export async function handleList(
     throw new ApiError('dependency_failure', 'Library read failed', true)
   if (result.data.length > 50)
     throw new ApiError('invalid_request', 'Corpus larger than the demo bound')
-  return { items: result.data }
+  return { items: result.data.map(flattenLibraryItem) }
 }

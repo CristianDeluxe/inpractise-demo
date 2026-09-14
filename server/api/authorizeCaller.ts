@@ -1,3 +1,4 @@
+import type { ViewAs } from '@/api/ViewAs.ts'
 import { meOutput } from '@/http-api/meOutput.ts'
 import { callBackend } from './callBackend.ts'
 import type { FacadeConfig } from './FacadeConfig.ts'
@@ -8,12 +9,13 @@ import { requireBearer } from './requireBearer.ts'
 export async function authorizeCaller(
   config: FacadeConfig,
   context: OperationContext,
+  viewAs?: ViewAs,
 ) {
   const authorization = requireBearer(context.request)
   const identity = await callBackend(config, {
     authorization,
     correlationId: context.correlationId,
-    payload: { action: 'me' },
+    payload: { action: 'me', ...(viewAs ? { viewAs } : {}) },
   })
   try {
     meOutput.parse(identity.data)

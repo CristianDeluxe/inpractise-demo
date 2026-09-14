@@ -1,20 +1,12 @@
-import { documentParameters } from './documentParameters.ts'
 import { FacadeError } from './FacadeError.ts'
 import type { matchOperation } from './matchOperation.ts'
+import { queryInput } from './queryInput.ts'
 
 export async function parseInput(
   request: Request,
   route: ReturnType<typeof matchOperation>,
 ) {
-  let raw: unknown = route.path
-  const params = new URL(request.url).searchParams
-  if (route.name === 'documents') raw = documentParameters(params)
-  else if (params.size)
-    throw new FacadeError(
-      422,
-      'invalid_request',
-      'Unexpected query parameters.',
-    )
+  let raw: unknown = queryInput(request, route)
   if (request.method === 'POST') {
     if (
       request.headers.get('content-type')?.split(';')[0]?.trim() !==

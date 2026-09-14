@@ -1,5 +1,6 @@
 import type { OperationName } from './OperationName.ts'
 import { operations } from './operations.ts'
+import { setOperationQuery } from './setOperationQuery.ts'
 
 export function operationUrl(
   baseUrl: string,
@@ -14,9 +15,6 @@ export function operationUrl(
       path = path.replace(`{${key}}`, encodeURIComponent(String(value)))
     }
   const url = new URL(path, baseUrl)
-  if (name === 'documents')
-    for (const [key, value] of Object.entries(input))
-      if (typeof value === 'string' || typeof value === 'number')
-        url.searchParams.set(key, String(value))
+  setOperationQuery(url, name, input)
   return url
 }

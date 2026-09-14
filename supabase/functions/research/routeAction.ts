@@ -4,16 +4,18 @@ import { handleList } from './actions/handleList.ts'
 import { handleMe } from './actions/handleMe.ts'
 import { handleRead } from './actions/handleRead.ts'
 import { handleSearch } from './actions/handleSearch.ts'
+import { effectivePrincipal } from './effectivePrincipal.ts'
 import type { Principal } from './Principal.ts'
 import type { ResearchRequest } from './ResearchRequest.ts'
 
 export async function routeAction(
-  principal: Principal,
+  realPrincipal: Principal,
   request: ResearchRequest,
 ): Promise<unknown> {
+  const principal = effectivePrincipal(realPrincipal, request.viewAs)
   switch (request.action) {
     case 'me':
-      return handleMe(principal)
+      return handleMe(principal, realPrincipal)
     case 'list':
       return await handleList(principal, request.company, request.kind)
     case 'read':

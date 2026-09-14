@@ -9,9 +9,13 @@ export function openApiParameters(
   const fields = Object.entries<z.ZodType>(operation.input.shape).map(
     ([key, schema]) => ({
       name: key,
-      in: name === 'passage' ? 'path' : 'query',
+      in: name === 'passage' && key !== 'viewAs' ? 'path' : 'query',
       required: !schema.safeParse(undefined).success,
-      schema: z.toJSONSchema(schema),
+      ...(key === 'viewAs'
+        ? {
+            content: { 'application/json': { schema: z.toJSONSchema(schema) } },
+          }
+        : { schema: z.toJSONSchema(schema) }),
     }),
   )
   return [

@@ -11,7 +11,7 @@ export async function searchEvidence(
 ) {
   const { candidates, diagnostics } = await retrieveCandidates(
     principal.client,
-    input,
+    { ...input, premium: principal.premium },
   )
   const top = candidates.slice(0, limit)
   const sources = await readCitationSources(principal, top)
