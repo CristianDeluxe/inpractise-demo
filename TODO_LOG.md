@@ -711,3 +711,18 @@
   context across four revisions); the same `ask` with `viewAs: {role: 'member'}`
   returned 200 with no diagnostics; `debug` returned 200 with the written rows
   under `recentRequests`.
+
+### 2026-09-14 - Frontend redeployed so `/inspect` survives the new `debug` field
+
+- The deployed bundle's `parseDebugData` is a `z.strictObject`, so the
+  `recentRequests` key added to `debug` in the same day's Edge deployment would
+  have made `/inspect` fail to parse a valid response. Rebuilt and redeployed
+  the origin in the same pass rather than leaving the two sides disagreeing.
+- `pnpm build`, rsync of `dist server server.js` to the cPanel app root, then
+  `cloudlinux-selector restart` returned `{"result": "success"}`.
+- Evidence: `/`, `/method`, `/connect`, `/login`, `/app`, `/inspect` each 200;
+  `/api/v1/health`
+  `{"status":"ok","scope":"facade-only","backendChecked":false}`;
+  `/assets/InspectionPage-C71whWct.js` 200 containing `recentRequests` and
+  `candidateAt10`; `/assets/WorkspacePage-iTCvrxnZ.js` 200 containing
+  `candidateAt10`. Recorded in `docs/deploy.md`.
