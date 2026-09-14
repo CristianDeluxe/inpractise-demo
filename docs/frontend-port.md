@@ -81,8 +81,9 @@ quality beyond the two observed questions.
 
 Other retained boundaries:
 
-- The UI enforces the documented ten-document list limit with an error. The
-  backend currently permits fifty; its owner must reconcile the bounds.
+- The UI enforces the documented fifty-document list limit with an error. The
+  backend permits fifty and returns an overflow error when its 51-row probe
+  finds a 51st authorized current logical document.
 - List records contain no first-passage pointer. Use explicit passage search.
 - Neighbor IDs have no direction. Controls say “Adjacent passage”.
 - Search/Ask have no fingerprint or model/usage metadata to display.

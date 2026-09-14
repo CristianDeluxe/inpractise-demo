@@ -22,7 +22,7 @@ afterEach(() => {
 describe('authorized research workflow', () => {
   it('requires explicit submit, preserves company scope and opens exact evidence', async () => {
     const { runtime, requests, signOut } = uiRuntimeFixture()
-    renderRouteFixture('/app', runtime)
+    await renderRouteFixture('/app', runtime)
     await screen.findByRole('heading', { name: 'Source library' })
     expect(requests.map((request) => request['action'])).toEqual(['me', 'list'])
     expect(
@@ -71,7 +71,7 @@ describe('authorized research workflow', () => {
   })
   it('reads a deep link without substituting the current revision', async () => {
     const { runtime, requests } = uiRuntimeFixture()
-    renderRouteFixture(citationFixture().readerPath, runtime)
+    await renderRouteFixture(citationFixture().readerPath, runtime)
     expect(
       await screen.findByText('Retained historical revision', { exact: false }),
     ).toBeTruthy()
@@ -84,7 +84,7 @@ describe('authorized research workflow', () => {
   })
   it('shows real scoped counts and an unavailable evaluation report', async () => {
     const { runtime, requests } = uiRuntimeFixture()
-    renderRouteFixture('/inspect', runtime)
+    await renderRouteFixture('/inspect', runtime)
     expect(
       await screen.findByRole('heading', {
         name: 'No reviewed evaluation report',
@@ -107,7 +107,7 @@ describe('authorized research workflow', () => {
         { status: 403 },
       ),
     )
-    renderRouteFixture('/app', runtime)
+    await renderRouteFixture('/app', runtime)
     expect(await screen.findByText(/Access denied/)).toBeTruthy()
     expect(requests).toHaveLength(0)
     expect(fetcher).toHaveBeenCalledTimes(1)

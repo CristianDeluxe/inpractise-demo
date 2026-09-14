@@ -1,27 +1,13 @@
-import { z } from 'zod'
 import { ApiError } from '../ApiError.ts'
 import type { ProviderAnswer } from '../ProviderAnswer.ts'
 import { parseProtocol } from '../parseProtocol.ts'
+import { providerAnswerWireSchema } from './providerAnswerWireSchema.ts'
 
 export function validateProviderAnswer(
   input: unknown,
   suppliedCitationIds: ReadonlySet<string>,
 ): ProviderAnswer {
-  const answer = parseProtocol(
-    z.strictObject({
-      status: z.enum(['answered', 'partial', 'conflict', 'not_found']),
-      claims: z
-        .array(
-          z.strictObject({
-            text: z.string().min(1).max(500),
-            citationIds: z.array(z.string().min(1)).min(1),
-          }),
-        )
-        .max(4),
-      missingEvidence: z.array(z.string()),
-    }),
-    input,
-  )
+  const answer = parseProtocol(providerAnswerWireSchema, input)
   if (
     answer.claims.some(
       (claim) =>

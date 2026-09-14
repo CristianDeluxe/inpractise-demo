@@ -21,7 +21,9 @@ export function buildAskResult(
     return {
       status: 'not_found' as const,
       claims: [],
-      missingEvidence: ['Access to the supporting evidence changed.'],
+      missingEvidence: answer.claims.length
+        ? ['Access to the supporting evidence changed.']
+        : answer.missingEvidence,
       citations: [],
     }
   return {

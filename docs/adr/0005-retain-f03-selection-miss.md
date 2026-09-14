@@ -21,10 +21,10 @@ global four-slot limit.
 
 The reported expected-status match stays 13/14, candidate recall stays 10/10
 evidence cases, and one selection miss remains visible. Backfilling by rank
-could improve coverage but changes the diversity tradeoff; the
-[backlog](../../TODO.md) retains that decision for a separately evaluated
-change. These cases do not establish general accuracy or production retrieval
-quality.
+could improve coverage but changes the diversity tradeoff. This ADR resolves the
+backlog decision: retain the cap and the refusal. Any future selection change
+requires a new, separately evaluated decision. These cases do not establish
+general accuracy or production retrieval quality.
 
 Verification: `pnpm test:ci` checks the selector and diagnostic behavior. The
 two JSON reports are historical measurements and are not regenerated during

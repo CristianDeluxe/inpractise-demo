@@ -66,3 +66,10 @@ This is a timed script, not a claimed two-minute rehearsal on a deployed UI.
 Verification: `pnpm build`, the U3 browser evidence linked in
 [frontend-port.md](frontend-port.md), and the local routing checks in
 [deploy.md](deploy.md).
+
+The database enforces 100 Ask calls per member per UTC day before provider work.
+A failure, refusal, no-evidence result or cancellation still costs one unit; the
+browser renders exhaustion as `allowance_exhausted`. Completion usage is
+recorded from the response or left unknown. Search and Read do not debit the Ask
+allowance. Search parity now uses controlled lexical embeddings with live RLS;
+it does not establish deployed hybrid-provider determinism.

@@ -60,10 +60,14 @@ promised.
 
 ## Run locally
 
-Use Node 24.20.0 and pnpm 12.4.1 from the repository root. Installation requires
-access to private `@busirocket` packages and the `file:../max-lane` dependency
-in `package.json`; this checkout is not a self-contained public install. Obtain
-those inputs from the owner before installing.
+Use Node 24.20.0 and pnpm 12.4.1 from the repository root. Installation is
+currently blocked on five unpublished exact `@syntopica/*` packages and
+unpublished `@cristiandeluxe/max-lane`, which is also declared as the sibling
+`file:../max-lane` dependency. The lockfile still names the former
+`@busirocket/*` packages, so `pnpm install --frozen-lockfile` fails until the
+owner makes the exact packages available, publishes or vendors max-lane without
+importing Keychain credentials, and commits a regenerated lockfile. This
+checkout is not a self-contained public install.
 
 ```sh
 pnpm install --frozen-lockfile
@@ -106,11 +110,12 @@ The `inpractise-demo` stdio server exposes:
   adjacent passage IDs.
 
 Follow [MCP installation](docs/mcp-install.md) for Claude Code, Claude Desktop,
-Cursor or a generic stdio client. It explains the four required environment
-variables, member provisioning and connection failures. The tools are read-only;
-search can call the embedding provider. They accept no identity or role
-override, and the database determines access. [MCP evidence](docs/mcp.md)
-retains the 2026-09-13 Claude Code session and browser/MCP parity coverage.
+Cursor or a generic stdio client. It explains the three direct environment
+variables, optional resolved-name overrides, member provisioning and connection
+failures. The tools are read-only; search can call the embedding provider. They
+accept no identity or role override, and the database determines access.
+[MCP evidence](docs/mcp.md) retains the 2026-09-13 Claude Code session and
+browser/MCP parity coverage.
 
 ## Verify
 
@@ -142,8 +147,9 @@ raw snapshots and embedding artifacts. [The baseline](docs/baseline.md)
 describes those prerequisites and the separate security gate.
 
 Passing the commands above does not establish a clean secret scan, a remote CI
-run, a deployment or a live evaluation. Security-scan findings and remote CI
-installation blockers are tracked in [TODO.md](TODO.md).
+run, a deployment or a live evaluation. CI source/history/workflow security is
+now independent of installation, but no remote run of that job is claimed;
+install-dependent jobs remain blocked as tracked in [TODO.md](TODO.md).
 
 ## Measured results and limits
 
@@ -191,10 +197,16 @@ generation-to-delivery permission snapshot, and a multi-source claim can survive
 losing some references. No concurrent revocation or publication/late-insert race
 guarantee is claimed.
 
-Request allowance debiting, durable usage totals, a connected reviewer report
-and a dedicated MCP member remain incomplete. No enforced provider invoice cap,
-general answer-quality guarantee, production latency target, complete plan
-delivery, or new remote CI/deployment success is claimed by these local checks.
+Request allowance debiting, durable usage totals and the dedicated MCP member
+are implemented and evidenced by the allowance and MCP parity suites. A
+connected reviewer report and its UI state remain incomplete. No enforced
+provider invoice cap, general answer-quality guarantee, production latency
+target, complete plan delivery, or new remote CI/deployment success is claimed
+by these local checks.
+
+The [HTTP API guide](docs/api.md) describes the third client, executable local
+examples, typed client, OpenAPI contract and authorization-safe conditional
+reads.
 
 ## Documentation map
 
@@ -205,34 +217,39 @@ they can describe work before later components existed. Use
 [architecture](docs/architecture.md) for the source behavior verified in this
 pass.
 
-| Document                                                              | Purpose                                                                            |
-| --------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| [CONTRIBUTING.md](CONTRIBUTING.md)                                    | Setup, enforced hooks, verification and review conventions.                        |
-| [CONTEXT.md](CONTEXT.md)                                              | Precise domain vocabulary.                                                         |
-| [architecture.md](docs/architecture.md)                               | Browser/MCP request paths, six actions, RLS, retrieval and structured answers.     |
-| [mcp-install.md](docs/mcp-install.md)                                 | Client configuration, required environment, connection checks and troubleshooting. |
-| [mcp.md](docs/mcp.md)                                                 | Tool behavior, parity evidence and recorded Claude session.                        |
-| [mcp-handshake.jsonl](docs/mcp-handshake.jsonl)                       | Untouched timestamps and protocol versions from the 2026-09-13 session.            |
-| [baseline.md](docs/baseline.md)                                       | Runtime boundaries, quality gates and dated baseline evidence.                     |
-| [backend.md](docs/backend.md)                                         | Database/import foundations, frozen revisions and historical verification.         |
-| [corpus.md](docs/corpus.md)                                           | Public/synthetic provenance, acceptance and corpus validation.                     |
-| [evals.md](docs/evals.md)                                             | Labeled evaluation method, retained runs, failures and limits.                     |
-| [frontend-contract.md](docs/frontend-contract.md)                     | Browser/API contract and intended UI states.                                       |
-| [frontend-port.md](docs/frontend-port.md)                             | Frontend implementation and dated browser checks.                                  |
-| [demo-script.md](docs/demo-script.md)                                 | Two-minute review script and failure fallback.                                     |
-| [deploy.md](docs/deploy.md)                                           | Hosting, route checks and historical Pages preparation.                            |
-| [ADR 0001](docs/adr/0001-project-name.md)                             | One package/server name and independent-demo framing.                              |
-| [ADR 0002](docs/adr/0002-handler-authentication.md)                   | Handler token validation, SDK deviation and forwarded RLS identity.                |
-| [ADR 0003](docs/adr/0003-caller-scoped-retrieval.md)                  | No service-role retrieval.                                                         |
-| [ADR 0004](docs/adr/0004-retrieval-before-selection.md)               | Candidate recall before selection and honest error classification.                 |
-| [ADR 0005](docs/adr/0005-retain-f03-selection-miss.md)                | Preserve the F03 selection miss.                                                   |
-| [Research 01](docs/research/01-market-and-landing-research.md)        | Frozen market and landing research.                                                |
-| [Research 02](docs/research/02-reusable-assets.md)                    | Frozen reusable-asset inventory.                                                   |
-| [Research 03](docs/research/03-lovable-landing-brief.md)              | Frozen landing brief.                                                              |
-| [Research 04](docs/research/04-members-and-admin-spec.md)             | Frozen members/admin specification.                                                |
-| [Research 05](docs/research/05-askbot-and-mcp-spec.md)                | Frozen answer and MCP specification.                                               |
-| [Research 06](docs/research/06-build-plan.md)                         | Earlier build plan, subordinate to Research 07.                                    |
-| [Research 07](docs/research/07-one-day-execution-plan.md)             | Governing one-day execution plan.                                                  |
-| [Research progress](docs/research/research-a-progress.md)             | Frozen research work record.                                                       |
-| [Research verifier](docs/research/verify_specs.py)                    | Frozen specification-verification utility.                                         |
-| [Research input hashes](docs/research/verification-input-hashes.json) | Frozen verification input identities.                                              |
+| Document                                                              | Purpose                                                                                    |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| [CONTRIBUTING.md](CONTRIBUTING.md)                                    | Setup, enforced hooks, verification and review conventions.                                |
+| [CONTEXT.md](CONTEXT.md)                                              | Precise domain vocabulary.                                                                 |
+| [api.md](docs/api.md)                                                 | Caller-token HTTP facade, endpoints, examples, caching, limits and measured local latency. |
+| [openapi.json](docs/openapi.json)                                     | Generated OpenAPI 3.1 contract, checked against runtime schemas.                           |
+| [ADR 0008](docs/adr/0008-caller-token-http-facade.md)                 | No-credentials facade decision.                                                            |
+| [ADR 0009](docs/adr/0009-scope-immutable-passage-caching.md)          | Immutable evidence versus revocable access.                                                |
+| [architecture.md](docs/architecture.md)                               | Browser/MCP request paths, six actions, RLS, retrieval and structured answers.             |
+| [mcp-install.md](docs/mcp-install.md)                                 | Client configuration, required environment, connection checks and troubleshooting.         |
+| [mcp.md](docs/mcp.md)                                                 | Tool behavior, parity evidence and recorded Claude session.                                |
+| [mcp-handshake.jsonl](docs/mcp-handshake.jsonl)                       | Untouched timestamps and protocol versions from the 2026-09-13 session.                    |
+| [baseline.md](docs/baseline.md)                                       | Runtime boundaries, quality gates and dated baseline evidence.                             |
+| [backend.md](docs/backend.md)                                         | Database/import foundations, frozen revisions and historical verification.                 |
+| [corpus.md](docs/corpus.md)                                           | Public/synthetic provenance, acceptance and corpus validation.                             |
+| [evals.md](docs/evals.md)                                             | Labeled evaluation method, retained runs, failures and limits.                             |
+| [frontend-contract.md](docs/frontend-contract.md)                     | Browser/API contract and intended UI states.                                               |
+| [frontend-port.md](docs/frontend-port.md)                             | Frontend implementation and dated browser checks.                                          |
+| [demo-script.md](docs/demo-script.md)                                 | Two-minute review script and failure fallback.                                             |
+| [deploy.md](docs/deploy.md)                                           | Hosting, route checks and historical Pages preparation.                                    |
+| [ADR 0001](docs/adr/0001-project-name.md)                             | One package/server name and independent-demo framing.                                      |
+| [ADR 0002](docs/adr/0002-handler-authentication.md)                   | Handler token validation, SDK deviation and forwarded RLS identity.                        |
+| [ADR 0003](docs/adr/0003-caller-scoped-retrieval.md)                  | No service-role retrieval.                                                                 |
+| [ADR 0004](docs/adr/0004-retrieval-before-selection.md)               | Candidate recall before selection and honest error classification.                         |
+| [ADR 0005](docs/adr/0005-retain-f03-selection-miss.md)                | Preserve the F03 selection miss.                                                           |
+| [ADR 0006](docs/adr/0006-require-complete-claim-evidence.md)          | Whole-claim evidence after revocation and ordinary refusal messages.                       |
+| [Research 01](docs/research/01-market-and-landing-research.md)        | Frozen market and landing research.                                                        |
+| [Research 02](docs/research/02-reusable-assets.md)                    | Frozen reusable-asset inventory.                                                           |
+| [Research 03](docs/research/03-lovable-landing-brief.md)              | Frozen landing brief.                                                                      |
+| [Research 04](docs/research/04-members-and-admin-spec.md)             | Frozen members/admin specification.                                                        |
+| [Research 05](docs/research/05-askbot-and-mcp-spec.md)                | Frozen answer and MCP specification.                                                       |
+| [Research 06](docs/research/06-build-plan.md)                         | Earlier build plan, subordinate to Research 07.                                            |
+| [Research 07](docs/research/07-one-day-execution-plan.md)             | Governing one-day execution plan.                                                          |
+| [Research progress](docs/research/research-a-progress.md)             | Frozen research work record.                                                               |
+| [Research verifier](docs/research/verify_specs.py)                    | Frozen specification-verification utility.                                                 |
+| [Research input hashes](docs/research/verification-input-hashes.json) | Frozen verification input identities.                                                      |

@@ -1,4 +1,4 @@
-import { validateProviderAnswer } from '@/api/validators/validateProviderAnswer'
+import { validateProviderAnswer } from '../api/validators/validateProviderAnswer.ts'
 import { askSchema } from './askSchema'
 
 export function parseAskData(input: unknown) {

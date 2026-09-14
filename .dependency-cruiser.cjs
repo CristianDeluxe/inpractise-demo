@@ -8,7 +8,7 @@ const { createJiti } = require('jiti')
 
 const jiti = createJiti(__filename)
 const { createDepCruiserConfig } = jiti(
-  '@syntopica/quality-config/dependency-cruiser',
+  '@busirocket/quality-config/dependency-cruiser',
 )
 
 module.exports = createDepCruiserConfig({

@@ -1,3 +1,3 @@
-import baseline from '@syntopica/prettier-config'
+import baseline from '@busirocket/prettier-config'
 
 export default baseline

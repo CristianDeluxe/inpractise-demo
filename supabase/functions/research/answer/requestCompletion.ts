@@ -2,6 +2,7 @@ import { ApiError } from '../../_shared/http/ApiError.ts'
 import type { CitationSource } from '../citations/CitationSource.ts'
 import { requireEnv } from '../requireEnv.ts'
 import { buildContext } from './buildContext.ts'
+import { readCompletion } from './readCompletion.ts'
 import { systemPrompt } from './systemPrompt.ts'
 
 /**
@@ -11,6 +12,7 @@ import { systemPrompt } from './systemPrompt.ts'
 export async function requestCompletion(
   query: string,
   sources: readonly CitationSource[],
+  onUsage: (usage: unknown) => Promise<void>,
 ): Promise<string> {
   const controller = new AbortController()
   const timer = setTimeout(() => {
@@ -49,10 +51,5 @@ export async function requestCompletion(
   }
   if (!response.ok)
     throw new ApiError('dependency_failure', 'Generation failed', true)
-  const body = (await response.json()) as {
-    choices?: { message?: { content?: string } }[]
-  }
-  const content = body.choices?.[0]?.message?.content
-  if (!content) throw new ApiError('invalid_model_answer', 'Empty answer')
-  return content
+  return readCompletion(response, onUsage)
 }

@@ -15,7 +15,7 @@ afterEach(() => {
 describe('public demo routes', () => {
   it('opens a labelled curated source without calling research', async () => {
     const { runtime, requests } = uiRuntimeFixture()
-    renderRouteFixture('/', runtime)
+    await renderRouteFixture('/', runtime)
     expect(
       await screen.findByRole('heading', { name: /Executive insight/ }),
     ).toBeTruthy()
@@ -36,18 +36,18 @@ describe('public demo routes', () => {
     ['/connect', 'Tools'],
     ['/missing', 'Page unavailable'],
   ])('renders %s', async (path, title) => {
-    renderRouteFixture(path, null)
+    await renderRouteFixture(path, null)
     expect(await screen.findByRole('heading', { name: title })).toBeTruthy()
   })
   it('keeps public pages available without browser configuration', async () => {
-    renderRouteFixture('/app', null)
+    await renderRouteFixture('/app', null)
     expect(
       await screen.findByText('Workspace configuration required'),
     ).toBeTruthy()
   })
   it('has password sign-in only and validates access after login', async () => {
     const { runtime, requests } = uiRuntimeFixture()
-    renderRouteFixture('/login', runtime)
+    await renderRouteFixture('/login', runtime)
     fireEvent.change(await screen.findByLabelText('Email'), {
       target: { value: 'demo@example.com' },
     })

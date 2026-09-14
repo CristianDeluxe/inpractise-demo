@@ -24,7 +24,7 @@ describe('protected route session presentation', () => {
         data: { session: null },
         error: null,
       })
-      renderRouteFixture(path, runtime)
+      await renderRouteFixture(path, runtime)
       expect(
         await screen.findByRole('heading', { name: signInHeadingFixture }),
       ).toBeTruthy()
@@ -43,7 +43,7 @@ describe('protected route session presentation', () => {
         Awaited<ReturnType<typeof runtime.auth.getSession>>
       >()
     getSession.mockReturnValue(pending.promise)
-    renderRouteFixture('/app', runtime)
+    await renderRouteFixture('/app', runtime)
     expect(await screen.findByRole('status')).toBeTruthy()
     expect(screen.queryByRole('alert')).toBeNull()
     await act(async () => {
@@ -67,7 +67,7 @@ describe('protected route session presentation', () => {
           { status: 401 },
         ),
       )
-      renderRouteFixture('/app', runtime)
+      await renderRouteFixture('/app', runtime)
       expect((await screen.findByRole('alert')).textContent).toContain(
         'Request: access-rejected',
       )
@@ -78,7 +78,7 @@ describe('protected route session presentation', () => {
   )
   it('lands on the calm invitation after workspace sign-out', async () => {
     const { runtime, authChange, signOut, getSession } = uiRuntimeFixture()
-    renderRouteFixture('/app', runtime)
+    await renderRouteFixture('/app', runtime)
     await screen.findByRole('heading', { name: 'Source library' })
     signOut.mockImplementation(async () => {
       getSession.mockResolvedValue({

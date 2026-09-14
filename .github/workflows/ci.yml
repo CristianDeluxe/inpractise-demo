@@ -1,6 +1,9 @@
-# Written by `create-baseline --write`. Three jobs, three commands:
-# `check:ci`, `check:quality` and `check:security` are the same entrypoints
-# you run locally, so a red job reproduces with one line.
+# Written by `create-baseline --write`. Four jobs: install-dependent
+# `check:ci` and `check:quality`; dependency-free source/history and pinned
+# workflow checks; and install-dependent `audit:check`. `NPM_CONFIG_FORCE=true`
+# only runs the declared dependency-free `secrets:check` script, bypassing its
+# devEngines Deno provisioning before project installation. Local
+# `check:security` combines the source scan with `audit:check`.
 #
 # Every action is pinned to a commit SHA, not a tag. A tag can be moved by
 # whoever owns the action; a SHA cannot. The trailing comment names the tag the
@@ -62,8 +65,8 @@ jobs:
       - name: Baseline conformance
         run: pnpm run conformance
 
-  security:
-    name: secrets + advisories + workflows
+  source-security:
+    name: source + history + workflow security
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -72,15 +75,6 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           fetch-depth: 0
-
-      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
-
-      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
-        with:
-          node-version: 24.20.0
-          cache: pnpm
-
-      - run: pnpm install --frozen-lockfile
 
       - name: Install gitleaks
         env:
@@ -93,11 +87,11 @@ jobs:
           sudo install -m 0755 gitleaks /usr/local/bin/gitleaks
           gitleaks version
 
-      - name: check:security
-        run: pnpm run check:security
+      - name: Source scan
+        run: NPM_CONFIG_FORCE=true npm run secrets:check
 
       - name: Secret scan of committed history
-        run: gitleaks detect --no-banner --redact
+        run: gitleaks git --config .gitleaks.toml --no-banner --redact .
 
       # actionlint checks workflow syntax; zizmor checks workflow security -
       # template injection through `${{ github.event.* }}`, unpinned actions,
@@ -110,3 +104,22 @@ jobs:
         uses: zizmorcore/zizmor-action@3dc1ecc9bcb9e94e9b2c709687979e1298497054 # v0.6.2
         with:
           advanced-security: false
+
+  dependency-security:
+    name: dependency advisories
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
+
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24.20.0
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: audit:check
+        run: pnpm run audit:check

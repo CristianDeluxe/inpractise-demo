@@ -1,20 +1,20 @@
-import { createAccessibilityConfig } from '@syntopica/eslint-config/accessibility'
-import { createBaseConfig } from '@syntopica/eslint-config/base'
-import { createCodeQualityConfig } from '@syntopica/eslint-config/code-quality'
-import { createNodeConfig } from '@syntopica/eslint-config/node'
-import { createViteReactConfig } from '@syntopica/eslint-config/vite-react'
+import { createAccessibilityConfig } from '@busirocket/eslint-config/accessibility'
+import { createBaseConfig } from '@busirocket/eslint-config/base'
+import { createCodeQualityConfig } from '@busirocket/eslint-config/code-quality'
+import { createNodeConfig } from '@busirocket/eslint-config/node'
+import { createViteReactConfig } from '@busirocket/eslint-config/vite-react'
 import codePolicy from 'eslint-plugin-code-policy'
 import { defineConfig } from 'eslint/config'
 import globals from 'globals'
 
 export default defineConfig([
-  { ignores: ['work/**', 'corpus/**', 'supabase/.temp/**'] },
+  { ignores: ['work/**', 'corpus/**', 'supabase/.temp/**', 'server/build/**'] },
   ...createBaseConfig({ tsconfigRootDir: import.meta.dirname }),
   {
     files: [
       'scripts/**/*.{ts,mjs}',
       'server.js',
-      'server/**/*.mjs',
+      'server/**/*.{mjs,ts}',
       'tests/**/*.ts',
       'evals/**/*.ts',
       'mcp/**/*.ts',
@@ -33,10 +33,13 @@ export default defineConfig([
   {
     files: [
       'scripts/db/**/*.ts',
+      'scripts/api/**/*.ts',
+      'server/api/**/*.ts',
       'tests/**/*.ts',
       'evals/**/*.ts',
       'mcp/**/*.ts',
       'vite.config.ts',
+      'vite.api.config.ts',
     ],
     languageOptions: {
       parserOptions: { projectService: false, project: './tsconfig.node.json' },
@@ -55,6 +58,16 @@ export default defineConfig([
       parserOptions: {
         projectService: false,
         project: './supabase/functions/tsconfig.json',
+      },
+    },
+  },
+  {
+    files: ['tests/browser/**/*.ts', 'playwright.config.ts'],
+    languageOptions: {
+      globals: globals.browser,
+      parserOptions: {
+        projectService: false,
+        project: './tests/browser/tsconfig.json',
       },
     },
   },

@@ -31,12 +31,25 @@ determines visibility. Decoding a JWT or trusting the publishable key alone is
 insufficient. OPTIONS preflight is unauthenticated; malformed requests can fail
 validation before authentication without touching the corpus.
 
-`verify_jwt=false` is a deployment requirement recorded by the plan and handler
-comment, **not a setting present in `supabase/config.toml`**. Remote
-configuration was not inspected in this documentation pass; redeployment must
-preserve that requirement and test missing, forged and expired tokens. No
-deployment command is issued here.
+`supabase/config.toml` still has no function-specific JWT setting. On
+2026-09-14, a read-only
+[Management API function listing](https://supabase.com/docs/reference/api/v1-list-all-functions)
+confirmed deployed `research` version 11 is `ACTIVE` with `verify_jwt=false`.
+Missing bearer tokens and a structurally valid JWT signed with deliberately
+incorrect test material each returned the handler's `401 unauthenticated`
+envelope, with a request ID and no evidence data.
 
-Verification: `pnpm type-check` and `pnpm test:ci` cover the checked source and
-offline boundaries; they do not establish the remote gateway setting or the full
-live token matrix.
+A real member session returned 200 before its natural expiry. After its `exp`,
+Supabase Auth's `/auth/v1/user` endpoint rejected the same token with HTTP 403.
+The probe expected only 401 and stopped before sending the expired token through
+the Edge handler; the token was intentionally kept only in process memory and
+cannot be replayed.
+
+Verification: `pnpm test:edge` runs native Deno tests without network
+permission; `pnpm test:ci` includes them. Its expiry case constructs a JWT with
+an `exp` in the past, models the observed Auth 403 response, and proves that the
+handler maps it to `unauthenticated` before a membership or evidence read. This
+is a constructed-token handler control-flow proof, not remote cryptographic or
+clock verification and not an end-to-end replay of an expired token through the
+deployed handler. No authentication configuration or deployment write was
+performed.

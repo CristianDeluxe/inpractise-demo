@@ -1,0 +1,19 @@
+{
+  "sampleSize": 200,
+  "warmupRequests": 20,
+  "method": "Sequential GET /api/v1/me through the built origin to a local fixture. Server-Timing measures facade handler minus awaited backend fetch/body time. Loopback time includes HTTP transport. No production or real backend inference.",
+  "metrics": {
+    "loopbackMs": {
+      "p50": 2.238249988295138,
+      "p95": 2.576833008788526
+    },
+    "backendMs": {
+      "p50": 1.648,
+      "p95": 1.8
+    },
+    "facadeMs": {
+      "p50": 0.225,
+      "p95": 0.319
+    }
+  }
+}

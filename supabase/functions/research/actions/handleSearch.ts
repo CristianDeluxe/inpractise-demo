@@ -1,13 +1,8 @@
-import { retrieveCandidates } from '../../_shared/search/retrieveCandidates.ts'
 import { embedQuery } from '../answer/embedQuery.ts'
-import { buildCitation } from '../citations/buildCitation.ts'
-import { readCitationSources } from '../citations/readCitationSources.ts'
 import type { Principal } from '../Principal.ts'
+import { searchEvidence } from './searchEvidence.ts'
 
-/**
- * The reported mode is the mode that actually ran: if the embedding call failed,
- * this says lexical_only rather than claiming a hybrid search happened.
- */
+/** Acquire a query embedding, then retrieve under the caller's RLS scope. */
 export async function handleSearch(
   principal: Principal,
   query: string,
@@ -15,15 +10,9 @@ export async function handleSearch(
   limit: number,
 ) {
   const embedding = await embedQuery(query)
-  const { candidates, diagnostics } = await retrieveCandidates(
-    principal.client,
+  return searchEvidence(
+    principal,
     { query, embedding, ...(company === undefined ? {} : { company }) },
+    limit,
   )
-  const top = candidates.slice(0, limit)
-  const sources = await readCitationSources(principal, top)
-  return {
-    items: sources.map(buildCitation),
-    mode: diagnostics.mode,
-    truncated: candidates.length > top.length,
-  }
 }

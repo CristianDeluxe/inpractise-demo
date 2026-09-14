@@ -1,8 +1,18 @@
+import { mcpMemberEmail } from '../../mcp/McpMemberEmail.ts'
+
 export const personas = [
   {
     name: 'basic',
     email: 'info+inpractise-basic@busirocket.com',
     passwordVariable: 'DEMO_BASIC_PASSWORD',
+    orgId: 'org-a',
+    role: 'member',
+    premium: false,
+  },
+  {
+    name: 'mcp',
+    email: mcpMemberEmail,
+    passwordVariable: 'DEMO_MCP_PASSWORD',
     orgId: 'org-a',
     role: 'member',
     premium: false,

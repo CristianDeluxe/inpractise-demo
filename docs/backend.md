@@ -312,3 +312,37 @@ Two review findings were corrected: canonical metadata binding and
 persisted-vector replay checking. A second read-only review reported no
 remaining blocking findings in the revised scope. It did not independently run
 database tests or inspect credentials.
+
+## Ask allowance and usage
+
+Each authenticated member has 100 Ask requests per UTC calendar day. The
+`debit_request` RPC takes its principal from `auth.uid()`, serializes requests
+for that principal with a transaction advisory lock, and inserts an
+unknown-usage ledger row before any Ask embedding or generation request.
+Exhaustion returns `allowance_exhausted` (HTTP 429). Caller cancellation,
+retrieval failure, no matching evidence, provider failure and invalid answers do
+not refund the debit. Search and Read do not consume this Ask allowance.
+
+The two mutation RPCs execute as a dedicated non-login role without RLS bypass;
+RLS restricts ledger access to the active caller. Members cannot directly mutate
+ledger rows. Reported completion prompt, completion and total tokens are stored
+once, even if answer validation subsequently fails. Missing or invalid provider
+usage stays NULL (unknown), never an invented zero. These are completion totals,
+not an aggregate of embedding usage. The member-scoped usage endpoint accepts
+caller reports, so it is operational accounting, not a tamper-proof billing
+record. No service-role key participates in this request path. Usage metadata is
+not added to the browser response contract.
+
+Verify with `pnpm test` (rolled-back database integration and provider-free
+search parity) and `pnpm test:edge` (stubbed provider ordering and usage). The
+concurrency fixture holds the last debit open on one connection and proves a
+second connection cannot acquire it; it times out the contender and rolls both
+transactions back. A same-principal attempt after the last debit sees
+exhaustion. See [ADR 0007](adr/0007-debit-before-provider.md).
+
+Deployment uses
+`supabase functions deploy research --use-api --no-verify-jwt --import-map supabase/functions/deploy-import-map.json`
+with the validated project reference supplied explicitly. The deployment map
+pins the same imports as local `deno.json` without its `nodeModulesDir: manual`
+setting. Version 11 was confirmed ACTIVE with `verify_jwt=false` after
+deployment on 2026-09-14.

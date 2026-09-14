@@ -8,7 +8,7 @@ import {
 } from '@tanstack/react-router'
 import { render } from '@testing-library/react'
 
-export function renderRouteFixture(
+export async function renderRouteFixture(
   path: string,
   runtime: BrowserRuntime | null,
 ) {
@@ -17,6 +17,7 @@ export function renderRouteFixture(
     history: createMemoryHistory({ initialEntries: [path] }),
     defaultPreload: false,
   })
+  await router.load()
   const view = render(
     <RuntimeContext value={runtime}>
       <RouterProvider router={router} />

@@ -18,18 +18,28 @@ All direct dependencies are exactly pinned in `package.json`; the root
 
 | Package                          | Version                  |
 | -------------------------------- | ------------------------ |
-| `@busirocket/eslint-config`      | 0.8.0                    |
-| `@busirocket/tsconfig`           | 0.3.0                    |
-| `@busirocket/prettier-config`    | 0.2.0                    |
+| `@syntopica/eslint-config`       | 0.8.0                    |
+| `@syntopica/tsconfig`            | 0.3.0                    |
+| `@syntopica/prettier-config`     | 0.2.0                    |
 | `eslint-plugin-code-policy`      | 0.7.4                    |
-| `@busirocket/quality-config`     | 0.11.0                   |
-| `@busirocket/create-baseline`    | 0.9.0                    |
+| `@syntopica/quality-config`      | 0.11.0                   |
+| `@syntopica/create-baseline`     | 0.9.0                    |
 | ESLint / TypeScript / Prettier   | 10.9.1 / 6.0.3 / 3.9.6   |
 | Vitest / V8 coverage             | 4.1.11 / 4.1.11          |
 | React / React DOM                | 19.3.0 / 19.3.0          |
 | Vite / React plugin              | 8.3.0 / 6.1.1            |
 | Node / pnpm / Deno               | 24.20.0 / 12.4.1 / 2.9.6 |
 | Supabase CLI / JavaScript client | 2.75.0 / 2.116.0         |
+
+The frozen lockfile is stale: `package.json` names these five exact
+`@syntopica/*` packages while it still resolves the former `@busirocket/*`
+names. The exact renamed versions and `@cristiandeluxe/max-lane` are not
+published; max-lane is also a sibling-only `file:../max-lane` dependency. A
+clean GitHub runner therefore cannot install until the exact packages are
+available, max-lane is published or vendored without importing Keychain
+credentials, and the regenerated lockfile is committed. CI independently runs
+source/history/workflow security before that install gate; no remote run of the
+restructured workflow is claimed here.
 
 The repository-local Node binary runs package scripts even if the interactive
 shell uses Node 26. pnpm downloads the pinned Deno runtime; its cache stays in
@@ -43,6 +53,26 @@ including `eslint-plugin-testing-library`, `@vitest/eslint-plugin`, and
 Vitest/coverage were updated together, and `supabase>tar` is overridden to
 7.5.22 to resolve real audit advisories. No advisory waivers are present.
 
+## Supabase CLI pin and verified flags
+
+`package.json` already pins the CLI dev dependency to exactly `2.75.0`, and
+`pnpm-lock.yaml` resolves that version. Use `pnpm exec supabase` so the local
+pin is used instead of a possibly different global binary. On 2026-09-14 these
+read-only commands all exited 0:
+
+```sh
+pnpm exec supabase --version
+pnpm exec supabase functions deploy --help
+pnpm exec supabase secrets set --help
+pnpm exec supabase db push --help
+```
+
+The version output was `2.75.0`. Functions help exposes `--project-ref string`
+and `--no-verify-jwt`; secrets help exposes `--env-file string`; database push
+help exposes `--dry-run`. This verifies flag availability on the installed
+binary, not deployment readiness. No function deployment, secret update or
+migration push was executed.
+
 ## Presets and runtime boundaries
 
 | Surface                 | Configuration                                                                                                      |
@@ -51,13 +81,13 @@ Vitest/coverage were updated together, and `supabase>tar` is overridden to
 | Node tooling and corpus | `createNodeConfig`; explicit Node project for `scripts/db`, `tests`, and `vite.config.ts`                          |
 | Browser `src/`          | `createViteReactConfig` and `createAccessibilityConfig`; browser globals and explicit app TypeScript project       |
 | Edge functions          | Dedicated base-derived TypeScript project with DOM and Deno types, plus native `deno check`; no Node ambient types |
-| Formatting              | Shared `@busirocket/prettier-config/base`                                                                          |
+| Formatting              | Shared `@syntopica/prettier-config/base`                                                                           |
 | Quality                 | Shared Knip, dependency-cruiser, Oxlint, duplicate and type-coverage policies                                      |
 | Hooks and CI            | Baseline Lefthook, commitlint and generated CI conventions; separate offline and local integration entrypoints     |
 
 `tsconfig.json` is a solution referencing the Node, app and Edge projects.
-`tsconfig.node.json` extends `@busirocket/tsconfig/node.json`.
-`tsconfig.app.json` extends `@busirocket/tsconfig/vite-react.json`.
+`tsconfig.node.json` extends `@syntopica/tsconfig/node.json`.
+`tsconfig.app.json` extends `@syntopica/tsconfig/vite-react.json`.
 `supabase/functions/tsconfig.json` extends the strict base and owns its runtime
 libraries explicitly. `src/api/tsconfig.json` delegates to the app config for
 existing tooling compatibility.
@@ -94,28 +124,33 @@ keep `pnpm type-check` before a production build.
 
 ## Commands
 
-| Command                                                               | What it verifies or changes                                                                                              |
-| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `pnpm verify`                                                         | Full local gate: `check:ci`, `check:quality`, full tests, corpus replay, database audit, conformance                     |
-| `pnpm check:ci`                                                       | Oxlint, three TS projects, native Deno, strict ESLint, Prettier, offline coverage/tests, corpus tests, duplication, Knip |
-| `pnpm check:all`                                                      | Baseline static gate: type-check, ESLint, Prettier, duplication                                                          |
-| `pnpm check:quality`                                                  | Dependency graph and at least 99% TypeScript type coverage                                                               |
-| `pnpm type-check` / `pnpm typecheck`                                  | Explicit Node, browser and Edge TypeScript projects; the second name preserves compatibility                             |
-| `pnpm check:deno`                                                     | Native Deno module/type check using its own import map and the installed npm graph                                       |
-| `pnpm lint` / `pnpm lint:fast`                                        | Strict ESLint / shared Oxlint, both failing on warnings                                                                  |
-| `pnpm format:check`                                                   | Check shared Prettier output without rewriting files                                                                     |
-| `pnpm fix`                                                            | Baseline convention: ESLint automatic fixes followed by Prettier                                                         |
-| `pnpm lint:fix` / `pnpm format`                                       | Individual formatting/fix commands; review changes and rerun verification                                                |
-| `pnpm test:ci`                                                        | Offline Vitest suite with V8 coverage and 80% thresholds                                                                 |
-| `pnpm test`                                                           | Full suite, including real database/password sessions and persisted embeddings, with coverage                            |
-| `pnpm test:rls` / `pnpm test:db`                                      | Focused live authorization / SQL and import integration checks                                                           |
-| `pnpm test:corpus`                                                    | Five Node test-runner normalization/tamper tests                                                                         |
-| `pnpm corpus:verify`                                                  | Replay retained accepted and candidate corpus artifacts, hashes, provenance, offsets and gold text                       |
-| `pnpm db:verify`                                                      | Read-only live schema, grants, RLS, RPC and row-count audit                                                              |
-| `pnpm dupes` / `pnpm knip` / `pnpm deps:graph` / `pnpm type-coverage` | Individual shared quality checks                                                                                         |
-| `pnpm check:security`                                                 | Working-tree secret scan followed by dependency audit at moderate severity                                               |
-| `pnpm secrets:check` / `pnpm audit:check`                             | Individual secret / dependency checks                                                                                    |
-| `pnpm conformance`                                                    | `create-baseline --check` against the installed shared baseline                                                          |
+| Command                                                               | What it verifies or changes                                                                                             |
+| --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `pnpm verify`                                                         | Full local gate: `check:ci`, `check:quality`, full tests, corpus replay, database audit, conformance                    |
+| `pnpm check:ci`                                                       | Oxlint, four TS projects, native Deno, strict ESLint, Prettier, offline coverage/tests, corpus tests, duplication, Knip |
+| `pnpm check:all`                                                      | Baseline static gate: type-check, ESLint, Prettier, duplication                                                         |
+| `pnpm check:quality`                                                  | Dependency graph and at least 99% TypeScript type coverage                                                              |
+| `pnpm type-check` / `pnpm typecheck`                                  | Explicit Node, browser, Edge and browser-test TypeScript projects; the second name preserves compatibility              |
+| `pnpm check:deno`                                                     | Native Deno module/type check using its own import map and the installed npm graph                                      |
+| `pnpm lint` / `pnpm lint:fast`                                        | Strict ESLint / shared Oxlint, both failing on warnings                                                                 |
+| `pnpm format:check`                                                   | Check shared Prettier output without rewriting files                                                                    |
+| `pnpm fix`                                                            | Baseline convention: ESLint automatic fixes followed by Prettier                                                        |
+| `pnpm lint:fix` / `pnpm format`                                       | Individual formatting/fix commands; review changes and rerun verification                                               |
+| `pnpm test:ci`                                                        | Offline Vitest coverage with 80% thresholds, plus native Deno Auth/answer regressions                                   |
+| `pnpm test`                                                           | Full suite, including real database/password sessions and persisted embeddings, with coverage                           |
+| `pnpm test:rls` / `pnpm test:db`                                      | Focused live authorization / SQL and import integration checks                                                          |
+| `pnpm test:corpus`                                                    | Five Node test-runner normalization/tamper tests                                                                        |
+| `pnpm corpus:verify`                                                  | Replay retained accepted and candidate corpus artifacts, hashes, provenance, offsets and gold text                      |
+| `pnpm db:verify`                                                      | Read-only live schema, grants, RLS, RPC and row-count audit                                                             |
+| `pnpm dupes` / `pnpm knip` / `pnpm deps:graph` / `pnpm type-coverage` | Individual shared quality checks                                                                                        |
+| `pnpm check:security`                                                 | Working-tree secret scan followed by dependency audit at moderate severity                                              |
+| `pnpm secrets:check` / `pnpm audit:check`                             | Individual secret / dependency checks                                                                                   |
+| `pnpm conformance`                                                    | `create-baseline --check` against the installed shared baseline                                                         |
+
+`pnpm test` uses controlled lexical query embeddings for search parity while
+exercising the local search handler, real MCP transport and live caller-scoped
+RLS. Deployed Read parity remains live. It does not invoke paid providers or
+claim deployed hybrid search parity. Native Deno provider tests use stubs.
 
 The generated `lint:suppress` and `lint:prune` maintenance commands exist for
 baseline conformance but were not run. They are not a remediation workflow for
@@ -249,11 +284,50 @@ mismatch. The smallest next step is to adopt upstream versions declaring ESLint
 10 compatibility; this is recorded in `TODO.md`. Baseline-provided Knip
 configuration hints are informational, not unused-source or dependency errors.
 
-`.github/workflows/ci.yml` uses the baseline's pinned actions and three jobs:
-`check:ci`, `check:quality` plus conformance, and security plus
-committed-history scanning and workflow checks. Local `actionlint` checks its
-syntax. Remote CI, its zizmor action, and deployment have not executed: the
-repository has no remote or commits. No claim of remote success is made.
+`.github/workflows/ci.yml` uses pinned actions and four independent jobs:
+`check:ci`, `check:quality` plus conformance, dependency advisories after an
+install, and source/history/workflow security without project dependencies. The
+last job uses a full-history checkout, both gitleaks configurations and the
+pinned actionlint and zizmor actions. Its source scan invokes the declared
+`secrets:check` script as `NPM_CONFIG_FORCE=true npm run secrets:check`: force
+only bypasses npm's `devEngines` Deno provisioning before project installation,
+so the already dependency-free gitleaks command runs without installing project
+packages. Local `actionlint` checks syntax. The repository is published at
+`CristianDeluxe/inpractise-demo`; this document records local and
+repository-state evidence only and does not claim a fresh remote CI run.
+
+### Reader self-check: publication and credentials
+
+The following read-only checks reproduce the boundary between local ignored
+inputs and publishable source. They never print credential values:
+
+```sh
+git check-ignore -v .env.functions.remote
+git ls-files --error-unmatch .env.functions.remote  # must report no tracked path
+git log --all -- .env.functions.remote              # must be empty
+
+mkdir -p work/backlog2
+archive_target="$(mktemp -d work/backlog2/item5-clean-tree.XXXXXX)"
+printf 'clean-tree target: %s\n' "$archive_target"
+git archive HEAD | tar -x -C "$archive_target"
+(cd "$archive_target" && \
+  gitleaks dir --config .gitleaks-source.toml --no-banner --redact .)
+find "$archive_target" -depth -delete
+
+gitleaks git --config .gitleaks.toml --no-banner --redact .
+gitleaks dir --config .gitleaks-source.toml --no-banner --redact .
+./node_modules/.bin/baseline-audit --level moderate
+```
+
+The source scan intentionally excludes ignored local credentials and build or
+report artifacts that are not publishable source. The history scan uses the
+committed-history configuration and does not exclude credential paths. A clean
+tree scan therefore checks exactly what `git archive HEAD` would publish, while
+the working-tree scan checks current source around local inputs. On 2026-09-14,
+the clean-tree scan found no leaks in approximately 5.92 MB, the history scan
+found no leaks across 19 commits and approximately 6.33 MB, the current source
+scan found no leaks in approximately 27.40 MB, and baseline-audit reported zero
+advisories.
 
 CI deliberately excludes password/SQL integration tests and the embedding replay
 that needs ignored local artifacts. It runs the offline coverage gate and five
@@ -266,3 +340,12 @@ false pass.
 Outstanding UI, HTTP, answer-generation, MCP, live evaluation and public-filing
 approval work stays in `TODO.md`; baseline adoption does not claim those product
 features are delivered.
+
+Browser regression runner: see [CONTRIBUTING](../CONTRIBUTING.md#browser-probe)
+for its pinned dependency, installation, execution and timeout boundaries.
+
+Native Edge authentication and answer-contract regressions run with
+`pnpm test:edge`, included in `pnpm test:ci`. Deno uses the installed module
+graph with `--cached-only` and no network permission; Auth, retrieval and
+provider responses are stubbed, and environment changes are restored. This keeps
+test execution inside the existing Edge type boundary.

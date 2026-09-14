@@ -1,0 +1,387 @@
+[
+  {
+    "name": "health",
+    "path": "/api/v1/health",
+    "status": 200,
+    "headers": {
+      "cache-control": "no-store",
+      "content-type": "application/json",
+      "server-timing": "backend;dur=0.000, facade;dur=1.504",
+      "x-correlation-id": "example-health",
+      "x-request-id": "example-health",
+      "x-robots-tag": "noindex, nofollow",
+      "Date": "Mon, 14 Sep 2026 04:36:35 GMT",
+      "Connection": "keep-alive",
+      "Keep-Alive": "timeout=5",
+      "Transfer-Encoding": "chunked"
+    },
+    "body": {
+      "status": "ok",
+      "scope": "facade-only",
+      "backendChecked": false
+    }
+  },
+  {
+    "name": "openapi",
+    "path": "/api/v1/openapi.json",
+    "status": 200,
+    "headers": {
+      "cache-control": "no-store",
+      "content-type": "application/json",
+      "server-timing": "backend;dur=0.000, facade;dur=0.405",
+      "x-correlation-id": "example-openapi",
+      "x-request-id": "example-openapi",
+      "x-robots-tag": "noindex, nofollow",
+      "Date": "Mon, 14 Sep 2026 04:36:35 GMT",
+      "Connection": "keep-alive",
+      "Keep-Alive": "timeout=5",
+      "Transfer-Encoding": "chunked"
+    },
+    "body": {
+      "openapi": "3.1.1",
+      "pathCount": 7,
+      "note": "Full returned document equals docs/openapi.json; condensed here."
+    }
+  },
+  {
+    "name": "me",
+    "path": "/api/v1/me",
+    "status": 200,
+    "headers": {
+      "cache-control": "no-store",
+      "content-type": "application/json",
+      "ratelimit": "\"principal\";r=59;t=60",
+      "ratelimit-policy": "\"principal\";q=60;w=60",
+      "server-timing": "backend;dur=11.475, facade;dur=1.913",
+      "x-correlation-id": "example-me",
+      "x-request-id": "fixture-me",
+      "x-robots-tag": "noindex, nofollow",
+      "Date": "Mon, 14 Sep 2026 04:36:35 GMT",
+      "Connection": "keep-alive",
+      "Keep-Alive": "timeout=5",
+      "Transfer-Encoding": "chunked"
+    },
+    "body": {
+      "orgId": "demo-org",
+      "role": "member",
+      "premium": false
+    }
+  },
+  {
+    "name": "documents",
+    "path": "/api/v1/documents?pageSize=1&company=northstar&kind=synthetic_interview",
+    "status": 200,
+    "headers": {
+      "cache-control": "no-store",
+      "content-type": "application/json",
+      "ratelimit": "\"principal\";r=58;t=60",
+      "ratelimit-policy": "\"principal\";q=60;w=60",
+      "server-timing": "backend;dur=4.110, facade;dur=1.893",
+      "x-correlation-id": "example-documents",
+      "x-request-id": "fixture-list",
+      "x-robots-tag": "noindex, nofollow",
+      "Date": "Mon, 14 Sep 2026 04:36:35 GMT",
+      "Connection": "keep-alive",
+      "Keep-Alive": "timeout=5",
+      "Transfer-Encoding": "chunked"
+    },
+    "body": {
+      "items": [
+        {
+          "document_id": "northstar",
+          "revision_id": "rev-1",
+          "title": "Synthetic interview",
+          "company": "northstar",
+          "kind": "synthetic_interview",
+          "origin": "synthetic",
+          "interview_date": null,
+          "published_at": "2026-09-02T00:00:00Z",
+          "source_url": null
+        }
+      ],
+      "nextCursor": "eyJhZnRlciI6Im5vcnRoc3RhciIsImNvbXBhbnkiOiJub3J0aHN0YXIiLCJraW5kIjoic3ludGhldGljX2ludGVydmlldyJ9"
+    }
+  },
+  {
+    "name": "passage",
+    "path": "/api/v1/documents/northstar/revisions/rev-1/passages/p-1",
+    "status": 200,
+    "headers": {
+      "cache-control": "private, no-cache",
+      "content-type": "application/json",
+      "etag": "\"passage-v2-WyJkZW1vLW9yZyIsIm5vcnRoc3RhciIsInJldi0xIiwicC0xIl0\"",
+      "ratelimit": "\"principal\";r=57;t=60",
+      "ratelimit-policy": "\"principal\";q=60;w=60",
+      "server-timing": "backend;dur=4.789, facade;dur=2.194",
+      "vary": "Authorization",
+      "x-correlation-id": "example-passage",
+      "x-request-id": "fixture-read",
+      "x-robots-tag": "noindex, nofollow",
+      "Date": "Mon, 14 Sep 2026 04:36:35 GMT",
+      "Connection": "keep-alive",
+      "Keep-Alive": "timeout=5",
+      "Transfer-Encoding": "chunked"
+    },
+    "body": {
+      "citation": {
+        "citationId": "northstar:rev-1:p-1",
+        "documentId": "northstar",
+        "revisionId": "rev-1",
+        "passageId": "p-1",
+        "quote": "Source evidence 𐐀",
+        "startChar": 0,
+        "endChar": 17,
+        "title": "Synthetic interview",
+        "company": "northstar",
+        "origin": "synthetic",
+        "kind": "synthetic_interview",
+        "speaker": "Invented speaker",
+        "speakerRole": "Former operator",
+        "interviewDate": "2026-09-01",
+        "publishedAt": "2026-09-02T00:00:00Z",
+        "sourceUrl": null,
+        "readerPath": "/read/northstar/rev-1/p-1"
+      },
+      "section": "Synthetic evidence",
+      "neighbourIds": ["p-2"]
+    }
+  },
+  {
+    "name": "search",
+    "path": "/api/v1/search",
+    "status": 200,
+    "headers": {
+      "cache-control": "no-store",
+      "content-type": "application/json",
+      "ratelimit": "\"principal\";r=56;t=60",
+      "ratelimit-policy": "\"principal\";q=60;w=60",
+      "server-timing": "backend;dur=4.417, facade;dur=1.531",
+      "x-correlation-id": "example-search",
+      "x-request-id": "fixture-search",
+      "x-robots-tag": "noindex, nofollow",
+      "Date": "Mon, 14 Sep 2026 04:36:35 GMT",
+      "Connection": "keep-alive",
+      "Keep-Alive": "timeout=5",
+      "Transfer-Encoding": "chunked"
+    },
+    "body": {
+      "items": [
+        {
+          "citationId": "northstar:rev-1:p-1",
+          "documentId": "northstar",
+          "revisionId": "rev-1",
+          "passageId": "p-1",
+          "quote": "Source evidence 𐐀",
+          "startChar": 0,
+          "endChar": 17,
+          "title": "Synthetic interview",
+          "company": "northstar",
+          "origin": "synthetic",
+          "kind": "synthetic_interview",
+          "speaker": "Invented speaker",
+          "speakerRole": "Former operator",
+          "interviewDate": "2026-09-01",
+          "publishedAt": "2026-09-02T00:00:00Z",
+          "sourceUrl": null,
+          "readerPath": "/read/northstar/rev-1/p-1"
+        }
+      ],
+      "mode": "lexical_only",
+      "truncated": false
+    }
+  },
+  {
+    "name": "answers",
+    "path": "/api/v1/answers",
+    "status": 200,
+    "headers": {
+      "cache-control": "no-store",
+      "content-type": "application/json",
+      "ratelimit": "\"principal\";r=55;t=60",
+      "ratelimit-policy": "\"principal\";q=60;w=60",
+      "server-timing": "backend;dur=4.815, facade;dur=1.553",
+      "x-correlation-id": "example-answers",
+      "x-request-id": "fixture-ask",
+      "x-robots-tag": "noindex, nofollow",
+      "Date": "Mon, 14 Sep 2026 04:36:35 GMT",
+      "Connection": "keep-alive",
+      "Keep-Alive": "timeout=5",
+      "Transfer-Encoding": "chunked"
+    },
+    "body": {
+      "status": "answered",
+      "claims": [
+        {
+          "text": "Fixture claim.",
+          "citationIds": ["northstar:rev-1:p-1"]
+        }
+      ],
+      "missingEvidence": [],
+      "citations": [
+        {
+          "citationId": "northstar:rev-1:p-1",
+          "documentId": "northstar",
+          "revisionId": "rev-1",
+          "passageId": "p-1",
+          "quote": "Source evidence 𐐀",
+          "startChar": 0,
+          "endChar": 17,
+          "title": "Synthetic interview",
+          "company": "northstar",
+          "origin": "synthetic",
+          "kind": "synthetic_interview",
+          "speaker": "Invented speaker",
+          "speakerRole": "Former operator",
+          "interviewDate": "2026-09-01",
+          "publishedAt": "2026-09-02T00:00:00Z",
+          "sourceUrl": null,
+          "readerPath": "/read/northstar/rev-1/p-1"
+        }
+      ],
+      "mode": "lexical_only",
+      "candidateCount": 1
+    }
+  },
+  {
+    "name": "unauthenticated",
+    "path": "/api/v1/me",
+    "status": 401,
+    "headers": {
+      "cache-control": "no-store",
+      "content-type": "application/problem+json",
+      "server-timing": "backend;dur=0.000, facade;dur=0.427",
+      "www-authenticate": "Bearer",
+      "x-correlation-id": "example-unauthenticated",
+      "x-request-id": "example-unauthenticated",
+      "x-robots-tag": "noindex, nofollow",
+      "Date": "Mon, 14 Sep 2026 04:36:35 GMT",
+      "Connection": "keep-alive",
+      "Keep-Alive": "timeout=5",
+      "Transfer-Encoding": "chunked"
+    },
+    "body": {
+      "type": "urn:inpractise-demo:problem:unauthenticated",
+      "title": "unauthenticated",
+      "status": 401,
+      "detail": "A caller bearer token is required.",
+      "code": "unauthenticated",
+      "retryable": false,
+      "requestId": "example-unauthenticated",
+      "correlationId": "example-unauthenticated"
+    }
+  },
+  {
+    "name": "provider",
+    "path": "/api/v1/answers",
+    "status": 503,
+    "headers": {
+      "cache-control": "no-store",
+      "content-type": "application/problem+json",
+      "ratelimit": "\"principal\";r=54;t=60",
+      "ratelimit-policy": "\"principal\";q=60;w=60",
+      "server-timing": "backend;dur=4.646, facade;dur=0.952",
+      "x-correlation-id": "example-provider",
+      "x-request-id": "fixture-provider-failure",
+      "x-robots-tag": "noindex, nofollow",
+      "Date": "Mon, 14 Sep 2026 04:36:35 GMT",
+      "Connection": "keep-alive",
+      "Keep-Alive": "timeout=5",
+      "Transfer-Encoding": "chunked"
+    },
+    "body": {
+      "type": "urn:inpractise-demo:problem:dependency_failure",
+      "title": "dependency failure",
+      "status": 503,
+      "detail": "Offline fixture provider failure.",
+      "code": "dependency_failure",
+      "retryable": true,
+      "requestId": "fixture-provider-failure",
+      "correlationId": "example-provider"
+    }
+  },
+  {
+    "name": "next-page",
+    "path": "/api/v1/documents?pageSize=1&company=northstar&kind=synthetic_interview&cursor=eyJhZnRlciI6Im5vcnRoc3RhciIsImNvbXBhbnkiOiJub3J0aHN0YXIiLCJraW5kIjoic3ludGhldGljX2ludGVydmlldyJ9",
+    "status": 200,
+    "headers": {
+      "cache-control": "no-store",
+      "content-type": "application/json",
+      "ratelimit": "\"principal\";r=53;t=60",
+      "ratelimit-policy": "\"principal\";q=60;w=60",
+      "server-timing": "backend;dur=4.004, facade;dur=0.936",
+      "x-correlation-id": "example-next-page",
+      "x-request-id": "fixture-list",
+      "x-robots-tag": "noindex, nofollow",
+      "Date": "Mon, 14 Sep 2026 04:36:35 GMT",
+      "Connection": "keep-alive",
+      "Keep-Alive": "timeout=5",
+      "Transfer-Encoding": "chunked"
+    },
+    "body": {
+      "items": [
+        {
+          "document_id": "zenith",
+          "revision_id": "rev-1",
+          "title": "Synthetic interview",
+          "company": "northstar",
+          "kind": "synthetic_interview",
+          "origin": "synthetic",
+          "interview_date": null,
+          "published_at": "2026-09-02T00:00:00Z",
+          "source_url": null
+        }
+      ],
+      "nextCursor": null
+    }
+  },
+  {
+    "name": "not-modified",
+    "path": "/api/v1/documents/northstar/revisions/rev-1/passages/p-1",
+    "status": 304,
+    "headers": {
+      "cache-control": "private, no-cache",
+      "etag": "\"passage-v2-WyJkZW1vLW9yZyIsIm5vcnRoc3RhciIsInJldi0xIiwicC0xIl0\"",
+      "ratelimit": "\"principal\";r=52;t=60",
+      "ratelimit-policy": "\"principal\";q=60;w=60",
+      "server-timing": "backend;dur=2.734, facade;dur=0.985",
+      "vary": "Authorization",
+      "x-correlation-id": "example-not-modified",
+      "x-request-id": "fixture-read",
+      "x-robots-tag": "noindex, nofollow",
+      "Date": "Mon, 14 Sep 2026 04:36:35 GMT",
+      "Connection": "keep-alive",
+      "Keep-Alive": "timeout=5"
+    },
+    "body": null
+  },
+  {
+    "name": "rate",
+    "path": "/api/v1/me",
+    "status": 429,
+    "headers": {
+      "cache-control": "no-store",
+      "content-type": "application/problem+json",
+      "ratelimit": "\"principal\";r=0;t=60",
+      "ratelimit-policy": "\"principal\";q=60;w=60",
+      "retry-after": "60",
+      "server-timing": "backend;dur=1.914, facade;dur=0.292",
+      "x-correlation-id": "example-rate",
+      "x-request-id": "fixture-me",
+      "x-robots-tag": "noindex, nofollow",
+      "Date": "Mon, 14 Sep 2026 04:36:36 GMT",
+      "Connection": "keep-alive",
+      "Keep-Alive": "timeout=5",
+      "Transfer-Encoding": "chunked"
+    },
+    "body": {
+      "type": "urn:inpractise-demo:problem:rate_limited",
+      "title": "rate limited",
+      "status": 429,
+      "detail": "The facade request rate is exhausted.",
+      "code": "rate_limited",
+      "retryable": true,
+      "requestId": "fixture-me",
+      "correlationId": "example-rate"
+    }
+  }
+]

@@ -6,8 +6,8 @@
       "env": {
         "RESEARCH_URL": "${RESEARCH_URL}",
         "RESEARCH_PUBLISHABLE_KEY": "${RESEARCH_PUBLISHABLE_KEY}",
-        "RESEARCH_EMAIL": "${RESEARCH_EMAIL}",
-        "RESEARCH_PASSWORD": "${RESEARCH_PASSWORD}",
+        "RESEARCH_EMAIL": "info+inpractise-mcp@busirocket.com",
+        "RESEARCH_PASSWORD": "${DEMO_MCP_PASSWORD}",
         "RESEARCH_HANDSHAKE_LOG": "${RESEARCH_HANDSHAKE_LOG:-}"
       }
     }

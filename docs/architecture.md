@@ -1,8 +1,8 @@
 # Request architecture
 
 In Practise Demo is an independent engineering demonstration using public SEC
-filings and synthetic interviews. It has one research endpoint and two clients;
-it does not access In Practise systems or private research.
+filings and synthetic interviews. It has one research endpoint and three
+clients; it does not access In Practise systems or private research.
 
 ```text
 Browser session                         Local MCP member session
@@ -60,7 +60,14 @@ through Supabase Auth's `/auth/v1/user`;
 the bearer token into a caller-scoped database client and reads active
 membership. This is the implemented equivalent of the plan's
 `auth.getUser(token)` step; [ADR 0002](adr/0002-handler-authentication.md)
-records the SDK deviation and unverified remote gateway setting.
+records the SDK deviation and verification evidence. Read-only Management API
+inspection records deployed version 11 as `ACTIVE` with `verify_jwt=false`. Live
+probes reject missing and deliberately mis-signed tokens. The expiry regression
+constructs a JWT with a past `exp`, models Supabase Auth's observed HTTP 403
+expiry response, and proves authentication stops before membership or evidence
+access. A separately, organically aged member token was accepted before `exp`
+and rejected by Auth after it, but was not replayed through the deployed
+handler.
 
 ## Six actions
 
@@ -80,8 +87,8 @@ active membership.
 Success returns `{ action, data, buildId, requestId }`; errors return
 `{ error: { code, message, retryable }, requestId }`.
 [apiErrorStatuses.ts](../supabase/functions/_shared/http/apiErrorStatuses.ts)
-defines HTTP mappings. A reserved `allowance_exhausted` error does not establish
-an implemented allowance ledger.
+defines HTTP mappings. `allowance_exhausted` represents a rejected database Ask
+debit.
 
 ## Database boundary and exact evidence
 
@@ -152,19 +159,75 @@ rejects labels beyond the supplied sources.
 [buildAskResult.ts](../supabase/functions/research/answer/buildAskResult.ts)
 maps labels to server citations;
 [authorisedClaims.ts](../supabase/functions/research/answer/authorisedClaims.ts)
-removes unauthorized references and drops claims with no surviving references.
-If no claims survive, it emits `not_found` and an access-changed message. That
-branch also covers a generated answer with zero claims, so the message alone is
-not proof that revocation occurred.
+drops a whole claim if any referenced source is unavailable. Independent claims
+with complete evidence remain, and only their citations are returned. If an
+originally nonempty answer loses every claim, it emits `not_found` with an
+access-changed message. An ordinary generated zero-claim refusal retains its
+original missing-evidence explanation.
+[ADR 0006](adr/0006-require-complete-claim-evidence.md) records why a partly
+supported comparison cannot retain its unchanged prose.
 
-This is not an atomic permission snapshot covering generation and delivery. A
-claim with multiple references can survive losing some references; the tests do
-not establish that the remainder supports every part of its prose. No full
-concurrent revocation or corpus-fingerprint guarantee is claimed. Request
-allowance debiting and a usage ledger are absent from this path and remain in
-[TODO.md](../TODO.md). The broader [plan](research/07-one-day-execution-plan.md)
-is the authority for intended work, not proof that every requirement shipped.
+This is not an atomic permission snapshot covering generation and delivery; no
+full concurrent revocation or corpus-fingerprint guarantee is claimed. Ask
+allowance debiting and completion usage accounting are described below. The
+broader [plan](research/07-one-day-execution-plan.md) is the authority for
+intended work, not proof that every requirement shipped.
 
 Verification: `pnpm type-check`, `pnpm test:ci` and `pnpm check:ci` exercise the
 source and offline contracts. Retained live evaluation and database results are
 separately dated in [evals.md](evals.md) and [backend.md](backend.md).
+
+## Ask allowance and usage
+
+Each authenticated member has 100 Ask requests per UTC calendar day. The
+`debit_request` RPC takes its principal from `auth.uid()`, serializes requests
+for that principal with a transaction advisory lock, and inserts an
+unknown-usage ledger row before any Ask embedding or generation request.
+Exhaustion returns `allowance_exhausted` (HTTP 429). Caller cancellation,
+retrieval failure, no matching evidence, provider failure and invalid answers do
+not refund the debit. Search and Read do not consume this Ask allowance.
+
+The two mutation RPCs execute as a dedicated non-login role without RLS bypass;
+RLS restricts ledger access to the active caller. Members cannot directly mutate
+ledger rows. Reported completion prompt, completion and total tokens are stored
+once, even if answer validation subsequently fails. Missing or invalid provider
+usage stays NULL (unknown), never an invented zero. These are completion totals,
+not an aggregate of embedding usage. The member-scoped usage endpoint accepts
+caller reports, so it is operational accounting, not a tamper-proof billing
+record. No service-role key participates in this request path. Usage metadata is
+not added to the browser response contract.
+
+Verify with `pnpm test` (rolled-back database integration and provider-free
+search parity) and `pnpm test:edge` (stubbed provider ordering and usage). The
+concurrency fixture holds the last debit open on one connection and proves a
+second connection cannot acquire it; it times out the contender and rolls both
+transactions back. A same-principal attempt after the last debit sees
+exhaustion. See [ADR 0007](adr/0007-debit-before-provider.md).
+
+## Plain HTTP client
+
+The [HTTP API](api.md) adds `/api/v1` to the existing Node origin.
+`server/originListener.mjs` dispatches that prefix to the bundled
+`server/api/createApiListener.ts` and preserves static assets and SPA fallback.
+The facade holds no key and forwards the caller bearer to the same research
+endpoint. Backend `me` verification precedes per-principal in-process quota
+admission; database authorization still gates every evidence response, including
+304s.
+
+`src/http-api/operations.ts` binds routes to runtime schemas shared by the typed
+client and OpenAPI generator. The immutable passage projection omits mutable
+current-revision and envelope metadata. Strong ETags derive from server
+identity; private revalidation preserves revocation. Public immutable caching
+and zero-read authorization shortcuts are deliberately not implemented. See ADRs
+[0008](adr/0008-caller-token-http-facade.md) and
+[0009](adr/0009-scope-immutable-passage-caching.md).
+`pnpm exec vitest run tests/api --no-coverage` checks the contract;
+`python3 scripts/api/exercise.py` verifies the built local origin with an
+offline backend fixture.
+
+The read response supplies `X-Research-Org-Id` from the same authenticated
+principal through `researchResponse.ts`. ETag v2 includes that scope, protecting
+tenant isolation even when memberships change between the earlier identity check
+and the read. An older backend without the header receives compatible uncached
+200 responses; the API never guesses read scope from `me`. This additive backend
+metadata change has not been deployed.

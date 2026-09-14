@@ -80,14 +80,17 @@ the answering passage is retrieved. Measured ranking for that query:
 ```
 
 The gold passage is at ranks 5 and 6. Context selection caps a broad query at
-two passages per document; with only two Costco documents in the corpus, that
-cap consumes all four slots at ranks 1-4 and the answering passage never reaches
-the model. The system then refuses, correctly given its context — a refusal, not
-a fabrication.
+two passages per document, within global limits of eight passages and 4,000
+tokens. With only two Costco documents in the corpus, the diversity cap admits
+four passages at ranks 1-4; it leaves global capacity unused and the answering
+passage never reaches the model. The system then refuses, correctly given its
+context — a refusal, not a fabrication.
 
-This is a real limitation of the diversity cap, recorded rather than removed.
-Raising the cap to make one case pass would trade a measured behaviour for a
-better-looking number.
+The decision in [ADR 0005](adr/0005-retain-f03-selection-miss.md) retains the
+diversity cap and this refusal. F03 remains a measured selection miss; no
+backfill or cap increase is part of this decision. Future selection changes
+require separate evaluation. `pnpm test:ci` verifies selector and diagnostic
+behavior; it does not regenerate these historical live reports.
 
 ## Cost and repeatability
 
@@ -98,3 +101,10 @@ embeddings; the judge runs on the Claude Code subscription, not on the demo's
 provider budget. The gate (`assertAnswerGate`) fails on any leaked restricted
 string, any unauthorised citation, any ungrounded answer, a wrong refusal, or a
 recall regression.
+
+The allowance is now enforced by `debit_request` before Ask retrieval. Failed
+calls and no-evidence results still consume one of the 100 daily units. Actual
+completion token totals are persisted when reported; absent usage stays unknown.
+Embedding usage is not part of that completion ledger. See
+[backend allowance](backend.md#ask-allowance-and-usage). Historical reports
+predating this migration do not prove that enforcement was present then.

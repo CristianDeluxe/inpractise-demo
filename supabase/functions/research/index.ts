@@ -6,6 +6,7 @@ import { authenticate } from './authenticate.ts'
 import { buildId } from './buildId.ts'
 import { maxBodyBytes } from './maxBodyBytes.ts'
 import { RequestSchema } from './RequestSchema.ts'
+import { researchResponse } from './researchResponse.ts'
 import { routeAction } from './routeAction.ts'
 
 Deno.serve(async (request) => {
@@ -29,9 +30,9 @@ Deno.serve(async (request) => {
       throw new ApiError('invalid_request', 'Request failed its schema')
     const principal = await authenticate(request)
     const data = await routeAction(principal, parsed.data)
-    return jsonResponse(
+    return researchResponse(
       { action: parsed.data.action, data, buildId, requestId },
-      200,
+      principal.orgId,
     )
   } catch (cause) {
     const error =
