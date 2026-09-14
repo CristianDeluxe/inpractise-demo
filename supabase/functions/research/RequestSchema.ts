@@ -40,4 +40,9 @@ export const RequestSchema = z.discriminatedUnion('action', [
     action: z.literal('debug'),
     viewAs: ViewAsSchema.optional(),
   }),
+  z.strictObject({
+    action: z.literal('provenance'),
+    viewAs: ViewAsSchema.optional(),
+    requestId: z.uuid(),
+  }),
 ])

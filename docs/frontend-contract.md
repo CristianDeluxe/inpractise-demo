@@ -115,7 +115,7 @@ navigation must use the validated server `readerPath`, never a model URL or
 
 ## HTTP contract
 
-All six operations use one authenticated JSON POST. No request accepts a user,
+All seven operations use one authenticated JSON POST. No request accepts a user,
 organization, role, SQL expression, source URL or retrieval-mode override.
 
 ```text
@@ -125,6 +125,7 @@ organization, role, SQL expression, source URL or retrieval-mode override.
 {action:"search", query:string, company?:string, limit?:integer}
 {action:"ask", query:string, company?:string}
 {action:"debug"}
+{action:"provenance", requestId:string}
 ```
 
 The query limit is 1–2,000 characters and 500 tokens; company slugs are at most
@@ -134,7 +135,10 @@ most fifty current logical documents; the backend requests 51 rows and returns
 an overflow error when a 51st authorized document exists. Read returns a passage
 and neighboring passage IDs, with each subsequent neighbor read separately
 authorized. Debug is read-only and reviewer-only; it cannot impersonate another
-principal or run an evaluation/model.
+principal or run an evaluation/model. Provenance reopens exactly one of the
+caller's own `ask` requests by its request id; row level security on
+`request_usage` scopes it to the caller, so another principal's request id is
+indistinguishable from a nonexistent one and both surface as `not_found`.
 
 ```text
 Success: {action,data,buildId,requestId}
@@ -259,12 +263,12 @@ parsers, and each `controller` is a new `AbortController`. Define one request
 scope for each independently rendered resource and retain it across replacement
 requests. An answer scope must not cancel an unrelated source-reader request.
 
-Import `me`, `list`, `read`, `search`, `ask` and `debug` from their
-correspondingly named files under `src/api/`. Each function returns the
+Import `me`, `list`, `read`, `search`, `ask`, `debug` and `provenance` from
+their correspondingly named files under `src/api/`. Each function returns the
 validated success envelope, so the action payload is `response.data`.
-`MeData<T>`, `ListData<T>`, `ReadData<T>`, `AskData<T>` and `DebugData<T>`
-preserve the type inferred by the injected `DataParser<T>`. `SearchData<T>`
-additionally requires an `items` array, `mode: SearchMode` and
+`MeData<T>`, `ListData<T>`, `ReadData<T>`, `AskData<T>`, `DebugData<T>` and
+`ProvenanceData<T>` preserve the type inferred by the injected `DataParser<T>`.
+`SearchData<T>` additionally requires an `items` array, `mode: SearchMode` and
 `truncated: boolean`; the backend parser supplies the concrete item type and
 validates the actual fingerprint property. An item's evidence can be a direct
 citation or a citation inside the frozen result shape.
@@ -382,6 +386,35 @@ Distinguish measured candidate recall from context selection; an induced
 retrieval miss remains visible as a failed diagnostic. Never label an unreviewed
 question a correct refusal. There is no run-model, impersonation or ingestion
 mutation control.
+
+### `/answer/:requestId`
+
+Read the route's `requestId` parameter and call `provenance` with it. This
+reopens one of the caller's own `ask` requests, months later, to check whether
+the evidence it quoted is still current.
+
+```typescript
+await provenance(
+  client,
+  { action: 'provenance', requestId },
+  parsers.provenance,
+  { signal: controller.signal, scope: provenanceScope },
+)
+```
+
+The successful result contains `requestId`, `recordedAt`, `totalTokens`, and
+`revisions`: one entry per revision the answer's diagnostic record cited, each
+with `revisionId`, `documentId` and `current`. A revision the caller can no
+longer read comes back with `documentId: null` and `current: false` rather than
+disclosing anything about it. `diagnostics` is present under exactly the same
+gate as `ask` and `debug` (`mayReadDiagnostics`, judged on the effective
+principal), so viewing as a member withholds it here too.
+
+Render loading, cancelled, and a neutral not-found state for 404: another
+caller's request id is indistinguishable from one that does not exist. Render an
+error for other failures. Label a superseded revision distinctly from a current
+one; do not imply that a superseded citation was wrong when it was written, only
+that it is no longer the current revision of its document.
 
 ## Verification record
 

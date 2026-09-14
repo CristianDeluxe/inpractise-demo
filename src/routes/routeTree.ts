@@ -8,6 +8,7 @@ import { landingRoute } from './landingRoute'
 import { libraryAliasRoute } from './libraryAliasRoute'
 import { loginRoute } from './loginRoute'
 import { methodRoute } from './methodRoute'
+import { provenanceRoute } from './provenanceRoute'
 import { readerRoute } from './readerRoute'
 import { resetAliasRoute } from './resetAliasRoute'
 import { rootRoute } from './rootRoute'
@@ -25,6 +26,11 @@ export const routeTree = rootRoute.addChildren([
   debugAliasRoute,
   runtimeRoute.addChildren([
     loginRoute,
-    accessRoute.addChildren([workspaceRoute, readerRoute, inspectionRoute]),
+    accessRoute.addChildren([
+      workspaceRoute,
+      readerRoute,
+      inspectionRoute,
+      provenanceRoute,
+    ]),
   ]),
 ])

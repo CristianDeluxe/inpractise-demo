@@ -9,8 +9,9 @@ The facade owns no credential, issues no tokens, and stores no sessions. It
 forwards the caller's `Authorization` header unchanged to
 `POST /functions/v1/research`; all evidence authorization remains in the backend
 database. Removing the facade would not change which evidence the caller may
-read. Reviewer-only `debug` diagnostics are deliberately absent from v1. Health
-is local liveness, not the sixth research action.
+read. Reviewer-only `debug` diagnostics and the `provenance` action that reopens
+one of the caller's own requests are deliberately absent from v1. Health is
+local liveness, not one of the research actions.
 
 ## Run and reproduce
 
