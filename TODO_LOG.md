@@ -558,3 +558,18 @@
   without the sibling checkout; `pnpm check:quality` and `pnpm conformance` exit
   0; full `pnpm type-check` and `pnpm lint`, which do cover `evals/`, exit 0
   with the sibling present.
+
+### 2026-09-14 - CI green on a clean runner
+
+- Run `34817650779` passed all four jobs on `95d589d`: `check:ci`,
+  `check:quality`, `audit:check` and the source/history/workflow security scan.
+  The blocker recorded since run `34801318491` is closed.
+- Three causes, all now fixed: the `@syntopica/*` rename shipped with its
+  regenerated lockfile; `@cristiandeluxe/max-lane` became optional and the CI
+  type-check and lint scopes exclude `evals/`; `zizmor` reported four
+  low-confidence `artipacked` findings, answered with
+  `persist-credentials: false` on every `actions/checkout` - the workflow never
+  pushes, so the token has no reason to stay in `.git/config`.
+- `tests/unit/corpusVocabulary.test.ts` rehashes the raw source artifacts that
+  `corpus/raw/` deliberately keeps out of the repository, so it is excluded from
+  `vitest.ci.config.ts` and still runs in the local `pnpm test`.

@@ -48,18 +48,6 @@ plan wins.
   compatible upstream releases when available. No metadata override or lint
   suppression masks this. See `docs/baseline.md`.
 
-- [~] **CI green except for what a runner cannot hold.** Run `34817335482`
-  installed cleanly on a fresh runner - the scope rename and the regenerated
-  lockfile now agree, and the optional judge is skipped - and `check:quality`
-  and `audit:check` passed. Two jobs failed for reasons unrelated to
-  dependencies: `zizmor` reported four low-confidence `artipacked` findings
-  (`actions/checkout` persisting credentials), now answered with
-  `persist-credentials: false` on all four checkouts, and
-  `tests/unit/corpusVocabulary.test.ts` rehashes the raw source artifacts that
-  `corpus/raw/` deliberately keeps out of the repository, so it is excluded from
-  `vitest.ci.config.ts` and stays in the local `pnpm test`. Next: confirm both
-  jobs pass on the next push.
-
 ## Documentation
 
 - [ ] **Rehearse the two-minute script against an authorized deployment.**
