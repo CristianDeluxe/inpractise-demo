@@ -48,7 +48,7 @@ describe('research request states', () => {
       )
       await pending.promise
     })
-    expect(screen.queryByText(/could not establish an answer/)).toBeNull()
+    expect(screen.queryByText(/Not established by the corpus/)).toBeNull()
     expect(runtime.controllers.size).toBe(0)
   })
   it('clears all evidence on expired session and auth identity changes', async () => {
@@ -109,7 +109,7 @@ describe('research request states', () => {
     })
     fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
     expect(
-      await screen.findByText(/could not establish an answer/),
+      await screen.findByText(/no passages you are authorised to read/),
     ).toBeTruthy()
     const citation = citationFixture()
     fetcher.mockResolvedValueOnce(
@@ -129,7 +129,9 @@ describe('research request states', () => {
     )
     fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
     expect(await screen.findByText('<img src=x onerror=alert(1)>')).toBeTruthy()
-    expect(screen.getByRole('heading', { name: 'conflict' })).toBeTruthy()
+    expect(
+      screen.getByRole('heading', { name: 'Sources disagree' }),
+    ).toBeTruthy()
     expect(screen.queryByRole('img')).toBeNull()
   })
   it('keeps missing passages neutral and empty search distinct', async () => {

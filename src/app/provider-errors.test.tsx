@@ -41,7 +41,7 @@ describe('provider errors in the research workspace', () => {
       })
       fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
       expect(await screen.findByRole('alert')).toBeTruthy()
-      expect(screen.queryByText(/could not establish an answer/)).toBeNull()
+      expect(screen.queryByText(/Not established by the corpus/)).toBeNull()
       expect(screen.queryByRole('button', { name: 'Retry' }) !== null).toBe(
         retryable,
       )

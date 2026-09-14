@@ -58,7 +58,12 @@ it differs from the retained run.
 The [two-minute presentation script](docs/demo-script.md) opens a premium
 passage with the reviewer account and explains where the denied-fixture boundary
 is tested. The same account can open `/inspect` for caller-scoped counts; no
-connected report is promised.
+connected report is promised. The workspace also carries a view switcher: the
+reviewer can re-run the same search as a plain member and watch the premium
+document leave the results. That switch is a downgrade only - the request shape
+cannot express an upgrade, and the effective principal is the intersection with
+the real one, so RLS stays the ceiling. See
+[the architecture note](docs/architecture.md#viewing-the-corpus-as-a-lesser-principal).
 
 ## Run locally
 

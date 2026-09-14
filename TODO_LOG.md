@@ -607,3 +607,31 @@
   by instruction; live SQL/count behavior and restricted search/ask await the
   owner-authorized application and rollout recorded in TODO.md. No commit, push,
   provisioning, provider generation or deployment was performed.
+
+### 2026-09-14 — Restricted search applied, demo identity live, landing figures pinned
+
+- `20260914000011_scoped_search_candidates.sql` is applied on the remote project
+  and the Edge function is rolled out. `pnpm db:verify` reports
+  `search_candidates` as `prosecdef=false` with no anonymous execute, so
+  restricted search runs as the caller.
+- The consolidated demo identity is provisioned: four `auth.users` and four
+  memberships, `me@cristiandeluxe.dev` as the premium reviewer. Retired
+  agency-domain accounts are gone.
+- `pnpm db:verify` had been failing since
+  `20260914000008_request_allowances.sql` added `public.request_usage`: the
+  script still expected five RLS tables and aborted before its grant assertions,
+  which also made `pnpm verify` red. Expected set widened to six;
+  `request_usage` satisfies the same invariants (RLS on, no anonymous select, no
+  member write). Evidence:
+  `PASS: six RLS tables, default-deny anonymous grants, no member writes, caller-scoped retrieval, service-only publication`.
+- Landing-page corpus figures were decorative and three of four were wrong. They
+  now read 6 synthetic interviews, 4 public filings, 962 indexed passages and 5
+  companies, each recomputed from `corpus/manifest.json` by
+  `tests/unit/demoCorpusStats.test.ts`.
+- Refusal copy distinguishes the two ways an answer can be absent: zero
+  candidates names retrieval, a positive count says how many passages were read.
+  Status headings no longer show raw contract codes.
+- `AGENTS.md` no longer claims there is no remote or deployment; it names
+  `CristianDeluxe/inpractise-demo`, the live host, and keeps the rule that a
+  local gate proves neither. The downgrade-only view-as design is documented in
+  `docs/architecture.md` and `README.md`, where it had no coverage at all.
