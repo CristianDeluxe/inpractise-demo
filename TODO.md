@@ -17,6 +17,14 @@ plan wins.
 
 ## Backend
 
+- [!] **Provision the consolidated demo identity and renamed fixtures.** Source
+  now defines `demo` as the premium reviewer and retains `basic`, `other` and
+  `mcp` for authorization tests. The owner must set `DEMO_PASSWORD`, provision
+  the new identities and verify their memberships before login or live
+  integration checks. No credential or remote user was changed during the
+  identity update. Next: owner provisioning, then `pnpm test:rls` and
+  `pnpm test` against the new accounts.
+
 ## Corpus
 
 ## Testing
@@ -50,11 +58,20 @@ plan wins.
 
 ## Documentation
 
+- [!] **Resolve the identity scan's historical-artifact exception.** The exact
+  recursive search from the identity briefing also reads ignored `work/` logs,
+  backup snapshots and caches, plus another session's `.superpowers/` records.
+  Those retain the retired name. They were preserved pending the owner's cleanup
+  decision; source and documentation use the new identity. Next: confirm whether
+  to preserve these historical artifacts as explicit exceptions or authorize
+  scrubbing them. Credential and frozen files stay untouched.
+
 - [ ] **Rehearse the two-minute script against an authorized deployment.**
       `docs/demo-script.md` contains a 120-second sequence, exact local URLs,
-      live questions, refusal/premium-denial steps and timed failure fallback.
-      The script now targets `https://inpractise.cristiandeluxe.dev`, which is
-      live and route-verified, but no timed rehearsal against it has been run.
+      live questions, refusal/premium-access steps, test-covered tier denial and
+      timed failure fallback. The script now targets
+      `https://inpractise.cristiandeluxe.dev`, which is live and route-verified,
+      but no timed rehearsal against it has been run.
 
 ## Pending Decisions
 

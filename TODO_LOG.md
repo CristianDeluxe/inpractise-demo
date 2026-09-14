@@ -64,6 +64,19 @@
 
 ### 2026-09
 
+- [x] 2026-09-14 — **Consolidated the reviewer demo identity in source.** The
+      only advertised browser account is the premium `demo` reviewer. Basic,
+      other-organization and MCP identities remain test fixtures. Preflight
+      derives password requirements from the persona list; RLS and MCP controls
+      use demo. Frozen evaluation labels resolve to demo without rewriting the
+      gold set or historical reports. The walkthrough shows premium access live
+      and describes denial through the database and parity tests. Verification:
+      `pnpm check:ci`, `pnpm type-check`, `pnpm lint`, and the offline
+      `work/demo-identity/verify-personas.mjs` assertions. Owner provisioning,
+      remote verification and the ignored historical-artifact scan exception
+      stay in TODO.md. No credentials, frozen artifacts, migrations or remote
+      state were changed; no commit or push was made.
+
 - [x] 2026-09-14 — **Edge function `research` token verification.** Read-only
       Management API evidence records deployed version 11 as `ACTIVE` with
       `verify_jwt=false`. Live handler probes rejected a missing token and a
@@ -545,9 +558,9 @@
 - The five shared config packages are published under `@syntopica/*` at the
   exact versions this repository pins (`create-baseline` 0.9.0, `eslint-config`
   0.8.0, `tsconfig` 0.3.0, `prettier-config` 0.2.0, `quality-config` 0.11.0);
-  `@busirocket/*` is retired. Renamed every manifest, config and document and
-  regenerated the lockfile in the same commit, which is what commit `3f3dc7d`
-  had not done.
+  the former package scope is retired. Renamed every manifest, config and
+  document and regenerated the lockfile in the same commit, which is what commit
+  `3f3dc7d` had not done.
 - `@cristiandeluxe/max-lane` moved to `optionalDependencies`. It is the local
   answer-quality judge and nothing outside `evals/` imports it, so the CI scope
   now excludes that directory: `type-check:ci` drops it from the project list
