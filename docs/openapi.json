@@ -40,6 +40,30 @@
             }
           },
           {
+            "name": "viewAs",
+            "in": "query",
+            "required": false,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "role": {
+                      "type": "string",
+                      "const": "member"
+                    },
+                    "premium": {
+                      "type": "boolean",
+                      "const": false
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          {
             "name": "company",
             "in": "query",
             "required": false,
@@ -160,6 +184,11 @@
                           },
                           "source_url": {
                             "type": ["string", "null"]
+                          },
+                          "passage_count": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
                           }
                         },
                         "required": [
@@ -1389,6 +1418,30 @@
             "schema": {
               "type": "string",
               "pattern": "^[A-Za-z0-9._-]{1,128}$"
+            }
+          },
+          {
+            "name": "viewAs",
+            "in": "query",
+            "required": false,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "role": {
+                      "type": "string",
+                      "const": "member"
+                    },
+                    "premium": {
+                      "type": "boolean",
+                      "const": false
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
             }
           },
           {
@@ -2850,6 +2903,20 @@
                 "$schema": "https://json-schema.org/draft/2020-12/schema",
                 "type": "object",
                 "properties": {
+                  "viewAs": {
+                    "type": "object",
+                    "properties": {
+                      "role": {
+                        "type": "string",
+                        "const": "member"
+                      },
+                      "premium": {
+                        "type": "boolean",
+                        "const": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
                   "query": {
                     "type": "string",
                     "minLength": 1,
@@ -4232,6 +4299,20 @@
                 "$schema": "https://json-schema.org/draft/2020-12/schema",
                 "type": "object",
                 "properties": {
+                  "viewAs": {
+                    "type": "object",
+                    "properties": {
+                      "role": {
+                        "type": "string",
+                        "const": "member"
+                      },
+                      "premium": {
+                        "type": "boolean",
+                        "const": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
                   "query": {
                     "type": "string",
                     "minLength": 1,
@@ -5641,6 +5722,30 @@
               "type": "string",
               "pattern": "^[A-Za-z0-9._-]{1,128}$"
             }
+          },
+          {
+            "name": "viewAs",
+            "in": "query",
+            "required": false,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "role": {
+                      "type": "string",
+                      "const": "member"
+                    },
+                    "premium": {
+                      "type": "boolean",
+                      "const": false
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -5694,6 +5799,42 @@
                     },
                     "premium": {
                       "type": "boolean"
+                    },
+                    "realPrincipal": {
+                      "type": "object",
+                      "properties": {
+                        "orgId": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "role": {
+                          "type": "string",
+                          "enum": ["member", "reviewer"]
+                        },
+                        "premium": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": ["orgId", "role", "premium"],
+                      "additionalProperties": false
+                    },
+                    "effectivePrincipal": {
+                      "type": "object",
+                      "properties": {
+                        "orgId": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "role": {
+                          "type": "string",
+                          "enum": ["member", "reviewer"]
+                        },
+                        "premium": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": ["orgId", "role", "premium"],
+                      "additionalProperties": false
                     }
                   },
                   "required": ["orgId", "role", "premium"],

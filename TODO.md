@@ -17,6 +17,15 @@ plan wins.
 
 ## Backend
 
+- [!] **Apply and verify the new restricted-search migration.**
+  `supabase/migrations/20260914000011_scoped_search_candidates.sql` is
+  deliberately unapplied under the view-as briefing. Restricted search and ask
+  fail closed until this caller-RLS, security-invoker function exists. Next:
+  owner-authorized migration application and Edge rollout, then live checks of
+  member/premium narrowing before candidate limits and authorization-scoped
+  passage counts. Existing migrations and corpus remain unchanged; offline
+  regressions cover request scopes and failure behavior, not live SQL execution.
+
 - [!] **Provision the consolidated demo identity and renamed fixtures.** Source
   now defines `demo` as the premium reviewer and retains `basic`, `other` and
   `mcp` for authorization tests. The owner must set `DEMO_PASSWORD`, provision

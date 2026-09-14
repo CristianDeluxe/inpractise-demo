@@ -5,26 +5,18 @@ import type { Database } from '../types/Database.ts'
 import type { FusedRank } from '../types/FusedRank.ts'
 import { candidateKey } from './candidateKey.ts'
 import { PassageContentSchema } from './PassageContentSchema.ts'
+import { readCandidatePassage } from './readCandidatePassage.ts'
 
 export async function readCandidate(
   client: SupabaseClient<Database>,
   rows: BranchRow[],
   fused: FusedRank,
+  premium = true,
 ): Promise<Candidate> {
   const matching = rows.filter((row) => candidateKey(row) === fused.key)
   const row = matching[0]
   if (!row) throw new Error('Fused rank has no source row')
-  const passage = await client
-    .from('passages')
-    .select('text_content,token_count')
-    .eq('org_id', row.org_id)
-    .eq('document_id', row.document_id)
-    .eq('revision_id', row.revision_id)
-    .eq('passage_id', row.passage_id)
-    .maybeSingle()
-  if (passage.error)
-    throw new Error(`Evidence read failed: ${passage.error.code}`)
-  if (!passage.data) throw new Error('Evidence access changed during retrieval')
+  const passage = await readCandidatePassage(client, row, premium)
   const content = PassageContentSchema.parse(passage.data)
   const lexical = matching.find((item) => item.branch === 'fts')
   const vector = matching.find((item) => item.branch === 'vector')

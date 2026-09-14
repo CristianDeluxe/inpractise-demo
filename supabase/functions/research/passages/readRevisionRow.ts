@@ -4,15 +4,16 @@ import type { PassageRef } from './PassageRef.ts'
 
 /** The revision carries the provenance every citation has to print. */
 export async function readRevisionRow(principal: Principal, ref: PassageRef) {
-  const revision = await principal.client
+  let query = principal.client
     .from('document_revisions')
     .select(
-      'title,company,origin,kind,interview_date,published_at,source_url,is_current',
+      'title,company,origin,kind,interview_date,published_at,source_url,is_current,documents!inner(required_tier)',
     )
     .eq('org_id', principal.orgId)
     .eq('document_id', ref.documentId)
     .eq('revision_id', ref.revisionId)
-    .maybeSingle()
+  if (!principal.premium) query = query.eq('documents.required_tier', 'basic')
+  const revision = await query.maybeSingle()
   if (revision.error)
     throw new ApiError('dependency_failure', 'Revision read failed', true)
   if (!revision.data) throw new ApiError('not_found', 'No such revision')
