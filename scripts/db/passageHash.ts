@@ -1,6 +1,11 @@
 import type { CorpusDocument } from './CorpusDocument.ts'
 import { sha256 } from './sha256.ts'
 
+/**
+ * Bind passage order, text and attribution using length-prefixed fields, avoiding
+ * ambiguous concatenation. Lengths count Unicode code points to match publication
+ * verification; changing to UTF-16 string lengths would change evidence hashes.
+ */
 export function passageHash(document: CorpusDocument): string {
   return sha256(
     [...document.passages]

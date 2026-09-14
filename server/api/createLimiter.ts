@@ -2,6 +2,11 @@ import type { FacadeConfig } from './FacadeConfig.ts'
 import { FacadeError } from './FacadeError.ts'
 import type { QuotaBucket } from './QuotaBucket.ts'
 
+/**
+ * Quota state is local to this limiter instance, not shared across processes.
+ * At capacity, reject new principals instead of evicting live buckets and letting
+ * an existing principal reset its allowance. Call only after authentication.
+ */
 export function createLimiter(config: FacadeConfig) {
   const buckets = new Map<string, QuotaBucket>()
   return (key: string, headers: Headers): void => {

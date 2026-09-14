@@ -3,6 +3,11 @@ import { jsonResponse } from './jsonResponse.ts'
 import type { OperationContext } from './OperationContext.ts'
 import { passageEtag } from './passageEtag.ts'
 
+/**
+ * Call only after the backend read and evidence validation, even for a 304.
+ * Without scope from that read, omit the ETag and return the full response;
+ * using an earlier identity check could reuse evidence across organizations.
+ */
 export function evidenceResponse(
   data: unknown,
   passage: boolean,

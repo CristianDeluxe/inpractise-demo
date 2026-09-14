@@ -4,6 +4,11 @@ import type { ResearchRequest } from './ResearchRequest.ts'
 import { inspectResponseEvidence } from './inspectResponseEvidence.ts'
 import { validateActionEvidence } from './validators/validateActionEvidence.ts'
 
+/**
+ * Validate evidence both before and after the caller-supplied parser.
+ * A parser may shape action data, but every citation it retains must match the
+ * server's serialized evidence exactly; even a plausible rewritten quote fails.
+ */
 export function parseActionData<T extends Record<string, unknown>>(
   request: ResearchRequest,
   input: unknown,

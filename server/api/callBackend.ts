@@ -3,6 +3,11 @@ import type { FacadeConfig } from './FacadeConfig.ts'
 import { FacadeError } from './FacadeError.ts'
 import { parseBackend } from './parseBackend.ts'
 
+/**
+ * Forward the caller bearer unchanged so research retains its database RLS
+ * boundary; the facade supplies no privileged key. Redirects are rejected to
+ * keep the bearer on the configured endpoint. Transport failure stays an error.
+ */
 export async function callBackend(config: FacadeConfig, call: BackendCall) {
   if (!config.researchUrl)
     throw new FacadeError(

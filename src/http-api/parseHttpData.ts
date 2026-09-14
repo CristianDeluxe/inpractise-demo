@@ -4,6 +4,11 @@ import type { OperationName } from './OperationName.ts'
 import type { OperationOutput } from './OperationOutput.ts'
 import { operations } from './operations.ts'
 
+/**
+ * After checking the HTTP shape, apply the same action-specific evidence checks
+ * as the browser research client. In particular, a valid-looking passage must
+ * still match the requested identity and answer citations must be supplied.
+ */
 export function parseHttpData<K extends OperationName>(
   name: K,
   input: Record<string, unknown>,

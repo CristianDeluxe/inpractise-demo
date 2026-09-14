@@ -5,6 +5,11 @@ import { searchResearchInput } from './searchResearchInput.ts'
 import { toolFailure } from './toolFailure.ts'
 import { toolText } from './toolText.ts'
 
+/**
+ * Use the member session's research search action, with no separate retrieval
+ * index or privileged client. Backend failures remain tool errors rather than
+ * empty matches; this tool exposes neither Ask generation nor writes.
+ */
 export function registerSearchResearch(
   server: McpServer,
   session: ResearchSession,
