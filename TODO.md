@@ -34,17 +34,6 @@ plan wins.
 
 ## Frontend
 
-- [!] **Apply the diagnostics migration to the remote project.**
-  `supabase/migrations/20260914000012_request_diagnostics.sql` adds
-  `diagnostics` and `recorded_at` to `public.request_usage` plus
-  `record_request_diagnostics`, and is applied and tested only on the local
-  container (`pnpm test:db:local`, 11 cases). Until the owner applies it
-  remotely and redeploys the Edge function, the live `ask` path's diagnostic
-  write and the live `debug` action's `recentRequests` will fail against the
-  deployed schema. Next: owner-authorized migration application and Edge
-  rollout, then a live check that a reviewer sees their own record on `/inspect`
-  and a downgraded view does not.
-
 - [!] **Freeze the frontend/backend response boundary.** The remaining open
   points are the absent first-passage pointer, directional neighbors,
   fingerprint/usage metadata and connected redacted diagnostic report. Do not

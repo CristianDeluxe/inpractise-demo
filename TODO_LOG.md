@@ -691,3 +691,23 @@
   `pnpm test:edge`, `pnpm test:browser` 12 passed. The migration is applied on
   the local container only; remote application stays an owner-authorized step in
   `TODO.md`.
+
+### 2026-09-14 — Diagnostics migration applied and the function redeployed
+
+- `20260914000012_request_diagnostics.sql` applied to the remote project with
+  `supabase db push --linked`; `supabase migration list --linked` now shows all
+  twelve migrations on both sides. `pnpm db:verify` still reports
+  `PASS: six RLS tables, default-deny anonymous grants, no member writes, caller-scoped retrieval, service-only publication`.
+- Read-only inspection of the remote schema confirms
+  `record_request_diagnostics` is `prosecdef=true`, owned by
+  `request_usage_writer`, with no anonymous execute and execute granted to
+  `authenticated`; `request_usage.diagnostics` is nullable `jsonb` and
+  `recorded_at` is `not null timestamptz`.
+- `supabase functions deploy research --use-api --no-verify-jwt --import-map supabase/functions/deploy-import-map.json`
+  redeployed the handler. Management API reports version 14 `ACTIVE` with
+  `verify_jwt=false`.
+- Live checks against the deployed endpoint as the demo reviewer: `ask` returned
+  200 with a diagnostic record (10 candidates ranked, 8 selected, 928 tokens of
+  context across four revisions); the same `ask` with `viewAs: {role: 'member'}`
+  returned 200 with no diagnostics; `debug` returned 200 with the written rows
+  under `recentRequests`.
