@@ -108,11 +108,19 @@ pnpm test:browser
 The browser installation stays under `node_modules`. The runner builds the app
 with dummy public configuration and starts its own preview at
 `http://127.0.0.1:4197`; that port must be free. It never reuses or stops
-another server. Six scenarios cover 1440/390/320px with reduced and normal
-motion, canvas initialization, ticker/reveal/parallax behavior, horizontal
-layout, protected-route sign-in invitations and reloads. External HTTPS requests
-are blocked, and only the existing font hosts may be requested. No member
-password, remote database or provider call is needed.
+another server. Two specs run at 1440/390/320px with reduced and normal motion.
+The landing probe covers canvas initialization, ticker/reveal/parallax behavior,
+horizontal layout, protected-route sign-in invitations and reloads. The analyst
+probe walks one complete workflow - sign in, search a passage, ask a standalone
+question, follow a claim's source link into the reader - against stubbed
+Supabase Auth and research responses, so it checks the client, router and
+rendering path with the network cut. External HTTPS requests are blocked, and
+only the existing font hosts may be requested. No member password, remote
+database or provider call is needed.
+
+Route registration order is load-bearing in the analyst probe: Playwright
+matches the most recently registered route first, so the catch-all abort is
+registered before the fixtures that must answer.
 
 Playwright owns browser/context teardown. Each test has a 30-second budget; the
 repository browser fixture has an explicit 10-second setup/teardown budget (the
