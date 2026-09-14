@@ -68,6 +68,24 @@ key.
 Noindex discourages indexing; it is not access control. Authenticated evidence
 stays behind Supabase authorization.
 
+### Frontend redeploy on 2026-09-14 for the diagnostics contract
+
+`debug` began returning a `recentRequests` key and
+`src/contracts/parseDebugData.ts` is a `z.strictObject`, so the previously
+deployed bundle would have failed to parse the new response and broken
+`/inspect`. The deployed origin must therefore be rebuilt in the same pass as an
+Edge function response change, not after it.
+
+`pnpm build`, then the rsync above for `dist server server.js`, then
+`cloudlinux-selector restart --json --interpreter nodejs --domain inpractise.cristiandeluxe.dev --app-root apps/inpractise-demo`,
+which returned `{"result": "success"}`. Re-probed: `/`, `/method`, `/connect`,
+`/login`, `/app` and `/inspect` each returned 200, and `/api/v1/health` returned
+`{"status":"ok","scope":"facade-only","backendChecked":false}`. The lazy chunks
+were fetched individually to confirm the new code is the code being served:
+`/assets/InspectionPage-C71whWct.js` returned 200 and contains both
+`recentRequests` and `candidateAt10`, and `/assets/WorkspacePage-iTCvrxnZ.js`
+returned 200 and contains `candidateAt10`.
+
 ## HTTP API on the origin
 
 `server.js` routes `/api/v1` to the facade built from `server/api/` and every
