@@ -148,6 +148,15 @@ Before contributing a change, run the credential-free aggregate:
 pnpm check:ci
 ```
 
+The authorization rules live in the database, and they can be exercised without
+this project's credentials. `pnpm test:db:local` applies the real migrations to
+a throwaway PostgreSQL container and asserts anonymous denial, organization
+isolation, premium tier gating, member write refusal, self-promotion,
+service-only publication and the restricted search path - real SQL, no remote
+project, no secrets. Docker is the only prerequisite;
+[CONTRIBUTING.md](CONTRIBUTING.md) describes the container and the Supabase
+primitives it stands in for.
+
 [CONTRIBUTING.md](CONTRIBUTING.md) explains the actual commit hooks,
 architecture rules and review evidence. The full gate is named `pnpm verify`;
 unlike `check:ci`, it includes authenticated integration, corpus replay and
