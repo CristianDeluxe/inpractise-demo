@@ -8,6 +8,10 @@ Deno.test(
   async () => {
     const handler = await captureResearchHandler()
     const original = globalThis.fetch
+    // provenanceApiFixture answers any request_id with the same canned row;
+    // it does not exercise .eq('request_id', ...) scoping. Real row-selection
+    // scoping (own-row read, cross-org denial) is proven against RLS in
+    // tests/local/provenanceScope.test.ts, not here.
     const { fetcher } = answerTransportFixture(async () =>
       Promise.reject(new Error('No completion expected for provenance')),
     )
@@ -39,10 +43,15 @@ Deno.test(
       globalThis.fetch = original
     }
     if (!response) throw new Error('Handler did not respond')
+    // z.strictObject on `data` fails the test if diagnostics were ever
+    // leaked to this fixture's non-reviewer principal (role: 'member',
+    // premium: false), which is the security-relevant behaviour under test.
     z.object({
       action: z.literal('provenance'),
-      data: z.object({
+      data: z.strictObject({
         requestId: z.literal('00000000-0000-0000-0000-000000000000'),
+        recordedAt: z.literal('2026-09-14T10:00:00Z'),
+        totalTokens: z.literal(928),
         revisions: z.tuple([
           z.object({
             revisionId: z.literal('rev-1'),
@@ -52,6 +61,11 @@ Deno.test(
           z.object({
             revisionId: z.literal('rev-0'),
             documentId: z.literal('s2'),
+            current: z.literal(false),
+          }),
+          z.object({
+            revisionId: z.literal('rev-missing'),
+            documentId: z.literal(null),
             current: z.literal(false),
           }),
         ]),
