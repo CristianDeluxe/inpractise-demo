@@ -4,7 +4,7 @@ import { LoginForm } from './LoginForm'
 
 export function LoginPage() {
   return (
-    <main id="main-content" className="grid min-h-[85vh] lg:grid-cols-2">
+    <main id="main-content" className="grid lg:grid-cols-2">
       <section className="ink-panel grain flex flex-col justify-between gap-16 p-8 md:p-16">
         <Link to="/">
           <Wordmark />
