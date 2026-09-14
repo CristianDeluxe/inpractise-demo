@@ -31,15 +31,14 @@ All direct dependencies are exactly pinned in `package.json`; the root
 | Node / pnpm / Deno               | 24.20.0 / 12.4.1 / 2.9.6 |
 | Supabase CLI / JavaScript client | 2.75.0 / 2.116.0         |
 
-The frozen lockfile is stale: `package.json` names these five exact
-`@syntopica/*` packages while it still resolves the former `@busirocket/*`
-names. The exact renamed versions and `@cristiandeluxe/max-lane` are not
-published; max-lane is also a sibling-only `file:../max-lane` dependency. A
-clean GitHub runner therefore cannot install until the exact packages are
-available, max-lane is published or vendored without importing Keychain
-credentials, and the regenerated lockfile is committed. CI independently runs
-source/history/workflow security before that install gate; no remote run of the
-restructured workflow is claimed here.
+`@cristiandeluxe/max-lane` is unpublished and declared as the sibling
+`file:../max-lane`, so it sits in `optionalDependencies`: pnpm skips it when the
+sibling checkout is absent instead of failing the install. Only `evals/` imports
+it, and only the local gates reach that directory - `type-check` adds
+`tsconfig.evals.json` on top of `type-check:ci`, and `lint:ci` passes
+`--ignore-pattern 'evals/**'` to the same ESLint configuration `lint` runs. A
+clean GitHub runner therefore installs and runs `check:ci` unchanged, without
+the judge ever being resolved.
 
 The repository-local Node binary runs package scripts even if the interactive
 shell uses Node 26. pnpm downloads the pinned Deno runtime; its cache stays in

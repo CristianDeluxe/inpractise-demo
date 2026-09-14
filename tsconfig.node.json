@@ -1,5 +1,5 @@
 {
-  "extends": "@busirocket/tsconfig/node.json",
+  "extends": "@syntopica/tsconfig/node.json",
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "tsBuildInfoFile": "./node_modules/.cache/tsconfig.node.tsbuildinfo",
@@ -10,7 +10,6 @@
   "include": [
     "scripts/db/**/*.ts",
     "tests/**/*.ts",
-    "evals/**/*.ts",
     "mcp/**/*.ts",
     "vite.config.ts",
     "server/api/**/*.ts",

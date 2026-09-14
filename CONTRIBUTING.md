@@ -10,13 +10,13 @@ significant decision.
 ## Set up
 
 Follow [README local setup](README.md#run-locally) for Node 24.20.0, pnpm
-12.4.1, the current unpublished exact `@syntopica/*` and max-lane dependency
-blocker, and browser configuration. `@cristiandeluxe/max-lane` is currently a
-sibling-only `file:../max-lane` dependency, and the lockfile still names the
-former `@busirocket/*` packages. The checkout is not a self-contained public
-install. Member accounts are provisioned by the project owner; signing up is not
-the setup procedure. The [MCP guide](docs/mcp-install.md) covers its separate
-three-variable direct environment and optional resolved-name overrides.
+12.4.1, the optional `@cristiandeluxe/max-lane` judge dependency, and browser
+configuration. `pnpm check:ci` is the gate a clean checkout can run; the wider
+`pnpm type-check` and `pnpm lint` additionally cover `evals/` and need the
+sibling `file:../max-lane` checkout. Member accounts are provisioned by the
+project owner; signing up is not the setup procedure. The
+[MCP guide](docs/mcp-install.md) covers its separate three-variable direct
+environment and optional resolved-name overrides.
 
 Do not regenerate the corpus, reapply provisioning or change credentials merely
 to run a check. Full verification uses existing ignored credentials, SQL link

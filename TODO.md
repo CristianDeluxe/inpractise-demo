@@ -41,14 +41,6 @@ plan wins.
 
 ## Infrastructure
 
-- [ ] **Claim the `@syntopica` npm scope, or never reuse the name.** Commit
-      `3f3dc7d` renamed the five shared config packages to `@syntopica/*`, a
-      scope nobody owns: the registry answers 404 for it anonymously and with
-      the account token. The rename is reverted, but an unowned scope in a
-      manifest is a dependency-confusion foothold - whoever registers it first
-      gets installed by any future checkout that reintroduces the name. Next:
-      either register the scope on npm before any rename, or drop the name.
-
 - [~] **Upstream ESLint 10 peer metadata.** Strict runtime lint passes, but
   `pnpm peers check` exits 1 for `eslint-plugin-import@2.32.0`,
   `eslint-plugin-jsx-a11y@6.10.2`, and `eslint-plugin-react@7.37.5`: their
@@ -56,19 +48,18 @@ plan wins.
   compatible upstream releases when available. No metadata override or lint
   suppression masks this. See `docs/baseline.md`.
 
-- [!] **CI cannot install dependencies on a clean runner.** Run `34801318491`
-  stopped at `pnpm install --frozen-lockfile`. Two causes, one now fixed: commit
-  `3f3dc7d` had moved the five shared config packages to an `@syntopica/*` scope
-  that is not published - the registry answers 404 for it both anonymously and
-  with the account token, while `@busirocket/*` answers 200 - and the lockfile
-  still named `@busirocket/*`, so every `pnpm <script>` failed at resolution.
-  The scope is back to the published `@busirocket/*` and the tree installs again
-  (`pnpm install --frozen-lockfile --offline`, exit 0). Reintroduce the rename
-  only after the five exact versions are published under the new scope and the
-  lockfile is regenerated in the same commit. What remains blocked is
-  `@cristiandeluxe/max-lane`, available only as the sibling `file:../max-lane`:
-  publish or vendor it without importing Keychain credentials, then let an
-  ordinary push verify every job.
+- [~] **CI install fixed locally; no clean-runner run yet.** Run `34801318491`
+  stopped at `pnpm install --frozen-lockfile` for two reasons, both now
+  addressed. The five shared config packages are published under `@syntopica/*`
+  at the exact versions this repository pins, `@busirocket/*` is retired, and
+  the lockfile was regenerated in the same commit as the rename - the mismatch
+  between the two, not the rename itself, is what broke that run.
+  `@cristiandeluxe/max-lane`, available only as the sibling `file:../max-lane`,
+  is now an optional dependency used exclusively by the local `evals/` harness,
+  and `type-check:ci` / `lint:ci` exclude that directory, so a runner without
+  the sibling passes `check:ci` (verified locally with the package unlinked,
+  exit 0). Next: confirm on the next push that every job is green on a real
+  runner.
 
 ## Documentation
 
