@@ -10,11 +10,13 @@ significant decision.
 ## Set up
 
 Follow [README local setup](README.md#run-locally) for Node 24.20.0, pnpm
-12.4.1, private package access, `../max-lane`, installation and browser
-configuration. The checkout is not a self-contained public install. Member
-accounts are provisioned by the project owner; signing up is not the setup
-procedure. The [MCP guide](docs/mcp-install.md) covers its separate
-four-variable process environment.
+12.4.1, the current unpublished exact `@syntopica/*` and max-lane dependency
+blocker, and browser configuration. `@cristiandeluxe/max-lane` is currently a
+sibling-only `file:../max-lane` dependency, and the lockfile still names the
+former `@busirocket/*` packages. The checkout is not a self-contained public
+install. Member accounts are provisioned by the project owner; signing up is not
+the setup procedure. The [MCP guide](docs/mcp-install.md) covers its separate
+three-variable direct environment and optional resolved-name overrides.
 
 Do not regenerate the corpus, reapply provisioning or change credentials merely
 to run a check. Full verification uses existing ignored credentials, SQL link
@@ -79,7 +81,47 @@ conformance. This is a **command reference, not an instruction executed in the
 explicitly prohibits. Use it only with the existing owner-provided inputs and an
 authorized verification scope. The separate security gate is documented in
 [baseline.md](docs/baseline.md); a CI/build pass is not a clean secret-scan
-claim.
+claim. CI source/history/workflow security runs without project installation,
+while verify, quality and dependency advisories remain install-dependent until
+the documented package and lockfile remediation is complete.
+
+## Route test readiness
+
+Always await `renderRouteFixture(path, runtime)`. It awaits the router's lazy
+component loading before mounting the route, so cold module transformation does
+not consume the first DOM assertion's default one-second wait. Session and
+request effects remain observable after mounting, including deliberate pending
+responses. `pnpm test:ci` includes a deferred-import regression for this
+contract. Do not increase a wait timeout to cover unfinished fixture setup.
+
+## Browser probe
+
+The repository-owned Playwright Test 1.58.2 runner replaces the historical
+`work/lovable2/browser.mjs` script and its external cache path. After completing
+the normal repository installation, run:
+
+```sh
+pnpm browser:install
+pnpm test:browser
+```
+
+The browser installation stays under `node_modules`. The runner builds the app
+with dummy public configuration and starts its own preview at
+`http://127.0.0.1:4197`; that port must be free. It never reuses or stops
+another server. Six scenarios cover 1440/390/320px with reduced and normal
+motion, canvas initialization, ticker/reveal/parallax behavior, horizontal
+layout, protected-route sign-in invitations and reloads. External HTTPS requests
+are blocked, and only the existing font hosts may be requested. No member
+password, remote database or provider call is needed.
+
+Playwright owns browser/context teardown. Each test has a 30-second budget; the
+repository browser fixture has an explicit 10-second setup/teardown budget (the
+built-in browser fixture has none). A 180-second global run limit and no retries
+bound the complete run. Assertion failures and teardown timeouts produce a
+nonzero exit. Diagnostic artifacts go under ignored `work/browser-results`.
+Browser helpers have a separate `tests/browser/tsconfig.json` with DOM types;
+Node tooling and Edge modules retain their existing runtime boundaries.
+`pnpm type-check` includes this fourth project.
 
 ## Architecture rules
 

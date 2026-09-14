@@ -64,6 +64,193 @@
 
 ### 2026-09
 
+- [x] 2026-09-14 — **Edge function `research` token verification.** Read-only
+      Management API evidence records deployed version 11 as `ACTIVE` with
+      `verify_jwt=false`. Live handler probes rejected a missing token and a
+      structurally valid JWT signed with incorrect test material as
+      `401 unauthenticated`, with request IDs and no data. A real member session
+      returned 200 before its natural expiry and Supabase Auth returned 403
+      after `exp`; the probe stopped there because it expected 401 and did not
+      persist the token. The credential-free regression therefore constructs a
+      JWT with a past `exp`, models the observed Auth 403, and proves handler
+      authentication maps it to `unauthenticated` before membership or evidence
+      access. This is a constructed-token handler-path proof, not a claim that
+      the expired token was replayed through the live handler. Verification:
+      `PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN=false pnpm test:edge` passes 6 tests
+      and 24 steps; the seven prescribed repository gates also pass.
+
+- [x] 2026-09-14 — **Isolated source, history and workflow security from
+      dependency installation.** CI now has a dependency-free, full-history
+      `source-security` job that installs the existing pinned and checksummed
+      gitleaks binary, runs the declared dependency-free `secrets:check` source
+      scan with `NPM_CONFIG_FORCE=true` only to bypass npm's `devEngines` Deno
+      provisioning before project installation, scans committed history with
+      `.gitleaks.toml`, and retains the pinned actionlint and zizmor actions.
+      The dependency audit remains a separate install-dependent job; verify and
+      quality are unchanged, and `pnpm check:security` remains the combined
+      local command. Local actionlint, source/history gitleaks, baseline-audit
+      and workflow isolation checks passed. No remote CI was triggered. Current
+      remote run `34801318491` fails earlier at the outdated lockfile; older run
+      `34793517553` reached installation and all three jobs failed
+      `ERR_PNPM_FS_PACKLIST_IO` because
+      `/home/runner/work/inpractise-demo/max-lane` was absent.
+
+- [x] 2026-09-14 — **Reverified publication and credential boundaries.** The
+      published `main` commit and `origin/main` both resolve to
+      `3f3dc7d34f3e0a302580af09f0d2582b7f548c05`. `.env.functions.remote` is
+      ignored by `.gitignore:4`, absent from the Git index, and has no path
+      history. A clean tree recreated with `git archive HEAD` was scanned from
+      its own root with
+      `gitleaks dir --config .gitleaks-source.toml --no-banner --redact .`:
+      approximately 5.92 MB, no leaks. The committed history scan covered 19
+      commits and approximately 6.33 MB with no leaks. The current source scan
+      covered approximately 27.40 MB with no leaks. The source configuration
+      excludes ignored local inputs and artifacts, while the history
+      configuration scans committed content; no credential value is part of
+      published source or this record.
+      `./node_modules/.bin/baseline-audit --level moderate` reports zero
+      advisories. The stale D1 credential-gate blocker is closed; no scanner,
+      ignore rule, credential, history, remote state or deployment was changed.
+
+- [x] 2026-09-14 — **Rejected expanded synthetic interview candidates.** Owner
+      review rejected S4 because P8's observational-gap explanation weakens the
+      frozen P2 ledger observation and invites an unsupported reconciliation
+      with S3; P6 and P16 also introduce unestablished recordkeeping
+      limitations. S5 was rejected because P6, P10 and P16 introduce refund
+      uncertainty that conflicts with frozen P3; P10 additionally adds an
+      unestablished refund-exclusion mechanism. Neither candidate entered the
+      accepted manifest. All generation attempts, audits, sidecars, review
+      documents and source responses remain retained as evidence. Verification:
+      `./node_modules/node/bin/node --test scripts/corpus/checks.test.mjs`;
+      `./node_modules/node/bin/node scripts/corpus/verify.mjs`;
+      `./node_modules/node/bin/node scripts/corpus/auditRegeneration.mjs`;
+      `./node_modules/node/bin/node scripts/corpus/verifyPreservedCorpus.mjs`;
+      and
+      `git diff --check -- corpus/generated/briefing-i/REVIEW.md TODO.md TODO_LOG.md`.
+
+- [x] 2026-09-14 — **Dedicated MCP member.** Seeded a separate basic-tier `mcp`
+      member in `org-a`, isolating MCP quota and lockout effects from the
+      browser basic persona. Verification: authorized seed exit 0, `.env.remote`
+      mode 0600, real stdio password sign-in with an exact `s1/P2` fetch, and
+      MCP parity 4/4.
+
+- [x] 2026-09-14 — **Database-enforced Ask allowances.** Applied additive
+      migrations 8–10 and deployed research version 11 ACTIVE. Each caller has
+      100 Ask requests per UTC day, debited before retrieval/providers; failures
+      remain charged and absent completion usage remains unknown. A non-login
+      function owner remains subject to RLS. SQL debit/exhaustion/scope and
+      two-connection lock tests roll back. Verification: all eight briefing
+      gates, `pnpm test` (39 files, 165 tests), `pnpm test:edge` and
+      `pnpm check:deno`; raw output and deployment attempts in
+      `work/backlog2/item1-*`. ADR 0007 records the trade-off.
+
+- [x] 2026-09-14 — **Provider-free search parity.** Extracted the shared search
+      operation from embedding acquisition. Browser-shaped and real MCP requests
+      now compare ordered citations and explicit lexical modes over live
+      caller-scoped RLS with controlled embeddings; deployed Read parity remains
+      live. `pnpm test` passes without paid provider calls. This does not claim
+      deployed hybrid-provider determinism.
+
+- [x] 2026-09-14 — **Investigate intermittent workspace-test readiness.**
+      Reproduced the historical Source library timeout under 32-process load:
+      3/40 with phase instrumentation and 15/40 without it, after 208 lower-load
+      executions had passed. Traces showed lazy module loading plus
+      session/me/list effects consumed the initial one-second DOM wait; the
+      library was still loading at failure. renderRouteFixture now awaits
+      router.load before mounting, and all 23 existing call sites await it. A
+      deferred-preload regression failed before the fix and passed after it.
+      Both traced and untraced 40-run batches passed after the change; the
+      traced batch included a 1.24-second lazy import. No timeout increased.
+      CONTRIBUTING documents the setup contract. Verification: all seven
+      prescribed gates passed in item02-complete, including 140 offline Vitest
+      tests and 24 native Deno steps. Detailed phase tables and commands are in
+      FINDINGS.md and work/backlog1/item02-timing-report.md.
+
+- [x] 2026-09-14 — **Context selection drops a retrieved answer on a
+      two-document company.** Reconciled the existing ADR 0005 decision with
+      docs/evals.md: retain the two-per-document cap and F03 refusal. The global
+      bounds are eight passages and 4,000 tokens; four selected passages follow
+      from having two documents, not a four-slot global limit. Removed the ADR
+      claim that the same decision remains open in the backlog. Historical
+      reports were not regenerated. Verification: all seven prescribed commands
+      passed in item10; pnpm test:ci verifies selector and diagnostic behavior.
+
+- [x] 2026-09-14 — **Strict structured answer contract.** Source inspection
+      confirmed strict schema parsing, source-label bounds against supplied
+      context, and invalid status/claim combinations already fail. Added native
+      Deno tests through the actual HTTP handler with Auth, retrieval and
+      provider transport stubbed: 21 answer steps cover exact server-owned
+      citation mapping, malformed/uncited/invalid answers, provider
+      HTTP/network/transport failures and valid refusal text. No provider call
+      occurs; Deno has no network permission. Browser UI tests verify both error
+      codes remain errors and honor retryability. Verification: pnpm test:edge
+      passed 2 tests / 24 steps including token cases; pnpm check:deno passed;
+      all seven prescribed gates passed in item09-complete (139 offline Vitest
+      tests). Earlier lint failures and their fixes remain in the findings log.
+
+- [x] 2026-09-14 — **Pin the Supabase CLI to 2.75.0.** Already exactly pinned in
+      package.json and pnpm-lock.yaml. pnpm exec supabase --version prints
+      2.75.0; functions deploy --help exposes --project-ref and --no-verify-jwt,
+      secrets set --help exposes --env-file, and db push --help exposes
+      --dry-run. All four commands and all seven item07 gates exit 0.
+      docs/baseline.md records the commands and local-binary requirement. No
+      deployment, secret write or migration push occurred.
+
+- [x] 2026-09-14 — **Reduce the shared SPA entry bundle.** Measured all entry
+      dependencies using source-map byte attribution and Rolldown
+      renderedLength. One @supabase chunk group reduces entry 599.61 to 384.23
+      kB (Vite gzip 172.43 to 117.78 kB); new SDK chunk 214.97 kB. All chunks
+      are below the unchanged warning limit, the SDK is modulepreloaded, and all
+      previous dynamic route facades remain split. Five cold runs per viewport
+      show median hero-ready 2093.1 to 2083.2 ms at 1440px and 2090.8 to 2075.4
+      ms at 390px (4x CPU, 40 ms latency, 5 Mbps). Six browser cases and all
+      seven item06 gates passed. Commands and per-dependency table are in the
+      briefing FINDINGS.md and work/backlog1/report-bundle.py. Also reconciled
+      the architecture guide with the already-tested ADR 0006 evidence policy.
+
+- [x] 2026-09-14 — **Bound cached browser-probe teardown.** Pinned
+      repository-owned Playwright Test 1.58.2; pnpm browser:install installs
+      local browser binaries and pnpm test:browser builds/serves the app with
+      dummy configuration. All six 1440/390/320px reduced/normal-motion
+      scenarios pass with the final fixture (1.1 minutes). A forced assertion
+      plus hung browser.close exits 1 in 12.05 seconds and retains both the
+      assertion and the 10-second fixture-teardown error; the temporary probe
+      was removed. All seven item05 gates passed. CONTRIBUTING.md#browser-probe
+      documents setup and bounds; tests/browser/tsconfig.json isolates DOM test
+      types from Node/Edge tooling. No external cache path or user Chrome
+      profile is required.
+
+- [x] 2026-09-14 — **Exercise concurrent publication and a late passage
+      insert.** Added a real two-connection publication race with a staging
+      barrier and transaction/statement deadlines. Exactly one contender aborts
+      with PostgreSQL 40P01; the winner publishes exactly one current
+      canonical-valid revision. Both rollback and original revision rows plus
+      absence of inserted passages are asserted. A separate staged fixture
+      publishes, rejects a late passage INSERT, and proves complete
+      passage/revision row equality. Targeted tests: 2/2 passed. All seven
+      item04-final gates passed. Sequential pnpm test passed; complete output in
+      work/backlog1/item04-full-test-final.log. A separate TODO records the
+      transactional staging lock-upgrade retry limitation; no promise of two
+      successful committed publications or migration change.
+
+- [x] 2026-09-14 — **Verify partial citation revocation and empty-answer
+      messaging.** Every cited source must survive final authorization or the
+      whole claim is dropped; independent complete claims remain. Zero-claim
+      generated refusals keep their original missingEvidence. ADR 0006 records
+      the comparison/evidence rationale and README links it. Five focused tests
+      reproduced four failures before the fix; all seven new/existing revocation
+      tests now pass. All seven item03-final gates exit 0 (138 offline tests).
+      Initial item03 lint failure was a duplicated fixture string, resolved
+      through a separately imported fixture constant.
+
+- [x] 2026-09-14 — **Reconcile Knip configuration hints.** Knip 6.35.1 now
+      checks CSS imports and omits ignored root patterns and the resolved
+      dependency-cruiser exemption. Actual reporter counters: 621 processed
+      before, 622 after; zero unused files in both. Temporary backlogUnusedProbe
+      produced exit 1, then was removed. pnpm knip prints no hints. All seven
+      item01 gates exited 0; raw outputs in work/backlog1/. Official reference:
+      https://knip.dev/reference/configuration-hints and installed schema.json.
+
 - [x] 2026-09-14 — **Unified project naming and documented the review/install
       path.** Package and MCP identity are `inpractise-demo`; the human title is
       In Practise Demo. Rewrote README, added CONTRIBUTING, CONTEXT,
@@ -310,3 +497,26 @@
     manifest — whose digests recompute to the files they name — from both scans.
     `gitleaks git` over the full history reports no leaks.
   - Evidence: `docs/deploy.md`, commits `a1df133`, `c594512`, `1dc8e14`.
+
+### 2026-09-14 — Documented caller-token HTTP API
+
+- Added six `/api/v1` endpoints, shared-schema OpenAPI 3.1, typed client using
+  existing evidence validators, RFC 9457 problems, correlation, per-principal
+  in-process quotas and bounded keyset pagination. Preserved the original SPA
+  and static-asset handler. No new runtime dependency, commit, push or
+  deployment.
+- Added read-owned `X-Research-Org-Id` metadata to research success responses
+  without changing their JSON or authorization. Scoped ETag v2 excludes mutable
+  envelope/current-revision data; every 304 reauthorizes. Older backends return
+  uncached 200. Public immutable/zero-read caching was rejected because access
+  is revocable; remote rollout stays blocked in TODO.
+- `PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN=false pnpm exec vitest run tests/api --no-coverage`:
+  9 files, 55 tests passed. `python3 scripts/api/exercise.py`: all endpoints
+  plus 304/401/429/provider-503, cursor continuation, malformed request target
+  survival and static regressions passed against the built origin with an
+  offline fixture. Captures and the 200-sample local latency method are in
+  `docs/api-examples.json` and `docs/api-latency.json`; this does not claim live
+  backend/provider parity.
+- Independent review found and resolved omitted tenant scope in validators and
+  lost backend IDs on locally generated problems. Final broad verification is
+  recorded in the task's FINDINGS.md.

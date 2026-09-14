@@ -11,3 +11,6 @@ supabase/.temp/
 coverage/
 *.tsbuildinfo
 reports/
+
+server/build/
+scripts/api/__pycache__/

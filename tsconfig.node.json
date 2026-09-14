@@ -1,14 +1,21 @@
 {
-  "extends": "@syntopica/tsconfig/node.json",
+  "extends": "@busirocket/tsconfig/node.json",
   "compilerOptions": {
     "allowImportingTsExtensions": true,
-    "tsBuildInfoFile": "./node_modules/.cache/tsconfig.node.tsbuildinfo"
+    "tsBuildInfoFile": "./node_modules/.cache/tsconfig.node.tsbuildinfo",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": [
     "scripts/db/**/*.ts",
     "tests/**/*.ts",
     "evals/**/*.ts",
     "mcp/**/*.ts",
-    "vite.config.ts"
-  ]
+    "vite.config.ts",
+    "server/api/**/*.ts",
+    "scripts/api/**/*.ts",
+    "vite.api.config.ts"
+  ],
+  "exclude": ["tests/browser/**"]
 }

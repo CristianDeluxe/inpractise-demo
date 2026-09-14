@@ -102,10 +102,14 @@ to Pages after a direct upload cannot change that artifact. Rebuild when either
 changes. Never copy `.env.remote`, credentials, the corpus, evaluation reports
 or the MCP process into `dist`.
 
-Installation requires private `@busirocket` package access and the declared
-`file:../max-lane` dependency. Build from the provisioned checkout for direct
-upload; a clean Cloudflare Git build is not established by these instructions.
-See [Vite environment variables](https://vite.dev/guide/env-and-mode) and
+Installation is currently blocked on five unpublished exact `@syntopica/*`
+packages, an outdated lockfile that still names `@busirocket/*`, and unpublished
+`@cristiandeluxe/max-lane`, which is declared as `file:../max-lane`. Build from
+a provisioned checkout only after the owner makes the exact packages available,
+publishes or vendors max-lane without importing Keychain credentials, and
+commits a regenerated lockfile; a clean Cloudflare Git build is not established
+by these instructions. See
+[Vite environment variables](https://vite.dev/guide/env-and-mode) and
 [Pages build configuration](https://developers.cloudflare.com/pages/configuration/build-configuration/).
 
 ## Routing and noindex

@@ -130,7 +130,8 @@ organization, role, SQL expression, source URL or retrieval-mode override.
 The query limit is 1–2,000 characters and 500 tokens; company slugs are at most
 80 characters; search limit is an integer from 1 to 10, defaulting to 10. The
 server remains responsible for token counting and authorization. List returns at
-most ten current logical documents; overflow is an error. Read returns a passage
+most fifty current logical documents; the backend requests 51 rows and returns
+an overflow error when a 51st authorized document exists. Read returns a passage
 and neighboring passage IDs, with each subsequent neighbor read separately
 authorized. Debug is read-only and reviewer-only; it cannot impersonate another
 principal or run an evaluation/model.

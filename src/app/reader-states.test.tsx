@@ -29,7 +29,7 @@ describe('source availability and provenance', () => {
         { status: 404 },
       ),
     )
-    renderRouteFixture(citationFixture().readerPath, runtime)
+    await renderRouteFixture(citationFixture().readerPath, runtime)
     expect(await screen.findByText('This source is unavailable.')).toBeTruthy()
     expect(screen.queryByText(citationFixture().title)).toBeNull()
   })
@@ -59,7 +59,7 @@ describe('source availability and provenance', () => {
       configurable: true,
       value: { writeText },
     })
-    renderRouteFixture(citation.readerPath, runtime)
+    await renderRouteFixture(citation.readerPath, runtime)
     expect(await screen.findByText('Public filing')).toBeTruthy()
     expect(
       screen.queryByText('Synthetic interview — fictional company and speaker'),
@@ -78,7 +78,7 @@ describe('source availability and provenance', () => {
       responseFixture('me', { orgId: 'org', role: 'member', premium: false }),
     )
     fetcher.mockResolvedValueOnce(responseFixture('list', { items: [] }))
-    renderRouteFixture('/app', runtime)
+    await renderRouteFixture('/app', runtime)
     expect(
       await screen.findByText('No authorized documents are available.'),
     ).toBeTruthy()

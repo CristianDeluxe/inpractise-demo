@@ -20,6 +20,21 @@ Neither draft is semantically approved. Execution-plan section 7.3 requires the
 owner to review appended content. Passing the existing structural gate is not
 proof that the added claims preserve the meaning or uncertainty of the core.
 
+## Final decision
+
+Reject **S4**: P8's explanation attributes apparently missed delivery windows to
+observational gaps, which weakens the frozen P2 ledger observation and invites an
+unsupported reconciliation with S3. P6 and P16 add further unestablished
+recordkeeping limitations.
+
+Reject **S5**: P6, P10 and P16 introduce refund uncertainty, conflicting with
+the frozen P3 statement that the example figures exclude refunds. In particular,
+P10 adds an unestablished mechanism for refund exclusion.
+
+Neither candidate may enter the accepted manifest. All generation attempts,
+audits, sidecars, review documents and their source responses remain retained
+as evidence; no generated artifact was edited into accepted evidence.
+
 - **S4 P8:** the added explanation attributes apparently missed delivery windows
   to observational gaps. It could weaken the meaning of the frozen distributor
   ledger observation or invite an unsupported reconciliation with S3. P6 and P16

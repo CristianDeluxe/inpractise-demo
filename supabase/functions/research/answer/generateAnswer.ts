@@ -7,6 +7,7 @@ import { requestCompletion } from './requestCompletion.ts'
 export async function generateAnswer(
   query: string,
   sources: readonly CitationSource[],
+  onUsage: (usage: unknown) => Promise<void>,
 ): Promise<ProviderAnswer> {
-  return parseProviderAnswer(await requestCompletion(query, sources))
+  return parseProviderAnswer(await requestCompletion(query, sources, onUsage))
 }

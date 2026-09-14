@@ -20,23 +20,28 @@ Obtain an existing member login and project public configuration privately from
 the demo owner. Public signup is disabled. An Auth user must also have an active
 `memberships` row in an active organization; a successful password login alone
 is insufficient. [scripts/db/personas.ts](../scripts/db/personas.ts) defines the
-seeded basic, premium, reviewer and other-organization personas, and
-[seed.ts](../scripts/db/seed.ts) associates them with memberships. Those are
-provisioning sources, not installation steps to rerun. A dedicated MCP member is
-still a [backlog item](../TODO.md).
+basic, dedicated MCP, premium, reviewer and other-organization personas, and
+[seed.ts](../scripts/db/seed.ts) associates them with memberships. The MCP
+server uses `info+inpractise-mcp@busirocket.com`, a separate basic-tier member
+in the same organization as the browser's basic persona. Those are provisioning
+sources, not installation steps to rerun.
 
 | Required variable          | Value supplied by the owner                                                                                                                                   |
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `RESEARCH_URL`             | Supabase project base URL, such as `https://PROJECT_REF.supabase.co`, with no trailing slash. Do not use the demo website or append `/functions/v1/research`. |
 | `RESEARCH_PUBLISHABLE_KEY` | Publishable key for that same Supabase project; never a service-role/secret key.                                                                              |
-| `RESEARCH_EMAIL`           | Provisioned member's email.                                                                                                                                   |
-| `RESEARCH_PASSWORD`        | That member's password.                                                                                                                                       |
+| `DEMO_MCP_PASSWORD`        | Dedicated MCP member password, stored privately by the demo owner in ignored `.env.remote`.                                                                   |
 
-The server reads these from its **process environment**; it does not
-automatically load `.env.local` or `.env.remote`. Supply them through your
-client's private environment settings or an existing secret loader before
-launch. Do not put credentials in tool arguments, command-line flags, tracked
-files or logs. Browser `VITE_` variables are a separate configuration.
+The bundled server accepts those three names directly: it selects the fixed
+dedicated member email and uses `DEMO_MCP_PASSWORD` when its resolved
+counterpart is absent. Generic clients may instead set `RESEARCH_EMAIL` and
+`RESEARCH_PASSWORD`; those explicit values take precedence. Client JSON may map
+the three direct names into the resolved names, as the examples below do. The
+server reads only its **process environment**; it does not automatically load
+`.env.local` or `.env.remote`. Supply values through private client settings or
+an existing secret loader before launch. Do not put credentials in tool
+arguments, command-line flags, tracked files or logs. Browser `VITE_` variables
+are separate configuration.
 
 `RESEARCH_HANDSHAKE_LOG` is optional. Leave it unset or empty unless a new local
 session log is wanted; use an ignored path, never the retained
@@ -45,11 +50,12 @@ session log is wanted; use an ignored path, never the retained
 ## Claude Code: project configuration
 
 The repository's [.mcp.json](../.mcp.json) works when Claude Code is launched
-from this repository with the four variables available. It uses
-`node --import tsx mcp/start.ts`; Node and the checkout must therefore be
-resolvable from that launch environment. For installation into another project,
-merge this entry into that project's `.mcp.json`, replacing every
-`/ABSOLUTE/PATH/inpractise-demo` with the installed checkout path:
+from this repository with `RESEARCH_URL`, `RESEARCH_PUBLISHABLE_KEY` and
+`DEMO_MCP_PASSWORD` available. It uses `node --import tsx mcp/start.ts`; Node
+and the checkout must therefore be resolvable from that launch environment. For
+installation into another project, merge this entry into that project's
+`.mcp.json`, replacing every `/ABSOLUTE/PATH/inpractise-demo` with the installed
+checkout path:
 
 ```json
 {
@@ -65,8 +71,8 @@ merge this entry into that project's `.mcp.json`, replacing every
       "env": {
         "RESEARCH_URL": "${RESEARCH_URL}",
         "RESEARCH_PUBLISHABLE_KEY": "${RESEARCH_PUBLISHABLE_KEY}",
-        "RESEARCH_EMAIL": "${RESEARCH_EMAIL}",
-        "RESEARCH_PASSWORD": "${RESEARCH_PASSWORD}"
+        "RESEARCH_EMAIL": "info+inpractise-mcp@busirocket.com",
+        "RESEARCH_PASSWORD": "${DEMO_MCP_PASSWORD}"
       }
     }
   }
@@ -82,8 +88,8 @@ session. See
 
 As an alternative to manually merging JSON, set `INPRACTISE_DEMO_DIR` to the
 checkout's absolute path in your shell and enter the project where you want the
-registration. The four required variables must be available to Claude Code when
-it launches the server. Run:
+registration. `RESEARCH_URL`, `RESEARCH_PUBLISHABLE_KEY` and `DEMO_MCP_PASSWORD`
+must be available to Claude Code when it launches the server. Run:
 
 ```sh
 claude mcp add --transport stdio --scope project inpractise-demo -- "$INPRACTISE_DEMO_DIR/node_modules/node/bin/node" --import "$INPRACTISE_DEMO_DIR/node_modules/tsx/dist/loader.mjs" "$INPRACTISE_DEMO_DIR/mcp/start.ts"
@@ -103,7 +109,7 @@ Desktop's developer settings and restart Desktop after saving, as described in
 the
 [official local-server guide](https://modelcontextprotocol.io/docs/develop/connect-local-servers).
 
-Replace the absolute paths and the four `OWNER_SUPPLIED_...` placeholders
+Replace the absolute paths and the three `OWNER_SUPPLIED_...` placeholders
 locally. They are literal placeholders, not a supported environment-expansion
 syntax. Keep the resulting credential-bearing config private. The launch paths
 below are for macOS/Linux; Windows requires an installed Node executable path
@@ -122,8 +128,8 @@ and escaped backslashes in JSON, and was not tested in this pass.
       "env": {
         "RESEARCH_URL": "OWNER_SUPPLIED_PROJECT_URL",
         "RESEARCH_PUBLISHABLE_KEY": "OWNER_SUPPLIED_PUBLISHABLE_KEY",
-        "RESEARCH_EMAIL": "OWNER_SUPPLIED_MEMBER_EMAIL",
-        "RESEARCH_PASSWORD": "OWNER_SUPPLIED_MEMBER_PASSWORD"
+        "RESEARCH_EMAIL": "info+inpractise-mcp@busirocket.com",
+        "RESEARCH_PASSWORD": "OWNER_SUPPLIED_MCP_MEMBER_PASSWORD"
       }
     }
   }
@@ -134,7 +140,7 @@ and escaped backslashes in JSON, and was not tested in this pass.
 
 Merge the following into `.cursor/mcp.json` for one project or
 `~/.cursor/mcp.json` for your user. Replace the absolute checkout paths and
-launch Cursor with the four variables available. Cursor's environment
+launch Cursor with the three variables available. Cursor's environment
 interpolation is `${env:NAME}`, unlike Claude Code's syntax. Enable the server
 in Cursor's MCP settings. See
 [Cursor's MCP reference](https://cursor.com/docs/mcp).
@@ -153,8 +159,8 @@ in Cursor's MCP settings. See
       "env": {
         "RESEARCH_URL": "${env:RESEARCH_URL}",
         "RESEARCH_PUBLISHABLE_KEY": "${env:RESEARCH_PUBLISHABLE_KEY}",
-        "RESEARCH_EMAIL": "${env:RESEARCH_EMAIL}",
-        "RESEARCH_PASSWORD": "${env:RESEARCH_PASSWORD}"
+        "RESEARCH_EMAIL": "info+inpractise-mcp@busirocket.com",
+        "RESEARCH_PASSWORD": "${env:DEMO_MCP_PASSWORD}"
       }
     }
   }
@@ -163,16 +169,17 @@ in Cursor's MCP settings. See
 
 ## Generic stdio client
 
-Use the Desktop example's executable, argument array and four resolved
-environment values in your client's stdio transport configuration. The
-`mcpServers` wrapper is a client convention, not the protocol. Launch the
-process with stdin/stdout pipes, send MCP `initialize`, complete initialization
-and request `tools/list`. Do not configure the research HTTP URL as an MCP HTTP
-endpoint: it speaks the application's six-action JSON contract, not MCP.
+Use the Desktop example's executable, argument array and resolved environment
+values in your client's stdio transport configuration. The `mcpServers` wrapper
+is a client convention, not the protocol. Launch the process with stdin/stdout
+pipes, send MCP `initialize`, complete initialization and request `tools/list`.
+Do not configure the research HTTP URL as an MCP HTTP endpoint: it speaks the
+application's six-action JSON contract, not MCP.
 
 ## Verify the connection
 
-For a terminal startup check, from the checkout with the four variables loaded:
+For a terminal startup check, from the checkout with `RESEARCH_URL`,
+`RESEARCH_PUBLISHABLE_KEY` and `DEMO_MCP_PASSWORD` loaded:
 
 ```sh
 pnpm mcp
@@ -222,13 +229,13 @@ verification.
 
 ## Troubleshooting
 
-| Symptom                                                                            | Check and smallest next step                                                                                                                                                             |
-| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Set RESEARCH_URL, RESEARCH_PUBLISHABLE_KEY, RESEARCH_EMAIL and RESEARCH_PASSWORD` | At least one variable is absent or empty. Supply all four to the child process, not just Vite. Check variable names/presence without printing values.                                    |
-| `RESEARCH_URL is not a URL`, sign-in failure or non-JSON response                  | Use the owner's Supabase base URL and matching publishable key, not the website or function URL. A syntactically valid wrong URL can pass startup validation and fail at sign-in.        |
-| `Research sign-in failed`                                                          | Have the owner verify the provisioned member login and project pairing. Do not enable public signup or substitute a service key.                                                         |
-| Ready line appears, but a tool reports `forbidden: No active membership`           | Auth accepted the password; the database has no visible active membership. The owner must check the seeded user/membership and active organization. Startup does not perform this check. |
-| `not_found` from `fetch_passage`                                                   | Check all three exact IDs and the member's organization/tier. Missing and inaccessible sources intentionally share this error; no title hint is expected.                                |
-| Module/executable not found                                                        | Complete installation, replace every absolute path, and verify the Node executable and `tsx` loader exist. Desktop clients may not inherit terminal PATH.                                |
-| Protocol parse error                                                               | Use direct Node, keep stdout exclusively for MCP, and send diagnostics to stderr. Do not put the pnpm banner in a client's protocol stream.                                              |
-| A later session fails to renew                                                     | One 401 triggers a password sign-in retry. A second failure becomes a tool error; restore the member session rather than retrying in a loop.                                             |
+| Symptom                                                                                  | Check and smallest next step                                                                                                                                                                                                                                    |
+| ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Set RESEARCH_URL, RESEARCH_PUBLISHABLE_KEY and DEMO_MCP_PASSWORD, or RESEARCH_PASSWORD` | The URL, publishable key or both accepted password names are absent or empty. Supply the documented three variables, or a resolved password for a generic client, to the child process rather than Vite. Check variable names/presence without printing values. |
+| `RESEARCH_URL is not a URL`, sign-in failure or non-JSON response                        | Use the owner's Supabase base URL and matching publishable key, not the website or function URL. A syntactically valid wrong URL can pass startup validation and fail at sign-in.                                                                               |
+| `Research sign-in failed`                                                                | Have the owner verify the provisioned member login and project pairing. Do not enable public signup or substitute a service key.                                                                                                                                |
+| Ready line appears, but a tool reports `forbidden: No active membership`                 | Auth accepted the password; the database has no visible active membership. The owner must check the seeded user/membership and active organization. Startup does not perform this check.                                                                        |
+| `not_found` from `fetch_passage`                                                         | Check all three exact IDs and the member's organization/tier. Missing and inaccessible sources intentionally share this error; no title hint is expected.                                                                                                       |
+| Module/executable not found                                                              | Complete installation, replace every absolute path, and verify the Node executable and `tsx` loader exist. Desktop clients may not inherit terminal PATH.                                                                                                       |
+| Protocol parse error                                                                     | Use direct Node, keep stdout exclusively for MCP, and send diagnostics to stderr. Do not put the pnpm banner in a client's protocol stream.                                                                                                                     |
+| A later session fails to renew                                                           | One 401 triggers a password sign-in retry. A second failure becomes a tool error; restore the member session rather than retrying in a loop.                                                                                                                    |
