@@ -31,7 +31,7 @@ these files. Use a focused branch for a reviewable change without describing
 that preference as an enforced rule.
 
 [commitlint.config.mjs](commitlint.config.mjs) loads the installed
-`@busirocket/quality-config` factory, which extends Conventional Commits. The
+`@syntopica/quality-config` factory, which extends Conventional Commits. The
 commit type must be lowercase and one of `feat`, `fix`, `docs`, `style`,
 `refactor`, `perf`, `test`, `build`, `ci`, `chore` or `revert`. A subject is
 required, must not end in a period, and the whole header is limited to 100
