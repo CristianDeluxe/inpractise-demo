@@ -10,7 +10,7 @@ export async function start(): Promise<void> {
   const transport = new StdioServerTransport()
   recordHandshake(transport, process.env['RESEARCH_HANDSHAKE_LOG'])
   await createServer(session).connect(transport)
-  process.stderr.write('research-evidence MCP server ready\n')
+  process.stderr.write('inpractise-demo MCP server ready\n')
 }
 
 await start()
