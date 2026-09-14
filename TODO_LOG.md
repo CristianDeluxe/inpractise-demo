@@ -635,3 +635,33 @@
   `CristianDeluxe/inpractise-demo`, the live host, and keeps the rule that a
   local gate proves neither. The downgrade-only view-as design is documented in
   `docs/architecture.md` and `README.md`, where it had no coverage at all.
+
+### 2026-09-14 — Analyst browser workflow and a credential-free authorization suite
+
+- `tests/browser/analyst.spec.ts` walks sign-in, passage search, a standalone
+  question and a claim's source link into the reader, against stubbed Supabase
+  Auth and research responses. Evidence: `pnpm test:browser` 12 passed, the
+  analyst spec green at 1440/390/320px under both motion settings.
+- Route registration order was the one trap: Playwright matches the most
+  recently registered route first, so the catch-all HTTPS abort has to be
+  registered before the fixtures that must answer.
+- Claim source links read `Source: <documentId>:<64 hex>:<passageId>`. The
+  visible label now names the document and passage, the exact identity stays on
+  the link's `title`, and the card's reader link carries the identity in its
+  accessible name so several citations are distinguishable.
+- `pnpm test:db:local` runs the authorization rules as real SQL against a
+  throwaway `pgvector/pgvector:pg17` container on 127.0.0.1:54399, applying
+  `scripts/db/local/bootstrap.sql` and every migration unedited. Seven cases:
+  anonymous denial, organization isolation, premium tier gating, member write
+  refusal, self-promotion, service-only publication, and premium evidence
+  excluded from the restricted search path before ranking.
+- Negative control: disabling row level security on `public.passages` and
+  granting `select` to `authenticated` fails the tier case; restoring the
+  container returns 7 passed.
+- Two shim gaps were found by running it rather than by reading: passages must
+  be written before the revision is published (the immutability trigger), and
+  the request roles need `usage` on the `extensions` schema or a policy-correct
+  call fails on the schema instead of the policy.
+- `scripts/db/loadTarget.ts` and `scripts/db/createDatabase.ts` are unchanged;
+  `createLocalDatabase` refuses any host that is not loopback and never reads
+  `.env.remote`.

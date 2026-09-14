@@ -6,6 +6,8 @@ export default mergeConfig(
   defineConfig({
     test: {
       include: ['tests/**/*.test.ts', 'src/**/*.test.{ts,tsx}'],
+      // tests/local needs the throwaway container; it has its own config.
+      exclude: ['tests/local/**'],
       maxWorkers: 1,
       fileParallelism: false,
       coverage: {
