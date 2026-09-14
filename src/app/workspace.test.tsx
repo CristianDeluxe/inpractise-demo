@@ -58,7 +58,9 @@ describe('authorized research workflow', () => {
     expect(requests.at(-1)?.['company']).toBe(citationFixture().company)
     expect(
       screen
-        .getByRole('link', { name: 'Open exact passage' })
+        .getByRole('link', {
+          name: `Open exact passage ${citationFixture().citationId}`,
+        })
         .getAttribute('href'),
     ).toBe(citationFixture().readerPath)
     fireEvent.click(

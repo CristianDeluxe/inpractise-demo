@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import type { ClaimRowProps } from './ClaimRowProps'
+import { citationLinkLabel } from './citationLinkLabel'
 import { claimSources } from './claimSources'
 
 export function ClaimRow(props: ClaimRowProps) {
@@ -11,9 +12,10 @@ export function ClaimRow(props: ClaimRowProps) {
           <Link
             key={citation.citationId}
             to={citation.readerPath}
-            className="break-all font-mono text-xs text-primary underline"
+            className="text-xs text-primary underline"
+            title={citation.citationId}
           >
-            Source: {citation.citationId}
+            Source: {citationLinkLabel(citation)}
           </Link>
         ))}
       </div>
