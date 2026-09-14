@@ -9,7 +9,7 @@ import { WorkspaceNav } from './WorkspaceNav'
 export function WorkspaceLayout({ children }: PublicLayoutProps) {
   return (
     <div className="min-h-full lg:grid lg:grid-cols-[16rem_minmax(0,1fr)]">
-      <aside className="hidden flex-col bg-sidebar text-sidebar-foreground lg:flex">
+      <aside className="hidden flex-col bg-sidebar text-sidebar-foreground lg:sticky lg:top-0 lg:flex lg:h-dvh lg:overflow-y-auto">
         <div className="border-b border-sidebar-border p-5">
           <Link to="/">
             <Wordmark />

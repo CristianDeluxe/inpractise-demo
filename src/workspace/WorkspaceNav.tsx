@@ -6,10 +6,20 @@ export function WorkspaceNav() {
   const { access } = useWorkspace()
   return (
     <nav aria-label="Workspace" className="flex flex-wrap gap-2 lg:flex-col">
-      <Link to="/app" hash="library" className="workspace-link">
+      <Link
+        to="/app"
+        hash="library"
+        activeOptions={{ includeHash: true }}
+        className="workspace-link"
+      >
         <BookOpen size={16} strokeWidth={1.5} aria-hidden="true" /> Library
       </Link>
-      <Link to="/app" hash="research" className="workspace-link">
+      <Link
+        to="/app"
+        hash="research"
+        activeOptions={{ includeHash: true }}
+        className="workspace-link"
+      >
         <Search size={16} strokeWidth={1.5} aria-hidden="true" /> Research
         workspace
       </Link>
