@@ -60,12 +60,13 @@ plan wins.
   to preserve these historical artifacts as explicit exceptions or authorize
   scrubbing them. Credential and frozen files stay untouched.
 
-- [ ] **Rehearse the two-minute script against an authorized deployment.**
-      `docs/demo-script.md` contains a 120-second sequence, exact local URLs,
-      live questions, refusal/premium-access steps, test-covered tier denial and
-      timed failure fallback. The script now targets
-      `https://inpractise.cristiandeluxe.dev`, which is live and route-verified,
-      but no timed rehearsal against it has been run.
+- [~] **Rehearse the two-minute script against an authorized deployment.** Every
+  request in `docs/demo-script.md` has now been timed against
+  `https://inpractise.cristiandeluxe.dev` as the demo reviewer and each fits the
+  script's 8-second budget once the function is warm; the measurements and the
+  required warm-up are recorded in the script itself. What remains is a person
+  reading the narration against a clock, which no automated run can stand in
+  for.
 
 ## Pending Decisions
 

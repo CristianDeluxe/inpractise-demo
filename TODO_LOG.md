@@ -726,3 +726,20 @@
   `/assets/InspectionPage-C71whWct.js` 200 containing `recentRequests` and
   `candidateAt10`; `/assets/WorkspacePage-iTCvrxnZ.js` 200 containing
   `candidateAt10`. Recorded in `docs/deploy.md`.
+
+### 2026-09-14 - Demo script timed against the deployment
+
+- Every request the two-minute script makes was run once against
+  `https://inpractise.cristiandeluxe.dev` signed in as the demo reviewer: sign
+  in 989ms, search 6418ms, the answered Ask 4439ms (`answered`, one claim,
+  diagnostic record present), the cited passage read 515ms and 200, the refusal
+  Ask 3843ms (`not_found`, no claims), `debug` 2007ms with six recent requests.
+- The 6418ms search was a cold start. Three consecutive searches after it took
+  3017ms, 2562ms and 2310ms, so the script's 8-second fallback threshold only
+  holds for a warm function; `docs/demo-script.md` now requires a throwaway
+  search before the timer.
+- Corrected one now-false line in the script: the `/method` slot claimed the
+  inspection endpoint has no connected report, which the diagnostics work
+  deployed the same day made untrue.
+- The backlog entry stays `[~]`: the requests are measured, a human reading the
+  narration against a clock is not something an automated run can establish.
