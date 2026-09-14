@@ -14,7 +14,7 @@ describe('restored interview library', () => {
   it('selects tabs with the keyboard, wraps focus, and opens only the real workspace', async () => {
     const { runtime, requests } = uiRuntimeFixture()
     vi.stubGlobal('scrollTo', vi.fn())
-    renderRouteFixture('/', runtime)
+    await renderRouteFixture('/', runtime)
     const first = await screen.findByRole('tab', {
       name: 'In Practise content',
     })
@@ -59,7 +59,7 @@ describe('restored interview library', () => {
   })
   it('closes the mobile navigation after choosing a real route and restores trigger focus', async () => {
     vi.stubGlobal('scrollTo', vi.fn())
-    renderRouteFixture('/', null)
+    await renderRouteFixture('/', null)
     const trigger = await screen.findByRole('button', { name: 'Open menu' })
     fireEvent.click(trigger)
     const menu = await screen.findByRole('dialog', { name: 'In Practise' })

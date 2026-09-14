@@ -17,117 +17,37 @@ plan wins.
 
 ## Backend
 
-- [ ] **Edge function `research`.** One endpoint, `verify_jwt=false` only
-      because the handler validates accepted research requests through
-      `verifyToken` (`GET /auth/v1/user`) and forwards that token so RLS
-      applies. `supabase/config.toml` has no function-specific JWT setting;
-      verify the deployed setting and missing, forged and expired tokens. See
-      ADR 0002.
-
-- [ ] **Strict structured answer contract.** Model returns cited claims only;
-      missing or invalid passage IDs, or malformed JSON, are an error rather
-      than a silent answer. A provider failure must render as an error, never as
-      `no_evidence`.
-
-- [ ] **Request allowances.** Debit a fixed per-principal allowance before the
-      provider call, including calls that then fail. Persist real usage totals
-      and mark missing usage unknown. Source inspection on 2026-09-14 found no
-      debit or usage ledger in `handleAsk.ts`/`requestCompletion.ts`; older
-      allowance claims in `docs/evals.md` and `docs/demo-script.md` are not
-      implementation evidence. Reconcile those claims when implementing the
-      control.
-
 ## Corpus
-
-- [!] **Expanded synthetic interviews: budget exhausted; semantic review
-  pending.** Briefing I used 12/12 requests (29,038 tokens). S1–S3 failed all
-  three attempts at 615–686 words; their short cores remain. S4 (710 words) and
-  S5 (702) pass the unchanged automatic gate but remain outside the accepted
-  manifest. Review `corpus/generated/briefing-i/REVIEW.md`: S4/P8 speculates
-  about missed windows, and S5/P6/P16 may undermine the frozen refund exclusion.
-  The smallest next step is owner review of those exact drafts; further paid
-  generation requires a new explicit budget and revised prompt. All 24 accepted
-  gold paragraphs and all six short documents remain byte-identical.
-
-## MCP
-
-- [ ] **Give the MCP server its own member.** It currently signs in as the
-      seeded basic persona, which the browser tests also use, so a quota or
-      lockout in one surface is felt by the other. Seed a dedicated MCP member
-      in the same org and tier and point `.mcp.json` at it.
 
 ## Testing
 
-- [ ] **Verify partial citation revocation and empty-answer messaging.**
-      `authorisedClaims.ts` retains a multi-source claim if any reference
-      remains; `buildAskResult.ts` reports access changed whenever no claims
-      survive, including an ordinary generated zero-claim refusal. Source
-      inspection on 2026-09-14; existing revocation tests cover single-source
-      claims only. Add focused cases and decide whether partial evidence loss
-      requires rejecting the whole claim; no concurrent revocation guarantee is
-      established.
-
-- [ ] **Bound cached browser-probe teardown.** The repeated
-      `work/lovable2/browser.mjs` probe completed all six scenarios and Chrome
-      exited, but its externally cached Playwright 1.58.2 Node runner remained
-      stuck in `browser.close()` for over three minutes. The owned runner was
-      stopped with SIGTERM; the extended probe exited normally. Add a bounded
-      teardown supervisor or move to a repository-owned test runner while
-      preserving assertion failures. Evidence:
-      `work/lovable3/previous-probe.log` and the Lovable3 `FINDINGS.md`.
-
-- [ ] **Investigate intermittent workspace-test readiness.** One `pnpm test:ci`
-      run timed out after 1060 ms at `src/app/states.test.tsx:29` while awaiting
-      the Source library heading; the other 132 tests passed and earlier full
-      runs passed. The test and workspace code are unchanged by the landing
-      restoration. Trace lazy-route readiness against the default one-second
-      Testing Library wait before changing its timeout. Evidence:
-      `work/lovable3/intermittent-test-ci.log`.
-
-- [ ] **Exercise concurrent publication and a late passage insert.** Existing
-      immutability/publication tests pass and parent locking is implemented, but
-      the backend report records no concurrency race test. Add a transactional
-      integration test proving a late insert cannot change published evidence.
-
-- [ ] **Context selection drops a retrieved answer on a two-document company.**
-      Measured by `F03`: the two-per-document diversity cap fills all four
-      context slots at ranks 1-4, so Costco's fiscal-year passage at ranks 5-6
-      never reaches the model and the system refuses. Decide whether to backfill
-      the unused context budget by rank once every document has had its cap, or
-      to keep the cap and the refusal. Evidence in `docs/evals.md`.
+- [ ] **Handle lock-upgrade deadlocks for transactional publishers.** The
+      synchronized staging/publication regression produces one `40P01` abort:
+      both transactions hold foreign-key key-share locks before publication
+      requests `FOR UPDATE` on the same document. Atomicity is preserved; the
+      losing transaction must retry. The current importer uses separate REST
+      operations, so this is not evidence it encounters this exact staging
+      pattern. Next: evaluate locking the parent before staging for callers that
+      combine both operations in one transaction, or add bounded
+      whole-transaction retry. Evidence:
+      `tests/integration/publication-concurrency.test.ts`.
 
 ## Frontend
 
-- [!] **Freeze the frontend/backend response boundary.** Strict UI parsers
-  follow current source, while list's documented bound is ten and backend bound
-  is fifty. Owner must reconcile that bound and the still-absent first-passage
-  pointer, directional neighbors, fingerprint/usage metadata and connected
-  redacted diagnostic report. Do not fabricate these fields.
-
-- [ ] **Reduce the shared SPA entry bundle.** Route-level chunks are split; Vite
-      still reports the shared entry above its default 500 kB warning. Inspect
-      dependency contribution before choosing a further split.
+- [!] **Freeze the frontend/backend response boundary.** The remaining open
+  points are the absent first-passage pointer, directional neighbors,
+  fingerprint/usage metadata and connected redacted diagnostic report. Do not
+  fabricate these fields.
 
 ## Infrastructure
 
-- [ ] **Reconcile Knip configuration hints.** `pnpm knip` exits 0 but reports
-      four hints for top-level entry/project fields, the dependency-cruiser
-      ignore and CSS import coverage. Inspect `knip.config.ts` against the
-      installed configuration schema and preserve actual source coverage.
-      Evidence: `work/lovable2/final-knip.log`.
-
-- [!] **D1 publication stopped at the credential gate.** `pnpm check:security`
-  exited 1 with six findings: three recomputed SHA-256 checksums in
-  `corpus/generated/briefing-i/before-hashes.json`, two allowed Supabase
-  publishable-key occurrences in ignored `dist/`, and one actual OpenAI key in
-  ignored `.env.functions.remote`. That credential file has never been tracked;
-  known private environment values were absent from 717 historical Git blobs and
-  20 build files. No credential exposure was established. The briefing
-  explicitly requires stopping on an actual credential finding. The smallest
-  next step is owner clarification that this ignored credential is an expected
-  local input and publication may resume. No scanner rule was changed. Redacted
-  evidence: `/tmp/lovable-work/d1-source-redacted.json` and
-  `/tmp/lovable-work/d1-history-redacted.json`.
+- [!] **HTTP conditional caching requires deployed read-owned scope metadata.**
+  The local API safely returns `no-store` 200 when the research backend omits
+  `X-Research-Org-Id`; the new `researchResponse.ts` supplies it from the
+  action's actual principal. Neither API nor backend was deployed in this task.
+  Next: explicitly authorize a release and verify the header and organization
+  isolation against the real backend before claiming remote 304 support. Public
+  immutable caching remains incompatible with revocable access (ADR 0009).
 
 - [~] **Upstream ESLint 10 peer metadata.** Strict runtime lint passes, but
   `pnpm peers check` exits 1 for `eslint-plugin-import@2.32.0`,
@@ -136,19 +56,19 @@ plan wins.
   compatible upstream releases when available. No metadata override or lint
   suppression masks this. See `docs/baseline.md`.
 
-- [ ] **Run the prepared CI workflow now that the remote exists.** Local
-      `check:ci`, `check:quality` and conformance gates pass, and the repository
-      is published at `CristianDeluxe/inpractise-demo`, but no GitHub job has
-      executed yet. Installation needs private `@busirocket` package access and
-      the `file:../max-lane` dependency, so the workflow cannot run on a clean
-      runner as written. Full corpus replay additionally needs the ignored raw
-      snapshots, while CI intentionally runs the corpus unit/tamper tests
-      without those snapshots.
-
-- [ ] **Pin the Supabase CLI to 2.75.0** and confirm the flags the plan relies
-      on (`functions deploy --project-ref`, `--no-verify-jwt`,
-      `secrets set --env-file`, `db push --dry-run`) resolve on the installed
-      binary before depending on them.
+- [!] **CI cannot install dependencies on a clean runner.** Run `34801318491`
+  stopped at `pnpm install --frozen-lockfile`. Two causes, one now fixed: commit
+  `3f3dc7d` had moved the five shared config packages to an `@syntopica/*` scope
+  that is not published - the registry answers 404 for it both anonymously and
+  with the account token, while `@busirocket/*` answers 200 - and the lockfile
+  still named `@busirocket/*`, so every `pnpm <script>` failed at resolution.
+  The scope is back to the published `@busirocket/*` and the tree installs again
+  (`pnpm install --frozen-lockfile --offline`, exit 0). Reintroduce the rename
+  only after the five exact versions are published under the new scope and the
+  lockfile is regenerated in the same commit. What remains blocked is
+  `@cristiandeluxe/max-lane`, available only as the sibling `file:../max-lane`:
+  publish or vendor it without importing Keychain credentials, then let an
+  ordinary push verify every job.
 
 ## Documentation
 
@@ -175,7 +95,3 @@ plan wins.
 - Node here is v24.20.0, not the v26.8.2 the execution plan claims to have
   observed. Set `engines` accordingly and do not trust that plan's version
   inventory without checking.
-
-## Shared package scope migration (2026-09-14)
-
-- [ ] After the owner publishes the renamed shared packages, regenerate the lockfile and run the existing repository quality gate. Source references now use the new scope; the lockfile is intentionally unchanged because the packages are not published.

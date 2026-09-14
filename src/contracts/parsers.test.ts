@@ -73,7 +73,7 @@ describe('source-backed action parsers', () => {
       }),
     ).toThrow()
   })
-  it('enforces the documented list bound without slicing', () => {
+  it('enforces the documented fifty-document list bound without slicing', () => {
     const item = {
       document_id: 's1',
       revision_id: 'r1',
@@ -86,8 +86,11 @@ describe('source-backed action parsers', () => {
       source_url: null,
     }
     expect(parseListData({ items: [item] }).items).toHaveLength(1)
+    expect(
+      parseListData({ items: Array.from({ length: 50 }, () => item) }).items,
+    ).toHaveLength(50)
     expect(() =>
-      parseListData({ items: Array.from({ length: 11 }, () => item) }),
+      parseListData({ items: Array.from({ length: 51 }, () => item) }),
     ).toThrow()
     expect(() =>
       parseListData({ items: [{ ...item, summary: 'Invented' }] }),

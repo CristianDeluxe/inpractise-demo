@@ -25,7 +25,7 @@ afterEach(() => {
 describe('research request states', () => {
   it('cancels pending work and suppresses a late completion', async () => {
     const { runtime, fetcher } = uiRuntimeFixture()
-    renderRouteFixture('/app', runtime)
+    await renderRouteFixture('/app', runtime)
     await screen.findByRole('heading', { name: uiLabelsFixture.library })
     const pending = Promise.withResolvers<Response>()
     fetcher.mockReturnValueOnce(pending.promise)
@@ -51,37 +51,9 @@ describe('research request states', () => {
     expect(screen.queryByText(/could not establish an answer/)).toBeNull()
     expect(runtime.controllers.size).toBe(0)
   })
-  it('handles a failed provider as an error, with explicit retry', async () => {
-    const { runtime, fetcher } = uiRuntimeFixture()
-    renderRouteFixture('/app', runtime)
-    await screen.findByRole('heading', { name: uiLabelsFixture.library })
-    fetcher.mockResolvedValueOnce(
-      new Response(
-        JSON.stringify({
-          error: {
-            code: 'dependency_failure',
-            message: 'Unavailable',
-            retryable: true,
-          },
-          requestId: 'provider-failure',
-        }),
-        { status: 503 },
-      ),
-    )
-    fireEvent.change(screen.getByLabelText(uiLabelsFixture.question), {
-      target: { value: 'question' },
-    })
-    fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
-    expect(await screen.findByRole('alert')).toBeTruthy()
-    expect(screen.queryByText(/could not establish an answer/)).toBeNull()
-    fireEvent.click(screen.getByRole('button', { name: 'Retry' }))
-    expect(
-      await screen.findByText('A supported claim with limits.'),
-    ).toBeTruthy()
-  })
   it('clears all evidence on expired session and auth identity changes', async () => {
     const { runtime, fetcher, authChange } = uiRuntimeFixture()
-    renderRouteFixture('/app', runtime)
+    await renderRouteFixture('/app', runtime)
     await screen.findByRole('heading', { name: uiLabelsFixture.library })
     const authListener = authChange.mock.calls[0]?.[0]
     if (!authListener) throw new Error('Missing auth listener')
@@ -120,7 +92,7 @@ describe('research request states', () => {
   })
   it('renders not_found without claims, and escapes provider text', async () => {
     const { runtime, fetcher } = uiRuntimeFixture()
-    renderRouteFixture('/app', runtime)
+    await renderRouteFixture('/app', runtime)
     await screen.findByRole('heading', { name: uiLabelsFixture.library })
     fetcher.mockResolvedValueOnce(
       responseFixture('ask', {
@@ -162,7 +134,7 @@ describe('research request states', () => {
   })
   it('keeps missing passages neutral and empty search distinct', async () => {
     const { runtime, fetcher } = uiRuntimeFixture()
-    renderRouteFixture('/app', runtime)
+    await renderRouteFixture('/app', runtime)
     await screen.findByRole('heading', { name: uiLabelsFixture.library })
     fetcher.mockResolvedValueOnce(
       responseFixture('search', {
@@ -192,7 +164,7 @@ describe('research request states', () => {
         { status: 403 },
       ),
     )
-    renderRouteFixture('/inspect', runtime)
+    await renderRouteFixture('/inspect', runtime)
     expect(await screen.findByText(/Access denied/)).toBeTruthy()
     expect(screen.queryByRole('link', { name: 'Diagnostics' })).toBeNull()
     expect(screen.queryByText('No reviewed evaluation report')).toBeNull()

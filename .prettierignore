@@ -12,3 +12,5 @@ supabase/.temp/
 pnpm-lock.yaml
 scripts/corpus/package-lock.json
 TODO_HISTORY_INDEX.jsonl
+
+server/build/

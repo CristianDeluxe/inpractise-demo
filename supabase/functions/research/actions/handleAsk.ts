@@ -2,8 +2,10 @@ import { retrieveCandidates } from '../../_shared/search/retrieveCandidates.ts'
 import { assertSourcesSupplied } from '../answer/assertSourcesSupplied.ts'
 import { authorisedCitationIds } from '../answer/authorisedCitationIds.ts'
 import { buildAskResult } from '../answer/buildAskResult.ts'
+import { debitRequest } from '../answer/debitRequest.ts'
 import { embedQuery } from '../answer/embedQuery.ts'
 import { generateAnswer } from '../answer/generateAnswer.ts'
+import { recordUsage } from '../answer/recordUsage.ts'
 import { readCitationSources } from '../citations/readCitationSources.ts'
 import type { Principal } from '../Principal.ts'
 
@@ -17,6 +19,7 @@ export async function handleAsk(
   query: string,
   company: string | undefined,
 ) {
+  const request = await debitRequest(principal)
   const embedding = await embedQuery(query)
   const { candidates, diagnostics } = await retrieveCandidates(
     principal.client,
@@ -35,7 +38,9 @@ export async function handleAsk(
       citations: [],
       ...scope,
     }
-  const answer = await generateAnswer(query, sources)
+  const answer = await generateAnswer(query, sources, async (usage) =>
+    recordUsage(principal, request, usage),
+  )
   assertSourcesSupplied(answer, sources.length)
   const rechecked = await readCitationSources(principal, selected)
   return {

@@ -23,15 +23,19 @@ checks and troubleshooting. The package and server ID are `inpractise-demo`; see
 [ADR 0001](adr/0001-project-name.md). This independent demo uses only public
 filings and synthetic interviews, with no private In Practise content.
 
-`.mcp.json` launches it from four environment variables — `RESEARCH_URL`,
-`RESEARCH_PUBLISHABLE_KEY`, `RESEARCH_EMAIL`, `RESEARCH_PASSWORD` — so no
-credential is ever a tool argument or a command-line flag. The optional
+The bundled server launches as the dedicated, basic-tier `mcp` member:
+`info+inpractise-mcp@busirocket.com`. It directly accepts `RESEARCH_URL`,
+`RESEARCH_PUBLISHABLE_KEY` and `DEMO_MCP_PASSWORD`; it selects that fixed email
+and password unless a generic client explicitly supplies `RESEARCH_EMAIL` or
+`RESEARCH_PASSWORD`. Client JSON may map the direct names to resolved names. No
+credential is a tool argument or command-line flag. The optional
 `RESEARCH_HANDSHAKE_LOG` records each negotiated session.
 
 ## Parity, including the denial
 
-`tests/integration/mcpParity.test.ts` runs a real MCP client against the real
-server over an in-memory transport pair and asserts, for one principal:
+`tests/integration/mcpParity.test.ts` runs a real MCP client as the dedicated
+MCP member against the real server over an in-memory transport pair. It compares
+that member with the browser's equivalent basic-tier member and asserts:
 
 - exactly the two tools are exposed, neither taking an `orgId`;
 - the basic member is refused the premium passage `s6/P2` with the same

@@ -1,5 +1,5 @@
 {
-  "extends": "@syntopica/tsconfig/base.json",
+  "extends": "@busirocket/tsconfig/base.json",
   "compilerOptions": {
     "lib": ["ES2024", "DOM", "DOM.Iterable"],
     "types": ["deno"],

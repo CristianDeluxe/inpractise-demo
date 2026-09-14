@@ -1,12 +1,9 @@
 import { z } from 'zod'
+import { searchOutput } from '../http-api/searchOutput.ts'
 import { citationSchema } from './citationSchema'
 
 export function parseSearchData(input: unknown) {
-  return z
-    .strictObject({
-      items: z.array(citationSchema).max(10),
-      mode: z.enum(['hybrid', 'lexical_only']),
-      truncated: z.boolean(),
-    })
+  return searchOutput
+    .extend({ items: z.array(citationSchema).max(10) })
     .parse(input)
 }

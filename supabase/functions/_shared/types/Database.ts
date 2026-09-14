@@ -1,3 +1,4 @@
+import type { DebitRequestFunction } from './DebitRequestFunction.ts'
 import type { DocumentRevisionsTable } from './DocumentRevisionsTable.ts'
 import type { DocumentsTable } from './DocumentsTable.ts'
 import type { InspectCorpusFunction } from './InspectCorpusFunction.ts'
@@ -5,6 +6,7 @@ import type { MembershipsTable } from './MembershipsTable.ts'
 import type { OrganisationsTable } from './OrganisationsTable.ts'
 import type { PassagesTable } from './PassagesTable.ts'
 import type { PublishDocumentFunction } from './PublishDocumentFunction.ts'
+import type { RecordRequestUsageFunction } from './RecordRequestUsageFunction.ts'
 import type { SearchCandidatesFunction } from './SearchCandidatesFunction.ts'
 
 export type Database = {
@@ -21,6 +23,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      debit_request: DebitRequestFunction
+      record_request_usage: RecordRequestUsageFunction
       inspect_corpus: InspectCorpusFunction
       publish_document: PublishDocumentFunction
       search_candidates: SearchCandidatesFunction
