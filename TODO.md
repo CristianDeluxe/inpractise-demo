@@ -34,10 +34,12 @@ plan wins.
 
 ## Frontend
 
-- [!] **Freeze the frontend/backend response boundary.** The remaining open
-  points are the absent first-passage pointer, directional neighbors,
-  fingerprint/usage metadata and connected redacted diagnostic report. Do not
-  fabricate these fields.
+- [!] **Freeze the frontend/backend response boundary.** The connected redacted
+  diagnostic report now exists on both sides: `ask` carries `diagnostics` for an
+  unrestricted reviewer and `debug` carries `recentRequests`, both deployed and
+  verified live. The remaining open points are the absent first-passage pointer,
+  directional neighbors and fingerprint/usage metadata. Do not fabricate these
+  fields.
 
 ## Infrastructure
 
