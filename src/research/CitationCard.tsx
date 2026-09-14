@@ -22,7 +22,11 @@ export function CitationCard({ citation }: CitationCardProps) {
       </p>
       <div className="mt-4 flex flex-wrap gap-5 text-sm">
         <SourcePanel citation={citation} />
-        <Link to={citation.readerPath} className="text-primary underline">
+        <Link
+          to={citation.readerPath}
+          className="text-primary underline"
+          aria-label={`Open exact passage ${citation.citationId}`}
+        >
           Open exact passage
         </Link>
       </div>

@@ -9,7 +9,7 @@ export async function assertLandingMotion(page: Page) {
     await expect(element).toHaveCSS('opacity', '1')
   await expect(page.locator('canvas')).toHaveAttribute('aria-hidden', 'true')
   await expect(page.locator('canvas')).toHaveCSS('pointer-events', 'none')
-  await expect(page.locator('dl')).toContainText('Interviews published5')
+  await expect(page.locator('dl')).toContainText('Synthetic interviews6')
   const reducedMotion = await page.evaluate(
     () => matchMedia('(prefers-reduced-motion: reduce)').matches,
   )
