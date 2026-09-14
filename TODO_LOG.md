@@ -665,3 +665,29 @@
 - `scripts/db/loadTarget.ts` and `scripts/db/createDatabase.ts` are unchanged;
   `createLocalDatabase` refuses any host that is not loopback and never reads
   `.env.remote`.
+
+### 2026-09-14 — Retrieval diagnostic record, per answer and per request
+
+- `retrieveCandidates` already computed candidate-at-ten, selected ids and the
+  selected token budget, and `handleAsk` discarded all three. Both shapes the
+  owner asked for are now built.
+- Per answer: `ask` carries a `diagnostics` object for an unrestricted reviewer
+  only, gated on the EFFECTIVE principal, so a reviewer viewing as a member does
+  not receive it. Evidence: `pnpm test:edge` 16 passed / 29 steps, including
+  `viewAsDiagnostics.test.ts` which asserts both downgrades withhold it.
+- Per request: new migration `20260914000012_request_diagnostics.sql` adds
+  `diagnostics` and `recorded_at` to `public.request_usage` and
+  `record_request_diagnostics`, owned by the existing narrow non-bypass
+  `request_usage_writer` role, identity from the JWT, payload bounded at 4096
+  bytes, one write per request. `debug` returns the caller's own recent rows and
+  `src/inspection/InspectionPage.tsx` renders them.
+- The ledger write is deliberately best effort: a correct answer must not become
+  an error because a diagnostic row failed to write. The failure is visible as a
+  request whose diagnostics stay null.
+- Evidence: `pnpm test:db:local` 11 passed, including a second write to the same
+  request refused, another principal's request refused, an over-sized payload
+  refused, and one principal's rows invisible to another.
+- Gates: `pnpm check:ci` exit 0, `pnpm type-check`, `pnpm lint`,
+  `pnpm test:edge`, `pnpm test:browser` 12 passed. The migration is applied on
+  the local container only; remote application stays an owner-authorized step in
+  `TODO.md`.

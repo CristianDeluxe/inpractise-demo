@@ -4503,6 +4503,46 @@
                       "type": "integer",
                       "minimum": 0,
                       "maximum": 9007199254740991
+                    },
+                    "diagnostics": {
+                      "type": "object",
+                      "properties": {
+                        "candidateAt10": {
+                          "maxItems": 10,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "selectedIds": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "selectedTokens": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "revisionIds": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                          }
+                        }
+                      },
+                      "required": [
+                        "candidateAt10",
+                        "selectedIds",
+                        "selectedTokens",
+                        "revisionIds"
+                      ],
+                      "additionalProperties": false
                     }
                   },
                   "required": [

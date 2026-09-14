@@ -6,7 +6,9 @@ import type { MembershipsTable } from './MembershipsTable.ts'
 import type { OrganisationsTable } from './OrganisationsTable.ts'
 import type { PassagesTable } from './PassagesTable.ts'
 import type { PublishDocumentFunction } from './PublishDocumentFunction.ts'
+import type { RecordRequestDiagnosticsFunction } from './RecordRequestDiagnosticsFunction.ts'
 import type { RecordRequestUsageFunction } from './RecordRequestUsageFunction.ts'
+import type { RequestUsageTable } from './RequestUsageTable.ts'
 import type { SearchCandidatesFunction } from './SearchCandidatesFunction.ts'
 
 export type Database = {
@@ -18,6 +20,7 @@ export type Database = {
       memberships: MembershipsTable
       organisations: OrganisationsTable
       passages: PassagesTable
+      request_usage: RequestUsageTable
     }
     Views: {
       [_ in never]: never
@@ -25,6 +28,7 @@ export type Database = {
     Functions: {
       debit_request: DebitRequestFunction
       record_request_usage: RecordRequestUsageFunction
+      record_request_diagnostics: RecordRequestDiagnosticsFunction
       inspect_corpus: InspectCorpusFunction
       publish_document: PublishDocumentFunction
       search_candidates_scoped: SearchCandidatesFunction

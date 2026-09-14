@@ -195,6 +195,16 @@ claims and citations. Each cited ID must identify validated evidence supplied
 with the answer. Exact quote validation is not a semantic entailment guarantee;
 show source-attributed claims and keep contradictions/limitations visible.
 
+An optional `diagnostics` object is present only for unrestricted reviewers
+(role `reviewer` AND `premium` as judged by the effective principal). It
+contains `candidateAt10` (top 10 retrieval-ranked `document:revision:passage`
+keys before selection), `selectedIds` (passages actually sent to the model),
+`selectedTokens` (token budget spent on selection), and `revisionIds`
+(server-owned corpus identities of selected passages). Together they distinguish
+a retrieval failure from a selection failure: candidates not ranked high enough,
+or a selection that rejected high-ranked candidates. Absence is normal and is
+not an error.
+
 Cancellation clears pending UI state immediately. It does not promise that
 server work stops or that an already consumed allowance is refunded. Browser
 abort can stop fetch/body consumption, but the adapter must also ignore late
@@ -343,9 +353,10 @@ synthetic/public labels and nullable speaker/date attribution truthful.
 
 ### `/inspect`
 
-Call `me` to establish access and `debug` for reviewer-authorized corpus counts
-and the latest matching redacted report. The server makes the reviewer
-authorization decision even when the UI hides the route from members.
+Call `me` to establish access and `debug` for reviewer-authorized corpus counts,
+their own recent request diagnostics, and the latest matching redacted report.
+The server makes the reviewer authorization decision even when the UI hides the
+route from members.
 
 ```typescript
 await debug(client, { action: 'debug' }, parsers.debug, {
@@ -353,6 +364,15 @@ await debug(client, { action: 'debug' }, parsers.debug, {
   scope: inspectorScope,
 })
 ```
+
+The successful result contains `corpus` (document/revision/passage counts and
+report status) and `recentRequests` (array of the caller's recent ask requests,
+newest first). Each request record has `requestId`, `recordedAt` (ISO
+timestamp), `totalTokens` (prompt plus completion tokens, or null when the
+provider returned no usable usage metadata), and `diagnostics` (candidate
+ranking before selection, passages selected, and token budget; null if the
+ledger write did not complete). No evaluation report is connected; `report`
+stays null and diagnosis stays `unclassified`.
 
 Render loading, cancelled, access denied for 403, error for failed diagnostics,
 and an explicit no-matching-report state when the successful result contains
