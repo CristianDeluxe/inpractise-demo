@@ -66,6 +66,72 @@ key.
 Noindex discourages indexing; it is not access control. Authenticated evidence
 stays behind Supabase authorization.
 
+## HTTP API on the origin
+
+`server.js` routes `/api/v1` to the facade built from `server/api/` and every
+other path to the static origin. The facade is credential-free: it forwards the
+caller's bearer token to the research Edge function and holds no key of its own,
+so the only server-side variable it needs is the backend URL.
+
+`RESEARCH_URL` lives in `/home/<account>/apps/inpractise-demo/.env` (`0600`,
+owned by `<account>`, excluded from `rsync` by the deploy command above). The
+CloudLinux Node selector starts the app without reading that file, so
+`server.js` loads it itself through `server/loadOriginEnv.mjs`; a missing file
+is reported by path and the facade then answers `503 dependency_failure` rather
+than starting with a silent misconfiguration.
+
+```sh
+ssh <host> '
+  f=/home/<account>/apps/inpractise-demo/.env
+  grep -q "^RESEARCH_URL=" "$f" || echo "RESEARCH_URL=<supabase-url>/functions/v1/research" >> "$f"
+  chown <account>:<account> "$f" && chmod 600 "$f"
+  sed "s/=.*/=<set>/" "$f"'
+```
+
+### nginx must forward the validators
+
+Evidence responses carry `ETag` and `Cache-Control: private, no-cache`, and the
+facade answers `304` to a matching `If-None-Match`. nginx hides conditional
+request headers from the backend on any location where `proxy_cache` is enabled,
+which the cPanel-generated vhost sets on `location /`. The API prefix therefore
+opts out in
+`/etc/nginx/conf.d/users/<account>/inpractise.cristiandeluxe.dev/api.conf`:
+
+```nginx
+location /api/v1 {
+    proxy_cache off;
+    proxy_cache_bypass 1;
+    proxy_no_cache 1;
+
+    include conf.d/includes-optional/cpanel-proxy.conf;
+    proxy_set_header If-None-Match $http_if_none_match;
+    proxy_set_header If-Modified-Since $http_if_modified_since;
+    proxy_pass $CPANEL_APACHE_PROXY_PASS;
+}
+```
+
+That directory is the cPanel user-include location, so it survives a vhost
+rebuild. Without it the passage endpoint still answers correctly, but always
+with `200`.
+
+### API verification performed on 2026-09-14
+
+Against `https://inpractise.cristiandeluxe.dev/api/v1`: `/health` returned
+`{"status":"ok","scope":"facade-only"}`; `/openapi.json` returned 200;
+unauthenticated `/me` returned `401 application/problem+json` with
+`urn:inpractise-demo:problem:unauthenticated` and a `requestId`; the basic
+persona's `/me` returned `{"orgId":"org-a","role":"member","premium":false}`;
+`/documents?pageSize=2` and `POST /search` with `{"query":...,"limit":2}`
+returned corpus rows with document, revision and passage identifiers; the cited
+passage returned `200` with an `ETag`, and repeating it with `If-None-Match`
+returned `304`. The `org-b` persona received its own organization's copy and a
+`200` - not a `304` - when replaying the `org-a` `ETag`, because the read scope
+is part of the tag.
+
+The `x-research-org-id` header the facade needs for that scope is produced by
+`supabase/functions/research/researchResponse.ts`, which was deployed in the
+same pass (`supabase functions deploy research --no-verify-jwt`).
+
 ## Two AutoSSL notes
 
 cPanel created the subdomain with both `inpractise.cristiandeluxe.dev` and
@@ -102,13 +168,13 @@ to Pages after a direct upload cannot change that artifact. Rebuild when either
 changes. Never copy `.env.remote`, credentials, the corpus, evaluation reports
 or the MCP process into `dist`.
 
-Installation is currently blocked on five unpublished exact `@syntopica/*`
-packages, an outdated lockfile that still names `@busirocket/*`, and unpublished
-`@cristiandeluxe/max-lane`, which is declared as `file:../max-lane`. Build from
-a provisioned checkout only after the owner makes the exact packages available,
-publishes or vendors max-lane without importing Keychain credentials, and
-commits a regenerated lockfile; a clean Cloudflare Git build is not established
-by these instructions. See
+Installation on a clean runner is still blocked on `@cristiandeluxe/max-lane`,
+which is declared as `file:../max-lane` and is not published. The five shared
+config packages resolve again under their published `@busirocket/*` scope, so a
+local `pnpm install --frozen-lockfile` succeeds. Build from a provisioned
+checkout only after the owner publishes or vendors max-lane without importing
+Keychain credentials; a clean Cloudflare Git build is not established by these
+instructions. See
 [Vite environment variables](https://vite.dev/guide/env-and-mode) and
 [Pages build configuration](https://developers.cloudflare.com/pages/configuration/build-configuration/).
 
