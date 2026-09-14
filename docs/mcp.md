@@ -1,4 +1,4 @@
-# The MCP server: the same reader, a different client
+# In Practise Demo MCP: the same reader, a different client
 
 `pnpm mcp` starts a local stdio MCP server exposing **exactly two tools**:
 
@@ -11,9 +11,17 @@ It signs in as an ordinary member with a password and calls the same
 `POST /functions/v1/research` endpoint the browser calls. It never holds a
 service key, and **no tool accepts an org, user or role argument**: what the
 member may read is decided by the same row level security, not by the caller.
-stdout carries the protocol only; diagnostics go to stderr.
+The Node server writes only protocol messages to stdout and diagnostics to
+stderr. The `pnpm mcp` wrapper also prints a package-script banner; agent
+clients launch Node directly, as shown in the install guide.
 
 ## Configuration
+
+See the [client installation guide](mcp-install.md) for Claude Code, Claude
+Desktop, Cursor and generic stdio configuration, member provisioning, connection
+checks and troubleshooting. The package and server ID are `inpractise-demo`; see
+[ADR 0001](adr/0001-project-name.md). This independent demo uses only public
+filings and synthetic interviews, with no private In Practise content.
 
 `.mcp.json` launches it from four environment variables — `RESEARCH_URL`,
 `RESEARCH_PUBLISHABLE_KEY`, `RESEARCH_EMAIL`, `RESEARCH_PASSWORD` — so no
@@ -54,3 +62,12 @@ February 2026."
 The client cited immutable ids, carried the scope caveat from the neighbouring
 passage, and refused the February question rather than extrapolating from
 January — the same refusal the web client gets, through a different surface.
+
+## Capture provenance
+
+The [handshake JSONL](mcp-handshake.jsonl) is an unchanged artifact of the
+2026-09-13 session, before the 2026-09-14 project rename. Its two records
+contain only timestamps and negotiated protocol versions; they contain no server
+name. The session used the pre-rename registration described in ADR 0001, so
+this capture is not evidence of a post-rename connection. New verification must
+not append to this retained artifact.

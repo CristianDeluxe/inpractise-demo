@@ -64,6 +64,25 @@
 
 ### 2026-09
 
+- [x] 2026-09-14 — **Unified project naming and documented the review/install
+      path.** Package and MCP identity are `inpractise-demo`; the human title is
+      In Practise Demo. Rewrote README, added CONTRIBUTING, CONTEXT,
+      architecture, client installation guidance and five ADRs; preserved frozen
+      research, corpus, migrations, lockfile and the captured handshake.
+      Recorded actual token validation, missing allowance enforcement and
+      revocation limits. Verification: `pnpm type-check`, `pnpm lint`,
+      `pnpm format:check`, `pnpm build`, `pnpm test:ci`, `pnpm knip`,
+      `pnpm dupes` and `pnpm check:ci` passed (133 offline tests and seven
+      corpus tests in the aggregate). `pnpm mcp` reported the renamed server;
+      SDK stdio probes negotiated it, discovered both tools and fetched the
+      documented synthetic passage. Installation, local dev/preview and isolated
+      Claude CLI registration examples were executed.
+      `python3 work/docs1/audit-docs.py` checks links, document-map coverage,
+      retained results and protected hashes. Full outputs and unverified claims
+      are in the docs1 briefing's FINDINGS.md; repeatable local probes are in
+      ignored `work/docs1/`. No commit, push, deployment, provider generation or
+      database provisioning was performed.
+
 - [x] 2026-09-14 — **Publication decisions resolved by Briefing D1.** The owner
       authorized public `CristianDeluxe/inpractise-demo` and nova hosting at
       `https://inpractise.cristiandeluxe.dev`. This closes the remote-ownership
