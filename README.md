@@ -60,14 +60,17 @@ promised.
 
 ## Run locally
 
-Use Node 24.20.0 and pnpm 12.4.1 from the repository root. Installation is
-currently blocked on five unpublished exact `@syntopica/*` packages and
-unpublished `@cristiandeluxe/max-lane`, which is also declared as the sibling
-`file:../max-lane` dependency. The lockfile still names the former
-`@busirocket/*` packages, so `pnpm install --frozen-lockfile` fails until the
-owner makes the exact packages available, publishes or vendors max-lane without
-importing Keychain credentials, and commits a regenerated lockfile. This
-checkout is not a self-contained public install.
+Use Node 24.20.0 and pnpm 12.4.1 from the repository root.
+`pnpm install --frozen-lockfile` installs everything the application, the tests
+and the checks need.
+
+One dependency is deliberately optional. The answer-quality harness under
+`evals/` judges grounding through `@cristiandeluxe/max-lane`, an unpublished
+sibling package declared as `file:../max-lane`. pnpm skips it when the sibling
+checkout is absent, and nothing outside `evals/` imports it: `pnpm check:ci`
+type-checks and lints the whole repository except that directory, so a clean
+checkout passes every gate. Run `pnpm type-check` and `pnpm lint` - which do
+include `evals/` - and `pnpm eval:answers` only with the sibling present.
 
 ```sh
 pnpm install --frozen-lockfile
