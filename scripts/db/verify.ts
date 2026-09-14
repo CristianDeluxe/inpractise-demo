@@ -19,6 +19,7 @@ export async function verifyDatabase() {
       'memberships',
       'organisations',
       'passages',
+      'request_usage',
     ],
   )
   assert.ok(
@@ -46,7 +47,7 @@ export async function verifyDatabase() {
     false,
   )
   console.log(
-    'PASS: five RLS tables, default-deny anonymous grants, no member writes, caller-scoped retrieval, service-only publication',
+    'PASS: six RLS tables, default-deny anonymous grants, no member writes, caller-scoped retrieval, service-only publication',
   )
   await reportDatabaseCounts()
 }

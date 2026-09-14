@@ -1,13 +1,15 @@
+import { answerStatusLabel } from './answerStatusLabel'
 import type { AnswerViewProps } from './AnswerViewProps'
 import { CitationCard } from './CitationCard'
 import { ClaimRow } from './ClaimRow'
+import { notFoundExplanation } from './notFoundExplanation'
 
 export function AnswerView({ answer }: AnswerViewProps) {
   return (
     <section aria-label="Answer" className="mt-8">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4">
-        <h3 className="font-sans text-xl capitalize">
-          {answer.status.replace('_', ' ')}
+        <h3 className="font-sans text-xl">
+          {answerStatusLabel(answer.status)}
         </h3>
         <p className="text-xs text-muted-foreground">
           {answer.mode === 'hybrid' ? 'Hybrid' : 'Lexical only'} ·{' '}
@@ -15,9 +17,7 @@ export function AnswerView({ answer }: AnswerViewProps) {
         </p>
       </div>
       {answer.status === 'not_found' ? (
-        <p className="mt-5">
-          The corpus could not establish an answer to this question.
-        </p>
+        <p className="mt-5">{notFoundExplanation(answer.candidateCount)}</p>
       ) : null}
       <ul className="my-6 space-y-5">
         {answer.claims.map((claim) => (
