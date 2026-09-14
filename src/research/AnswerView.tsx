@@ -3,6 +3,7 @@ import type { AnswerViewProps } from './AnswerViewProps'
 import { CitationCard } from './CitationCard'
 import { ClaimRow } from './ClaimRow'
 import { DiagnosticsPanel } from './DiagnosticsPanel'
+import { EvidenceVintageView } from './EvidenceVintageView'
 import { notFoundExplanation } from './notFoundExplanation'
 
 export function AnswerView({ answer }: AnswerViewProps) {
@@ -17,6 +18,7 @@ export function AnswerView({ answer }: AnswerViewProps) {
           {answer.candidateCount} candidates
         </p>
       </div>
+      {answer.vintage ? <EvidenceVintageView vintage={answer.vintage} /> : null}
       {answer.status === 'not_found' ? (
         <p className="mt-5">{notFoundExplanation(answer.candidateCount)}</p>
       ) : null}
