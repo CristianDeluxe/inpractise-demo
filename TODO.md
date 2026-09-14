@@ -52,6 +52,23 @@ plan wins.
 
 ## Testing
 
+- [ ] **Bound cached browser-probe teardown.** The repeated
+      `work/lovable2/browser.mjs` probe completed all six scenarios and Chrome
+      exited, but its externally cached Playwright 1.58.2 Node runner remained
+      stuck in `browser.close()` for over three minutes. The owned runner was
+      stopped with SIGTERM; the extended probe exited normally. Add a bounded
+      teardown supervisor or move to a repository-owned test runner while
+      preserving assertion failures. Evidence:
+      `work/lovable3/previous-probe.log` and the Lovable3 `FINDINGS.md`.
+
+- [ ] **Investigate intermittent workspace-test readiness.** One `pnpm test:ci`
+      run timed out after 1060 ms at `src/app/states.test.tsx:29` while awaiting
+      the Source library heading; the other 132 tests passed and earlier full
+      runs passed. The test and workspace code are unchanged by the landing
+      restoration. Trace lazy-route readiness against the default one-second
+      Testing Library wait before changing its timeout. Evidence:
+      `work/lovable3/intermittent-test-ci.log`.
+
 - [ ] **Exercise concurrent publication and a late passage insert.** Existing
       immutability/publication tests pass and parent locking is implemented, but
       the backend report records no concurrency race test. Add a transactional

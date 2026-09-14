@@ -1,5 +1,21 @@
 # TODO Log
 
+- 2026-09-14 — **Restored Lovable landing sections and hover behavior.**
+  Restored the library tabs/cards, podcast artwork/platform links, executives
+  CTA, interlude gradient/reveal, evidence chrome, header/mobile menu and all
+  footer columns. Cards open `/app`; login/recruitment presentation opens
+  `/login`; the RSS link serves a disclosed static demo feed. Particle pointer
+  highlighting matches Lovable and stops under reduced motion. Source dialogs
+  restore focus to the invoking citation or text button; hero masks preserve
+  descenders. Library presentation entries and copied artwork match the
+  read-only reference. Verification: `python3 work/lovable3/verify.py` runs the
+  seven requested gates; `python3 work/lovable3/verify-reference.py` checks
+  reference parity and scope; browser commands/results and deliberate
+  differences are recorded beside the Lovable3 briefing in `FINDINGS.md` and
+  under `work/lovable3/`. One intermittent unchanged workspace-test readiness
+  timeout is preserved in the active TODO; isolated and full reruns passed. No
+  commit, push, deployment or backend/corpus mutation was performed.
+
 - 2026-09-14 — **Owner-approved Lovable presentation values.** The owner
   superseded the earlier corpus-backed hero statistics and ticker requirements:
   restored Lovable's exact labels, values and middle-dot punctuation, removed
