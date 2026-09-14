@@ -44,6 +44,8 @@
   --color-brass: var(--brass);
   --color-steel: var(--steel);
   --color-steel-foreground: var(--steel-foreground);
+  --color-image-outline: var(--image-outline);
+  --color-image-outline-inverse: var(--image-outline-inverse);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -100,6 +102,8 @@
     oklch(0.255 0.043 250) 60%,
     oklch(0.185 0.03 254) 100%
   );
+  --image-outline: oklch(0 0 0 / 0.1);
+  --image-outline-inverse: oklch(1 0 0 / 0.1);
   --border: oklch(0.882 0.008 85);
   --input: oklch(0.882 0.008 85);
   --ring: oklch(0.64 0.176 43);
@@ -394,10 +398,10 @@
 
 @layer components {
   .action {
-    @apply inline-flex items-center justify-center gap-2 bg-primary px-6 py-3 text-xs font-semibold uppercase tracking-widest text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 bg-primary px-6 py-3 text-xs font-semibold uppercase tracking-widest text-primary-foreground transition-[background-color,scale] duration-150 motion-safe:active:scale-[0.96] hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100;
   }
   .quiet-action {
-    @apply inline-flex items-center justify-center rounded border border-border bg-card px-3 py-2 text-sm hover:bg-secondary;
+    @apply inline-flex items-center justify-center rounded border border-border bg-card px-3 py-2 text-sm transition-[background-color,scale] duration-150 motion-safe:active:scale-[0.96] hover:bg-secondary;
   }
   .field {
     @apply w-full rounded-md border border-input bg-card px-3 py-3 text-sm outline-offset-2;

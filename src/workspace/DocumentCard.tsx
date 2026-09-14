@@ -9,6 +9,7 @@ export function DocumentCard({ document }: DocumentCardProps) {
         <SourceLabel origin={document.origin} />
         <FileText
           size={18}
+          strokeWidth={1.5}
           className="shrink-0 text-primary"
           aria-hidden="true"
         />

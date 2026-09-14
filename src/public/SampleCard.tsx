@@ -15,7 +15,7 @@ export function SampleCard({ source }: SampleCardProps) {
             onClick={openSource}
             aria-haspopup="dialog"
             aria-expanded={open}
-            className="ml-2 inline-flex size-5 items-center justify-center rounded-full bg-primary align-middle text-[10px] font-bold text-primary-foreground transition-transform motion-safe:hover:scale-110"
+            className="ml-2 inline-flex size-5 items-center justify-center rounded-full bg-primary align-middle text-[10px] font-bold text-primary-foreground transition-[scale] duration-150 motion-safe:hover:scale-110 motion-safe:active:scale-[0.96]"
             aria-label={`Open source ${source.documentId}`}
           >
             {source.documentId === 's1' ? '1' : '2'}
