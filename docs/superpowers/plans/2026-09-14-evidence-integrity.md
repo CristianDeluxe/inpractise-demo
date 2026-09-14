@@ -68,8 +68,7 @@ Playwright, `deno test`.
 
 **Task 2 - evidence vintage**
 
-- Create `supabase/functions/research/answer/EvidenceVintage.ts` (type),
-  `supabase/functions/research/answer/evidenceVintage.ts` (function).
+- Create `supabase/functions/research/answer/evidenceVintage.ts`.
 - Modify `supabase/functions/research/actions/handleAsk.ts`.
 - Create `src/http-api/evidenceVintageOutput.ts`; modify
   `src/http-api/answerOutput.ts`.
@@ -83,7 +82,8 @@ Playwright, `deno test`.
 
 **Task 3 - legible disagreement**
 
-- Create `src/research/ConflictSide.ts` (type), `src/research/conflictSides.ts`
+- Create `src/research/ConflictSide.ts` (type),
+  `src/research/citationAttribution.ts`, `src/research/conflictSides.ts`
   (function), `src/research/ConflictView.tsx`,
   `src/research/ConflictViewProps.ts`; modify `src/research/AnswerView.tsx`.
 - Create `src/research/conflictSides.test.ts`,
@@ -363,8 +363,7 @@ Claude-Session: https://claude.ai/code/session_01SGMWjzUUogwqaXCbnjQXE5"
 
 **Files:**
 
-- Create: `supabase/functions/research/answer/EvidenceVintage.ts`,
-  `supabase/functions/research/answer/evidenceVintage.ts`
+- Create: `supabase/functions/research/answer/evidenceVintage.ts`
 - Modify: `supabase/functions/research/actions/handleAsk.ts:36-41`
 - Create: `src/http-api/evidenceVintageOutput.ts`
 - Modify: `src/http-api/answerOutput.ts`
@@ -381,7 +380,6 @@ Claude-Session: https://claude.ai/code/session_01SGMWjzUUogwqaXCbnjQXE5"
 - Consumes: `CitationSource` (Task 1 interfaces block); `answerOutput` from
   `src/http-api/answerOutput.ts`.
 - Produces:
-  - `type EvidenceVintage = { oldest: string; newest: string; oldestAgeDays: number; newestAgeDays: number }`
   - `evidenceVintage(sources: readonly CitationSource[], now: Date): EvidenceVintage | undefined`
   - `evidenceVintageOutput` - Zod schema matching `EvidenceVintage`, added to
     `answerOutput` as `vintage`, optional.
@@ -441,18 +439,12 @@ Deno.test('no sources means no vintage', () => {
 
 Run: `pnpm test:edge` Expected: FAIL, module not found.
 
-- [ ] **Step 3: Write the type**
+- [ ] **Step 3: No separate type file**
 
-Create `supabase/functions/research/answer/EvidenceVintage.ts`:
-
-```ts
-export type EvidenceVintage = {
-  oldest: string
-  newest: string
-  oldestAgeDays: number
-  newestAgeDays: number
-}
-```
+An earlier draft asked for `EvidenceVintage.ts` beside `evidenceVintage.ts`. On
+a case-insensitive volume, the default on macOS, those are one path and the
+second write silently clobbers the first. The function declares its shape as its
+own return type instead, and no other module needs it by name.
 
 - [ ] **Step 4: Write the function**
 
@@ -460,9 +452,6 @@ Create `supabase/functions/research/answer/evidenceVintage.ts`:
 
 ```ts
 import type { CitationSource } from '../citations/CitationSource.ts'
-import type { EvidenceVintage } from './EvidenceVintage.ts'
-
-const DAY_MS = 86_400_000
 
 /**
  * Interviews age. An answer whose evidence is two years old can be correct in
@@ -473,7 +462,15 @@ const DAY_MS = 86_400_000
 export function evidenceVintage(
   sources: readonly CitationSource[],
   now: Date,
-): EvidenceVintage | undefined {
+):
+  | {
+      oldest: string
+      newest: string
+      oldestAgeDays: number
+      newestAgeDays: number
+    }
+  | undefined {
+  const dayMs = 86_400_000
   const dates = sources
     .map((source) => (source.interviewDate ?? source.publishedAt).slice(0, 10))
     .filter((value) => /^\d{4}-\d{2}-\d{2}$/.test(value))
@@ -484,7 +481,7 @@ export function evidenceVintage(
   const ageDays = (value: string) =>
     Math.max(
       0,
-      Math.floor((now.getTime() - Date.parse(`${value}T00:00:00Z`)) / DAY_MS),
+      Math.floor((now.getTime() - Date.parse(`${value}T00:00:00Z`)) / dayMs),
     )
   return {
     oldest,
@@ -661,14 +658,13 @@ Create `src/research/EvidenceVintageView.tsx`:
 import type { EvidenceVintageViewProps } from './EvidenceVintageViewProps'
 import { evidenceAgeLabel } from './evidenceAgeLabel'
 
-const YEAR_DAYS = 365
-
 export function EvidenceVintageView({ vintage }: EvidenceVintageViewProps) {
+  const yearDays = 365
   return (
     <p role="status" className="mt-4 text-sm text-muted-foreground">
       Evidence from {vintage.oldest} to {vintage.newest}. Oldest source{' '}
       {evidenceAgeLabel(vintage.oldestAgeDays)}.
-      {vintage.newestAgeDays > YEAR_DAYS
+      {vintage.newestAgeDays > yearDays
         ? ' Every source is over a year old; treat this as historical.'
         : null}
     </p>
@@ -701,7 +697,7 @@ Run: `pnpm check:ci && pnpm test:edge` Expected: exit 0 and PASS.
 - [ ] **Step 19: Commit**
 
 ```bash
-git add supabase/functions/research/answer/EvidenceVintage.ts supabase/functions/research/answer/evidenceVintage.ts supabase/functions/research/actions/handleAsk.ts src/http-api/evidenceVintageOutput.ts src/http-api/answerOutput.ts src/research/evidenceAgeLabel.ts src/research/evidenceAgeLabel.test.ts src/research/EvidenceVintageView.tsx src/research/EvidenceVintageViewProps.ts src/research/EvidenceVintageView.test.tsx src/research/AnswerView.tsx supabase/functions/tests/evidenceVintage.test.ts docs/openapi.json
+git add supabase/functions/research/answer/evidenceVintage.ts supabase/functions/research/actions/handleAsk.ts src/http-api/evidenceVintageOutput.ts src/http-api/answerOutput.ts src/research/evidenceAgeLabel.ts src/research/evidenceAgeLabel.test.ts src/research/EvidenceVintageView.tsx src/research/EvidenceVintageViewProps.ts src/research/EvidenceVintageView.test.tsx src/research/AnswerView.tsx supabase/functions/tests/evidenceVintage.test.ts docs/openapi.json
 git commit -m "feat(research): carry the vintage of the evidence with the answer
 
 Interviews age. An answer resting entirely on material two years old can be
@@ -726,8 +722,9 @@ sends it.
 
 **Files:**
 
-- Create: `src/research/ConflictSide.ts`, `src/research/conflictSides.ts`,
-  `src/research/ConflictViewProps.ts`, `src/research/ConflictView.tsx`
+- Create: `src/research/ConflictSide.ts`, `src/research/citationAttribution.ts`,
+  `src/research/conflictSides.ts`, `src/research/ConflictViewProps.ts`,
+  `src/research/ConflictView.tsx`
 - Modify: `src/research/AnswerView.tsx`
 - Test: `src/research/conflictSides.test.ts`,
   `src/research/ConflictView.test.tsx`
@@ -844,19 +841,29 @@ export type ConflictSide = {
 
 - [ ] **Step 4: Write the grouping function**
 
-Create `src/research/conflictSides.ts`:
+A non-exported top-level declaration beside the exported one fails this
+repository's strict `code-policy` configuration, so the attribution helper gets
+its own file. Create `src/research/citationAttribution.ts`:
 
 ```ts
 import type { Citation } from '@/api/Citation'
-import type { Claim } from '@/api/Claim'
-import type { ConflictSide } from './ConflictSide'
 
-function attributionOf(citation: Citation): string {
+/** How a passage is credited on screen: the speaker, or the document itself. */
+export function citationAttribution(citation: Citation): string {
   if (!citation.speaker) return citation.title
   return citation.speakerRole
     ? `${citation.speaker}, ${citation.speakerRole}`
     : citation.speaker
 }
+```
+
+Then `src/research/conflictSides.ts`, which imports it:
+
+```ts
+import type { Citation } from '@/api/Citation'
+import type { Claim } from '@/api/Claim'
+import { citationAttribution } from './citationAttribution'
+import type { ConflictSide } from './ConflictSide'
 
 /**
  * A `conflict` answer is two accounts, not one list. Grouping the claims by the
@@ -879,7 +886,7 @@ export function conflictSides(
       .map((id) => byId.get(id))
       .find((value) => value !== undefined)
     if (!citation) continue
-    const key = attributionOf(citation)
+    const key = citationAttribution(citation)
     const side = sides.get(key)
     if (side) side.claims.push(claim)
     else
@@ -1033,7 +1040,7 @@ Run: `pnpm check:ci` Expected: exit 0.
 - [ ] **Step 13: Commit**
 
 ```bash
-git add src/research/ConflictSide.ts src/research/conflictSides.ts src/research/conflictSides.test.ts src/research/ConflictView.tsx src/research/ConflictViewProps.ts src/research/ConflictView.test.tsx src/research/AnswerView.tsx
+git add src/research/ConflictSide.ts src/research/citationAttribution.ts src/research/conflictSides.ts src/research/conflictSides.test.ts src/research/ConflictView.tsx src/research/ConflictViewProps.ts src/research/ConflictView.test.tsx src/research/AnswerView.tsx
 git commit -m "feat(research): show both sides of a disagreement
 
 The conflict status already existed and two gold cases cover it, but the claims
