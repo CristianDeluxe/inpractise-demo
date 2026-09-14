@@ -6,7 +6,7 @@ This report distinguishes **live source**, **archived notes**, and **proposed im
 
 ## 1. Inventory
 
-Citation roots: `C:` = `/Users/cristiandeluxe/p/casegpt/`; `B:` = `/Users/cristiandeluxe/p/wiki/`; `E:` = `/Users/cristiandeluxe/p/cristian-deluxe-developer-portfolio/career/evidence/`. Thus `C:README.md:3-7` identifies a concrete file and inclusive line range, not a remote claim.
+Citation roots: `C:` = `/Users/cristiandeluxe/p/casegpt/`; `B:` = `/Users/cristiandeluxe/p/brain/`; `E:` = `/Users/cristiandeluxe/p/cristian-deluxe-developer-portfolio/career/evidence/`. Thus `C:README.md:3-7` identifies a concrete file and inclusive line range, not a remote claim.
 
 | Prior system                     | Reusable assets                                                                                                                                        | Reference and reachability                                                                                                                                                                                                                                                   | Attribution boundary                                                                                                                                                                                                                                                                                                                                                               |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -273,7 +273,7 @@ report = Path('/Users/cristiandeluxe/p/cristian-deluxe-developer-portfolio/caree
 text = report.read_text()
 roots = {
     'C': Path('/Users/cristiandeluxe/p/casegpt'),
-    'B': Path('/Users/cristiandeluxe/p/wiki'),
+    'B': Path('/Users/cristiandeluxe/p/brain'),
     'E': Path('/Users/cristiandeluxe/p/cristian-deluxe-developer-portfolio/career/evidence'),
 }
 assert re.findall(r'^## (\d+)\.', text, re.M) == list('1234567')
