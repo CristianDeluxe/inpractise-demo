@@ -40,5 +40,11 @@ export function projectResponse(
         'not_found',
         'Reviewer diagnostics are not part of v1.',
       )
+    case 'provenance':
+      throw new FacadeError(
+        404,
+        'not_found',
+        'Reopening a request is not part of v1.',
+      )
   }
 }

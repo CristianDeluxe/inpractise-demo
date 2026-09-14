@@ -1,3 +1,4 @@
+import { fixtureKey } from './fixtureKey.ts'
 import { researchApiFixture } from './researchApiFixture.ts'
 
 export function answerTransportFixture(completion: () => Promise<Response>) {
@@ -12,7 +13,7 @@ export function answerTransportFixture(completion: () => Promise<Response>) {
       return new Response(null, { status: 503 })
     if (url.origin !== 'https://example.supabase.co')
       throw new Error('Unexpected external request')
-    return new Response(JSON.stringify(researchApiFixture(url.pathname)), {
+    return new Response(JSON.stringify(researchApiFixture(fixtureKey(url))), {
       headers: { 'content-type': 'application/json' },
     })
   }

@@ -2,6 +2,7 @@ import { handleAsk } from './actions/handleAsk.ts'
 import { handleDebug } from './actions/handleDebug.ts'
 import { handleList } from './actions/handleList.ts'
 import { handleMe } from './actions/handleMe.ts'
+import { handleProvenance } from './actions/handleProvenance.ts'
 import { handleRead } from './actions/handleRead.ts'
 import { handleSearch } from './actions/handleSearch.ts'
 import { effectivePrincipal } from './effectivePrincipal.ts'
@@ -40,5 +41,7 @@ export async function routeAction(
       return await handleAsk(principal, request.query, request.company)
     case 'debug':
       return await handleDebug(principal)
+    case 'provenance':
+      return await handleProvenance(principal, request.requestId)
   }
 }

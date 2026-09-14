@@ -1,7 +1,10 @@
 import { branchRowFixture } from '../../../tests/helpers/branchRowFixture.ts'
 import { citationSourceFixture } from '../../../tests/helpers/citationSourceFixture.ts'
+import { provenanceApiFixture } from './provenanceApiFixture.ts'
 
 export function researchApiFixture(path: string): unknown {
+  const provenanceFixture = provenanceApiFixture(path)
+  if (provenanceFixture !== undefined) return provenanceFixture
   const source = citationSourceFixture()
   switch (path) {
     case '/rest/v1/rpc/debit_request':
