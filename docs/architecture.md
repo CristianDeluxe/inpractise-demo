@@ -61,7 +61,7 @@ the bearer token into a caller-scoped database client and reads active
 membership. This is the implemented equivalent of the plan's
 `auth.getUser(token)` step; [ADR 0002](adr/0002-handler-authentication.md)
 records the SDK deviation and verification evidence. Read-only Management API
-inspection records deployed version 14 as `ACTIVE` with `verify_jwt=false`. Live
+inspection records deployed version 15 as `ACTIVE` with `verify_jwt=false`. Live
 probes reject missing and deliberately mis-signed tokens. The expiry regression
 constructs a JWT with a past `exp`, models Supabase Auth's observed HTTP 403
 expiry response, and proves authentication stops before membership or evidence
