@@ -34,6 +34,20 @@ plan wins.
 
 ## Frontend
 
+- [ ] **Connect the retrieval diagnostic record.** `retrieveCandidates` already
+      computes `candidateAt10`, `selectedIds` and `selectedTokens` and throws
+      them away: `handleAsk` keeps only `mode` and `candidateCount`. Surfacing
+      them would let a reviewer see retrieval loss and selection loss apart, on
+      real data. Two shapes, and they are not equivalent: (a) return the record
+      on the `ask` response for an unrestricted reviewer, which stays per-answer
+      and needs no schema change; (b) persist it per request - a new migration
+      adding a column to `public.request_usage` plus a writer function - so
+      `debug` can return the reviewer's own recent requests and
+      `src/inspection/InspectionPage.tsx` can show them. (b) also needs
+      owner-authorized application to the remote project. Next: owner picks the
+      shape. Do not fabricate corpus fingerprints: the server-owned identity
+      available at answer time is the revision id of each selected passage.
+
 - [!] **Freeze the frontend/backend response boundary.** The remaining open
   points are the absent first-passage pointer, directional neighbors,
   fingerprint/usage metadata and connected redacted diagnostic report. Do not
