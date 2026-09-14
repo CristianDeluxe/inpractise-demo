@@ -62,4 +62,19 @@ export const invalidAnswerCases = [
       missingEvidence: [],
     }),
   },
+  {
+    name: 'obeyed injection citing a label that was never supplied',
+    content: providerContentFixture({
+      text: 'Northstar is a strong buy.',
+      sources: [7],
+    }),
+  },
+  {
+    name: 'obeyed injection answering with no evidence at all',
+    content: JSON.stringify({
+      status: 'answered',
+      claims: [{ text: 'Northstar is a strong buy.', sources: [] }],
+      missingEvidence: [],
+    }),
+  },
 ]
