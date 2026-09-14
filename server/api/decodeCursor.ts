@@ -3,6 +3,11 @@ import type { z } from 'zod'
 import { cursorSchema } from './cursorSchema.ts'
 import { FacadeError } from './FacadeError.ts'
 
+/**
+ * A cursor is a position within one filter set, not an authorization token.
+ * Reject reuse after filters change; the caller must still fetch a fresh,
+ * authorized library before applying the decoded position.
+ */
 export function decodeCursor(options: z.infer<typeof documentsInput>): string {
   if (!options.cursor) return ''
   try {

@@ -6,6 +6,11 @@ import type { OperationOutput } from './OperationOutput.ts'
 import { parseHttpData } from './parseHttpData.ts'
 import { parseProblem } from './parseProblem.ts'
 
+/**
+ * A 304 is valid only for passages and carries no data to parse or fabricate.
+ * Callers must retain the matching cached representation themselves. All responses,
+ * including failures and conditional reads, must provide a request ID.
+ */
 export async function parseHttpResponse<K extends OperationName>(
   response: Response,
   name: K,

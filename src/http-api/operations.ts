@@ -11,6 +11,11 @@ import { passageOutput } from './passageOutput.ts'
 import { searchInput } from './searchInput.ts'
 import { searchOutput } from './searchOutput.ts'
 
+/**
+ * Runtime routing, the typed client and OpenAPI generation share these schemas.
+ * Keep evidence consistency checks in the parsers: a JSON schema describes field
+ * shapes but cannot prove that claim IDs or reader paths match their evidence.
+ */
 export const operations = {
   documents: {
     method: 'GET',

@@ -1,5 +1,10 @@
 import { z } from 'zod'
 
+/**
+ * Compare at float32 precision, matching database vector storage rather than
+ * JavaScript's wider numbers. Exact double comparison would reject a faithfully
+ * persisted embedding after its storage round trip.
+ */
 export function assertStoredVector(stored: unknown, expected: number[]): void {
   const parsed = z
     .array(z.number())

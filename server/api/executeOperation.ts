@@ -13,6 +13,11 @@ import { requireBearer } from './requireBearer.ts'
 import { researchPayload } from './researchPayload.ts'
 import { viewingReadScope } from './viewingReadScope.ts'
 
+/**
+ * Authenticate before charging the facade quota, then read and validate evidence
+ * before considering conditional delivery. A matching ETag never skips backend
+ * authorization. Health checks only the facade and makes no backend request.
+ */
 export async function executeOperation(
   config: FacadeConfig,
   limit: ReturnType<typeof createLimiter>,

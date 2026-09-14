@@ -7,6 +7,11 @@ import { ensurePassage } from './ensurePassage.ts'
 import { ensureRevision } from './ensureRevision.ts'
 import { toRevision } from './toRevision.ts'
 
+/**
+ * Stage and verify all passages before asking the publication RPC to expose them.
+ * These REST writes are not one transaction: a failure may leave resumable staging
+ * rows. Existing rows are checked for equality rather than overwritten on retry.
+ */
 export async function importDocument(
   client: SupabaseClient<Database>,
   document: CorpusDocument,

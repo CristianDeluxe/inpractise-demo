@@ -4,6 +4,11 @@ import { useRequest } from '@/runtime/hooks/useRequest'
 import { useRuntime } from '@/runtime/hooks/useRuntime'
 import { useEffect } from 'react'
 
+/**
+ * Invalidate outstanding research when the token or viewing mode changes.
+ * Repeated notifications for the same token preserve workspace state.
+ * Leave the synchronous Auth callback before reading its session again.
+ */
 export function useAccess() {
   const runtime = useRuntime()
   const request = useRequest(loadWorkspaceAccess)
@@ -25,7 +30,6 @@ export function useAccess() {
       observedSession.clear()
       observedSession.add(token)
       invalidate()
-      // Leave the synchronous Auth callback before reading its session again.
       queueMicrotask(() => {
         if (mounted) void run(undefined)
       })

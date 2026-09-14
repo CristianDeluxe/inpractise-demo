@@ -2,6 +2,11 @@ import { readFileSync, realpathSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { sha256 } from './sha256.ts'
 
+/**
+ * Accept only manifest-approved artifacts whose on-disk bytes match both hashes.
+ * Resolve symlinks before checking containment so a corpus-relative path cannot
+ * silently make an outside file part of the trusted source set.
+ */
 export function loadManifestEntry(documentId: string): Record<string, unknown> {
   const manifest = JSON.parse(
     readFileSync('corpus/manifest.json', 'utf8'),

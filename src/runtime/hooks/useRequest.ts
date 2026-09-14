@@ -4,6 +4,12 @@ import { useRuntime } from '@/runtime/hooks/useRuntime'
 import { requestFailure } from '@/runtime/requestFailure'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+/**
+ * Only the latest controller may publish state, even if an operation ignores abort.
+ * Shared controller registration lets access changes cancel work across components.
+ * Cancellation suppresses delivery; it cannot guarantee server work or an Ask
+ * debit was undone.
+ */
 export function useRequest<A, T>(operation: Operation<A, T>) {
   const runtime = useRuntime()
   const last = useRef<{ args: A } | null>(null)

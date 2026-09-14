@@ -7,6 +7,12 @@ import type { ResearchRequest } from './ResearchRequest.ts'
 import type { ResponseEnvelope } from './ResponseEnvelope.ts'
 import { throwIfCancelled } from './throwIfCancelled.ts'
 
+/**
+ * Read the current session token for each call and send it only to the fixed
+ * research endpoint, without cookies, redirects or cached responses. Cancellation
+ * is checked after token lookup, response arrival and body reading so late work
+ * cannot be delivered as a successful response.
+ */
 export async function performRequest<T, A extends ResearchRequest['action']>(
   client: ResearchClient,
   request: ResearchRequest & { action: A },

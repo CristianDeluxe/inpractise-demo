@@ -14,3 +14,6 @@ scripts/corpus/package-lock.json
 TODO_HISTORY_INDEX.jsonl
 
 server/build/
+
+# Local tool workspace, globally ignored by git.
+.serena/

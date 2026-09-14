@@ -1,6 +1,11 @@
 import { z } from 'zod'
 import type { EmbeddingBatchResult } from './EmbeddingBatchResult.ts'
 
+/**
+ * Provider array order is not input order: restore it using each response index.
+ * Reject duplicate or missing indexes and zero vectors before persistence so an
+ * embedding cannot be silently assigned to the wrong passage.
+ */
 export function parseEmbeddingResponse(
   input: unknown,
   count: number,

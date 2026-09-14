@@ -4,6 +4,11 @@ import { embedBatch } from './embedBatch.ts'
 import { persistEmbeddingBatch } from './persistEmbeddingBatch.ts'
 import { readEmbedding } from './readEmbedding.ts'
 
+/**
+ * Checkpoint each successful batch before surfacing a sibling batch's failure.
+ * Waiting for both settled outcomes preserves completed paid work for a retry;
+ * only texts without a validated persisted artifact are sent again.
+ */
 export async function embedDocuments(
   documents: CorpusDocument[],
   apiKey: string,

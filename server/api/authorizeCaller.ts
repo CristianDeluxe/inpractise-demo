@@ -6,6 +6,11 @@ import { FacadeError } from './FacadeError.ts'
 import type { OperationContext } from './OperationContext.ts'
 import { requireBearer } from './requireBearer.ts'
 
+/**
+ * The backend must accept this exact bearer before quota identity is decoded.
+ * Viewing restrictions travel with `me`, but its organization is not a cache
+ * scope for a later read: membership can change between the two requests.
+ */
 export async function authorizeCaller(
   config: FacadeConfig,
   context: OperationContext,

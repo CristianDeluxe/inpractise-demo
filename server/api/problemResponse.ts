@@ -1,6 +1,11 @@
 import { problemSchema } from '@/http-api/problemSchema.ts'
 import { FacadeError } from './FacadeError.ts'
 
+/**
+ * Unexpected exceptions become a generic dependency problem rather than exposing
+ * their message. Preserve a backend request ID when available, alongside the
+ * facade correlation ID, so failures remain traceable without caching the body.
+ */
 export function problemResponse(
   cause: unknown,
   correlationId: string,

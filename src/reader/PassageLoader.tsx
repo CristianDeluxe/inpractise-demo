@@ -6,6 +6,11 @@ import { Link } from '@tanstack/react-router'
 import type { PassageReference } from './PassageReference'
 import { PassageText } from './PassageText'
 
+/**
+ * Opening a citation or neighbor performs a new authorized read instead of showing
+ * an earlier search quote. Neighbor IDs have no directional contract, so labels
+ * do not guess which is previous or next when only one neighbor is returned.
+ */
 export function PassageLoader(props: PassageReference) {
   const neighbor = useNeighbor(props)
   const request = usePassage(neighbor.reference)

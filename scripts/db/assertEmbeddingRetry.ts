@@ -1,5 +1,11 @@
 import { z } from 'zod'
 
+/**
+ * A malformed provider error remains an HTTP failure.
+ * Only transient HTTP failures may reach another attempt; insufficient quota
+ * stops immediately even when reported as 429. Attempts are zero-based, with
+ * attempt two the final request.
+ */
 export async function assertEmbeddingRetry(
   response: Response,
   attempt: number,
@@ -8,7 +14,7 @@ export async function assertEmbeddingRetry(
   try {
     body = await response.json()
   } catch {
-    /* A malformed provider error remains an HTTP failure. */
+    // Continue to the HTTP status policy below.
   }
   const error = z
     .object({ error: z.object({ code: z.string() }).optional() })

@@ -1,6 +1,11 @@
 import type { IncomingMessage } from 'node:http'
 import { FacadeError } from './FacadeError.ts'
 
+/**
+ * Count bytes while consuming the stream instead of trusting Content-Length.
+ * The limit therefore also applies to chunked bodies and is checked before the
+ * next chunk is retained for JSON parsing.
+ */
 export async function readNodeBody(
   request: IncomingMessage,
 ): Promise<string | undefined> {

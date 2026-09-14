@@ -6,6 +6,12 @@ import { loadManifestEntry } from './loadManifestEntry.ts'
 import { sha256 } from './sha256.ts'
 import { validatePassageTokens } from './validators/validatePassageTokens.ts'
 
+/**
+ * Validate revision identity against the original JSON payload before importing.
+ * Hashing only parsed fields could omit metadata from the identity check. Accepted
+ * manifest provenance, explicit rights approval and recomputed token budgets are
+ * also required; a well-formed document alone is not publishable evidence.
+ */
 export function loadCorpus(): CorpusDocument[] {
   const directory = existsSync('corpus/normalised')
     ? 'corpus/normalised'

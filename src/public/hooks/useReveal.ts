@@ -1,6 +1,11 @@
 import { useEffect, useRef } from 'react'
 import { subscribeMotion } from '../subscribeMotion'
 
+/**
+ * Hide content only when motion is allowed and an observer can reveal it.
+ * Cleanup restores visibility as well as disconnecting the observer, so a switch
+ * to reduced motion cannot strand content in its hidden pre-reveal state.
+ */
 export function useReveal() {
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {

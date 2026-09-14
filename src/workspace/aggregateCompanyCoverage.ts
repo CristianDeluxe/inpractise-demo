@@ -1,6 +1,11 @@
 import type { Library } from '@/contracts/Library'
 import type { CompanyCoverage } from './CompanyCoverage'
 
+/**
+ * One missing document count makes its entire company total unknown.
+ * Summing only the available counts would present incomplete coverage as an exact
+ * figure; retain `undefined` so charts can disclose the missing measurement.
+ */
 export function aggregateCompanyCoverage(
   library: Library,
   company: string,

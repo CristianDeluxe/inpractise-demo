@@ -5,6 +5,11 @@ import type { ResearchSession } from './ResearchSession.ts'
 import { toolFailure } from './toolFailure.ts'
 import { toolText } from './toolText.ts'
 
+/**
+ * Keep reads on the shared research endpoint under the server's member session.
+ * A lookup failure becomes a tool error, preserving the distinction between
+ * denied evidence and a successful search with no matches.
+ */
 export function registerFetchPassage(
   server: McpServer,
   session: ResearchSession,
