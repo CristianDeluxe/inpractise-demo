@@ -59,9 +59,11 @@ plan wins.
 
 ## Pending Decisions
 
-- [ ] **Reranking stays off by default.** Enable the Voyage `rerank-2.5`
-      experiment only if the core gates already pass, and only if the same gold
-      report shows a gain with no new failures.
+- [ ] **Reranking stays off by default.** The first condition is now met:
+      `pnpm check:ci` exits 0 and the local gates pass. What is still missing is
+      a gold report from a run of the Voyage `rerank-2.5` experiment, which
+      costs provider calls and a key this repository does not hold. Enable it
+      only if that report shows a gain with no new failures.
 
 ## Notes that change how commands behave
 
