@@ -27,6 +27,12 @@ plan wins.
 
 ## Frontend
 
+- [ ] **Decide the third "How it is built" destination.** The landing strip was
+      asked to link its retrieval column to `/built`, but no such route exists;
+      it links to `/inspect` (retrieval diagnostics, sign-in required) instead.
+      Smallest step: either add a public `/built` page or confirm `/inspect` and
+      close this. Found 2026-09-15 while rebuilding the landing.
+
 - [ ] **Register the router types.** `@tanstack/react-router` has no
       `declare module` `Register` block here, so `useSearch`, `useNavigate`
       options and `Link` search props are `any`; `useResearchWorkspace`
