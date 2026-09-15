@@ -1,10 +1,13 @@
 /**
  * Split out of researchApiFixture to keep its switch under the complexity
- * budget. Returns undefined for any path it does not recognize, so the
+ * budget: the caller's own records (the request ledger and an empty
+ * notebook). Returns undefined for any path it does not recognize, so the
  * caller can fall through to its own routes.
  */
 export function provenanceApiFixture(path: string): unknown {
   switch (path) {
+    case '/rest/v1/research_notes':
+      return []
     case '/rest/v1/request_usage':
       return {
         request_id: '00000000-0000-0000-0000-000000000000',
