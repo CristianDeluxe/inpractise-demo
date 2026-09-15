@@ -1,3 +1,4 @@
+import { formatCompanyName } from '@/components/formatters/formatCompanyName'
 import { formatPublishedDate } from '@/components/formatters/formatPublishedDate'
 import { SourceLabel } from '@/components/SourceLabel'
 import { Link } from '@tanstack/react-router'
@@ -10,7 +11,8 @@ export function CitationCard({ citation }: CitationCardProps) {
       <SourceLabel origin={citation.origin} />
       <h3 className="mt-3 font-sans text-base">{citation.title}</h3>
       <p className="mt-1 text-xs text-muted-foreground">
-        {citation.company} · {citation.speaker} {citation.speakerRole}
+        {formatCompanyName(citation.company)} · {citation.speaker}{' '}
+        {citation.speakerRole}
       </p>
       <blockquote className="source-text my-4 whitespace-pre-wrap break-words border-l-2 border-primary pl-4">
         {citation.quote}

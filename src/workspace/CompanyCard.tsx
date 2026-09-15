@@ -1,40 +1,46 @@
+import { formatCompanyName } from '@/components/formatters/formatCompanyName'
 import { formatPublishedDate } from '@/components/formatters/formatPublishedDate'
 import { CompanyCardActions } from './CompanyCardActions'
 import type { CompanyCardProps } from './CompanyCardProps'
-import { describeInterviews } from './describeInterviews'
+import { describeInterviewDates } from './describeInterviewDates'
 
 export function CompanyCard({ summary }: CompanyCardProps) {
-  const interviews = describeInterviews(summary)
+  const name = formatCompanyName(summary.company)
+  const dates = describeInterviewDates(summary)
   return (
     <article
-      aria-label={summary.company}
-      className="flex flex-col rounded-lg border border-border bg-card p-5"
+      aria-label={name}
+      className="flex h-full flex-col rounded-lg border border-border bg-card p-5"
     >
-      <h3 className="break-words font-sans text-lg leading-snug">
-        {summary.company}
-      </h3>
-      <dl className="mt-4 space-y-1 text-sm text-muted-foreground">
-        {interviews === undefined ? null : (
-          <div>
-            <dt className="sr-only">Interviews</dt>
-            <dd>{interviews}</dd>
-          </div>
+      <h3 className="break-words font-sans text-lg leading-snug">{name}</h3>
+      <dl className="mb-5 mt-4 grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1.5 text-sm">
+        {summary.interviews > 0 ? (
+          <>
+            <dt className="text-muted-foreground">Synthetic interviews</dt>
+            <dd>{summary.interviews}</dd>
+          </>
+        ) : null}
+        {dates === undefined ? null : (
+          <>
+            <dt className="text-muted-foreground">Interview dates</dt>
+            <dd>
+              {dates.map((date, index) => (
+                <span key={date} className="whitespace-nowrap">
+                  {index > 0 ? ' to ' : ''}
+                  {date}
+                </span>
+              ))}
+            </dd>
+          </>
         )}
         {summary.filings > 0 ? (
-          <div>
-            <dt className="sr-only">Filings</dt>
-            <dd>
-              {summary.filings} SEC{' '}
-              {summary.filings === 1 ? 'filing' : 'filings'}
-            </dd>
-          </div>
+          <>
+            <dt className="text-muted-foreground">SEC filings</dt>
+            <dd>{summary.filings}</dd>
+          </>
         ) : null}
-        <div>
-          <dt className="sr-only">Latest publication</dt>
-          <dd>
-            Latest publication {formatPublishedDate(summary.latestPublished)}
-          </dd>
-        </div>
+        <dt className="text-muted-foreground">Latest publication</dt>
+        <dd>{formatPublishedDate(summary.latestPublished)}</dd>
       </dl>
       <CompanyCardActions company={summary.company} />
     </article>
