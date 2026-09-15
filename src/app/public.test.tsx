@@ -34,6 +34,7 @@ describe('public demo routes', () => {
   })
   it.each([
     ['/method', 'How we handle evidence'],
+    ['/built', 'Built with agents'],
     ['/connect', 'Tools'],
     ['/missing', 'Page unavailable'],
   ])('renders %s', async (path, title) => {
