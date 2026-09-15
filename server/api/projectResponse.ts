@@ -34,6 +34,12 @@ export function projectResponse(
       return parseActionData(payload, data, parseAskData)
     case 'me':
       return parseMeData(data)
+    case 'investigate':
+      throw new FacadeError(
+        404,
+        'not_found',
+        'The bounded investigation loop is not part of v1.',
+      )
     case 'debug':
       throw new FacadeError(
         404,
