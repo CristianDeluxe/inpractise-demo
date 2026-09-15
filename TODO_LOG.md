@@ -1,5 +1,20 @@
 # TODO Log
 
+- 2026-09-15 - **Research notebook implemented and locally verified; remote
+  deployment pending.** Members can now save a citation (passage identity plus
+  the question and a one-line note, never the quotation itself), list saved
+  notes grouped by company, and delete them, on `/app/notes` with a nav badge.
+  New migration `20260915000013_research_notes.sql` adds `research_notes` with
+  owner-only select/delete RLS and an insert policy that re-checks passage
+  visibility as the caller regardless of role. Three new backend-only actions
+  (`note_save`, `note_list`, `note_delete`) stay outside the v1 HTTP facade,
+  which still exposes seven paths. `pnpm db:local:up` applied the migration to
+  the local database and `pnpm test:db:local` (real RLS, no mocks) passed 3/3;
+  `pnpm check:ci` passes in full except the pre-existing `dupes` step, which
+  fails on this machine with `spawnSync pnpm ENOEXEC` on `main` too (jscpd's
+  shebang-less pnpm shim), unrelated to this change. The migration has not been
+  applied to the remote database and the frontend has not been deployed.
+
 - 2026-09-14 - **Evidence-integrity release deployed and verified live.** Four
   deliverables shipped on `main`: passage fencing against prompt injection in
   the retrieved text, evidence vintage on every answer, a legible two-sided view

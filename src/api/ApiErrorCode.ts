@@ -3,6 +3,7 @@ export type ApiErrorCode =
   | 'forbidden'
   | 'passage_not_found'
   | 'request_not_found'
+  | 'note_not_found'
   | 'bad_input'
   | 'allowance_exhausted'
   | 'invalid_model_answer'
