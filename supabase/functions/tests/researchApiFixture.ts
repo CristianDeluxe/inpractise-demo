@@ -8,7 +8,7 @@ export function researchApiFixture(path: string): unknown {
   const source = citationSourceFixture()
   switch (path) {
     case '/rest/v1/rpc/debit_request':
-      return '00000000-0000-0000-0000-000000000001'
+      return '00000000-0000-4000-8000-000000000001'
     case '/rest/v1/rpc/record_request_usage':
       return null
     case '/auth/v1/user':

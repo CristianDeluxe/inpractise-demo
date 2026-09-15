@@ -17,7 +17,7 @@ src/api/performRequest.ts               mcp/callResearch.ts
                                |
               caller JWT forwarded to Supabase client
                                |
-              routeAction.ts -> one of seven handlers
+              routeAction.ts -> one of ten handlers
                                |
               PostgreSQL RLS -> authorized evidence only
                                |
@@ -86,21 +86,25 @@ response either - [viewingReadScope.ts](../server/api/viewingReadScope.ts) folds
 the mode into the ETag, so a member-view response cannot be served from a
 reviewer-view entry.
 
-## Seven actions
+## Ten actions
 
 [routeAction.ts](../supabase/functions/research/routeAction.ts) dispatches
 exactly these actions. Every action requires an authenticated principal with
-active membership.
+active membership. The plain HTTP facade (below) exposes only the original
+seven; `note_save`, `note_list` and `note_delete` are browser-only.
 
-| Action       | Input beyond `action`                                   | Handler and result                                                                                                                                                                                                                                                                                                                                                                                                                |
-| ------------ | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `me`         | None                                                    | [handleMe.ts](../supabase/functions/research/actions/handleMe.ts): organization, role and premium entitlement.                                                                                                                                                                                                                                                                                                                    |
-| `list`       | Optional `company`, `kind`                              | [handleList.ts](../supabase/functions/research/actions/handleList.ts): authorized current revisions, ordered by document ID; more than 50 results is an error.                                                                                                                                                                                                                                                                    |
-| `read`       | `documentId`, `revisionId`, `passageId`                 | [handleRead.ts](../supabase/functions/research/actions/handleRead.ts): exact passage citation and adjacent passage IDs; missing or denied evidence is 404.                                                                                                                                                                                                                                                                        |
-| `search`     | `query`, optional `company`, `limit` (1–10, default 10) | [handleSearch.ts](../supabase/functions/research/actions/handleSearch.ts): ranked citations, actual search mode and truncation flag.                                                                                                                                                                                                                                                                                              |
-| `ask`        | `query`, optional `company`                             | [handleAsk.ts](../supabase/functions/research/actions/handleAsk.ts): standalone structured answer, mode, candidate count and evidence vintage.                                                                                                                                                                                                                                                                                    |
-| `provenance` | `requestId`                                             | [handleProvenance.ts](../supabase/functions/research/actions/handleProvenance.ts): the caller's own past request, replayed with the current currency of each cited revision. Row level security scopes the lookup, so another caller's request and an unknown one are the same 404. The revision list reaches any member for their own request; the stored diagnostic record follows the same `mayReadDiagnostics` gate as `ask`. |
-| `debug`      | None                                                    | [handleDebug.ts](../supabase/functions/research/actions/handleDebug.ts): reviewer-only corpus counts through `inspect_corpus`.                                                                                                                                                                                                                                                                                                    |
+| Action        | Input beyond `action`                                                | Handler and result                                                                                                                                                                                                                                                                                                                                                                                                                |
+| ------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `me`          | None                                                                 | [handleMe.ts](../supabase/functions/research/actions/handleMe.ts): organization, role and premium entitlement.                                                                                                                                                                                                                                                                                                                    |
+| `list`        | Optional `company`, `kind`                                           | [handleList.ts](../supabase/functions/research/actions/handleList.ts): authorized current revisions, ordered by document ID; more than 50 results is an error.                                                                                                                                                                                                                                                                    |
+| `read`        | `documentId`, `revisionId`, `passageId`                              | [handleRead.ts](../supabase/functions/research/actions/handleRead.ts): exact passage citation and adjacent passage IDs; missing or denied evidence is 404.                                                                                                                                                                                                                                                                        |
+| `search`      | `query`, optional `company`, `limit` (1–10, default 10)              | [handleSearch.ts](../supabase/functions/research/actions/handleSearch.ts): ranked citations, actual search mode and truncation flag.                                                                                                                                                                                                                                                                                              |
+| `ask`         | `query`, optional `company`                                          | [handleAsk.ts](../supabase/functions/research/actions/handleAsk.ts): standalone structured answer, mode, candidate count and evidence vintage.                                                                                                                                                                                                                                                                                    |
+| `provenance`  | `requestId`                                                          | [handleProvenance.ts](../supabase/functions/research/actions/handleProvenance.ts): the caller's own past request, replayed with the current currency of each cited revision. Row level security scopes the lookup, so another caller's request and an unknown one are the same 404. The revision list reaches any member for their own request; the stored diagnostic record follows the same `mayReadDiagnostics` gate as `ask`. |
+| `debug`       | None                                                                 | [handleDebug.ts](../supabase/functions/research/actions/handleDebug.ts): reviewer-only corpus counts through `inspect_corpus`.                                                                                                                                                                                                                                                                                                    |
+| `note_save`   | `documentId`, `revisionId`, `passageId`, optional `question`, `note` | [handleNoteSave.ts](../supabase/functions/research/actions/handleNoteSave.ts): re-reads the passage as the caller, then inserts a note row naming it; the insert policy re-checks visibility independently of the Edge read.                                                                                                                                                                                                      |
+| `note_list`   | None                                                                 | [handleNoteList.ts](../supabase/functions/research/actions/handleNoteList.ts): the caller's own notes, newest first, each with its passage re-read as the effective principal - `null` when it can no longer be opened.                                                                                                                                                                                                           |
+| `note_delete` | `noteId`                                                             | [handleNoteDelete.ts](../supabase/functions/research/actions/handleNoteDelete.ts): deletes one of the caller's own notes; another member's note and an unknown id are the same 404.                                                                                                                                                                                                                                               |
 
 Success returns `{ action, data, buildId, requestId }`; errors return
 `{ error: { code, message, retryable }, requestId }`.
@@ -137,6 +141,19 @@ and
 protect published content, including against privileged passage changes. Service
 credentials remain in operator scripts, outside retrieval; see
 [ADR 0003](adr/0003-caller-scoped-retrieval.md).
+
+### Research notebook
+
+The
+[research notes migration](../supabase/migrations/20260915000013_research_notes.sql)
+adds `research_notes`: one row per saved citation, naming a passage by its three
+ids plus an optional question and note. No quotation is stored. Row level
+security scopes select and delete to `auth.uid()`, and the insert policy selects
+the referenced passage as the caller, so saving evidence the passage policy
+would hide fails in the database regardless of what the Edge function believes -
+reviewer status does not bypass it. `note_list` re-reads each passage as the
+effective principal at list time, so a note can never surface evidence its owner
+may no longer read.
 
 ## Retrieval and selection
 
