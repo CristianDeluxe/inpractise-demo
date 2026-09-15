@@ -1,4 +1,5 @@
 import { DemoNotice } from '@/components/DemoNotice'
+import { formatPublishedDate } from '@/components/formatters/formatPublishedDate'
 import { SourceLabel } from '@/components/SourceLabel'
 import { useCopyPassage } from '@/reader/hooks/useCopyPassage'
 import type { PassageViewProps } from './PassageViewProps'
@@ -20,7 +21,7 @@ export function PassageText({ passage }: PassageViewProps) {
         {passage.citation.interviewDate
           ? `Interview: ${passage.citation.interviewDate} · `
           : null}
-        Published: {passage.citation.publishedAt}
+        Published: {formatPublishedDate(passage.citation.publishedAt)}
       </p>
       <p className="mt-5 text-xs font-medium text-primary">
         {passage.section} ·{' '}

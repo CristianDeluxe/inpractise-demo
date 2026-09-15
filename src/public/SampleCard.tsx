@@ -1,3 +1,4 @@
+import { formatPublishedDate } from '@/components/formatters/formatPublishedDate'
 import * as Dialog from '@radix-ui/react-dialog'
 import { useSampleDialog } from './hooks/useSampleDialog'
 import type { SampleCardProps } from './SampleCardProps'
@@ -24,7 +25,8 @@ export function SampleCard({ source }: SampleCardProps) {
         <figcaption className="mt-3 text-xs text-muted-foreground">
           {source.passages[0].speaker} · {source.passages[0].speakerRole}
           <br />
-          Interview: {source.interviewDate} · Published: {source.publishedAt}
+          Interview: {formatPublishedDate(source.interviewDate)} · Published:{' '}
+          {formatPublishedDate(source.publishedAt)}
           <br />
           {source.disclosure}
         </figcaption>

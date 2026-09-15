@@ -1,3 +1,4 @@
+import { formatPublishedDate } from '@/components/formatters/formatPublishedDate'
 import type { LibraryPanelProps } from './LibraryPanelProps'
 import { StatTile } from './StatTile'
 import { summariseLibrary } from './summariseLibrary'
@@ -21,7 +22,14 @@ export function LibraryStatsRow({ library, company }: LibraryPanelProps) {
           value={stats.interviews}
           note="Synthetic sources"
         />
-        <StatTile label="Latest revision" value={stats.latestPublished} />
+        <StatTile
+          label="Latest revision"
+          value={
+            stats.latestPublished === undefined
+              ? undefined
+              : formatPublishedDate(stats.latestPublished)
+          }
+        />
       </div>
     </section>
   )
