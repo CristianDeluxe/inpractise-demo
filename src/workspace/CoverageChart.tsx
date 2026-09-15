@@ -1,3 +1,4 @@
+import { formatCompanyName } from '@/components/formatters/formatCompanyName'
 import type { CoverageProps } from './CoverageProps'
 
 export function CoverageChart({ companies, maximum }: CoverageProps) {
@@ -12,7 +13,9 @@ export function CoverageChart({ companies, maximum }: CoverageProps) {
         {companies.map((item) => (
           <li key={item.company}>
             <div className="flex flex-wrap justify-between gap-2 text-sm">
-              <span className="break-words">{item.company}</span>
+              <span className="break-words">
+                {formatCompanyName(item.company)}
+              </span>
               <span className="font-mono tabular-nums">
                 {item.passages === undefined
                   ? 'Count unavailable'

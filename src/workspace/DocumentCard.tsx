@@ -1,3 +1,4 @@
+import { formatCompanyName } from '@/components/formatters/formatCompanyName'
 import { formatPublishedDate } from '@/components/formatters/formatPublishedDate'
 import { SourceLabel } from '@/components/SourceLabel'
 import { FileText } from 'lucide-react'
@@ -16,7 +17,7 @@ export function DocumentCard({ document }: DocumentCardProps) {
         />
       </div>
       <p className="mt-5 text-xs uppercase tracking-widest text-primary">
-        {document.company}
+        {formatCompanyName(document.company)}
       </p>
       <h3 className="mt-2 font-sans text-lg leading-snug">{document.title}</h3>
       <p className="mt-4 text-xs text-muted-foreground">
