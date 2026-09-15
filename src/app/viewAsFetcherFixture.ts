@@ -1,4 +1,5 @@
 import type { Mock } from 'vitest'
+import { askStreamFixture } from './askStreamFixture'
 import { responseFixture } from './responseFixture'
 import { viewAsPayloadFixture } from './viewAsPayloadFixture'
 
@@ -12,6 +13,8 @@ export function viewAsFetcherFixture(
       typeof init?.body === 'string' ? init.body : '{}',
     ) as Record<string, unknown>
     requests.push(request)
+    if (request['stream'] === true)
+      return Promise.resolve(askStreamFixture(viewAsPayloadFixture(request)))
     return Promise.resolve(
       responseFixture(String(request['action']), viewAsPayloadFixture(request)),
     )

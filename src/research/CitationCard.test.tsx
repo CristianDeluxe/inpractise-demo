@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { citationFixture } from '@/api/citationFixture'
+import { askStreamFixture } from '@/app/askStreamFixture'
 import { renderRouteFixture } from '@/app/renderRouteFixture'
-import { responseFixture } from '@/app/responseFixture'
 import { uiLabelsFixture } from '@/app/uiLabelsFixture'
 import { uiRuntimeFixture } from '@/app/uiRuntimeFixture'
 import { cleanup, fireEvent, screen } from '@testing-library/react'
@@ -28,7 +28,7 @@ describe('CitationCard', () => {
       endChar: Array.from(quote).length,
     })
     fetcher.mockResolvedValueOnce(
-      responseFixture('ask', {
+      askStreamFixture({
         status: 'conflict',
         claims: [{ text: 'Reported.', citationIds: [citation.citationId] }],
         citations: [citation],

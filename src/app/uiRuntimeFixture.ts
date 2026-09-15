@@ -2,6 +2,7 @@ import { createResearchClient } from '@/api/createResearchClient'
 import type { BrowserRuntime } from '@/runtime/BrowserRuntime'
 import { vi } from 'vitest'
 import { z } from 'zod'
+import { askStreamFixture } from './askStreamFixture'
 import { authClientFixture } from './authClientFixture'
 import { sessionFixture } from './sessionFixture'
 import { uiPayloadFixture } from './uiPayloadFixture'
@@ -17,6 +18,10 @@ export function uiRuntimeFixture() {
     const body = typeof init?.body === 'string' ? init.body : '{}'
     const request = z.record(z.string(), z.unknown()).parse(JSON.parse(body))
     requests.push(request)
+    if (request['stream'] === true)
+      return Promise.resolve(
+        askStreamFixture(uiPayloadFixture(String(request['action']))),
+      )
     return Promise.resolve(
       new Response(
         JSON.stringify({
