@@ -25,20 +25,20 @@ is sized for a warm function, not a cold start. One throwaway search from the
 signed-in session is enough.
 
 Keep the retained U3 screenshots `live-ask-answered.png` and
-`live-ask-not_found.png` open locally as a fallback. They are historical
-live-run evidence, not current responses. Also open `docs/evals.md` for the F03
-explanation and `tests/integration/rls.test.ts` for the premium-boundary test.
-Check these artifacts are available before presenting.
+`live-ask-not_found.png`, recorded on 13 September, open locally as a fallback.
+Also open `docs/evals.md` for the F03 explanation and
+`tests/integration/rls.test.ts` for the premium-boundary test. Check these
+artifacts are available before presenting.
 
 ## Timed sequence — 120 seconds total
 
 | Time     | Exact URL and action                                                                                                                                                                                                                                                            | Spoken words                                                                                                                                                                                                                                                                                                                                           |
 | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 0–12s    | `https://inpractise.cristiandeluxe.dev/`                                                                                                                                                                                                                                        | “This is an independent engineering demo. Its sources are public SEC filings and synthetic interviews about fictional companies. It uses no private In Practise research.”                                                                                                                                                                             |
+| 0–12s    | `https://inpractise.cristiandeluxe.dev/`                                                                                                                                                                                                                                        | “This is an independent engineering demo. Its corpus is public SEC filings and synthetic interviews about fictional companies.”                                                                                                                                                                                                                        |
 | 12–25s   | `https://inpractise.cristiandeluxe.dev/app`, then follow Ask to `/app/ask`. Paste the question below and submit once; the evidence inspector on the right reports each phase as it arrives.                                                                                     | “The corpus panel is scoped by the database to my account. I’ll ask one standalone question about the synthetic Northstar interview, and the panel on the right names each phase: allowance debited, candidates ranked, passages selected, citations rechecked.”                                                                                       |
 | 25–47s   | Stay at `/app/ask`. Open the returned citation, then follow its exact reader link. The prior live answer cited `https://inpractise.cristiandeluxe.dev/read/s1/ab42aaa01bc9ae30065733e728e678b004f91fc097ff33186169ac69dc2fde94/P2`. Use the actual returned link if it differs. | “This claim points to an exact quotation, with document, revision, passage, date and speaker. Opening it rechecks my access. The interview is synthetic; the citation identifies the passage actually used.”                                                                                                                                           |
-| 47–68s   | Stay at `/app/ask`. Paste the refusal question below and submit once.                                                                                                                                                                                                           | “Now I’ll ask for a forecast the corpus cannot establish. The recorded live result was not_found, with no claims or citations. Missing evidence should remain missing.”                                                                                                                                                                                |
-| 68–83s   | `https://inpractise.cristiandeluxe.dev/read/s6/15160e34c3737894ed8c389ea682cd7f6109d11a614b8d581cd69e64a1bf4b54/P2`                                                                                                                                                             | “This premium reviewer can read the exact passage. Direct RLS tests prove basic and MCP fixtures see no matching database rows; browser/MCP parity tests prove the read API returns not_found without leaking its title or quotation.”                                                                                                                 |
+| 47–68s   | Stay at `/app/ask`. Paste the refusal question below and submit once.                                                                                                                                                                                                           | “Now a forecast the corpus does not contain. The answer is not_found: no claims, no citations, and nothing extrapolated from the passages it did find.”                                                                                                                                                                                                |
+| 68–83s   | `https://inpractise.cristiandeluxe.dev/read/s6/15160e34c3737894ed8c389ea682cd7f6109d11a614b8d581cd69e64a1bf4b54/P2`                                                                                                                                                             | “This premium reviewer can read the exact passage. The RLS tests show the basic and MCP fixtures see no matching database rows, and the browser/MCP parity tests show the read API returning not_found without the title or the quotation.”                                                                                                            |
 | 83–105s  | `https://inpractise.cristiandeluxe.dev/method`                                                                                                                                                                                                                                  | “Two fourteen-case runs matched thirteen statuses. All ten evidence cases were retrieved, but F03 failed selection: the document cap excluded Costco’s answering passage. We kept that failure. The inspection page shows the connected diagnostic report: which candidates were retrieved and which of them the selector actually sent to the model.” |
 | 105–120s | `https://inpractise.cristiandeluxe.dev/connect`                                                                                                                                                                                                                                 | “The local MCP server exposes search_research and fetch_passage under database-enforced member access. The recorded session negotiated protocol 2025-11-25. Parity tests cover search order and the premium boundary.”                                                                                                                                 |
 
@@ -54,15 +54,15 @@ Live refusal question:
 What will Northstar Workflow net retention be in 2027?
 ```
 
-The premium reader **page** is a static HTTP 200 shell. For the reviewer, its
-authenticated research request should return the passage. The denial is not a
-live reviewer-demo step: `tests/integration/rls.test.ts` verifies empty passage
-rows for the basic and MCP fixtures while the reviewer control reads the same
-source. `tests/integration/mcpParity.test.ts` verifies `not_found` through the
-browser and MCP read paths. The refusal should say “The corpus could not
-establish an answer to this question.” If the live status differs, describe the
-actual result and use the fallback; never narrate an expected result as
-observed.
+The premium reader **page** is a static HTTP 200 shell; the reviewer's
+authenticated research request then returns the passage. The denial is shown
+through the tests rather than a second login: `tests/integration/rls.test.ts`
+verifies empty passage rows for the basic and MCP fixtures while the reviewer
+control reads the same source, and `tests/integration/mcpParity.test.ts`
+verifies `not_found` through the browser and MCP read paths. The refusal reads
+“The corpus could not establish an answer to this question.” If the live status
+differs, describe the actual result and use the fallback; narrate what is on
+screen, never the expected result.
 
 ## Failure fallback inside the same time slots
 
@@ -81,15 +81,14 @@ and 2310-3017ms warm, the answered Ask 4439ms returning one claim with the
 diagnostic record, the cited passage read 515ms, the refusal Ask 3843ms
 returning `not_found` with no claims, and `debug` 2007ms returning six recent
 requests. Every step fits the 8-second budget below once the function is warm.
-What has not been rehearsed is a person performing the narration inside the slot
-boundaries; the numbers above bound the request time only, about 18 seconds of
-the 120. Those measurements were taken against the non-streaming route. The
-browser now asks with `stream: true`, and the streaming path was measured
-against the deployment on 2026-09-15 as the reviewer: the first phase appeared
-at 0.57s and the answer at 8.74s for the answered question, and at 0.59s and
-4.41s for the refusal on the warm function. The phase rail therefore moves
-within a second of the submit, while the answer itself stays inside the same
-8-second budget.
+The numbers bound the request time only, about 18 seconds of the 120; the
+narration itself still needs a rehearsal against a clock. Those measurements
+were taken against the non-streaming route. The browser now asks with
+`stream: true`, and the streaming path was measured against the deployment on
+2026-09-15 as the reviewer: the first phase appeared at 0.57s and the answer at
+8.74s for the answered question, and at 0.59s and 4.41s for the refusal on the
+warm function. The phase rail therefore moves within a second of the submit,
+while the answer itself stays inside the same 8-second budget.
 
 Other verification: `pnpm build`, the U3 browser evidence linked in
 [frontend-port.md](frontend-port.md), and the local routing checks in
@@ -99,5 +98,6 @@ The database enforces 100 Ask calls per member per UTC day before provider work.
 A failure, refusal, no-evidence result or cancellation still costs one unit; the
 browser renders exhaustion as `allowance_exhausted`. Completion usage is
 recorded from the response or left unknown. Search and Read do not debit the Ask
-allowance. Search parity now uses controlled lexical embeddings with live RLS;
-it does not establish deployed hybrid-provider determinism.
+allowance. The search parity tests use controlled lexical embeddings under live
+RLS; hybrid ranking with the live embedding provider is measured only by the
+evaluation runs.
