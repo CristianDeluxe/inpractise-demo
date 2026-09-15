@@ -1,5 +1,6 @@
 import type { PublicLayoutProps } from '@/components/PublicLayoutProps'
 import { Wordmark } from '@/components/Wordmark'
+import { AskBubble } from '@/research/AskBubble'
 import { Link } from '@tanstack/react-router'
 import { ViewAsBanner } from './ViewAsBanner'
 import { WorkspaceAccount } from './WorkspaceAccount'
@@ -27,6 +28,7 @@ export function WorkspaceLayout({ children }: PublicLayoutProps) {
         </header>
         <ViewAsBanner />
         {children}
+        <AskBubble />
       </div>
     </div>
   )
