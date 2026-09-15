@@ -1,4 +1,5 @@
 import { citationFixture } from '@/api/citationFixture'
+import { comparePayloadFixture } from '@/contracts/comparePayloadFixture'
 import { debugPayloadFixture } from './debugPayloadFixture'
 import { diagnosticsFixture } from './diagnosticsFixture'
 import { libraryPayloadFixture } from './libraryPayloadFixture'
@@ -36,6 +37,8 @@ export function uiPayloadFixture(action: string) {
           'What makes complex Northstar installations hard to replace?',
         diagnostics: diagnosticsFixture,
       }
+    case 'compare':
+      return comparePayloadFixture()
     case 'debug':
       return debugPayloadFixture()
     default:
