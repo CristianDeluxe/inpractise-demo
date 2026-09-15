@@ -9,9 +9,11 @@ The facade owns no credential, issues no tokens, and stores no sessions. It
 forwards the caller's `Authorization` header unchanged to
 `POST /functions/v1/research`; all evidence authorization remains in the backend
 database. Removing the facade would not change which evidence the caller may
-read. Reviewer-only `debug` diagnostics and the `provenance` action that reopens
-one of the caller's own requests are deliberately absent from v1. Health is
-local liveness, not one of the research actions.
+read. Reviewer-only `debug` diagnostics, the `provenance` action that reopens
+one of the caller's own requests, and the streamed `investigate` loop are
+deliberately absent from v1: the facade's contract is one request, one JSON
+response, and a bounded multi-step loop does not fit that shape. Health is local
+liveness, not one of the research actions.
 
 ## Run and reproduce
 
@@ -85,6 +87,22 @@ this disclosure. Unknown fields, duplicate query parameters, unsupported methods
 and invalid media types are rejected. JSON request bodies are limited to 16,384
 bytes at the Node boundary. Successful bodies are the action data, without the
 backend's changing envelope.
+
+### Investigation loop (browser-only, not in the facade)
+
+`POST /functions/v1/research` with
+`{ action: 'investigate', question, company?, stream: true }` runs a bounded,
+server-side research loop over the backend's event stream, one debit for the
+whole loop: a plan of two to four sub-questions, one retrieval per sub-question
+measured exactly like a standalone ask, at most one refinement round for a
+sub-question that returned no evidence, then one synthesis under the same
+grounded-claim contract as `ask`, plus a `status` per sub-question. Phases
+stream as `debited`, `plan`, `retrieve`, `refine` and `synthesise`, each
+carrying `elapsedMs`; no phase carries claim text, a quotation, or a citation
+identifier the caller may not read. A hard token budget bounds every provider
+call across the loop; a provider failure is an error, never a silent refusal.
+See [architecture.md](architecture.md#the-bounded-investigation-loop) for the
+pipeline.
 
 Pagination is a facade keyset over a **freshly authorized** backend list capped
 at 50 documents. The cursor encodes the last document ID and filters; it is not
