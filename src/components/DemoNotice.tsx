@@ -1,12 +1,17 @@
 import { CloseGlyph } from './CloseGlyph'
 import { demoNotice } from './disclosureText'
 import { useDemoNotice } from './hooks/useDemoNotice'
+import { useNoticeHeight } from './hooks/useNoticeHeight'
 
 export function DemoNotice() {
   const { dismissed, dismiss } = useDemoNotice()
+  const height = useNoticeHeight()
   if (dismissed) return null
   return (
-    <div className="flex items-center gap-3 border-b border-border bg-warning px-4 py-2 text-xs text-warning-foreground">
+    <div
+      ref={height}
+      className="sticky top-0 z-50 flex items-center gap-3 border-b border-border bg-warning px-4 py-2 text-xs text-warning-foreground"
+    >
       <p className="flex-1 text-center">{demoNotice}</p>
       <button
         type="button"
