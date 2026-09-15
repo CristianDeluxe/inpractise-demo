@@ -340,8 +340,9 @@ The two mutation RPCs execute as a dedicated non-login role without RLS bypass;
 RLS restricts ledger access to the active caller. Members cannot directly mutate
 ledger rows. Reported completion prompt, completion and total tokens are stored
 once, even if answer validation subsequently fails. Missing or invalid provider
-usage stays NULL (unknown), never an invented zero. These are completion totals,
-not an aggregate of embedding usage. The member-scoped usage endpoint accepts
+usage stays NULL (unknown), never an invented zero. These are completion totals
+of the answer generation, not an aggregate of embedding usage nor of the
+follow-up rewrite described below. The member-scoped usage endpoint accepts
 caller reports, so it is operational accounting, not a tamper-proof billing
 record. No service-role key participates in this request path. Usage metadata is
 not added to the browser response contract.
@@ -352,6 +353,20 @@ concurrency fixture holds the last debit open on one connection and proves a
 second connection cannot acquire it; it times out the contender and rolls both
 transactions back. A same-principal attempt after the last debit sees
 exhaustion. See [ADR 0007](adr/0007-debit-before-provider.md).
+
+## Follow-up questions
+
+`ask` accepts an optional `history`: at most three earlier turns, each a
+question and the answer text the chat showed for it. The server stores none of
+it. When history is present, one short plain-text completion rewrites the latest
+question into a standalone question (`answer/resolveQuery.ts`), and that
+rewritten question is what embedding, retrieval, generation and the diagnostics
+measure. The answer returns it as `resolvedQuery`, and the chat prints it above
+the answer whenever it differs from what was typed, so the question the corpus
+was asked is always visible. A question without history is used as written and
+costs no extra provider call. A failed or empty rewrite is a provider or model
+error, never a refusal. The rewrite's own token usage is not recorded against
+the request ledger.
 
 Deployment uses
 `supabase functions deploy research --use-api --no-verify-jwt --import-map supabase/functions/deploy-import-map.json`

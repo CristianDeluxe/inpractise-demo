@@ -10,4 +10,5 @@ export const answerOutput = providerAnswerWireSchema.extend({
   candidateCount: z.number().int().nonnegative(),
   vintage: evidenceVintageOutput.optional(),
   diagnostics: retrievalDiagnosticsOutput.optional(),
+  resolvedQuery: z.string().optional(),
 })

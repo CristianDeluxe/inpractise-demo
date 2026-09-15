@@ -12,9 +12,9 @@ export function AskPage() {
       <p className="eyebrow text-muted-foreground">Ask the corpus</p>
       <h1 className="mt-3 font-sans text-3xl">Ask. Read. Verify.</h1>
       <p className="mb-8 mt-3 max-w-2xl text-sm text-muted-foreground">
-        Each question starts its own retrieval. Nothing carries over from the
-        previous one, so an answer depends on the corpus rather than on what you
-        asked before.
+        Each question on this page starts its own retrieval and shows every
+        stage of it. For follow-ups, use the Ask IP chat: it rewrites each one
+        into a standalone question and shows you that question.
       </p>
       {library.state.status === 'success' ? (
         <CompanyFilter

@@ -14,8 +14,9 @@ not show it on screen. Open the URLs below as bookmarks. Keep the company
 selector at all companies. Ask lives at `/app/ask`, the company entry at `/app`
 and the source library at `/app/library`. Each company card opens Ask or the
 library already scoped through `?company=`. Have the two questions ready to
-paste. Each question is standalone and each explicit Ask consumes allowance; do
-not rehearse requests repeatedly or retry automatically.
+paste. Each explicit Ask consumes allowance; do not rehearse requests repeatedly
+or retry automatically. A follow-up in the Ask IP chat is rewritten into a
+standalone question first, and the chat shows that rewrite above the answer.
 
 Warm the Edge function before the timer starts. Measured against the deployment
 on 2026-09-14, the first `search` after an idle period took 6418ms while the
