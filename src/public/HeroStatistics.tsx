@@ -7,7 +7,7 @@ export function HeroStatistics() {
       className="intro-fade relative z-10 border-t border-ink-border"
       style={animationDelay(1150)}
     >
-      <dl className="page-shell grid grid-cols-2 divide-ink-border md:grid-cols-4 md:divide-x">
+      <dl className="page-shell grid grid-cols-2 gap-x-6 divide-ink-border md:grid-cols-4 md:gap-x-0 md:divide-x">
         {demoCorpusStats.map((stat, index) => (
           <div
             key={stat.label}
