@@ -18,7 +18,7 @@ describe('public demo routes', () => {
     const { runtime, requests } = uiRuntimeFixture()
     await renderRouteFixture('/', runtime)
     expect(
-      await screen.findByRole('heading', { name: /Executive insight/ }),
+      await screen.findByRole('heading', { name: /Answers that/ }),
     ).toBeTruthy()
     fireEvent.click(
       screen.getAllByRole('button', { name: /Open source passage/ })[0] ??
