@@ -4,6 +4,6 @@ export const corpusTickerEntries = [
   'Freight brokerage · Cedarline Logistics',
   'Packaged food · Vantage Foods',
   'Paragraph-level citations',
-  'Five interviews · 56 passages',
+  'Six interviews · four filings · 962 passages',
   'Answers you can audit',
 ] as const
