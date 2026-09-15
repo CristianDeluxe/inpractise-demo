@@ -51,7 +51,11 @@ export function AskSession({ company }: AskSessionProps) {
           </>
         ) : null}
       </div>
-      <EvidenceInspector answer={answer} />
+      <EvidenceInspector
+        answer={answer}
+        stages={research.progress.stages}
+        pending={research.answer.state.status === 'loading'}
+      />
     </div>
   )
 }

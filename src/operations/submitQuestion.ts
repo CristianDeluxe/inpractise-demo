@@ -1,12 +1,15 @@
-import { ask } from '@/api/ask'
-import type { AskRequest } from '@/api/AskRequest'
+import { streamAsk } from '@/api/streamAsk'
 import { parseAskData } from '@/contracts/parseAskData'
 import type { BrowserRuntime } from '@/runtime/BrowserRuntime'
+import type { StreamingAskArgs } from './StreamingAskArgs'
 
 export async function submitQuestion(
   runtime: BrowserRuntime,
-  args: AskRequest,
+  args: StreamingAskArgs,
   signal: AbortSignal,
 ) {
-  return ask(runtime.client, args, parseAskData, { signal })
+  return streamAsk(runtime.client, args.request, parseAskData, {
+    signal,
+    onStage: args.onStage,
+  })
 }

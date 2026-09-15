@@ -1,13 +1,18 @@
 import { DiagnosticsPanel } from './DiagnosticsPanel'
 import type { EvidenceInspectorProps } from './EvidenceInspectorProps'
 import { RecordedSelectionMissCard } from './RecordedSelectionMissCard'
+import { StageTrail } from './StageTrail'
 
 /**
  * The middle of the pipeline, beside the answer rather than under it. Detailed
  * diagnostics arrive only when the endpoint decided the caller may read them,
  * so their absence here is the authorization boundary working, not a gap.
  */
-export function EvidenceInspector({ answer }: EvidenceInspectorProps) {
+export function EvidenceInspector({
+  answer,
+  stages,
+  pending,
+}: EvidenceInspectorProps) {
   return (
     <section aria-label="Why this answer" className="space-y-6">
       <div className="border border-border bg-card p-4">
@@ -25,6 +30,9 @@ export function EvidenceInspector({ answer }: EvidenceInspectorProps) {
             a selection loss rather than a retrieval miss.
           </p>
         )}
+        <div className="mt-4">
+          <StageTrail stages={stages} pending={pending} />
+        </div>
       </div>
       {answer?.diagnostics ? (
         <DiagnosticsPanel diagnostics={answer.diagnostics} />

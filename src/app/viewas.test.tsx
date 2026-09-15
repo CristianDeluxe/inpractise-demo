@@ -8,6 +8,7 @@ import {
   within,
 } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { askStreamFixture } from './askStreamFixture'
 import { renderRouteFixture } from './renderRouteFixture'
 import { responseFixture } from './responseFixture'
 import { uiLabelsFixture } from './uiLabelsFixture'
@@ -157,7 +158,7 @@ describe('server-backed viewing mode', () => {
     await screen.findByText(/This view is restricted on purpose/)
     expect(signal?.aborted).toBe(true)
     await act(async () => {
-      pending.resolve(responseFixture('ask', uiPayloadFixture('ask')))
+      pending.resolve(askStreamFixture(uiPayloadFixture('ask')))
       await pending.promise
     })
     expect(screen.queryByText('A supported claim with limits.')).toBeNull()

@@ -35,6 +35,7 @@ export const RequestSchema = z.discriminatedUnion('action', [
     viewAs: ViewAsSchema.optional(),
     query: querySchema,
     company: companySchema,
+    stream: z.literal(true).optional(),
   }),
   z.strictObject({
     action: z.literal('debug'),
