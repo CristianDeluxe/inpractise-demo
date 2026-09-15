@@ -82,10 +82,12 @@ requests. Every step fits the 8-second budget below once the function is warm.
 What has not been rehearsed is a person performing the narration inside the slot
 boundaries; the numbers above bound the request time only, about 18 seconds of
 the 120. Those measurements were taken against the non-streaming route. The
-browser now asks with `stream: true`, which changes when the first pixel moves,
-not when the answer completes: the terminal frame carries the same validated
-envelope. Streaming has not been measured against the deployment, so quote the
-numbers above as total time and do not claim a first-phase latency.
+browser now asks with `stream: true`, and the streaming path was measured
+against the deployment on 2026-09-15 as the reviewer: the first phase appeared
+at 0.57s and the answer at 8.74s for the answered question, and at 0.59s and
+4.41s for the refusal on the warm function. The phase rail therefore moves
+within a second of the submit, while the answer itself stays inside the same
+8-second budget.
 
 Other verification: `pnpm build`, the U3 browser evidence linked in
 [frontend-port.md](frontend-port.md), and the local routing checks in
