@@ -111,6 +111,47 @@ CI run 34990945894 on `87c0873` passed after one rerun of the security job,
 whose first attempt failed downloading gitleaks (`curl: (35)`), not on a
 finding.
 
+### Notebook, compare, investigate and latency release on 2026-09-16
+
+Head commit `2c40b14` (`main`), deployed from a linked worktree while another
+session held the primary checkout. Migrations first, since both sides validate
+each other with strict schemas: `supabase db push` applied
+`20260915000013_research_notes.sql`, `20260915000014_query_embedding_cache.sql`
+and `20260915000015_search_candidates_kind_filter.sql`;
+`supabase migration list` then showed all fifteen local migrations matched on
+the remote project. `pnpm db:verify` refused to run from the worktree path (its
+guard hardcodes the primary checkout), so the CLI's migration list stood as the
+confirmation, as anticipated.
+
+`supabase functions deploy research --use-api --no-verify-jwt --import-map supabase/functions/deploy-import-map.json --project-ref <ref>`
+returned "Deployed Functions on project \<ref\>: research".
+
+`pnpm build` with the real `VITE_` environment, the rsync above for
+`dist server server.js`, then
+`cloudlinux-selector restart --json --interpreter nodejs --domain inpractise.cristiandeluxe.dev --app-root apps/inpractise-demo`
+returned `{"result": "success"}`.
+
+Re-probed `/`, `/method`, `/built`, `/connect`, `/login`, `/app`, `/app/ask`,
+`/app/compare`, `/app/notes` and `/inspect`: all returned 200. The served
+`/assets/index-*.js` hash matched the just-built artifact byte-for-byte
+(`index-BuHe2mcN.js`). This app code-splits by route, so the entry chunk itself
+carries no feature prose; the route table it does carry lists `/app/ask` and
+`/app/compare`, and the lazy `AskPage-*.js` (200) contains the `investigate`
+stream-event identifier while `ComparePage-*.js` (200) is the chunk that route
+loads, confirming the new bundle is live.
+
+As the reviewer (`me@cristiandeluxe.dev`) against the live function, one call
+each, no retries: `search` (microsoft, "revenue growth") 200 in 5403 ms; `ask`
+("What drove revenue growth?", microsoft) 200 in 4749 ms, `answered`;
+`investigate` ("How has margin trended?", microsoft) 200 in 3489 ms, `not_found`
+(the corpus does not establish a margin trend for the question as asked, a valid
+retrieval outcome, not an error); `compare` (microsoft, "cloud growth") 200 in
+1799 ms; `note_save` against the search's first citation 200 in 546 ms;
+`note_list` 200 in 502 ms, one row; `note_delete` of that note 200 in 435 ms.
+
+Chromium screenshots of the live `/` and `/built` at 1440x900 full-page showed
+no empty band taller than 80px on either page.
+
 ## HTTP API on the origin
 
 `server.js` routes `/api/v1` to the facade built from `server/api/` and every
