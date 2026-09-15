@@ -1,13 +1,12 @@
 import { Link } from '@tanstack/react-router'
 import { EvidenceSteps } from './EvidenceSteps'
-import { Reveal } from './Reveal'
 import { SampleCard } from './SampleCard'
 import { sampleSources } from './sampleSources'
 
 export function EvidenceExample() {
   return (
     <section id="evidence" className="page-shell mb-28">
-      <Reveal className="grid gap-12 lg:grid-cols-12">
+      <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
         <div className="lg:col-span-5">
           <p className="eyebrow text-muted-foreground">
             Curated example — not a live answer
@@ -40,7 +39,7 @@ export function EvidenceExample() {
             <SampleCard key={source.documentId} source={source} />
           ))}
         </div>
-      </Reveal>
+      </div>
     </section>
   )
 }
