@@ -35,6 +35,7 @@ export default {
         'server/api/createApiListener.ts',
         'scripts/api/generateOpenApi.ts',
         'scripts/api/fixtureBackend.ts',
+        'scripts/build/collectBuildStats.mjs',
         'src/http-api/createHttpClient.ts',
       ],
       project: [
@@ -47,6 +48,7 @@ export default {
         '*.config.{ts,mjs}',
         'server/**/*.{mjs,ts}',
         'scripts/api/**/*.ts',
+        'scripts/build/**/*.mjs',
       ],
     },
     'scripts/corpus': {
