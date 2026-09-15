@@ -1,6 +1,7 @@
 import { useAccess } from '@/auth/hooks/useAccess'
 import { RequestFeedback } from '@/components/RequestFeedback'
 import { WorkspaceLayout } from '@/workspace/WorkspaceLayout'
+import { WorkspaceShellSkeleton } from '@/workspace/WorkspaceShellSkeleton'
 import { Outlet } from '@tanstack/react-router'
 import { AccessContext } from './AccessContext'
 import { SignInInvitation } from './SignInInvitation'
@@ -12,6 +13,8 @@ import { SignInInvitation } from './SignInInvitation'
  */
 export function AccessGate() {
   const access = useAccess()
+  if (access.state.status === 'idle' || access.state.status === 'loading')
+    return <WorkspaceShellSkeleton />
   if (access.state.status !== 'success')
     return (
       <main id="main-content" className="page-shell py-16">
