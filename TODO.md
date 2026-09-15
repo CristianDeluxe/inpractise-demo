@@ -30,14 +30,6 @@ plan wins.
   directional neighbors and fingerprint/usage metadata. Do not fabricate these
   fields.
 
-- [ ] **Measure the SSE ask against the deployment.** The browser now posts
-      `action: 'ask'` with `stream: true` and reads stage frames over SSE; that
-      path is covered by edge and UI tests but has never run against
-      `https://inpractise.cristiandeluxe.dev`. Next: sign in as the reviewer,
-      ask once, and record time to the first `stage` frame and to the `result`
-      frame, then update `docs/demo-script.md`, whose timings predate the
-      transport.
-
 ## Infrastructure
 
 - [~] **Upstream ESLint 10 peer metadata.** Strict runtime lint passes, but

@@ -773,3 +773,19 @@
   parent-locked pair both publish with the follower measurably blocked on the
   lock (~1s against a 1s hold) instead of aborted. Helper:
   `tests/database/publishWithParentLock.ts`. Rule recorded in `docs/backend.md`.
+
+### 2026-09-15 — Streaming ask published and measured live
+
+Deployed `research` with the streaming schema
+(`supabase functions deploy research --use-api --no-verify-jwt --import-map supabase/functions/deploy-import-map.json`)
+after two credential-free probes proved the live function predated it: an `ask`
+body returned 401 `unauthenticated` while the same body with `stream: true`
+returned 422 `invalid_request`. Re-probed after the deploy: both return 401, so
+the flag now passes the schema.
+
+Measured as the reviewer over SSE against the deployment. Answered question:
+first `stage` frame at 0.57s, `retrieved` 3.26s, `selected` 3.94s, `verifying`
+8.22s, `result` 8.74s with `status=answered`, 1 claim, 1 citation. Refusal
+question on the warm function: first frame 0.59s, `result` 4.41s with
+`status=not_found`, no claims, no citations. Both ran with `mode=hybrid` and 30
+candidates.
