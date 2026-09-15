@@ -1,3 +1,4 @@
+import { formatPublishedDate } from '@/components/formatters/formatPublishedDate'
 import { SourceLabel } from '@/components/SourceLabel'
 import type { LibraryPanelProps } from './LibraryPanelProps'
 
@@ -24,7 +25,8 @@ export function RecentDocuments({ library, company }: LibraryPanelProps) {
                 {document.title}
               </h3>
               <p className="mt-1 text-xs text-muted-foreground">
-                {document.company} · Published {document.published_at}
+                {document.company} · Published{' '}
+                {formatPublishedDate(document.published_at)}
               </p>
             </div>
             {document.passage_count === undefined ? null : (

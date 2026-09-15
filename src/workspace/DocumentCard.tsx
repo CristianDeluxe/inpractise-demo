@@ -1,3 +1,4 @@
+import { formatPublishedDate } from '@/components/formatters/formatPublishedDate'
 import { SourceLabel } from '@/components/SourceLabel'
 import { FileText } from 'lucide-react'
 import type { DocumentCardProps } from './DocumentCardProps'
@@ -23,7 +24,7 @@ export function DocumentCard({ document }: DocumentCardProps) {
           ? `Interview: ${document.interview_date}`
           : null}
         <br />
-        Published: {document.published_at}
+        Published: {formatPublishedDate(document.published_at)}
       </p>
       <details className="mt-4 text-xs text-muted-foreground">
         <summary>Source identity</summary>
