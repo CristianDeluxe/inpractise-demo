@@ -1,8 +1,7 @@
 # Request architecture
 
-In Practise Demo is an independent engineering demonstration using public SEC
-filings and synthetic interviews. It has one research endpoint and three
-clients; it does not access In Practise systems or private research.
+In Practise Demo is an independent engineering demonstration over public SEC
+filings and synthetic interviews, with one research endpoint and three clients.
 
 ```text
 Browser session                         Local MCP member session
@@ -61,13 +60,13 @@ the bearer token into a caller-scoped database client and reads active
 membership. This is the implemented equivalent of the plan's
 `auth.getUser(token)` step; [ADR 0002](adr/0002-handler-authentication.md)
 records the SDK deviation and verification evidence. Read-only Management API
-inspection records deployed version 15 as `ACTIVE` with `verify_jwt=false`. Live
-probes reject missing and deliberately mis-signed tokens. The expiry regression
-constructs a JWT with a past `exp`, models Supabase Auth's observed HTTP 403
-expiry response, and proves authentication stops before membership or evidence
-access. A separately, organically aged member token was accepted before `exp`
-and rejected by Auth after it, but was not replayed through the deployed
-handler.
+inspection records deployed version 15 as `ACTIVE` with `verify_jwt=false`, so
+the handler's own validation is the one that counts. Live probes reject missing
+and deliberately mis-signed tokens. The expiry regression constructs a JWT with
+a past `exp`, models Supabase Auth's observed HTTP 403 expiry response, and
+shows authentication stopping before membership or evidence access; an
+organically aged member token was also checked against Auth directly, accepted
+before `exp` and rejected after it.
 
 ### Viewing the corpus as a lesser principal
 
@@ -101,7 +100,7 @@ active membership.
 | `search`     | `query`, optional `company`, `limit` (1–10, default 10) | [handleSearch.ts](../supabase/functions/research/actions/handleSearch.ts): ranked citations, actual search mode and truncation flag.                                                                                                                                                                                                                                                                                              |
 | `ask`        | `query`, optional `company`                             | [handleAsk.ts](../supabase/functions/research/actions/handleAsk.ts): standalone structured answer, mode, candidate count and evidence vintage.                                                                                                                                                                                                                                                                                    |
 | `provenance` | `requestId`                                             | [handleProvenance.ts](../supabase/functions/research/actions/handleProvenance.ts): the caller's own past request, replayed with the current currency of each cited revision. Row level security scopes the lookup, so another caller's request and an unknown one are the same 404. The revision list reaches any member for their own request; the stored diagnostic record follows the same `mayReadDiagnostics` gate as `ask`. |
-| `debug`      | None                                                    | [handleDebug.ts](../supabase/functions/research/actions/handleDebug.ts): reviewer-only corpus counts through `inspect_corpus`; no connected evaluation report.                                                                                                                                                                                                                                                                    |
+| `debug`      | None                                                    | [handleDebug.ts](../supabase/functions/research/actions/handleDebug.ts): reviewer-only corpus counts through `inspect_corpus`.                                                                                                                                                                                                                                                                                                    |
 
 Success returns `{ action, data, buildId, requestId }`; errors return
 `{ error: { code, message, retryable }, requestId }`.
@@ -129,7 +128,8 @@ reads with the principal's client.
 creates the ID `documentId:revisionId:passageId`, quote, source metadata and
 [reader path](../supabase/functions/research/citations/readerPath.ts). The quote
 is the whole passage: offsets run from zero to its Unicode code-point length,
-not the surrounding document's offsets. The model does not supply this metadata.
+not the surrounding document's offsets. The server, not the model, supplies
+every field of this metadata.
 
 [Immutability](../supabase/migrations/20260913000003_evidence_immutability.sql)
 and
@@ -186,15 +186,14 @@ original missing-evidence explanation.
 [ADR 0006](adr/0006-require-complete-claim-evidence.md) records why a partly
 supported comparison cannot retain its unchanged prose.
 
-This is not an atomic permission snapshot covering generation and delivery; no
-full concurrent revocation or corpus-fingerprint guarantee is claimed. Ask
-allowance debiting and completion usage accounting are described below. The
-broader [plan](research/07-one-day-execution-plan.md) is the authority for
-intended work, not proof that every requirement shipped.
+The reread is a single check after generation, governing the evidence set it
+observes; there is no permission snapshot spanning generation and delivery, so a
+revocation that lands after the reread is outside it. Ask allowance debiting and
+completion usage accounting are described below.
 
-Verification: `pnpm type-check`, `pnpm test:ci` and `pnpm check:ci` exercise the
-source and offline contracts. Retained live evaluation and database results are
-separately dated in [evals.md](evals.md) and [backend.md](backend.md).
+`pnpm type-check`, `pnpm test:ci` and `pnpm check:ci` exercise the source and
+offline contracts. Retained live evaluation and database results are dated in
+[evals.md](evals.md) and [backend.md](backend.md).
 
 ## Ask allowance and usage
 
@@ -212,9 +211,8 @@ ledger rows. Reported completion prompt, completion and total tokens are stored
 once, even if answer validation subsequently fails. Missing or invalid provider
 usage stays NULL (unknown), never an invented zero. These are completion totals,
 not an aggregate of embedding usage. The member-scoped usage endpoint accepts
-caller reports, so it is operational accounting, not a tamper-proof billing
-record. No service-role key participates in this request path. Usage metadata is
-not added to the browser response contract.
+caller reports, which makes it operational accounting rather than a billing
+record. Usage metadata stays out of the browser response contract.
 
 ## Retrieval diagnostics (reviewer-only)
 
@@ -261,8 +259,9 @@ admission; database authorization still gates every evidence response, including
 `src/http-api/operations.ts` binds routes to runtime schemas shared by the typed
 client and OpenAPI generator. The immutable passage projection omits mutable
 current-revision and envelope metadata. Strong ETags derive from server
-identity; private revalidation preserves revocation. Public immutable caching
-and zero-read authorization shortcuts are deliberately not implemented. See ADRs
+identity; private revalidation preserves revocation. Caching is private
+revalidation only: every conditional read still touches the database, and
+nothing is served from a public immutable cache. See ADRs
 [0008](adr/0008-caller-token-http-facade.md) and
 [0009](adr/0009-scope-immutable-passage-caching.md).
 `pnpm exec vitest run tests/api --no-coverage` checks the contract;
@@ -274,4 +273,4 @@ principal through `researchResponse.ts`. ETag v2 includes that scope, protecting
 tenant isolation even when memberships change between the earlier identity check
 and the read. An older backend without the header receives compatible uncached
 200 responses; the API never guesses read scope from `me`. This additive backend
-metadata change has not been deployed.
+metadata change is in source and not yet deployed.
