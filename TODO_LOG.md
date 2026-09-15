@@ -789,3 +789,12 @@ first `stage` frame at 0.57s, `retrieved` 3.26s, `selected` 3.94s, `verifying`
 question on the warm function: first frame 0.59s, `result` 4.41s with
 `status=not_found`, no claims, no citations. Both ran with `mode=hybrid` and 30
 candidates.
+
+### 2026-09-16 — Landing "How it is built" strip points at /built
+
+`wf/built-page` shipped the public `/built` route this repository lacked when
+`wf/landing` was built, so the frontend TODO asking to decide between a real
+page and the `/inspect` fallback is resolved: `src/public/buildProperties.ts`
+now links the retrieval column to `/built` ("See how it was built") instead of
+`/inspect`, and `src/public/LandingPage.test.tsx` checks for `/built`. Done
+while integrating `wf/docs-tone`, `wf/landing` and `wf/built-page` into `main`.
