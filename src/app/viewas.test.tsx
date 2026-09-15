@@ -13,6 +13,7 @@ import { responseFixture } from './responseFixture'
 import { uiLabelsFixture } from './uiLabelsFixture'
 import { uiPayloadFixture } from './uiPayloadFixture'
 import { uiRuntimeFixture } from './uiRuntimeFixture'
+import { viewAsFetcherFixture } from './viewAsFetcherFixture'
 import { viewAsPayloadFixture } from './viewAsPayloadFixture'
 
 afterEach(() => {
@@ -25,18 +26,7 @@ describe('server-backed viewing mode', () => {
   it('requests the selected mode, clears old evidence, hides diagnostics and changes coverage from server counts', async () => {
     vi.stubGlobal('scrollTo', vi.fn())
     const { runtime, fetcher, requests } = uiRuntimeFixture()
-    fetcher.mockImplementation(async (_url, init) => {
-      const request = JSON.parse(
-        typeof init?.body === 'string' ? init.body : '{}',
-      ) as Record<string, unknown>
-      requests.push(request)
-      return Promise.resolve(
-        responseFixture(
-          String(request['action']),
-          viewAsPayloadFixture(request),
-        ),
-      )
-    })
+    viewAsFetcherFixture(fetcher, requests)
     await renderRouteFixture('/app', runtime)
     const coverage = await screen.findByRole('region', {
       name: 'Research coverage',
@@ -76,19 +66,11 @@ describe('server-backed viewing mode', () => {
       { action: 'me', viewAs: { role: 'member', premium: false } },
       { action: 'list', viewAs: { role: 'member', premium: false } },
     ])
-    fireEvent.click(screen.getByRole('button', { name: /What makes complex/ }))
-    fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
-    await screen.findByText('A supported claim with limits.')
-    expect(requests.at(-1)).toHaveProperty('viewAs', {
-      role: 'member',
-      premium: false,
-    })
     fireEvent.change(
       within(screen.getByRole('complementary')).getByLabelText('View as'),
       { target: { value: 'member' } },
     )
     await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
-    expect(screen.queryByText('A supported claim with limits.')).toBeNull()
     expect(requests.at(-1)).toHaveProperty('viewAs', { role: 'member' })
     expect(screen.queryByRole('link', { name: 'Diagnostics' })).toBeNull()
     fireEvent.change(
@@ -104,6 +86,29 @@ describe('server-backed viewing mode', () => {
     expect(requests.at(-1)).not.toHaveProperty('viewAs')
     expect(screen.getAllByRole('link', { name: 'Diagnostics' })).toHaveLength(2)
   })
+  it('clears a delivered answer on the ask route when the viewing mode narrows', async () => {
+    vi.stubGlobal('scrollTo', vi.fn())
+    const { runtime, fetcher, requests } = uiRuntimeFixture()
+    viewAsFetcherFixture(fetcher, requests)
+    await renderRouteFixture('/app/ask', runtime)
+    await screen.findByLabelText(uiLabelsFixture.scope)
+    fireEvent.click(screen.getByRole('button', { name: /What makes complex/ }))
+    fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
+    await screen.findByText('A supported claim with limits.')
+    expect(requests.at(-1)).not.toHaveProperty('viewAs')
+    fireEvent.change(
+      within(screen.getByRole('complementary')).getByLabelText('View as'),
+      { target: { value: 'basic-member' } },
+    )
+    await screen.findByText(/This view is restricted on purpose/)
+    await waitFor(() => {
+      expect(screen.queryByText('A supported claim with limits.')).toBeNull()
+    })
+    expect(requests.at(-1)).toHaveProperty('viewAs', {
+      role: 'member',
+      premium: false,
+    })
+  })
   it('never invents counts when the response has none', async () => {
     vi.stubGlobal('scrollTo', vi.fn())
     await renderRouteFixture('/app', uiRuntimeFixture().runtime)
@@ -117,8 +122,8 @@ describe('server-backed viewing mode', () => {
   it('aborts an in-flight full-access answer and suppresses its late response after downgrade', async () => {
     vi.stubGlobal('scrollTo', vi.fn())
     const { runtime, fetcher } = uiRuntimeFixture()
-    await renderRouteFixture('/app', runtime)
-    await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
+    await renderRouteFixture('/app/ask', runtime)
+    await screen.findByLabelText(uiLabelsFixture.scope)
     const pending = Promise.withResolvers<Response>()
     fetcher.mockReturnValueOnce(pending.promise)
     fireEvent.click(screen.getByRole('button', { name: /What makes complex/ }))

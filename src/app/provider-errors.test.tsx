@@ -21,8 +21,8 @@ describe('provider errors in the research workspace', () => {
     'handles $code as an error and honors retryability',
     async ({ code, status, retryable }) => {
       const { runtime, fetcher } = uiRuntimeFixture()
-      await renderRouteFixture('/app', runtime)
-      await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
+      await renderRouteFixture('/app/ask', runtime)
+      await screen.findByLabelText(uiLabelsFixture.scope)
       fetcher.mockResolvedValueOnce(
         new Response(
           JSON.stringify({
