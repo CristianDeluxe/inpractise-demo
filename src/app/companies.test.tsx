@@ -26,12 +26,10 @@ describe('company entry to the workspace', () => {
     const premium = within(companies).getByRole('article', {
       name: 'Premium Company',
     })
-    expect(
-      within(premium).getByText('1 synthetic interview, dated 2026-09-01'),
-    ).toBeTruthy()
-    expect(
-      within(premium).getByText(/Latest publication 2026-09-02/),
-    ).toBeTruthy()
+    expect(within(premium).getByText('Synthetic interviews')).toBeTruthy()
+    expect(within(premium).getByText('2026-09-01')).toBeTruthy()
+    expect(within(premium).getByText('Latest publication')).toBeTruthy()
+    expect(within(premium).getByText('2026-09-02')).toBeTruthy()
     expect(
       within(premium)
         .getByRole('link', { name: 'Ask about Premium Company' })
@@ -39,7 +37,7 @@ describe('company entry to the workspace', () => {
     ).toBe('/app/ask?company=Premium+Company')
     expect(
       within(companies)
-        .getByRole('link', { name: `Sources for ${citationFixture().company}` })
+        .getByRole('link', { name: 'Sources for Northstar' })
         .getAttribute('href'),
     ).toBe(`/app/library?company=${citationFixture().company}`)
     expect(screen.queryByText(/paragraphs/)).toBeNull()

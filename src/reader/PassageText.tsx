@@ -1,4 +1,5 @@
 import { EvidenceId } from '@/components/EvidenceId'
+import { formatCompanyName } from '@/components/formatters/formatCompanyName'
 import { formatPublishedDate } from '@/components/formatters/formatPublishedDate'
 import { SourceLabel } from '@/components/SourceLabel'
 import { useCopyPassage } from '@/reader/hooks/useCopyPassage'
@@ -13,8 +14,8 @@ export function PassageText({ passage }: PassageViewProps) {
       </div>
       <h2 className="mt-4 text-2xl">{passage.citation.title}</h2>
       <p className="mt-3 text-sm text-muted-foreground">
-        {passage.citation.company} · {passage.citation.speaker}{' '}
-        {passage.citation.speakerRole}
+        {formatCompanyName(passage.citation.company)} ·{' '}
+        {passage.citation.speaker} {passage.citation.speakerRole}
       </p>
       <p className="mt-2 text-xs text-muted-foreground">
         {passage.citation.interviewDate

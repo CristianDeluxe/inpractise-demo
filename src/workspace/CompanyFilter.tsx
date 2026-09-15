@@ -1,3 +1,4 @@
+import { formatCompanyName } from '@/components/formatters/formatCompanyName'
 import type { CompanyFilterProps } from './CompanyFilterProps'
 import { companyChoices } from './companyChoices'
 
@@ -22,7 +23,7 @@ export function CompanyFilter({
         <option value="">All authorized companies</option>
         {companyChoices(library).map((choice) => (
           <option key={choice} value={choice}>
-            {choice}
+            {formatCompanyName(choice)}
           </option>
         ))}
       </select>
