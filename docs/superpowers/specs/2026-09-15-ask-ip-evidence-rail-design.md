@@ -40,6 +40,13 @@ total unknown rather than smaller.
 question and its answer on the left, the evidence inspector on the right. The
 sidebar points at routes rather than hash anchors.
 
+An "Ask IP" bubble sits at the corner of every workspace page and opens the same
+ask session in a non-modal side panel, so a reader can ask without leaving the
+page they are reading. The panel is not a second implementation: it mounts the
+same component the route does, unscoped, and links to `/app/ask` for the company
+filter. It is hidden on `/app/ask` itself, where two mounted sessions would each
+hold their own answer and each debit the allowance.
+
 The ask session is mounted under a key of the company scope, so narrowing the
 scope discards the previous answer rather than leaving evidence from one scope
 beside a question asked in another.
