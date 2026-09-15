@@ -5,7 +5,7 @@ export const podcastContent = {
     'Long conversations about single business models and the people who ran them, hosted by the analysts behind the written research.',
   episode: 'Latest episode · 52 min',
   disclosure:
-    'Independent demo presentation. Artwork and episode duration are illustrative; external links open the public podcast. This demo does not host or produce IP Fieldwork.',
+    'Artwork and episode duration are illustrative. The links open In Practise’s public podcast, which is produced independently of this demo.',
   spotify: 'https://open.spotify.com/show/0pNE11TzOo3pblGfBqeFI7',
   platforms: [
     {

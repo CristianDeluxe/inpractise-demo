@@ -10,13 +10,13 @@ export function EvidenceExample() {
       <Reveal className="grid gap-12 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <p className="eyebrow text-muted-foreground">
-            Curated example — not a live answer
+            Curated example from the corpus
           </p>
           <h2 className="mt-4 italic">Audit the source.</h2>
           <p className="mt-6 text-lg text-muted-foreground">
             Complex installations can require rebuilding integrations. One small
-            deployment moved in six weeks. These accounts do not establish a
-            universal switching cost.
+            deployment moved in six weeks. Two accounts, two scopes: each
+            citation says exactly how far it reaches.
           </p>
           <p className="mt-5 text-sm text-muted-foreground">
             Northstar Workflow and both speakers are fictional. Open each
