@@ -6,7 +6,7 @@ export function Spinner() {
       stroke="currentColor"
       strokeWidth="2.5"
       strokeLinecap="round"
-      className="size-4 animate-spin text-muted-foreground motion-reduce:animate-none"
+      className="size-6 animate-spin text-muted-foreground motion-reduce:animate-none"
       aria-hidden="true"
     >
       <circle cx="12" cy="12" r="9" className="opacity-20" />
