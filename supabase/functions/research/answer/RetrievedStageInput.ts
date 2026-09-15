@@ -5,4 +5,5 @@ export type RetrievedStageInput = {
   candidateAt10: readonly string[]
   candidates: readonly Candidate[]
   detailed: boolean
+  elapsedMs: number
 }
