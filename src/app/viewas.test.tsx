@@ -24,28 +24,14 @@ afterEach(() => {
 })
 
 describe('server-backed viewing mode', () => {
-  it('requests the selected mode, clears old evidence, hides diagnostics and changes coverage from server counts', async () => {
+  it('requests the selected mode, clears old evidence, hides diagnostics and relists companies from server rows', async () => {
     vi.stubGlobal('scrollTo', vi.fn())
     const { runtime, fetcher, requests } = uiRuntimeFixture()
     viewAsFetcherFixture(fetcher, requests)
     await renderRouteFixture('/app', runtime)
-    const coverage = await screen.findByRole('region', {
-      name: 'Research coverage',
-    })
-    expect(within(coverage).getByText('7 paragraphs')).toBeTruthy()
-    fireEvent.change(screen.getByLabelText('Company scope'), {
-      target: { value: 'Premium Company' },
-    })
-    expect(within(coverage).queryByText('3 paragraphs')).toBeNull()
+    const companies = await screen.findByRole('region', { name: 'Companies' })
     expect(
-      within(
-        screen.getByRole('region', { name: 'Depth by company' }),
-      ).getAllByRole('meter'),
-    ).toHaveLength(1)
-    expect(
-      within(
-        screen.getByRole('region', { name: 'Recent documents' }),
-      ).getByText('7 paragraphs'),
+      within(companies).getByRole('article', { name: 'Premium Company' }),
     ).toBeTruthy()
     expect(screen.getAllByRole('link', { name: 'Diagnostics' })).toHaveLength(2)
     fireEvent.change(
@@ -59,10 +45,10 @@ describe('server-backed viewing mode', () => {
     expect(screen.queryByRole('link', { name: 'Diagnostics' })).toBeNull()
     expect(screen.queryByText('Premium Company')).toBeNull()
     expect(
-      within(
-        screen.getByRole('region', { name: 'Research coverage' }),
-      ).getByText('3 paragraphs'),
-    ).toBeTruthy()
+      within(screen.getByRole('region', { name: 'Companies' })).getAllByRole(
+        'article',
+      ),
+    ).toHaveLength(1)
     expect(requests.slice(-2)).toEqual([
       { action: 'me', viewAs: { role: 'member', premium: false } },
       { action: 'list', viewAs: { role: 'member', premium: false } },
@@ -110,9 +96,9 @@ describe('server-backed viewing mode', () => {
       premium: false,
     })
   })
-  it('never invents counts when the response has none', async () => {
+  it('never invents counts on the diagnostics page when the response has none', async () => {
     vi.stubGlobal('scrollTo', vi.fn())
-    await renderRouteFixture('/app', uiRuntimeFixture().runtime)
+    await renderRouteFixture('/inspect', uiRuntimeFixture().runtime)
     const coverage = await screen.findByRole('region', {
       name: 'Research coverage',
     })
