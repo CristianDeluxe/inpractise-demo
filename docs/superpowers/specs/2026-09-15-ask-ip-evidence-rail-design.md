@@ -1,7 +1,6 @@
 # Ask IP: a dedicated route and a live evidence inspector
 
-Date: 2026-09-15. Status: revised after adversarial review; sections 1-2 built,
-section 3 pending.
+Date: 2026-09-15. Status: built.
 
 ## Problem
 
@@ -59,13 +58,17 @@ F03 is labeled because it has gold passages. A live unlabeled query is never
 classified as a selection miss: an ordinary dropped candidate is not evidence
 that it held the answer.
 
-## 3. Stage streaming (pending)
+## 3. Stage streaming (built)
 
-The `ask` action stays byte-identical; `evals/live/runAsk.ts` measures against
-it and three retained reports depend on that route not moving. A new
-`ask_stream` action returns `text/event-stream`. `handleAsk` is refactored into
-an async generator yielding stage events, and the existing non-streaming
-`handleAsk` becomes a consumer that drains it.
+Streaming is a transport, not a new action. The request carries `action: 'ask'`
+with `stream: true`, so the terminal frame is literally the ask envelope and
+goes through `parseEnvelope`, `parseActionData` and the existing evidence
+validators unchanged. `evals/live/runAsk.ts` omits the flag and keeps measuring
+exactly the route the three retained reports were measured on.
+
+`handleAsk` is refactored into an async generator, `askStages`, and the
+non-streaming `handleAsk` becomes the consumer that drains it. One
+implementation, two transports.
 
 Stage events carry only counts and phase names, plus per-candidate identifiers
 gated by `mayReadDiagnostics`. The terminal event carries the same validated
@@ -78,19 +81,25 @@ under the caller's RLS
 (`supabase/migrations/20260914000011_scoped_search_candidates.sql:12-17`): a
 passage the caller may not read never enters the candidate rows.
 
-Known constraints to verify before claiming streaming works end to end:
+A failure after the headers is an `error` frame whose code is mapped back to the
+status it would have been served with, so the reader sees the same category
+either way. A stream that ends without its terminal frame is a protocol failure,
+never an empty answer.
+
+Known constraints, still to be measured on the deployed host:
 
 - Supabase Edge Functions allow SSE, with a 150-second idle timeout and worker
   lifetimes of 150 to 400 seconds.
-- `server/api/callBackend.ts:32-34` applies a 15-second timeout and buffers
-  JSON, so the cPanel facade must be measured on the deployed path rather than
-  assumed.
-- Several values the first draft promised do not exist as described:
-  `debitRequest` returns an identifier rather than balances,
-  `retrievalDiagnostics` carries no scores, `selectContext` drops candidates
-  without recording a reason, and `embedQuery` can fall back to lexical-only.
-  Each event reports what the code actually produces, or the selector records
-  its decisions first.
+- The browser reaches Supabase directly through `VITE_SUPABASE_URL`, so the
+  cPanel facade is not on this path. `server/api/callBackend.ts:32-34` applies a
+  15-second timeout and buffers JSON; that facade remains non-streaming and is a
+  separate consumer.
+- Several values the first draft promised did not exist as described and were
+  dropped rather than invented: `debitRequest` returns an identifier rather than
+  balances, `retrievalDiagnostics` carries no scores, `selectContext` drops
+  candidates without recording a reason, and `embedQuery` can fall back to
+  lexical-only. Each event reports what the code actually produces, or the
+  selector records its decisions first.
 
 ### Equivalence testing
 
