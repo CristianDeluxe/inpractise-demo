@@ -1,11 +1,12 @@
 import { formatCompanyName } from '@/components/formatters/formatCompanyName'
 import { formatPublishedDate } from '@/components/formatters/formatPublishedDate'
 import { SourceLabel } from '@/components/SourceLabel'
+import { SaveNoteButton } from '@/notebook/SaveNoteButton'
 import { Link } from '@tanstack/react-router'
 import type { CitationCardProps } from './CitationCardProps'
 import { SourcePanel } from './SourcePanel'
 
-export function CitationCard({ citation }: CitationCardProps) {
+export function CitationCard({ citation, question }: CitationCardProps) {
   return (
     <article className="mt-4 rounded-lg border border-border bg-card p-5">
       <SourceLabel origin={citation.origin} />
@@ -33,6 +34,7 @@ export function CitationCard({ citation }: CitationCardProps) {
           Open exact passage
         </Link>
       </div>
+      <SaveNoteButton citation={citation} question={question} />
     </article>
   )
 }

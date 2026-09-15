@@ -5,6 +5,7 @@ export const apiErrorMessages: Record<ApiErrorCode, string> = {
   forbidden: 'Access denied. This account does not have permission.',
   passage_not_found: 'This source is unavailable.',
   request_not_found: 'No answer was found for this request id.',
+  note_not_found: 'This note is no longer in your notebook.',
   allowance_exhausted:
     'Request allowance exhausted. No request will be retried automatically.',
   bad_input:

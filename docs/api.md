@@ -93,6 +93,11 @@ reused with different filters. Every page reapplies database authorization.
 Concurrent publication can change subsequent pages; a backend corpus overflow
 remains an error, not silent truncation.
 
+The backend's `note_save`, `note_list` and `note_delete` actions (the research
+notebook) are browser-only and not part of this v1 surface;
+[projectResponse.ts](../server/api/projectResponse.ts) rejects them as
+`not_found`, the same treatment as `debug` and `provenance`.
+
 ### Executed curl examples
 
 For authenticated examples, the header is supplied through stdin to keep the

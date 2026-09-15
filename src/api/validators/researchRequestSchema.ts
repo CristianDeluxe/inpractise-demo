@@ -47,4 +47,22 @@ export const researchRequestSchema = z.discriminatedUnion('action', [
     action: z.literal('provenance'),
     requestId: z.string().min(1),
   }),
+  z.strictObject({
+    viewAs: viewAsSchema.optional(),
+    action: z.literal('note_save'),
+    documentId: z.string().min(1),
+    revisionId: z.string().min(1),
+    passageId: z.string().min(1),
+    question: z.string().min(1).max(2000).optional(),
+    note: z.string().min(1).max(300).optional(),
+  }),
+  z.strictObject({
+    viewAs: viewAsSchema.optional(),
+    action: z.literal('note_list'),
+  }),
+  z.strictObject({
+    viewAs: viewAsSchema.optional(),
+    action: z.literal('note_delete'),
+    noteId: z.string().min(1),
+  }),
 ])
