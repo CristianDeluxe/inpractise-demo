@@ -23,6 +23,14 @@ plan wins.
 
 ## Frontend
 
+- [ ] **Register the router types.** `@tanstack/react-router` has no
+      `declare module` `Register` block here, so `useSearch`, `useNavigate`
+      options and `Link` search props are `any`; `useResearchWorkspace`
+      re-parses `location.search` through `companySearchSchema` to stay typed.
+      Smallest step: add the `Register` interface for `router` in
+      `src/routes/router.ts` and drop the manual parse. Found 2026-09-15 while
+      moving the company scope to the URL.
+
 - [!] **Freeze the frontend/backend response boundary.** The connected redacted
   diagnostic report now exists on both sides: `ask` carries `diagnostics` for an
   unrestricted reviewer and `debug` carries `recentRequests`, both deployed and

@@ -11,8 +11,9 @@ Sign in at `https://inpractise.cristiandeluxe.dev/login` as
 `me@cristiandeluxe.dev`, the provisioned reviewer with premium access. Obtain
 `DEMO_PASSWORD` privately and confirm the owner has provisioned the identity; do
 not show it on screen. Open the URLs below as bookmarks. Keep the company
-selector at all companies. Ask lives at `/app/ask`, the corpus overview at
-`/app` and the source library at `/app/library`. Have the two questions ready to
+selector at all companies. Ask lives at `/app/ask`, the company entry at `/app`
+and the source library at `/app/library`. Each company card opens Ask or the
+library already scoped through `?company=`. Have the two questions ready to
 paste. Each question is standalone and each explicit Ask consumes allowance; do
 not rehearse requests repeatedly or retry automatically.
 
