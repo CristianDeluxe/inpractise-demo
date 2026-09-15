@@ -44,6 +44,16 @@ plan wins.
 
 ## Infrastructure
 
+- [!] **`pnpm dupes` fails with `spawnSync pnpm ENOEXEC` on this machine.**
+  `baseline-dupes` (from `@syntopica/quality-config`) shells out to `pnpm` to
+  run jscpd, and that spawn fails on this Mac's pnpm shim regardless of branch:
+  reproduces identically on a clean `main` checkout with no code changes.
+  `pnpm check:ci` otherwise passes in full (type-check, lint, deno check,
+  format, edge and vitest suites, corpus checks, knip). Found 2026-09-16 while
+  finishing the latency work on `wf/latency`. Smallest step: check whether
+  `@syntopica/quality-config`'s spawn uses `shell: true` or resolves the pnpm
+  binary path directly; compare against a machine where `pnpm dupes` succeeds.
+
 - [~] **Upstream ESLint 10 peer metadata.** Strict runtime lint passes, but
   `pnpm peers check` exits 1 for `eslint-plugin-import@2.32.0`,
   `eslint-plugin-jsx-a11y@6.10.2`, and `eslint-plugin-react@7.37.5`: their
