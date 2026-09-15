@@ -129,7 +129,7 @@ describe('authorized research workflow', () => {
       await screen.findByText('A supported claim with limits.'),
     ).toBeTruthy()
     expect(
-      screen.getByRole('heading', { name: 'Retrieval diagnostics' }),
+      screen.getByRole('heading', { name: 'Ranked candidates' }),
     ).toBeTruthy()
     const dropped = diagnosticsFixture.candidateAt10.filter(
       (candidateId) => !diagnosticsFixture.selectedIds.includes(candidateId),
@@ -138,6 +138,6 @@ describe('authorized research workflow', () => {
       diagnosticsFixture.selectedIds.length,
     )
     expect(screen.getAllByText('dropped')).toHaveLength(dropped.length)
-    expect(screen.getByText(dropped[0] ?? '')).toBeTruthy()
+    expect(screen.getByTitle(dropped[0] ?? '')).toBeTruthy()
   })
 })
