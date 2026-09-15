@@ -1,18 +1,19 @@
-import { errorCopy } from '@/components/errorCopy'
 import { submitQuestion } from '@/operations/submitQuestion'
 import type { AskExchange } from '@/research/AskExchange'
 import { askRequestFor } from '@/research/askRequestFor'
+import { chatFailureText } from '@/research/chatFailureText'
+import { chatQuestionFromSubmit } from '@/research/chatQuestionFromSubmit'
 import { useAnswerStages } from '@/research/hooks/useAnswerStages'
 import { settleExchange } from '@/research/settleExchange'
 import { useRuntime } from '@/runtime/hooks/useRuntime'
-import { requestFailure } from '@/runtime/requestFailure'
 import type { SubmitEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
 
 /**
- * One question at a time, each retrieved on its own. The transcript keeps what
- * was asked; it is never sent back to the model, so an answer depends on the
- * corpus rather than on the question before it.
+ * One question at a time. A follow-up travels with the last few settled turns,
+ * which the server uses only to rewrite it into a standalone question; that
+ * rewritten question is what gets retrieved, and it comes back with the answer.
+ * Nothing is stored server-side and a reload starts an empty transcript.
  */
 export function useAskChat(company: string) {
   const runtime = useRuntime()
@@ -38,18 +39,19 @@ export function useAskChat(company: string) {
     try {
       const envelope = await submitQuestion(
         runtime,
-        { request: askRequestFor(question, company), onStage: progress.push },
+        {
+          request: askRequestFor(question, company, exchanges),
+          onStage: progress.push,
+        },
         controller.signal,
       )
       setExchanges((current) =>
         settleExchange(current, id, { answer: envelope.data }),
       )
     } catch (error) {
-      const failure = requestFailure(runtime, error)
       setExchanges((current) =>
         settleExchange(current, id, {
-          failure:
-            failure.status === 'cancelled' ? undefined : errorCopy(error),
+          failure: chatFailureText(runtime, error),
         }),
       )
     } finally {
@@ -58,8 +60,7 @@ export function useAskChat(company: string) {
     }
   }
   const submit = (event: SubmitEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const question = query.trim()
+    const question = chatQuestionFromSubmit(event, query)
     if (question) void ask(question)
   }
   return { query, setQuery, exchanges, pending, submit, progress }

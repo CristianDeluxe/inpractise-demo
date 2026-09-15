@@ -17,9 +17,13 @@ plan wins.
 
 ## Backend
 
-## Corpus
-
-## Testing
+- [ ] **Record the follow-up rewrite's token usage.** `resolveQuery` spends one
+      short completion per follow-up and passes a no-op usage callback, because
+      `record_request_usage` stores one set of totals per request and a second
+      call would overwrite the generation's. Smallest step: add a
+      `rewrite_tokens` column and a second RPC, or sum both calls client-side in
+      `askStages` before one `recordUsage`. Found 2026-09-15 while adding
+      follow-ups to the chat.
 
 ## Frontend
 

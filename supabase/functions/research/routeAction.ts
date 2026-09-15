@@ -38,7 +38,12 @@ export async function routeAction(
         request.limit ?? 10,
       )
     case 'ask':
-      return await handleAsk(principal, request.query, request.company)
+      return await handleAsk(
+        principal,
+        request.query,
+        request.company,
+        request.history ?? [],
+      )
     case 'debug':
       return await handleDebug(principal)
     case 'provenance':

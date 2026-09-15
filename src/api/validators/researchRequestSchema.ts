@@ -28,6 +28,15 @@ export const researchRequestSchema = z.discriminatedUnion('action', [
     action: z.literal('ask'),
     query: z.string().min(1).max(2000),
     company: z.string().max(80).optional(),
+    history: z
+      .array(
+        z.strictObject({
+          question: z.string().min(1).max(2_000),
+          answer: z.string().min(1).max(2_000),
+        }),
+      )
+      .max(3)
+      .optional(),
   }),
   z.strictObject({
     viewAs: viewAsSchema.optional(),

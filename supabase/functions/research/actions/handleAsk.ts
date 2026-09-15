@@ -1,3 +1,4 @@
+import type { AskHistoryTurn } from '../answer/AskHistoryTurn.ts'
 import type { Principal } from '../Principal.ts'
 import { askStages } from './askStages.ts'
 
@@ -9,8 +10,9 @@ export async function handleAsk(
   principal: Principal,
   query: string,
   company: string | undefined,
+  history: readonly AskHistoryTurn[] = [],
 ) {
-  const stages = askStages(principal, query, company)
+  const stages = askStages(principal, query, company, history)
   let step = await stages.next()
   while (!step.done) step = await stages.next()
   return step.value

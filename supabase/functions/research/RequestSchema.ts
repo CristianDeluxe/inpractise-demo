@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { ViewAsSchema } from './ViewAsSchema.ts'
 import { companySchema } from './fields/companySchema.ts'
+import { historySchema } from './fields/historySchema.ts'
 import { identifierSchema } from './fields/identifierSchema.ts'
 import { querySchema } from './fields/querySchema.ts'
 
@@ -35,6 +36,7 @@ export const RequestSchema = z.discriminatedUnion('action', [
     viewAs: ViewAsSchema.optional(),
     query: querySchema,
     company: companySchema,
+    history: historySchema.optional(),
     stream: z.literal(true).optional(),
   }),
   z.strictObject({
