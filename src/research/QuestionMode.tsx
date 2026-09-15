@@ -18,6 +18,17 @@ export function QuestionMode({ research }: QuestionFormProps) {
         <input
           type="radio"
           name="operation"
+          checked={research.mode === 'investigate'}
+          onChange={() => {
+            research.setMode('investigate')
+          }}
+        />
+        Investigate
+      </label>
+      <label className="flex items-center gap-2 text-sm">
+        <input
+          type="radio"
+          name="operation"
           checked={research.mode === 'search'}
           onChange={() => {
             research.setMode('search')

@@ -9,7 +9,7 @@ export function QuestionForm({ research }: QuestionFormProps) {
     >
       <QuestionMode research={research} />
       <label htmlFor="question" className="mb-2 block text-sm font-medium">
-        {research.mode === 'ask' ? 'Your question' : 'Search query'}
+        {research.mode === 'search' ? 'Search query' : 'Your question'}
       </label>
       <textarea
         id="question"
@@ -32,7 +32,12 @@ export function QuestionForm({ research }: QuestionFormProps) {
           className="action"
           disabled={!research.query.trim()}
         >
-          {research.mode === 'ask' ? 'Ask the corpus' : 'Search passages'} →
+          {research.mode === 'search'
+            ? 'Search passages'
+            : research.mode === 'investigate'
+              ? 'Investigate'
+              : 'Ask the corpus'}{' '}
+          →
         </button>
       </div>
     </form>
