@@ -64,7 +64,7 @@ describe('server-backed viewing mode', () => {
     expect(
       await screen.findByText(/This view is restricted on purpose/),
     ).toBeTruthy()
-    await screen.findByRole('heading', { name: uiLabelsFixture.library })
+    await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
     expect(screen.queryByRole('link', { name: 'Diagnostics' })).toBeNull()
     expect(screen.queryByText('Premium Company')).toBeNull()
     expect(
@@ -87,7 +87,7 @@ describe('server-backed viewing mode', () => {
       within(screen.getByRole('complementary')).getByLabelText('View as'),
       { target: { value: 'member' } },
     )
-    await screen.findByRole('heading', { name: uiLabelsFixture.library })
+    await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
     expect(screen.queryByText('A supported claim with limits.')).toBeNull()
     expect(requests.at(-1)).toHaveProperty('viewAs', { role: 'member' })
     expect(screen.queryByRole('link', { name: 'Diagnostics' })).toBeNull()
@@ -100,7 +100,7 @@ describe('server-backed viewing mode', () => {
         screen.queryByText(/This view is restricted on purpose/),
       ).toBeNull()
     })
-    await screen.findByRole('heading', { name: uiLabelsFixture.library })
+    await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
     expect(requests.at(-1)).not.toHaveProperty('viewAs')
     expect(screen.getAllByRole('link', { name: 'Diagnostics' })).toHaveLength(2)
   })
@@ -118,7 +118,7 @@ describe('server-backed viewing mode', () => {
     vi.stubGlobal('scrollTo', vi.fn())
     const { runtime, fetcher } = uiRuntimeFixture()
     await renderRouteFixture('/app', runtime)
-    await screen.findByRole('heading', { name: uiLabelsFixture.library })
+    await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
     const pending = Promise.withResolvers<Response>()
     fetcher.mockReturnValueOnce(pending.promise)
     fireEvent.click(screen.getByRole('button', { name: /What makes complex/ }))
