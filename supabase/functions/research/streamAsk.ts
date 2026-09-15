@@ -1,62 +1,18 @@
-import { ApiError } from '../_shared/http/ApiError.ts'
-import { corsHeaders } from '../_shared/http/corsHeaders.ts'
-import { sseFrame } from '../_shared/http/sseFrame.ts'
 import { askStages } from './actions/askStages.ts'
 import type { AskInput } from './answer/AskInput.ts'
 import type { Principal } from './Principal.ts'
+import { streamStages } from './streamStages.ts'
 
-/**
- * Progress as it happens, then one terminal event. Stages carry counts and
- * phase names; the answer is published only by `result`, after generation, the
- * authorization recheck and envelope assembly have all completed. A failure
- * after the headers is an `error` event, never a truncated success: end of
- * stream on its own is not a result.
- */
+/** The ask pipeline over the event-stream transport. */
 export function streamAsk(
   principal: Principal,
   input: AskInput,
   envelope: { buildId: string; requestId: string },
 ): Response {
-  const body = new ReadableStream<Uint8Array>({
-    async start(controller) {
-      try {
-        const { query, company, history } = input
-        const run = askStages(principal, query, company, history)
-        let step = await run.next()
-        while (!step.done) {
-          controller.enqueue(sseFrame('stage', step.value))
-          step = await run.next()
-        }
-        controller.enqueue(
-          sseFrame('result', { action: 'ask', data: step.value, ...envelope }),
-        )
-      } catch (cause) {
-        const error =
-          cause instanceof ApiError
-            ? cause
-            : new ApiError('dependency_failure', 'Unhandled failure', true)
-        controller.enqueue(
-          sseFrame('error', {
-            error: {
-              code: error.code,
-              message: error.message,
-              retryable: error.retryable,
-            },
-            requestId: envelope.requestId,
-          }),
-        )
-      } finally {
-        controller.close()
-      }
-    },
-  })
-  return new Response(body, {
-    status: 200,
-    headers: {
-      ...corsHeaders,
-      'content-type': 'text/event-stream; charset=utf-8',
-      'cache-control': 'no-store',
-      'x-research-org-id': principal.orgId,
-    },
+  const { query, company, history } = input
+  return streamStages(askStages(principal, query, company, history), {
+    action: 'ask',
+    orgId: principal.orgId,
+    ...envelope,
   })
 }
