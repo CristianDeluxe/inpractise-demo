@@ -19,6 +19,7 @@ it('reports each phase of the answer as it arrives', async () => {
   expect(progress.textContent).toContain('10 candidates ranked (hybrid)')
   expect(progress.textContent).toContain('6 passages selected')
   expect(progress.textContent).toContain('Rereading 6 citations')
+  expect(progress.textContent).toContain('380ms')
   expect(requests.at(-1)).toHaveProperty('stream', true)
 })
 
