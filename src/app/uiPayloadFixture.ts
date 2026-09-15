@@ -1,13 +1,28 @@
 import { citationFixture } from '@/api/citationFixture'
+import { askPayloadFixture } from './askPayloadFixture'
 import { debugPayloadFixture } from './debugPayloadFixture'
-import { diagnosticsFixture } from './diagnosticsFixture'
 import { libraryPayloadFixture } from './libraryPayloadFixture'
+import { notebookPayloadFixture } from './notebookPayloadFixture'
 
 export function uiPayloadFixture(action: string) {
   const citation = citationFixture()
   switch (action) {
     case 'me':
-      return { orgId: 'demo-org', role: 'reviewer', premium: true }
+      return {
+        orgId: 'demo-org',
+        role: 'reviewer',
+        premium: true,
+        noteCount: 2,
+      }
+    case 'note_list':
+      return notebookPayloadFixture()
+    case 'note_save':
+      return {
+        noteId: '00000000-0000-4000-8000-000000000003',
+        createdAt: '2026-09-15T11:00:00Z',
+      }
+    case 'note_delete':
+      return { noteId: '00000000-0000-4000-8000-000000000001' }
     case 'list':
       return libraryPayloadFixture()
     case 'read':
@@ -20,22 +35,7 @@ export function uiPayloadFixture(action: string) {
     case 'search':
       return { items: [citation], mode: 'lexical_only', truncated: true }
     case 'ask':
-      return {
-        status: 'partial',
-        claims: [
-          {
-            text: 'A supported claim with limits.',
-            citationIds: [citation.citationId],
-          },
-        ],
-        citations: [citation],
-        missingEvidence: ['No February figures.'],
-        mode: 'hybrid',
-        candidateCount: 4,
-        resolvedQuery:
-          'What makes complex Northstar installations hard to replace?',
-        diagnostics: diagnosticsFixture,
-      }
+      return askPayloadFixture(citation)
     case 'debug':
       return debugPayloadFixture()
     default:

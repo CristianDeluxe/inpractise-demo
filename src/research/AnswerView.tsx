@@ -46,7 +46,11 @@ export function AnswerView({ answer }: AnswerViewProps) {
         </div>
       ) : null}
       {answer.citations.map((citation) => (
-        <CitationCard key={citation.citationId} citation={citation} />
+        <CitationCard
+          key={citation.citationId}
+          citation={citation}
+          question={answer.resolvedQuery}
+        />
       ))}
     </section>
   )

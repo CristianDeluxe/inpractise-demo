@@ -5,18 +5,26 @@ import { parseMeData } from '@/contracts/parseMeData.ts'
 import { parseReadData } from '@/contracts/parseReadData.ts'
 import { parseSearchData } from '@/contracts/parseSearchData.ts'
 import { FacadeError } from './FacadeError.ts'
+import { isV1Request } from './isV1Request.ts'
 import { paginateDocuments } from './paginateDocuments.ts'
 
 /**
  * Validate evidence against the original action before exposing its HTTP shape.
  * Passage output deliberately omits `isCurrentRevision`: that flag can change
  * without a revision change and would invalidate identity-based strong ETags.
+ * Reviewer diagnostics, reopening a request and the notebook are not part of v1.
  */
 export function projectResponse(
   payload: ResearchRequest,
   data: unknown,
   input: unknown,
 ) {
+  if (!isV1Request(payload))
+    throw new FacadeError(
+      404,
+      'not_found',
+      `The ${payload.action} action is not part of v1.`,
+    )
   switch (payload.action) {
     case 'list':
       return paginateDocuments(data, input)
@@ -34,17 +42,5 @@ export function projectResponse(
       return parseActionData(payload, data, parseAskData)
     case 'me':
       return parseMeData(data)
-    case 'debug':
-      throw new FacadeError(
-        404,
-        'not_found',
-        'Reviewer diagnostics are not part of v1.',
-      )
-    case 'provenance':
-      throw new FacadeError(
-        404,
-        'not_found',
-        'Reopening a request is not part of v1.',
-      )
   }
 }
