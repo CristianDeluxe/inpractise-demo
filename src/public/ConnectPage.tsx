@@ -28,10 +28,6 @@ export function ConnectPage() {
               provisioned member credentials through environment variables. No
               tool accepts an organization, user or role argument.
             </p>
-            <p className="mt-5 text-sm text-muted-foreground">
-              This page does not establish a connection or report connection
-              status.
-            </p>
           </div>
         </section>
         <section className="page-shell py-14">
