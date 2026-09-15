@@ -29,6 +29,12 @@ Deno.test('no stage discloses evidence before the recheck', async (t) => {
         throw new Error(`Unexpected phase order: ${order}`)
     },
   )
+  await t.step('every stage carries its own server-side duration', async () => {
+    const { stages } = await runStageScenario(undefined)
+    for (const stage of stages)
+      if (typeof stage.elapsedMs !== 'number' || stage.elapsedMs < 0)
+        throw new Error(`Stage ${stage.phase} carried no valid elapsedMs`)
+  })
   await t.step(
     'per-candidate detail follows the effective principal',
     async () => {

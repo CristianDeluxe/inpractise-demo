@@ -6,6 +6,7 @@ import type { MembershipsTable } from './MembershipsTable.ts'
 import type { OrganisationsTable } from './OrganisationsTable.ts'
 import type { PassagesTable } from './PassagesTable.ts'
 import type { PublishDocumentFunction } from './PublishDocumentFunction.ts'
+import type { QueryEmbeddingsTable } from './QueryEmbeddingsTable.ts'
 import type { RecordRequestDiagnosticsFunction } from './RecordRequestDiagnosticsFunction.ts'
 import type { RecordRequestUsageFunction } from './RecordRequestUsageFunction.ts'
 import type { RequestUsageTable } from './RequestUsageTable.ts'
@@ -21,6 +22,7 @@ export type Database = {
       memberships: MembershipsTable
       organisations: OrganisationsTable
       passages: PassagesTable
+      query_embeddings: QueryEmbeddingsTable
       request_usage: RequestUsageTable
       research_notes: ResearchNotesTable
     }
