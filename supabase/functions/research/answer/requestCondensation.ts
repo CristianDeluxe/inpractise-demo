@@ -2,6 +2,7 @@ import { ApiError } from '../../_shared/http/ApiError.ts'
 import { requireEnv } from '../requireEnv.ts'
 import type { AskHistoryTurn } from './AskHistoryTurn.ts'
 import { completionDeadlineMs } from './completionDeadlineMs.ts'
+import { condensationModel } from './condensationModel.ts'
 import { condensePrompt } from './condensePrompt.ts'
 import { condenseTranscript } from './condenseTranscript.ts'
 import { consumeCompletion } from './consumeCompletion.ts'
@@ -31,7 +32,7 @@ export async function requestCondensation(
           'content-type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'gpt-4.1-mini-2025-04-14',
+          model: condensationModel,
           max_completion_tokens: 200,
           temperature: 0,
           messages: [
