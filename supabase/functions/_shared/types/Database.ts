@@ -9,6 +9,7 @@ import type { PublishDocumentFunction } from './PublishDocumentFunction.ts'
 import type { RecordRequestDiagnosticsFunction } from './RecordRequestDiagnosticsFunction.ts'
 import type { RecordRequestUsageFunction } from './RecordRequestUsageFunction.ts'
 import type { RequestUsageTable } from './RequestUsageTable.ts'
+import type { ResearchNotesTable } from './ResearchNotesTable.ts'
 import type { SearchCandidatesFunction } from './SearchCandidatesFunction.ts'
 
 export type Database = {
@@ -21,6 +22,7 @@ export type Database = {
       organisations: OrganisationsTable
       passages: PassagesTable
       request_usage: RequestUsageTable
+      research_notes: ResearchNotesTable
     }
     Views: {
       [_ in never]: never
