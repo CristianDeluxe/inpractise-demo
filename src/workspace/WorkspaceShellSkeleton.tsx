@@ -12,7 +12,7 @@ export function WorkspaceShellSkeleton() {
       aria-label="Confirming workspace access"
       className="min-h-full lg:grid lg:grid-cols-[16rem_minmax(0,1fr)]"
     >
-      <aside className="hidden flex-col bg-sidebar text-sidebar-foreground lg:sticky lg:top-0 lg:flex lg:h-dvh">
+      <aside className="hidden flex-col bg-sidebar text-sidebar-foreground lg:sticky lg:top-[var(--app-notice-height,0px)] lg:flex lg:h-[calc(100dvh-var(--app-notice-height,0px))]">
         <div className="border-b border-sidebar-border p-5">
           <Wordmark />
         </div>
