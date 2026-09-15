@@ -22,6 +22,14 @@ export function CompanyCardActions({ company }: CompanyCardActionsProps) {
       >
         Sources
       </Link>
+      <Link
+        to="/app/compare"
+        search={{ company }}
+        aria-label={`Compare interviews and filings for ${name}`}
+        className="text-sm text-primary underline-offset-4 hover:underline"
+      >
+        Compare
+      </Link>
     </div>
   )
 }
