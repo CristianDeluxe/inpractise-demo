@@ -22,7 +22,7 @@ describe('provider errors in the research workspace', () => {
     async ({ code, status, retryable }) => {
       const { runtime, fetcher } = uiRuntimeFixture()
       await renderRouteFixture('/app', runtime)
-      await screen.findByRole('heading', { name: uiLabelsFixture.library })
+      await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
       fetcher.mockResolvedValueOnce(
         new Response(
           JSON.stringify({

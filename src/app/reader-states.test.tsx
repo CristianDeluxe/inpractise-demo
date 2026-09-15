@@ -78,7 +78,7 @@ describe('source availability and provenance', () => {
       responseFixture('me', { orgId: 'org', role: 'member', premium: false }),
     )
     fetcher.mockResolvedValueOnce(responseFixture('list', { items: [] }))
-    await renderRouteFixture('/app', runtime)
+    await renderRouteFixture('/app/library', runtime)
     expect(
       await screen.findByText('No authorized documents are available.'),
     ).toBeTruthy()

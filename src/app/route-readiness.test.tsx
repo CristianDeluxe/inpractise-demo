@@ -45,6 +45,6 @@ it('keeps route setup pending until its lazy component has loaded', async () => 
     })
   }
   expect(
-    await screen.findByRole('heading', { name: uiLabelsFixture.library }),
+    await screen.findByRole('heading', { name: uiLabelsFixture.workspace }),
   ).toBeTruthy()
 })

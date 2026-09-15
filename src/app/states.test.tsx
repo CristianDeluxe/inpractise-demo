@@ -26,7 +26,7 @@ describe('research request states', () => {
   it('cancels pending work and suppresses a late completion', async () => {
     const { runtime, fetcher } = uiRuntimeFixture()
     await renderRouteFixture('/app', runtime)
-    await screen.findByRole('heading', { name: uiLabelsFixture.library })
+    await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
     const pending = Promise.withResolvers<Response>()
     fetcher.mockReturnValueOnce(pending.promise)
     fireEvent.change(screen.getByLabelText(uiLabelsFixture.question), {
@@ -54,13 +54,13 @@ describe('research request states', () => {
   it('clears all evidence on expired session and auth identity changes', async () => {
     const { runtime, fetcher, authChange } = uiRuntimeFixture()
     await renderRouteFixture('/app', runtime)
-    await screen.findByRole('heading', { name: uiLabelsFixture.library })
+    await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
     const authListener = authChange.mock.calls[0]?.[0]
     if (!authListener) throw new Error('Missing auth listener')
     await act(async () => {
       await authListener('SIGNED_IN', sessionFixture)
     })
-    await screen.findByRole('heading', { name: uiLabelsFixture.library })
+    await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
     const previousCalls = fetcher.mock.calls.length
     await act(async () => {
       await authListener('SIGNED_IN', sessionFixture)
@@ -85,7 +85,7 @@ describe('research request states', () => {
     fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
     await waitFor(() => {
       expect(
-        screen.queryByRole('heading', { name: uiLabelsFixture.library }),
+        screen.queryByRole('heading', { name: uiLabelsFixture.workspace }),
       ).toBeNull()
     })
     expect(screen.getByRole('link', { name: 'Sign in' })).toBeTruthy()
@@ -93,7 +93,7 @@ describe('research request states', () => {
   it('renders not_found without claims, and escapes provider text', async () => {
     const { runtime, fetcher } = uiRuntimeFixture()
     await renderRouteFixture('/app', runtime)
-    await screen.findByRole('heading', { name: uiLabelsFixture.library })
+    await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
     fetcher.mockResolvedValueOnce(
       responseFixture('ask', {
         status: 'not_found',
@@ -137,7 +137,7 @@ describe('research request states', () => {
   it('keeps missing passages neutral and empty search distinct', async () => {
     const { runtime, fetcher } = uiRuntimeFixture()
     await renderRouteFixture('/app', runtime)
-    await screen.findByRole('heading', { name: uiLabelsFixture.library })
+    await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
     fetcher.mockResolvedValueOnce(
       responseFixture('search', {
         items: [],

@@ -2,6 +2,7 @@
 import { cleanup, fireEvent, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { renderRouteFixture } from './renderRouteFixture'
+import { uiLabelsFixture } from './uiLabelsFixture'
 import { uiRuntimeFixture } from './uiRuntimeFixture'
 
 beforeEach(() => {
@@ -56,7 +57,7 @@ describe('public demo routes', () => {
     })
     fireEvent.click(screen.getByRole('button', { name: /Sign in/ }))
     expect(
-      await screen.findByRole('heading', { name: 'Source library' }),
+      await screen.findByRole('heading', { name: uiLabelsFixture.workspace }),
     ).toBeTruthy()
     expect(requests[0]?.['action']).toBe('me')
     expect(screen.queryByText('Request access')).toBeNull()

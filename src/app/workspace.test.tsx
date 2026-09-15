@@ -10,6 +10,7 @@ import {
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { diagnosticsFixture } from './diagnosticsFixture'
 import { renderRouteFixture } from './renderRouteFixture'
+import { uiLabelsFixture } from './uiLabelsFixture'
 import { uiRuntimeFixture } from './uiRuntimeFixture'
 
 beforeEach(() => {
@@ -24,7 +25,7 @@ describe('authorized research workflow', () => {
   it('requires explicit submit, preserves company scope and opens exact evidence', async () => {
     const { runtime, requests, signOut } = uiRuntimeFixture()
     await renderRouteFixture('/app', runtime)
-    await screen.findByRole('heading', { name: 'Source library' })
+    await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
     expect(requests.map((request) => request['action'])).toEqual(['me', 'list'])
     expect(
       screen.getByLabelText<HTMLSelectElement>('Company scope').value,
@@ -116,12 +117,12 @@ describe('authorized research workflow', () => {
     expect(await screen.findByText(/Access denied/)).toBeTruthy()
     expect(requests).toHaveLength(0)
     expect(fetcher).toHaveBeenCalledTimes(1)
-    expect(screen.queryByText('Source library')).toBeNull()
+    expect(screen.queryByText(uiLabelsFixture.workspace)).toBeNull()
   })
   it('displays retrieval diagnostics when present in answer', async () => {
     const { runtime } = uiRuntimeFixture()
     await renderRouteFixture('/app', runtime)
-    await screen.findByRole('heading', { name: 'Source library' })
+    await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
     fireEvent.click(screen.getByRole('button', { name: /What makes complex/ }))
     fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
     expect(

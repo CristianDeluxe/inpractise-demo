@@ -4,6 +4,7 @@ import { act, cleanup, fireEvent, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { renderRouteFixture } from './renderRouteFixture'
 import { signInHeadingFixture } from './signInHeadingFixture'
+import { uiLabelsFixture } from './uiLabelsFixture'
 import { uiRuntimeFixture } from './uiRuntimeFixture'
 
 beforeEach(() => {
@@ -79,7 +80,7 @@ describe('protected route session presentation', () => {
   it('lands on the calm invitation after workspace sign-out', async () => {
     const { runtime, authChange, signOut, getSession } = uiRuntimeFixture()
     await renderRouteFixture('/app', runtime)
-    await screen.findByRole('heading', { name: 'Source library' })
+    await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
     signOut.mockImplementation(async () => {
       getSession.mockResolvedValue({
         data: { session: null },
@@ -95,6 +96,8 @@ describe('protected route session presentation', () => {
       await screen.findByRole('heading', { name: signInHeadingFixture }),
     ).toBeTruthy()
     expect(screen.queryByRole('alert')).toBeNull()
-    expect(screen.queryByRole('heading', { name: 'Source library' })).toBeNull()
+    expect(
+      screen.queryByRole('heading', { name: uiLabelsFixture.workspace }),
+    ).toBeNull()
   })
 })

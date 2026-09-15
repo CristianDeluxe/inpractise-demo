@@ -4,7 +4,7 @@ import { ResearchPanel } from '@/research/ResearchPanel'
 import { useResearchWorkspace } from '@/workspace/hooks/useResearchWorkspace'
 import { CompanyFilter } from './CompanyFilter'
 import { CoverageOverview } from './CoverageOverview'
-import { LibraryPanel } from './LibraryPanel'
+import { LibraryStatsRow } from './LibraryStatsRow'
 import { RecentDocuments } from './RecentDocuments'
 
 export function WorkspacePage() {
@@ -19,8 +19,9 @@ export function WorkspacePage() {
         From a question to its evidence.
       </h1>
       <p className="mb-8 mt-3 max-w-2xl text-sm text-muted-foreground">
-        Browse authorized sources, search exact passages, or ask a standalone
-        question. Each answer keeps its sources and limitations in view.
+        These counts describe the corpus you are authorized to read, not the
+        corpus that exists. Ask a question and every stage of the answer stays
+        inspectable.
       </p>
       <RequestFeedback
         state={library.state}
@@ -31,6 +32,10 @@ export function WorkspacePage() {
       />
       {library.state.status === 'success' ? (
         <>
+          <LibraryStatsRow
+            library={library.state.data.data}
+            company={company}
+          />
           <CompanyFilter
             library={library.state.data.data}
             company={company}
@@ -44,7 +49,6 @@ export function WorkspacePage() {
             library={library.state.data.data}
             company={company}
           />
-          <LibraryPanel library={library.state.data.data} company={company} />
           <ResponseMeta {...library.state.data} />
         </>
       ) : null}
