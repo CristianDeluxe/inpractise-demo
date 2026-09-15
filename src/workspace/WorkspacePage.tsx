@@ -1,11 +1,8 @@
 import { RequestFeedback } from '@/components/RequestFeedback'
 import { ResponseMeta } from '@/components/ResponseMeta'
-import { ResearchPanel } from '@/research/ResearchPanel'
 import { useResearchWorkspace } from '@/workspace/hooks/useResearchWorkspace'
-import { CompanyFilter } from './CompanyFilter'
-import { CoverageOverview } from './CoverageOverview'
-import { LibraryStatsRow } from './LibraryStatsRow'
-import { RecentDocuments } from './RecentDocuments'
+import { Link } from '@tanstack/react-router'
+import { WorkspaceOverview } from './WorkspaceOverview'
 
 export function WorkspacePage() {
   const { library, company, setCompany } = useResearchWorkspace()
@@ -23,6 +20,9 @@ export function WorkspacePage() {
         corpus that exists. Ask a question and every stage of the answer stays
         inspectable.
       </p>
+      <Link to="/app/ask" className="action mb-8 inline-flex">
+        Ask the corpus
+      </Link>
       <RequestFeedback
         state={library.state}
         cancel={library.cancel}
@@ -32,27 +32,14 @@ export function WorkspacePage() {
       />
       {library.state.status === 'success' ? (
         <>
-          <LibraryStatsRow
-            library={library.state.data.data}
-            company={company}
-          />
-          <CompanyFilter
+          <WorkspaceOverview
             library={library.state.data.data}
             company={company}
             onChange={setCompany}
           />
-          <CoverageOverview
-            library={library.state.data.data}
-            company={company}
-          />
-          <RecentDocuments
-            library={library.state.data.data}
-            company={company}
-          />
           <ResponseMeta {...library.state.data} />
         </>
       ) : null}
-      <ResearchPanel key={company} company={company} />
     </main>
   )
 }
