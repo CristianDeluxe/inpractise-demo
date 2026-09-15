@@ -15,5 +15,44 @@
       "p50": 0.225,
       "p95": 0.319
     }
+  },
+  "research": {
+    "deployed-baseline": {
+      "measuredAt": "2026-09-15T16:21:45.147Z",
+      "endpointHost": "zkcervfahhmyzmrdpgjx.supabase.co",
+      "persona": "reviewer",
+      "sampleSize": 10,
+      "warmupRequests": 1,
+      "coldSearchMs": 4456,
+      "signInMs": 435,
+      "askStatuses": ["answered"],
+      "method": "Sequential requests from this machine with the reviewer session, mirroring the browser headers. Search and read use the JSON route; ask uses the event stream, stamped at the first stage frame and at the result frame. Percentiles use nearest-rank indexes.",
+      "metrics": {
+        "searchMs": {
+          "p50": 2292,
+          "p95": 3091,
+          "min": 1990,
+          "max": 3091
+        },
+        "readMs": {
+          "p50": 482,
+          "p95": 534,
+          "min": 396,
+          "max": 534
+        },
+        "askFirstPhaseMs": {
+          "p50": 430,
+          "p95": 519,
+          "min": 351,
+          "max": 519
+        },
+        "askAnswerMs": {
+          "p50": 6312,
+          "p95": 8976,
+          "min": 4740,
+          "max": 8976
+        }
+      }
+    }
   }
 }

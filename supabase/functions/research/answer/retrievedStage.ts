@@ -8,5 +8,6 @@ export function retrievedStage(input: RetrievedStageInput): AskStage {
     mode: input.mode,
     candidateCount: input.candidates.length,
     ...(input.detailed ? { candidateAt10: input.candidateAt10 } : {}),
+    elapsedMs: input.elapsedMs,
   }
 }

@@ -1,7 +1,9 @@
 import { ApiError } from '../../_shared/http/ApiError.ts'
 import { requireEnv } from '../requireEnv.ts'
+import { embeddingModel } from './embeddingModel.ts'
 
 /**
+ * The provider call itself; `acquireEmbedding` consults the cache first.
  * Returns null rather than throwing when embedding is unavailable: search then
  * runs in a visible lexical_only mode instead of pretending to be hybrid.
  */
@@ -19,7 +21,7 @@ export async function embedQuery(query: string): Promise<number[] | null> {
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'text-embedding-3-small',
+        model: embeddingModel,
         input: query,
       }),
     })
