@@ -1,11 +1,14 @@
 import { citationFixture } from '@/api/citationFixture'
+import { comparePayloadFixture } from '@/contracts/comparePayloadFixture'
 import { askPayloadFixture } from './askPayloadFixture'
 import { debugPayloadFixture } from './debugPayloadFixture'
 import { libraryPayloadFixture } from './libraryPayloadFixture'
-import { notebookPayloadFixture } from './notebookPayloadFixture'
+import { notebookActionFixture } from './notebookActionFixture'
 
 export function uiPayloadFixture(action: string) {
   const citation = citationFixture()
+  const notebookFixture = notebookActionFixture(action)
+  if (notebookFixture !== undefined) return notebookFixture
   switch (action) {
     case 'me':
       return {
@@ -14,15 +17,6 @@ export function uiPayloadFixture(action: string) {
         premium: true,
         noteCount: 2,
       }
-    case 'note_list':
-      return notebookPayloadFixture()
-    case 'note_save':
-      return {
-        noteId: '00000000-0000-4000-8000-000000000003',
-        createdAt: '2026-09-15T11:00:00Z',
-      }
-    case 'note_delete':
-      return { noteId: '00000000-0000-4000-8000-000000000001' }
     case 'list':
       return libraryPayloadFixture()
     case 'read':
@@ -36,6 +30,8 @@ export function uiPayloadFixture(action: string) {
       return { items: [citation], mode: 'lexical_only', truncated: true }
     case 'ask':
       return askPayloadFixture(citation)
+    case 'compare':
+      return comparePayloadFixture()
     case 'debug':
       return debugPayloadFixture()
     default:

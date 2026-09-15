@@ -1,4 +1,5 @@
 import type { AskRequest } from './AskRequest.ts'
+import type { CompareRequest } from './CompareRequest.ts'
 import type { DebugRequest } from './DebugRequest.ts'
 import type { ListRequest } from './ListRequest.ts'
 import type { MeRequest } from './MeRequest.ts'
@@ -15,6 +16,7 @@ export type ResearchRequest =
   | ReadRequest
   | SearchRequest
   | AskRequest
+  | CompareRequest
   | DebugRequest
   | ProvenanceRequest
   | NoteSaveRequest

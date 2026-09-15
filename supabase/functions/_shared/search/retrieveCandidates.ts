@@ -27,6 +27,7 @@ export async function retrieveCandidates(
         ? { query_embedding: JSON.stringify(input.embedding) }
         : {}),
       ...(input.company === undefined ? {} : { company_filter: input.company }),
+      ...(input.kind === undefined ? {} : { kind_filter: input.kind }),
       candidate_limit: 30,
     },
   )

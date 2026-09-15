@@ -12,7 +12,8 @@ import { paginateDocuments } from './paginateDocuments.ts'
  * Validate evidence against the original action before exposing its HTTP shape.
  * Passage output deliberately omits `isCurrentRevision`: that flag can change
  * without a revision change and would invalidate identity-based strong ETags.
- * Reviewer diagnostics, reopening a request and the notebook are not part of v1.
+ * Reviewer diagnostics, reopening a request, cross-referencing and the
+ * notebook are not part of v1.
  */
 export function projectResponse(
   payload: ResearchRequest,
