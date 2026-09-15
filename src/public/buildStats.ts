@@ -4,17 +4,17 @@
 // result. The page at /built imports this file and never reads git at runtime.
 export const buildStats = {
   head: {
-    hash: '2a3e7c6',
-    date: '2026-09-15T17:53:19+02:00',
+    hash: '5ad2f3d',
+    date: '2026-09-15T18:29:14+02:00',
   },
   firstCommitAt: '13 September 2026, 19:59',
-  lastCommitAt: '15 September 2026, 17:53',
+  lastCommitAt: '15 September 2026, 18:29',
   elapsedHours: 46,
   calendarDays: 3,
-  commitCount: 81,
+  commitCount: 84,
   files: {
-    tracked: 1256,
-    source: 533,
+    tracked: 1286,
+    source: 552,
     edge: 181,
     migrations: 12,
     tests: 96,
@@ -56,10 +56,10 @@ export const buildStats = {
     {
       key: '2026-09-15-pm',
       label: '15 September, after noon',
-      commitCount: 16,
+      commitCount: 19,
       firstAt: '12:03',
-      lastAt: '17:53',
-      scopes: ['ui 4', 'research 3', 'docs 2', 'workspace 2', 'ask 1'],
+      lastAt: '18:29',
+      scopes: ['ui 4', 'research 3', 'docs 2', 'public 2', 'workspace 2'],
     },
   ],
 } as const

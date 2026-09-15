@@ -12,5 +12,5 @@ export const buildTimelineThemes = {
   '2026-09-15-am':
     'Interface polish under the better-ui rules, then the workspace shell: a pinned sidebar, a held frame while access is confirmed, standards readable without leaving the workspace. Ask moved to its own route beside an evidence inspector, the library got its own route, and the pipeline was exposed as observable stages, with an ADR rejecting provisional claims and stored answers.',
   '2026-09-15-pm':
-    'The answer began streaming its progress and publishing once, measured live over SSE. Pending and cancel states were settled, identifiers became chips, and dates became dates. Ask opened from a bubble on every page and became a chat; the workspace was entered by company; and follow-up questions were accepted by rewriting them before retrieval.',
+    'The answer began streaming its progress and publishing once, measured live over SSE. Pending and cancel states were settled, identifiers became chips, and dates became dates. Ask opened from a bubble on every page and became a chat; the workspace was entered by company; and follow-up questions were accepted by rewriting them before retrieval. In the evening, this page and the script that computes its figures.',
 } as const satisfies Record<BuildHalfDayKey, string>
