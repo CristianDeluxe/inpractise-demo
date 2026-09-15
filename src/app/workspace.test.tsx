@@ -24,8 +24,8 @@ afterEach(() => {
 describe('authorized research workflow', () => {
   it('requires explicit submit, preserves company scope and opens exact evidence', async () => {
     const { runtime, requests, signOut } = uiRuntimeFixture()
-    await renderRouteFixture('/app', runtime)
-    await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
+    await renderRouteFixture('/app/ask', runtime)
+    await screen.findByLabelText(uiLabelsFixture.scope)
     expect(requests.map((request) => request['action'])).toEqual(['me', 'list'])
     expect(
       screen.getByLabelText<HTMLSelectElement>('Company scope').value,
@@ -121,8 +121,8 @@ describe('authorized research workflow', () => {
   })
   it('displays retrieval diagnostics when present in answer', async () => {
     const { runtime } = uiRuntimeFixture()
-    await renderRouteFixture('/app', runtime)
-    await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
+    await renderRouteFixture('/app/ask', runtime)
+    await screen.findByLabelText(uiLabelsFixture.scope)
     fireEvent.click(screen.getByRole('button', { name: /What makes complex/ }))
     fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
     expect(
