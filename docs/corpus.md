@@ -3,16 +3,16 @@
 The accepted corpus contains **four real public SEC filings and six unchanged
 short synthetic interviews: 962 passages total**. The filings contribute 938
 passages. The interviews contribute 24 passages, all immutable gold: **S1–S6,
-P1–P4 in each source**. No SEC passage is a synthetic gold paragraph. Every
-source carries its own public or synthetic disclosure; this is an independent
-engineering demo with no private In Practise content.
+P1–P4 in each source**; the gold paragraphs live only in the interviews. Every
+source carries its own public or synthetic disclosure. This is an independent
+engineering demo, and the corpus is entirely public filings and synthetic
+interviews.
 
 Briefing I explicitly approved the four parsed filings and authorized a new
 bounded generation round. That round used 12 requests and produced two drafts
-that pass the existing automatic gate, plus ten rejected drafts. **No expanded
-interview has been added to the accepted corpus.** The six existing synthetic
-documents remain byte-identical, and the two reviewable drafts have concrete
-semantic concerns recorded in
+that pass the existing automatic gate, plus ten rejected drafts. The accepted
+corpus still contains the original six synthetic documents, byte-identical; the
+two reviewable drafts await owner semantic review, with the concerns recorded in
 [the review packet](../corpus/generated/briefing-i/REVIEW.md).
 
 ## Approved public filings
@@ -29,8 +29,7 @@ Coverage is Item 1 Business and Item 1A Risk Factors as parsed: 938 passages /
 are excluded. Each accepted public manifest entry has `origin: "public"`,
 `kind: "sec_filing"`, `synthetic: false`, `fictional: false`, the SEC
 company-disclosure label, the original filing URL, actual retrieval timestamp,
-raw hash, normalized hash, rights basis and policy URL. No SEC entry carries a
-synthetic disclosure.
+raw hash, normalized hash, rights basis and policy URL.
 
 Reuse follows the
 [SEC reuse policy](https://www.sec.gov/about/webmaster-frequently-asked-questions),
@@ -39,16 +38,16 @@ third-party content are outside this intake. Acquisition metadata and complete
 primary HTML/submissions JSON remain in `corpus/acquisition.json` and
 `corpus/raw/`. The original acquisition used identified, serial requests spaced
 at least 600 ms apart, 10-second request deadlines and a 15-minute overall
-deadline, stopping on 403/429. This update replayed the frozen files and made no
-new SEC acquisition requests.
+deadline, stopping on 403/429. Later updates replay those frozen files rather
+than fetching from EDGAR again.
 
 [approvals.json](../corpus/review/approvals.json) records the owner's explicit
 Briefing I approval against the original reviewed revisions and hashes. Its
-timestamp is when the supplied approval was recorded; the original human review
-time was not supplied. The historical
+timestamp is when the supplied approval was recorded, which is the only review
+time on record. The historical
 [SEC review packet](../corpus/review/SEC_REVIEW.md) and candidate JSON files
-remain unchanged as evidence of what was approved. Their old pending labels
-describe their historical state.
+remain unchanged as evidence of what was approved; their pending labels describe
+that historical state.
 
 Briefing K corrected the mistaken `origin: "sec_filing"` assignment to
 `origin: "public"`. `kind` is the single field for document type (`sec_filing`
@@ -62,9 +61,10 @@ Recomputing the canonical revision IDs and file hashes restores the exact
 original reviewed bytes for all four filings. The manifest's
 `reviewedRevisionId`, `reviewedNormalisedPath` and `reviewedNormalisedSha256`
 still bind to the unchanged owner approval. The corpus fingerprint was
-recomputed from the accepted IDs. No approval, historical review file, raw
-filing or passage text changed. Filing dates have day precision; midnight in
-`publishedAt` encodes a date, not a verified publication time.
+recomputed from the accepted IDs; approvals, historical review files, raw
+filings and passage text are unchanged. Filing dates have day precision:
+midnight in `publishedAt` encodes the date, and the time of day carries no
+information.
 
 | Document  | Canonical revision ID                                              | Normalized file SHA-256                                            |
 | --------- | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
@@ -102,12 +102,11 @@ and
 | S5     | 656, 702            | First rejected; second passed the automatic gate; semantic review pending |
 | S6     | Not generated       | Restricted short core preserved                                           |
 
-The new outputs average 664.9 words versus 431.3 in the old round. This supports
-structure helping length, but does not establish that the problem is solved or
-that the model cannot satisfy it. Even the two automatic passes underfill the
-prompted answer lengths. S4 introduces a possible explanation for missed
-windows; S5 introduces uncertainty about refund exclusion. These need owner
-semantic review against the frozen facts; neither is approved for import.
+The new outputs average 664.9 words versus 431.3 in the old round: the
+structured prompt helped length, and even the two automatic passes still
+underfill the prompted answer lengths. S4 introduces a possible explanation for
+missed windows; S5 introduces uncertainty about refund exclusion. Both wait for
+owner semantic review against the frozen facts before import.
 
 The two normalized review drafts contain **32 passages outside the accepted
 manifest**, including eight duplicate gold paragraphs and 24 appended turns.
@@ -122,7 +121,6 @@ disk lock excludes simultaneous generator commands. Attempts are checkpointed
 before requests; quota/auth/content-filter stops or unresolved interrupted
 attempts prevent further calls. Requests have 90-second deadlines within a
 10-minute run deadline. An exhausted rerun makes no paid requests and exits 1.
-No alternate model or relaxed validation was used.
 
 Actual API usage from the response bodies:
 
@@ -136,8 +134,8 @@ The new per-source sidecars and
 [audit.json](../corpus/generated/briefing-i/audit.json) record actual
 timestamps, model, prompt/core/raw hashes, rejection reasons, word counts and
 usage. The original `manifest.generation` stays historical;
-`manifest.regeneration` describes the new round. Neither array grants import
-approval; accepted evidence is defined solely by `manifest.documents`.
+`manifest.regeneration` describes the new round. Accepted evidence is defined by
+`manifest.documents` alone.
 
 ## Import contract
 
@@ -160,13 +158,12 @@ approval; accepted evidence is defined solely by `manifest.documents`.
   `vectorCount=0`, with an empty `corpus/embeddings.json`. Database hybrid
   vectors are stored separately under ignored `supabase/.temp/embeddings/` and
   in PostgreSQL; the ingestion record below reports their actual counts.
-- `manifest.fixtures` contains separate S5 v2 and Org B S6 fixtures. They are
-  not accepted-source additions, are never bundled and were not generated.
+- `manifest.fixtures` contains separate S5 v2 and Org B S6 fixtures, kept
+  outside the accepted sources, the bundle and the generation rounds.
 - `corpus/sample.json` remains the original S1/S2-only curated projection.
   Briefing K imports and embeds only accepted sources; expanded review drafts
-  remain excluded. No migration or frontend was changed. Knip now registers the
-  existing regeneration-audit and preservation commands as explicit entry
-  points.
+  stay excluded. Knip registers the regeneration-audit and preservation commands
+  as explicit entry points.
 
 ## Briefing I command record (historical)
 
@@ -184,8 +181,8 @@ pnpm exec node scripts/corpus/verifyPreservedCorpus.mjs
 pnpm exec eslint scripts/corpus --max-warnings 0
 ```
 
-Generation exited **1**, honestly reflecting three failed sources. Its final
-line, also reproduced by a checkpoint-only rerun without further requests:
+Generation exited **1** because three sources failed. Its final line, also
+reproduced by a checkpoint-only rerun without further requests:
 
 ```text
 GENERATION: 2/5 sources passed; 12/12 attempts; owner review pending.
@@ -220,8 +217,8 @@ PASS: 55 original corpus and validation files remain byte-identical; manifest ad
 ```
 
 Raw command output is retained in `corpus/generated/briefing-i/`. The original
-`corpus/verification.json` remains historical. Full backend and root baseline
-gates were not rerun during Briefing I. Briefing K results follow below.
+`corpus/verification.json` remains historical. The full gates ran in Briefing K,
+below.
 
 ## Briefing K ingestion record
 
@@ -282,12 +279,12 @@ Database counts after publication and replay, measured by read-only SQL:
 | Unpublished revisions                      |                     0 |
 | Retained test documents                    |                     0 |
 
-These are two organisation copies of ten accepted source documents, not twenty
-independent research sources. One prior Org B S6 revision retains four passages
-and vectors. Its current isolation fixture contains four lexical-only passages;
-all other stored passages have vectors. Source-level corpus counts remain ten
-documents, ten accepted revisions and 962 passages. The portable manifest's zero
-vector count describes its own artifact, not the populated database.
+The twenty documents are two organisation copies of the ten accepted sources.
+One prior Org B S6 revision retains four passages and vectors. Its current
+isolation fixture contains four lexical-only passages; all other stored passages
+have vectors. Source-level corpus counts remain ten documents, ten accepted
+revisions and 962 passages. The portable manifest's zero vector count describes
+its own artifact, not the populated database.
 
 ### Full verification
 
@@ -311,28 +308,27 @@ corpus replay, live RLS audit and baseline conformance all passed.
 The first full-gate attempt exited 1 at Knip because Briefing I's executable
 `auditRegeneration.mjs` and `verifyPreservedCorpus.mjs` were absent from its
 entry list; the former imports `writeExpansionReview.mjs`, also reported unused.
-Registering those two concrete CLI entry points fixed the graph. No ignore list,
-ESLint suppression, database constraint or test threshold was relaxed.
+Registering those two concrete CLI entry points fixed the graph, and that
+registration was the whole fix.
 
 The separate `pnpm check:security` exited **1** for three pre-existing
 `generic-api-key` matches in the historical `before-hashes.json`. Each was
 independently verified as the SHA-256 of `countTokens.mjs`, `tokenizer.mjs` or
 `loadApiKey.mjs`, not a credential. Scanner exclusions were unchanged; the
 false-positive policy is recorded in `TODO.md`. `pnpm audit:check` separately
-exited **0**, reporting zero advisories. The full gate does not include this
-separate security command, so its green result does not conceal that failure.
+exited **0**, reporting zero advisories. `pnpm verify` runs neither command; the
+security gate is its own step.
 
 Evidence: `work/briefing-k/verify-first.log`, `verify-final.log`,
-`security.log`, `gitleaks-redacted.json` and `audit.log`. No commit, migration
-edit, new synthetic generation, remote CI run or deployment was performed.
+`security.log`, `gitleaks-redacted.json` and `audit.log`.
 
 ## Remaining work
 
-- The twelve-request Briefing I budget is exhausted. S1–S3 need an explicitly
-  authorized new budget and a revised structure if expanded versions are still
-  wanted; do not make another request automatically.
+- The twelve-request Briefing I budget is exhausted. Expanded S1–S3 versions
+  need an explicitly authorized new budget and a revised structure; another
+  round starts only on that authorization.
 - Owner semantic review of the exact S4/S5 drafts is pending, with the concerns
-  and passage IDs in the review packet. Any rejection leaves the short core in
-  place. No semantic approval has been invented.
+  and passage IDs in the review packet. A rejection leaves the short core in
+  place.
 - `corpus/raw/` remains ignored by the existing root `.gitignore`; transfer its
   frozen source bytes with the workspace. A normal Git add omits them.
