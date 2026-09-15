@@ -61,6 +61,15 @@ This governs disclosure through delivery, not revocation in general. Neither the
 streaming nor the non-streaming path establishes an atomic guarantee against a
 change occurring after the final recheck.
 
-Verification: the streaming adapter's tests assert that no event before the
-terminal one carries claim text, quotations or citation identifiers, and that a
-restricted principal receives no per-candidate detail.
+A candidate identifier is not evidence and is not treated as one. It is the same
+string as the citation identifier
+([candidateKey](../../supabase/functions/_shared/search/candidateKey.ts) and
+[buildCitation](../../supabase/functions/research/citations/buildCitation.ts)
+both compose `documentId:revisionId:passageId`), and the non-streaming action
+already returns it inside `diagnostics.candidateAt10` to exactly the principals
+`mayReadDiagnostics` admits. Stages disclose no more.
+
+Verification: `pnpm test:edge` runs
+`supabase/functions/tests/askStages.test.ts`, which asserts that no stage
+carries claim text or a passage quotation, that the phases run in order, and
+that a restricted principal receives no per-candidate identifiers.
