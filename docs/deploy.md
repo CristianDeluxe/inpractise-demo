@@ -86,6 +86,31 @@ were fetched individually to confirm the new code is the code being served:
 `recentRequests` and `candidateAt10`, and `/assets/WorkspacePage-iTCvrxnZ.js`
 returned 200 and contains `candidateAt10`.
 
+### Company entry and follow-up release on 2026-09-15
+
+Two frontend passes and one function pass. First `/app` became the company entry
+(commits `999b9ce` and `ef5e1b3`): `pnpm build` with the real environment, the
+rsync above, and `cloudlinux-selector restart` returned `{"result": "success"}`;
+`/`, `/login`, `/app`, `/app/ask`, `/app/library` and `/inspect` returned 200
+and the served `WorkspacePage-*.js` chunk contained `Start with a company`,
+`Synthetic interviews` and `Interview dates`.
+
+Then follow-up questions (commit `87c0873`), frontend first because the deployed
+client validates `ask` responses with a strict schema and would have rejected
+the new `resolvedQuery` key: build, rsync and restart as above, then
+`supabase functions deploy research --use-api --no-verify-jwt --import-map supabase/functions/deploy-import-map.json --project-ref <ref>`
+returned `"Deployed Functions."`. Re-probed: `/`, `/app`, `/app/ask` and
+`/inspect` returned 200 and the served entry chunk contained both
+`Asked the corpus as` and `Follow-ups are fine`. As the demo reviewer against
+the live function, a first `ask` returned `answered` with `resolvedQuery` equal
+to the question as typed, and a follow-up `And what about the smaller ones?`
+sent with that one earlier turn returned `partial` with two claims and two
+citations and `resolvedQuery`
+`What makes smaller Northstar installations hard or easy to replace compared to complex ones?`.
+CI run 34990945894 on `87c0873` passed after one rerun of the security job,
+whose first attempt failed downloading gitleaks (`curl: (35)`), not on a
+finding.
+
 ## HTTP API on the origin
 
 `server.js` routes `/api/v1` to the facade built from `server/api/` and every
