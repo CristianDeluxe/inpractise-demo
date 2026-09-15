@@ -1,4 +1,5 @@
 import { handleAsk } from './actions/handleAsk.ts'
+import { handleCompare } from './actions/handleCompare.ts'
 import { handleDebug } from './actions/handleDebug.ts'
 import { handleList } from './actions/handleList.ts'
 import { handleMe } from './actions/handleMe.ts'
@@ -42,8 +43,13 @@ export async function routeAction(
         principal,
         request.query,
         request.company,
-        request.history ?? [],
+        request.history,
       )
+    case 'compare':
+      return await handleCompare(principal, {
+        company: request.company,
+        topic: request.topic,
+      })
     case 'debug':
       return await handleDebug(principal)
     case 'provenance':
