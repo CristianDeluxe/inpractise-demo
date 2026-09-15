@@ -34,6 +34,7 @@ export default {
         'server.js',
         'server/api/createApiListener.ts',
         'scripts/api/generateOpenApi.ts',
+        'scripts/api/measureLatency.ts',
         'scripts/api/fixtureBackend.ts',
         'src/http-api/createHttpClient.ts',
       ],
