@@ -47,7 +47,10 @@ export function AskSession({ company }: AskSessionProps) {
         {research.answer.state.status === 'success' ? (
           <>
             <AnswerView answer={research.answer.state.data.data} />
-            <ResponseMeta {...research.answer.state.data} />
+            <ResponseMeta
+              {...research.answer.state.data}
+              stages={research.progress.stages}
+            />
           </>
         ) : null}
       </div>
