@@ -1,6 +1,6 @@
 export const uiLabelsFixture = {
   library: 'Source library',
-  workspace: 'Corpus at a glance',
+  workspace: 'Start with a company.',
   scope: 'Company scope',
   question: 'Your question',
 }

@@ -48,7 +48,9 @@ describe('authorized research workflow', () => {
     fireEvent.change(screen.getByLabelText('Company scope'), {
       target: { value: citationFixture().company },
     })
-    expect(screen.queryByText('A supported claim with limits.')).toBeNull()
+    await waitFor(() => {
+      expect(screen.queryByText('A supported claim with limits.')).toBeNull()
+    })
     fireEvent.click(screen.getByLabelText('Passage search'))
     fireEvent.change(screen.getByLabelText('Search query'), {
       target: { value: 'migration' },
@@ -99,6 +101,7 @@ describe('authorized research workflow', () => {
     expect(requests.map((request) => request['action'])).toEqual([
       'me',
       'debug',
+      'list',
     ])
     expect(screen.getByText(/Diagnosis: unclassified/)).toBeTruthy()
   })

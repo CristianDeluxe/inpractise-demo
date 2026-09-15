@@ -1,11 +1,15 @@
 import { RequestFeedback } from '@/components/RequestFeedback'
 import { ResponseMeta } from '@/components/ResponseMeta'
 import { useInspection } from '@/inspection/hooks/useInspection'
+import { useLibrary } from '@/workspace/hooks/useLibrary'
+import { AuthorizedLibrary } from './AuthorizedLibrary'
 import { CorpusCounts } from './CorpusCounts'
+import { EvaluationReportNotice } from './EvaluationReportNotice'
 import { RecentRequests } from './RecentRequests'
 
 export function InspectionPage() {
   const request = useInspection()
+  const library = useLibrary()
   return (
     <main id="main-content" className="mx-auto max-w-6xl px-5 py-10">
       <p className="eyebrow text-muted-foreground">Reviewer diagnostics</p>
@@ -25,21 +29,21 @@ export function InspectionPage() {
         <>
           <CorpusCounts corpus={request.state.data.data.corpus} />
           <RecentRequests requests={request.state.data.data.recentRequests} />
-          <section className="rounded-lg border border-border bg-card p-6">
-            <h2 className="font-sans text-xl">No reviewed evaluation report</h2>
-            <p className="mt-4 text-sm text-muted-foreground">
-              No report is connected to this endpoint. Diagnosis:{' '}
-              {request.state.data.data.corpus.diagnosis}. These counts do not
-              measure answer quality.
-            </p>
-            <p className="mt-4 text-sm text-muted-foreground">
-              Candidate recall and context selection are separate measurements.
-              An induced retrieval miss must remain a failed diagnostic; an
-              unreviewed question is not a measured correct refusal.
-            </p>
-          </section>
+          <EvaluationReportNotice
+            diagnosis={request.state.data.data.corpus.diagnosis}
+          />
           <ResponseMeta {...request.state.data} />
         </>
+      ) : null}
+      <RequestFeedback
+        state={library.state}
+        cancel={library.cancel}
+        retry={() => {
+          void library.run(undefined)
+        }}
+      />
+      {library.state.status === 'success' ? (
+        <AuthorizedLibrary library={library.state.data.data} />
       ) : null}
     </main>
   )

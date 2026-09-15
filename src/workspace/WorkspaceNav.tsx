@@ -2,8 +2,8 @@ import { useWorkspace } from '@/workspace/hooks/useWorkspace'
 import { Link } from '@tanstack/react-router'
 import {
   BookOpen,
+  Building2,
   FlaskConical,
-  LayoutDashboard,
   MessagesSquare,
   Scale,
 } from 'lucide-react'
@@ -17,8 +17,7 @@ export function WorkspaceNav() {
         activeOptions={{ exact: true }}
         className="workspace-link"
       >
-        <LayoutDashboard size={16} strokeWidth={1.5} aria-hidden="true" />{' '}
-        Overview
+        <Building2 size={16} strokeWidth={1.5} aria-hidden="true" /> Companies
       </Link>
       <Link to="/app/ask" className="workspace-link">
         <MessagesSquare size={16} strokeWidth={1.5} aria-hidden="true" /> Ask
