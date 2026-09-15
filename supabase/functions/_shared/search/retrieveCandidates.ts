@@ -47,7 +47,7 @@ export async function retrieveCandidates(
   return {
     candidates,
     diagnostics: {
-      mode: input.embedding ? 'hybrid' : 'lexical_only',
+      mode: input.embedding ? ('hybrid' as const) : ('lexical_only' as const),
       candidateAt10: candidates.slice(0, 10).map((item) => item.key),
       selectedIds: selected.map((item) => item.key),
       selectedTokens: selected.reduce(
