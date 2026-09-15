@@ -40,9 +40,11 @@ export async function retrieveCandidates(
         .map((row) => ({ key: candidateKey(row), rank: row.rank })),
     ),
   ).slice(0, 40)
-  const candidates: Candidate[] = []
-  for (const fused of ranked)
-    candidates.push(await readCandidate(client, rows, fused, input.premium))
+  const candidates: Candidate[] = await Promise.all(
+    ranked.map(async (fused) =>
+      readCandidate(client, rows, fused, input.premium),
+    ),
+  )
   const selected = selectContext(candidates)
   return {
     candidates,
