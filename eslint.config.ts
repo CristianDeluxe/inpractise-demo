@@ -10,6 +10,9 @@ import globals from 'globals'
 export default defineConfig([
   { ignores: ['work/**', 'corpus/**', 'supabase/.temp/**', 'server/build/**'] },
   ...createBaseConfig({ tsconfigRootDir: import.meta.dirname }),
+  // The baseline ignores every build/ directory as compiler output; this one
+  // holds the source scripts that generate src/public/buildStats.ts.
+  { ignores: ['!scripts/build/', '!scripts/build/**'] },
   {
     files: [
       'scripts/**/*.{ts,mjs}',
@@ -113,9 +116,10 @@ export default defineConfig([
     files: ['mcp/recordHandshake.ts'],
     rules: { 'security/detect-non-literal-fs-filename': 'off' },
   },
-  // The baseline size layer omits .mjs; corpus code follows the same budgets.
+  // The baseline size layer omits .mjs; corpus and build scripts follow the
+  // same budgets.
   {
-    files: ['scripts/corpus/**/*.mjs'],
+    files: ['scripts/corpus/**/*.mjs', 'scripts/build/**/*.mjs'],
     rules: {
       'max-lines': [
         'error',
