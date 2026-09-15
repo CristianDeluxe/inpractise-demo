@@ -31,6 +31,7 @@ export const footerColumns = [
     heading: 'About',
     links: [
       { label: 'How we work', to: '/method' },
+      { label: 'Built with agents', to: '/built' },
       {
         label: 'For executives',
         to: '/login',
