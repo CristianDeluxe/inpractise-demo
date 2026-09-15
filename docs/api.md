@@ -376,6 +376,18 @@ a locally served function. The `deployed-baseline` run of 2026-09-15 measured
 search p50 2292 ms / p95 3091 ms (cold 4456 ms), read p50 482 ms, the first ask
 phase p50 430 ms and the answer p50 6312 ms / p95 8976 ms.
 
+A later change added a caller-scoped query-embedding cache (`query_embeddings`,
+migration `20260915000014`), overlapped the allowance debit with follow-up
+resolution and the citation read with the cache write, parallelized the
+per-candidate passage reads, switched the follow-up rewrite to a cheaper model
+(`CONDENSATION_MODEL`, default `gpt-4.1-nano-2025-04-14`), and added `elapsedMs`
+to every streamed stage. `pnpm api:latency` was not re-run against the deployed
+function for this change: the migration and function have not been deployed, and
+starting the local stack to measure against it would have meant `supabase start`
+plus reseeding the corpus, outside this change's scope. Post-change figures
+therefore await deployment; do not treat the `deployed-baseline` numbers above
+as reflecting the cache or the concurrency changes.
+
 ## Verification and remaining limits
 
 The seven requested gates are `pnpm type-check`, `pnpm lint`,
