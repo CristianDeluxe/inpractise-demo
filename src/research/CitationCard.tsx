@@ -1,3 +1,4 @@
+import { formatPublishedDate } from '@/components/formatters/formatPublishedDate'
 import { SourceLabel } from '@/components/SourceLabel'
 import { Link } from '@tanstack/react-router'
 import type { CitationCardProps } from './CitationCardProps'
@@ -18,7 +19,7 @@ export function CitationCard({ citation }: CitationCardProps) {
         {citation.interviewDate
           ? `Interview: ${citation.interviewDate} · `
           : null}
-        Published: {citation.publishedAt}
+        Published: {formatPublishedDate(citation.publishedAt)}
       </p>
       <div className="mt-4 flex flex-wrap gap-5 text-sm">
         <SourcePanel citation={citation} />
