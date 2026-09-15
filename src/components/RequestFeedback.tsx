@@ -1,7 +1,8 @@
 import { ApiError } from '@/api/ApiError'
 import { Link } from '@tanstack/react-router'
-import type { RequestFeedbackProps } from './RequestFeedbackProps'
 import { errorCopy } from './errorCopy'
+import type { RequestFeedbackProps } from './RequestFeedbackProps'
+import { Spinner } from './Spinner'
 
 export function RequestFeedback({
   state,
@@ -10,8 +11,9 @@ export function RequestFeedback({
 }: RequestFeedbackProps) {
   if (state.status === 'loading')
     return (
-      <div role="status" className="my-4 flex items-center gap-4 text-sm">
-        Loading…
+      <div role="status" className="my-4 flex items-center gap-3 text-sm">
+        <Spinner />
+        <span className="sr-only">Loading</span>
         <button type="button" className="quiet-action" onClick={cancel}>
           Cancel
         </button>
