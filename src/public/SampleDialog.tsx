@@ -16,7 +16,7 @@ export function SampleDialog({ source, restoreFocus }: SampleDialogProps) {
           {source.title}
         </Dialog.Title>
         <Dialog.Description className="mt-3 text-sm">
-          Curated example — not a live answer. {source.disclosure}.
+          Curated example from the corpus. {source.disclosure}.
         </Dialog.Description>
         <SamplePassages source={source} />
         <Dialog.Close className="quiet-action mt-6">Close source</Dialog.Close>
