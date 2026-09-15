@@ -18,7 +18,7 @@ src/api/performRequest.ts               mcp/callResearch.ts
                                |
               caller JWT forwarded to Supabase client
                                |
-              routeAction.ts -> one of seven handlers
+              routeAction.ts -> one of eight handlers
                                |
               PostgreSQL RLS -> authorized evidence only
                                |
@@ -87,21 +87,22 @@ response either - [viewingReadScope.ts](../server/api/viewingReadScope.ts) folds
 the mode into the ETag, so a member-view response cannot be served from a
 reviewer-view entry.
 
-## Seven actions
+## Eight actions
 
 [routeAction.ts](../supabase/functions/research/routeAction.ts) dispatches
 exactly these actions. Every action requires an authenticated principal with
 active membership.
 
-| Action       | Input beyond `action`                                   | Handler and result                                                                                                                                                                                                                                                                                                                                                                                                                |
-| ------------ | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `me`         | None                                                    | [handleMe.ts](../supabase/functions/research/actions/handleMe.ts): organization, role and premium entitlement.                                                                                                                                                                                                                                                                                                                    |
-| `list`       | Optional `company`, `kind`                              | [handleList.ts](../supabase/functions/research/actions/handleList.ts): authorized current revisions, ordered by document ID; more than 50 results is an error.                                                                                                                                                                                                                                                                    |
-| `read`       | `documentId`, `revisionId`, `passageId`                 | [handleRead.ts](../supabase/functions/research/actions/handleRead.ts): exact passage citation and adjacent passage IDs; missing or denied evidence is 404.                                                                                                                                                                                                                                                                        |
-| `search`     | `query`, optional `company`, `limit` (1–10, default 10) | [handleSearch.ts](../supabase/functions/research/actions/handleSearch.ts): ranked citations, actual search mode and truncation flag.                                                                                                                                                                                                                                                                                              |
-| `ask`        | `query`, optional `company`                             | [handleAsk.ts](../supabase/functions/research/actions/handleAsk.ts): standalone structured answer, mode, candidate count and evidence vintage.                                                                                                                                                                                                                                                                                    |
-| `provenance` | `requestId`                                             | [handleProvenance.ts](../supabase/functions/research/actions/handleProvenance.ts): the caller's own past request, replayed with the current currency of each cited revision. Row level security scopes the lookup, so another caller's request and an unknown one are the same 404. The revision list reaches any member for their own request; the stored diagnostic record follows the same `mayReadDiagnostics` gate as `ask`. |
-| `debug`      | None                                                    | [handleDebug.ts](../supabase/functions/research/actions/handleDebug.ts): reviewer-only corpus counts through `inspect_corpus`; no connected evaluation report.                                                                                                                                                                                                                                                                    |
+| Action        | Input beyond `action`                                   | Handler and result                                                                                                                                                                                                                                                                                                                                                                                                                |
+| ------------- | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `me`          | None                                                    | [handleMe.ts](../supabase/functions/research/actions/handleMe.ts): organization, role and premium entitlement.                                                                                                                                                                                                                                                                                                                    |
+| `list`        | Optional `company`, `kind`                              | [handleList.ts](../supabase/functions/research/actions/handleList.ts): authorized current revisions, ordered by document ID; more than 50 results is an error.                                                                                                                                                                                                                                                                    |
+| `read`        | `documentId`, `revisionId`, `passageId`                 | [handleRead.ts](../supabase/functions/research/actions/handleRead.ts): exact passage citation and adjacent passage IDs; missing or denied evidence is 404.                                                                                                                                                                                                                                                                        |
+| `search`      | `query`, optional `company`, `limit` (1–10, default 10) | [handleSearch.ts](../supabase/functions/research/actions/handleSearch.ts): ranked citations, actual search mode and truncation flag.                                                                                                                                                                                                                                                                                              |
+| `ask`         | `query`, optional `company`                             | [handleAsk.ts](../supabase/functions/research/actions/handleAsk.ts): standalone structured answer, mode, candidate count and evidence vintage.                                                                                                                                                                                                                                                                                    |
+| `investigate` | `question`, optional `company`                          | [handleInvestigate.ts](../supabase/functions/research/actions/handleInvestigate.ts): bounded multi-step research loop; see [below](#the-bounded-investigation-loop). Streamed only; the non-streamed path drains the same generator and returns its terminal value.                                                                                                                                                               |
+| `provenance`  | `requestId`                                             | [handleProvenance.ts](../supabase/functions/research/actions/handleProvenance.ts): the caller's own past request, replayed with the current currency of each cited revision. Row level security scopes the lookup, so another caller's request and an unknown one are the same 404. The revision list reaches any member for their own request; the stored diagnostic record follows the same `mayReadDiagnostics` gate as `ask`. |
+| `debug`       | None                                                    | [handleDebug.ts](../supabase/functions/research/actions/handleDebug.ts): reviewer-only corpus counts through `inspect_corpus`; no connected evaluation report.                                                                                                                                                                                                                                                                    |
 
 Success returns `{ action, data, buildId, requestId }`; errors return
 `{ error: { code, message, retryable }, requestId }`.
@@ -215,6 +216,63 @@ not an aggregate of embedding usage. The member-scoped usage endpoint accepts
 caller reports, so it is operational accounting, not a tamper-proof billing
 record. No service-role key participates in this request path. Usage metadata is
 not added to the browser response contract.
+
+## The bounded investigation loop
+
+[investigateStages.ts](../supabase/functions/research/actions/investigateStages.ts)
+is a five-phase async generator, run entirely server-side with the caller's own
+JWT client. Exactly one Ask debit covers the whole loop:
+
+1. **`debited`** — the same `debit_request` RPC as `ask`, before any provider
+   call.
+2. **`plan`** —
+   [planInvestigation.ts](../supabase/functions/research/investigate/planInvestigation.ts)
+   asks a chat completion to decompose the question into two to four
+   sub-questions, each optionally scoped to a company. The model sees only the
+   caller-visible company slugs
+   ([readVisibleCompanies.ts](../supabase/functions/research/investigate/readVisibleCompanies.ts)),
+   never corpus content; a slug outside that list is `invalid_model_answer`, not
+   silently dropped. More than four sub-questions are truncated, not rejected —
+   an eager model costs only the extra lines.
+3. **`retrieve`** (one per sub-question) —
+   [investigateSubQuestion.ts](../supabase/functions/research/investigate/investigateSubQuestion.ts)
+   runs the identical embed/retrieve/select/read pipeline a standalone `ask`
+   runs, so recall and selection are measured exactly the same way per
+   sub-question.
+4. **`refine`** (at most once) —
+   [refineInvestigation.ts](../supabase/functions/research/investigate/refineInvestigation.ts)
+   asks for one reformulated sub-question only when some step found no readable
+   passage and the token budget can still afford both the reformulation and the
+   synthesis after it; the model may decline. A reformulation replaces its
+   sub-question's evidence in place and keeps the original text beside it.
+5. **`synthesise`** — one grounded completion over the merged evidence, under
+   the same claim/citation contract as `ask`
+   ([ProviderAnswerSchema.ts](../supabase/functions/research/answer/ProviderAnswerSchema.ts)),
+   plus a `status` (`answered` / `partial` / `not_found`) per sub-question
+   ([subQuestionResults.ts](../supabase/functions/research/investigate/subQuestionResults.ts)).
+   A part is reported established only when it actually supplied a passage the
+   final answer still cites; the model's own claim is downgraded to `not_found`
+   otherwise. No readable passage anywhere ends the loop in the standalone
+   refusal shape, without a synthesis call.
+
+[TokenBudget.ts](../supabase/functions/research/investigate/TokenBudget.ts)
+enforces one hard token bound (`INVESTIGATE_TOKEN_BUDGET`, default 16,000)
+across every provider call in the loop; the next call is refused once the bound
+is reached, and usage is recorded once, as the sum of every call, with the
+synthesis (the ledger accepts one usage total per request). Each phase is
+timestamped by an elapsed-milliseconds clock started at the first debit. No
+phase carries claim text, a quotation, or a citation identifier the effective
+(view-as-downgraded) principal may not read; `mayReadDiagnostics` gates
+`candidateAt10`/`selectedIds` exactly as it does for `ask`. Both the streamed
+path
+([streamInvestigate.ts](../supabase/functions/research/streamInvestigate.ts))
+and the non-streamed path
+([handleInvestigate.ts](../supabase/functions/research/actions/handleInvestigate.ts))
+drain the same generator; the non-streamed path discards the intermediate phases
+and returns only the terminal, rechecked result. Verify with `pnpm test:edge`
+(`investigatePlan.test.ts`, `investigateRefine.test.ts`,
+`investigateSynthesis.test.ts`, `investigateBudget.test.ts`,
+`investigateDisclosure.test.ts`).
 
 ## Retrieval diagnostics (reviewer-only)
 
