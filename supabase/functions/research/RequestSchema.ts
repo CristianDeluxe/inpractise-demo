@@ -3,6 +3,7 @@ import { ViewAsSchema } from './ViewAsSchema.ts'
 import { companySchema } from './fields/companySchema.ts'
 import { historySchema } from './fields/historySchema.ts'
 import { identifierSchema } from './fields/identifierSchema.ts'
+import { noteSchema } from './fields/noteSchema.ts'
 import { querySchema } from './fields/querySchema.ts'
 
 /**
@@ -47,5 +48,23 @@ export const RequestSchema = z.discriminatedUnion('action', [
     action: z.literal('provenance'),
     viewAs: ViewAsSchema.optional(),
     requestId: z.uuid(),
+  }),
+  z.strictObject({
+    action: z.literal('note_save'),
+    viewAs: ViewAsSchema.optional(),
+    documentId: identifierSchema,
+    revisionId: identifierSchema,
+    passageId: identifierSchema,
+    question: querySchema.optional(),
+    note: noteSchema.optional(),
+  }),
+  z.strictObject({
+    action: z.literal('note_list'),
+    viewAs: ViewAsSchema.optional(),
+  }),
+  z.strictObject({
+    action: z.literal('note_delete'),
+    viewAs: ViewAsSchema.optional(),
+    noteId: z.uuid(),
   }),
 ])

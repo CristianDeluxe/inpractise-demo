@@ -2,6 +2,7 @@ import { EvidenceId } from '@/components/EvidenceId'
 import { formatCompanyName } from '@/components/formatters/formatCompanyName'
 import { formatPublishedDate } from '@/components/formatters/formatPublishedDate'
 import { SourceLabel } from '@/components/SourceLabel'
+import { SaveNoteButton } from '@/notebook/SaveNoteButton'
 import { useCopyPassage } from '@/reader/hooks/useCopyPassage'
 import type { PassageViewProps } from './PassageViewProps'
 
@@ -42,6 +43,7 @@ export function PassageText({ passage }: PassageViewProps) {
       >
         {copy.status}
       </button>
+      <SaveNoteButton citation={passage.citation} />
     </article>
   )
 }

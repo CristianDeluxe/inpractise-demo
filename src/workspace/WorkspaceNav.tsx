@@ -2,11 +2,13 @@ import { useWorkspace } from '@/workspace/hooks/useWorkspace'
 import { Link } from '@tanstack/react-router'
 import {
   BookOpen,
+  Bookmark,
   Building2,
   FlaskConical,
   MessagesSquare,
   Scale,
 } from 'lucide-react'
+import { NotebookBadge } from './NotebookBadge'
 
 export function WorkspaceNav() {
   const { access } = useWorkspace()
@@ -24,6 +26,10 @@ export function WorkspaceNav() {
       </Link>
       <Link to="/app/library" className="workspace-link">
         <BookOpen size={16} strokeWidth={1.5} aria-hidden="true" /> Library
+      </Link>
+      <Link to="/app/notes" className="workspace-link">
+        <Bookmark size={16} strokeWidth={1.5} aria-hidden="true" /> Notebook
+        <NotebookBadge />
       </Link>
       {access?.role === 'reviewer' ? (
         <Link to="/inspect" className="workspace-link">

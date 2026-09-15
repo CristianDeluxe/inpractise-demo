@@ -1,5 +1,6 @@
 import { useAccess } from '@/auth/hooks/useAccess'
 import { RequestFeedback } from '@/components/RequestFeedback'
+import { NotebookCountProvider } from '@/notebook/NotebookCountProvider'
 import { WorkspaceLayout } from '@/workspace/WorkspaceLayout'
 import { WorkspaceShellSkeleton } from '@/workspace/WorkspaceShellSkeleton'
 import { Outlet } from '@tanstack/react-router'
@@ -31,9 +32,11 @@ export function AccessGate() {
   if (access.state.data === null) return <SignInInvitation />
   return (
     <AccessContext value={access.state.data.data}>
-      <WorkspaceLayout>
-        <Outlet />
-      </WorkspaceLayout>
+      <NotebookCountProvider initial={access.state.data.data.noteCount ?? null}>
+        <WorkspaceLayout>
+          <Outlet />
+        </WorkspaceLayout>
+      </NotebookCountProvider>
     </AccessContext>
   )
 }
