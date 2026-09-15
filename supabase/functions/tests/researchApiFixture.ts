@@ -1,16 +1,14 @@
 import { branchRowFixture } from '../../../tests/helpers/branchRowFixture.ts'
 import { citationSourceFixture } from '../../../tests/helpers/citationSourceFixture.ts'
 import { provenanceApiFixture } from './provenanceApiFixture.ts'
+import { staticApiFixtures } from './staticApiFixtures.ts'
 
 export function researchApiFixture(path: string): unknown {
   const provenanceFixture = provenanceApiFixture(path)
   if (provenanceFixture !== undefined) return provenanceFixture
+  if (path in staticApiFixtures) return staticApiFixtures[path]
   const source = citationSourceFixture()
   switch (path) {
-    case '/rest/v1/rpc/debit_request':
-      return '00000000-0000-0000-0000-000000000001'
-    case '/rest/v1/rpc/record_request_usage':
-      return null
     case '/auth/v1/user':
       return { id: 'test-user' }
     case '/rest/v1/memberships':
