@@ -130,6 +130,17 @@ provider budget. The gate (`assertAnswerGate`) fails on any leaked restricted
 string, any unauthorised citation, any ungrounded answer, a wrong refusal, or a
 recall regression.
 
+## Pending: the `compare` action has no gold set
+
+`GoldCaseSchema` is shaped for a single-answer `ask` case (one `expectedStatus`,
+one `goldIds` list) and has no notion of two sides or relations, so the
+cross-reference action cannot be added to `evals/gold.json` without a schema
+change. Edge-side grounding for `compare` is covered instead by
+`supabase/functions/tests/compareGrounding.test.ts`, `compareRelations.test.ts`
+and `compareUncovered.test.ts`. Extending the gold schema with a
+`kind: 'compare'` case (two claim sets, a relation list, an uncovered-side
+expectation) is deferred.
+
 The allowance is enforced by `debit_request` before Ask retrieval. Failed calls
 and no-evidence results consume one of the 100 daily units. Completion token
 totals are persisted when the provider reports them and stay unknown otherwise;

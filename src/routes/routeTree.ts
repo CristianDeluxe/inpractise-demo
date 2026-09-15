@@ -2,6 +2,7 @@ import { accessRoute } from './accessRoute'
 import { askRoute } from './askRoute'
 import { authAliasRoute } from './authAliasRoute'
 import { builtRoute } from './builtRoute'
+import { compareRoute } from './compareRoute'
 import { connectRoute } from './connectRoute'
 import { debugAliasRoute } from './debugAliasRoute'
 import { inspectionRoute } from './inspectionRoute'
@@ -31,6 +32,7 @@ export const routeTree = rootRoute.addChildren([
     accessRoute.addChildren([
       workspaceRoute,
       askRoute,
+      compareRoute,
       libraryRoute,
       notesRoute,
       standardsRoute,

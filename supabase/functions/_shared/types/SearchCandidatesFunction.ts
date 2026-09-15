@@ -2,6 +2,7 @@ export type SearchCandidatesFunction = {
   Args: {
     candidate_limit?: number
     company_filter?: string
+    kind_filter?: string
     query_embedding?: string
     query_text: string
   }
