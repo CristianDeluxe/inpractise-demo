@@ -5,6 +5,7 @@ import { historySchema } from './fields/historySchema.ts'
 import { identifierSchema } from './fields/identifierSchema.ts'
 import { noteSchema } from './fields/noteSchema.ts'
 import { querySchema } from './fields/querySchema.ts'
+import { scopedCompanySchema } from './fields/scopedCompanySchema.ts'
 
 /**
  * Strict by construction: unknown keys are rejected, so a caller cannot smuggle
@@ -38,6 +39,13 @@ export const RequestSchema = z.discriminatedUnion('action', [
     query: querySchema,
     company: companySchema,
     history: historySchema.optional(),
+    stream: z.literal(true).optional(),
+  }),
+  z.strictObject({
+    action: z.literal('compare'),
+    viewAs: ViewAsSchema.optional(),
+    company: scopedCompanySchema,
+    topic: querySchema,
     stream: z.literal(true).optional(),
   }),
   z.strictObject({
