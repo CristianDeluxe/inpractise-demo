@@ -46,6 +46,12 @@ export const researchRequestSchema = z.discriminatedUnion('action', [
   }),
   z.strictObject({
     viewAs: viewAsSchema.optional(),
+    action: z.literal('investigate'),
+    question: z.string().min(1).max(2000),
+    company: z.string().max(80).optional(),
+  }),
+  z.strictObject({
+    viewAs: viewAsSchema.optional(),
     action: z.literal('debug'),
   }),
   z.strictObject({

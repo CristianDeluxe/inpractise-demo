@@ -1,5 +1,6 @@
 import { citationFixture } from '@/api/citationFixture'
 import { comparePayloadFixture } from '@/contracts/comparePayloadFixture'
+import { investigationFixture } from '@/contracts/investigationFixture'
 import { askPayloadFixture } from './askPayloadFixture'
 import { debugPayloadFixture } from './debugPayloadFixture'
 import { libraryPayloadFixture } from './libraryPayloadFixture'
@@ -32,6 +33,8 @@ export function uiPayloadFixture(action: string) {
       return askPayloadFixture(citation)
     case 'compare':
       return comparePayloadFixture()
+    case 'investigate':
+      return investigationFixture()
     case 'debug':
       return debugPayloadFixture()
     default:
