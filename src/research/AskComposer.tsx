@@ -33,8 +33,8 @@ export function AskComposer({
         </button>
       </div>
       <p className="mt-2 text-[11px] text-muted-foreground">
-        Each question is asked on its own. Nothing carries over from the one
-        before it.
+        Follow-ups are fine. One is rewritten into a standalone question before
+        the corpus is searched, and that rewrite is shown above its answer.
       </p>
     </form>
   )

@@ -24,12 +24,12 @@ export async function runStreamScenario(viewAs: ViewAs | undefined) {
       async () => {
         response = streamAsk(
           principal,
-          'What does the source say?',
-          undefined,
           {
-            buildId: 'build-test',
-            requestId: 'request-test',
+            query: 'What does the source say?',
+            company: undefined,
+            history: [],
           },
+          { buildId: 'build-test', requestId: 'request-test' },
         )
         frames = parseSseFrames(await response.text())
       },

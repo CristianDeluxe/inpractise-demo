@@ -4573,6 +4573,9 @@
                         "revisionIds"
                       ],
                       "additionalProperties": false
+                    },
+                    "resolvedQuery": {
+                      "type": "string"
                     }
                   },
                   "required": [

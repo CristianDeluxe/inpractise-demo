@@ -2,6 +2,7 @@ import { ApiError } from '../_shared/http/ApiError.ts'
 import { corsHeaders } from '../_shared/http/corsHeaders.ts'
 import { sseFrame } from '../_shared/http/sseFrame.ts'
 import { askStages } from './actions/askStages.ts'
+import type { AskInput } from './answer/AskInput.ts'
 import type { Principal } from './Principal.ts'
 
 /**
@@ -13,14 +14,14 @@ import type { Principal } from './Principal.ts'
  */
 export function streamAsk(
   principal: Principal,
-  query: string,
-  company: string | undefined,
+  input: AskInput,
   envelope: { buildId: string; requestId: string },
 ): Response {
   const body = new ReadableStream<Uint8Array>({
     async start(controller) {
       try {
-        const run = askStages(principal, query, company)
+        const { query, company, history } = input
+        const run = askStages(principal, query, company, history)
         let step = await run.next()
         while (!step.done) {
           controller.enqueue(sseFrame('stage', step.value))

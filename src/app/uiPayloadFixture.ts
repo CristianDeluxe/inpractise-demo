@@ -32,6 +32,8 @@ export function uiPayloadFixture(action: string) {
         missingEvidence: ['No February figures.'],
         mode: 'hybrid',
         candidateCount: 4,
+        resolvedQuery:
+          'What makes complex Northstar installations hard to replace?',
         diagnostics: diagnosticsFixture,
       }
     case 'debug':

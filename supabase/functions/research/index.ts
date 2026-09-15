@@ -2,6 +2,7 @@ import { ApiError } from '../_shared/http/ApiError.ts'
 import { corsHeaders } from '../_shared/http/corsHeaders.ts'
 import { jsonResponse } from '../_shared/http/jsonResponse.ts'
 import { statusForCode } from '../_shared/http/statusForCode.ts'
+import { askInputOf } from './answer/askInputOf.ts'
 import { authenticate } from './authenticate.ts'
 import { buildId } from './buildId.ts'
 import { effectivePrincipal } from './effectivePrincipal.ts'
@@ -34,8 +35,7 @@ Deno.serve(async (request) => {
     if (parsed.data.action === 'ask' && parsed.data.stream)
       return streamAsk(
         effectivePrincipal(principal, parsed.data.viewAs),
-        parsed.data.query,
-        parsed.data.company,
+        askInputOf(parsed.data),
         { buildId, requestId },
       )
     const data = await routeAction(principal, parsed.data)
