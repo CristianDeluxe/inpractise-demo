@@ -9,10 +9,9 @@ export function streamCompare(
   input: CompareInput,
   envelope: { buildId: string; requestId: string },
 ): Response {
-  return streamStages(
-    principal.orgId,
-    'compare',
-    compareStages(principal, input),
-    envelope,
-  )
+  return streamStages(compareStages(principal, input), {
+    action: 'compare',
+    orgId: principal.orgId,
+    ...envelope,
+  })
 }

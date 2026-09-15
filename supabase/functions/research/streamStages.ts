@@ -1,20 +1,24 @@
-import { ApiError } from '../_shared/http/ApiError.ts'
 import { corsHeaders } from '../_shared/http/corsHeaders.ts'
+import { errorFrame } from '../_shared/http/errorFrame.ts'
 import { sseFrame } from '../_shared/http/sseFrame.ts'
 
 /**
  * Progress as it happens, then one terminal event. Stages carry counts and
- * phase names; the payload is published only by `result`, after generation,
- * the authorization recheck and envelope assembly have all completed. A
- * failure after the headers is an `error` event, never a truncated success:
- * end of stream on its own is not a result.
+ * phase names; the answer is published only by `result`, after generation, the
+ * authorization recheck and envelope assembly have all completed. A failure
+ * after the headers is an `error` event, never a truncated success: end of
+ * stream on its own is not a result.
  */
 export function streamStages(
-  orgId: string,
-  action: 'ask' | 'compare',
-  run: AsyncGenerator<unknown, unknown, undefined>,
-  envelope: { buildId: string; requestId: string },
+  run: AsyncGenerator<unknown, unknown>,
+  envelope: {
+    action: string
+    orgId: string
+    buildId: string
+    requestId: string
+  },
 ): Response {
+  const { action, orgId, buildId, requestId } = envelope
   const body = new ReadableStream<Uint8Array>({
     async start(controller) {
       try {
@@ -24,23 +28,10 @@ export function streamStages(
           step = await run.next()
         }
         controller.enqueue(
-          sseFrame('result', { action, data: step.value, ...envelope }),
+          sseFrame('result', { action, data: step.value, buildId, requestId }),
         )
       } catch (cause) {
-        const error =
-          cause instanceof ApiError
-            ? cause
-            : new ApiError('dependency_failure', 'Unhandled failure', true)
-        controller.enqueue(
-          sseFrame('error', {
-            error: {
-              code: error.code,
-              message: error.message,
-              retryable: error.retryable,
-            },
-            requestId: envelope.requestId,
-          }),
-        )
+        controller.enqueue(errorFrame(cause, requestId))
       } finally {
         controller.close()
       }

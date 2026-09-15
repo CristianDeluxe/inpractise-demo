@@ -1,12 +1,10 @@
-import { RequestFeedback } from '@/components/RequestFeedback'
-import { ResponseMeta } from '@/components/ResponseMeta'
 import { useResearch } from '@/research/hooks/useResearch'
-import { AnswerView } from './AnswerView'
 import type { AskSessionProps } from './AskSessionProps'
+import { AskSessionResults } from './AskSessionResults'
 import { EvidenceInspector } from './EvidenceInspector'
+import { InvestigationInspector } from './InvestigationInspector'
 import { QuestionForm } from './QuestionForm'
 import { QuestionSuggestions } from './QuestionSuggestions'
-import { SearchView } from './SearchView'
 
 /**
  * Mounted under a key of the company scope, so changing scope discards the
@@ -19,6 +17,10 @@ export function AskSession({ company }: AskSessionProps) {
     research.answer.state.status === 'success'
       ? research.answer.state.data.data
       : undefined
+  const investigation =
+    research.investigation.state.status === 'success'
+      ? research.investigation.state.data.data
+      : undefined
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)]">
       <div id="research" className="min-w-0">
@@ -28,37 +30,21 @@ export function AskSession({ company }: AskSessionProps) {
           Cancelling clears the request display; server work and consumed
           allowance may continue.
         </p>
-        <RequestFeedback
-          state={research.search.state}
-          cancel={research.search.cancel}
-          retry={research.search.retry}
-        />
-        <RequestFeedback
-          state={research.answer.state}
-          cancel={research.answer.cancel}
-          retry={research.answer.retry}
-        />
-        {research.search.state.status === 'success' ? (
-          <>
-            <SearchView result={research.search.state.data.data} />
-            <ResponseMeta {...research.search.state.data} />
-          </>
-        ) : null}
-        {research.answer.state.status === 'success' ? (
-          <>
-            <AnswerView answer={research.answer.state.data.data} />
-            <ResponseMeta
-              {...research.answer.state.data}
-              stages={research.progress.stages}
-            />
-          </>
-        ) : null}
+        <AskSessionResults research={research} />
       </div>
-      <EvidenceInspector
-        answer={answer}
-        stages={research.progress.stages}
-        pending={research.answer.state.status === 'loading'}
-      />
+      {research.mode === 'investigate' ? (
+        <InvestigationInspector
+          answer={investigation}
+          stages={research.investigationProgress.stages}
+          pending={research.investigation.state.status === 'loading'}
+        />
+      ) : (
+        <EvidenceInspector
+          answer={answer}
+          stages={research.progress.stages}
+          pending={research.answer.state.status === 'loading'}
+        />
+      )}
     </div>
   )
 }

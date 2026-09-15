@@ -1,4 +1,4 @@
-import { completeChat } from '../answer/completeChat.ts'
+import { requestChatCompletion } from '../answer/requestChatCompletion.ts'
 import type { CitationSource } from '../citations/CitationSource.ts'
 import { compareSystemPrompt } from './compareSystemPrompt.ts'
 import { comparisonPrompt } from './comparisonPrompt.ts'
@@ -12,19 +12,14 @@ export async function requestComparison(
   },
   onUsage: (usage: unknown) => Promise<void>,
 ): Promise<string> {
-  return completeChat(
+  return requestChatCompletion(
     {
-      max_completion_tokens: 1_200,
-      response_format: { type: 'json_object' },
-      messages: [
-        { role: 'system', content: compareSystemPrompt },
-        {
-          role: 'user',
-          content: comparisonPrompt(topic, sides.interviews, sides.filings),
-        },
-      ],
+      system: compareSystemPrompt,
+      user: comparisonPrompt(topic, sides.interviews, sides.filings),
+      maxTokens: 1_200,
+      json: true,
+      failureMessage: 'Cross-reference failed',
     },
-    'Cross-reference failed',
     onUsage,
   )
 }

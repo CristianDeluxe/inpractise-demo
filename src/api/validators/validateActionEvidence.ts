@@ -10,11 +10,13 @@ export function validateActionEvidence(
   input: unknown,
 ): void {
   parseProtocol(z.record(z.string(), z.unknown()), input)
-  const evidence = inspectResponseEvidence(input, request.action === 'ask')
-  if (request.action === 'ask' && evidence.answers.length !== 1)
+  const carriesAnswer =
+    request.action === 'ask' || request.action === 'investigate'
+  const evidence = inspectResponseEvidence(input, carriesAnswer)
+  if (carriesAnswer && evidence.answers.length !== 1)
     throw new ApiError(
       'protocol',
-      'An ask response must contain exactly one structured answer.',
+      'An ask or investigate response must contain exactly one structured answer.',
     )
   if (request.action === 'read') validateReadEvidence(request, evidence)
   if (request.action === 'search') {

@@ -1,30 +1,28 @@
 import type { CitationSource } from '../citations/CitationSource.ts'
 import { buildContext } from './buildContext.ts'
-import { completeChat } from './completeChat.ts'
+import { requestChatCompletion } from './requestChatCompletion.ts'
 import { systemPrompt } from './systemPrompt.ts'
 
-/** One grounded answer as JSON, under the shared transport and deadline. */
+/**
+ * One generation, no retry, hard deadline. A provider failure raises a
+ * dependency error; it must never reach the reader as "no evidence".
+ */
 export async function requestCompletion(
   query: string,
   sources: readonly CitationSource[],
   onUsage: (usage: unknown) => Promise<void>,
 ): Promise<string> {
-  return completeChat(
+  return await requestChatCompletion(
     {
-      max_completion_tokens: 800,
-      response_format: { type: 'json_object' },
-      messages: [
-        { role: 'system', content: systemPrompt },
-        {
-          role: 'user',
-          content:
-            `Question: ${query}\n\nPassages:\n${buildContext(sources)}\n\n` +
-            'Reply with JSON only: {"status":"answered|partial|conflict|not_found",' +
-            '"claims":[{"text":"...","sources":[1]}],"missingEvidence":["..."]}',
-        },
-      ],
+      system: systemPrompt,
+      user:
+        `Question: ${query}\n\nPassages:\n${buildContext(sources)}\n\n` +
+        'Reply with JSON only: {"status":"answered|partial|conflict|not_found",' +
+        '"claims":[{"text":"...","sources":[1]}],"missingEvidence":["..."]}',
+      maxTokens: 800,
+      json: true,
+      failureMessage: 'Generation failed',
     },
-    'Generation failed',
     onUsage,
   )
 }
