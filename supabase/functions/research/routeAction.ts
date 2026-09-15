@@ -1,5 +1,6 @@
 import { handleAsk } from './actions/handleAsk.ts'
 import { handleDebug } from './actions/handleDebug.ts'
+import { handleInvestigate } from './actions/handleInvestigate.ts'
 import { handleList } from './actions/handleList.ts'
 import { handleMe } from './actions/handleMe.ts'
 import { handleProvenance } from './actions/handleProvenance.ts'
@@ -42,7 +43,13 @@ export async function routeAction(
         principal,
         request.query,
         request.company,
-        request.history ?? [],
+        request.history,
+      )
+    case 'investigate':
+      return await handleInvestigate(
+        principal,
+        request.question,
+        request.company,
       )
     case 'debug':
       return await handleDebug(principal)
