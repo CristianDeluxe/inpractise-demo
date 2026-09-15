@@ -1,4 +1,4 @@
-import { DemoNotice } from '@/components/DemoNotice'
+import { EvidenceId } from '@/components/EvidenceId'
 import { formatPublishedDate } from '@/components/formatters/formatPublishedDate'
 import { SourceLabel } from '@/components/SourceLabel'
 import { useCopyPassage } from '@/reader/hooks/useCopyPassage'
@@ -8,8 +8,7 @@ export function PassageText({ passage }: PassageViewProps) {
   const copy = useCopyPassage(passage.citation.readerPath)
   return (
     <article className="mt-6">
-      <DemoNotice />
-      <div className="mt-5">
+      <div>
         <SourceLabel origin={passage.citation.origin} />
       </div>
       <h2 className="mt-4 text-2xl">{passage.citation.title}</h2>
@@ -32,9 +31,7 @@ export function PassageText({ passage }: PassageViewProps) {
       <blockquote className="my-8 whitespace-pre-wrap break-words border-l-2 border-primary pl-5 font-serif text-xl leading-[1.78]">
         {passage.citation.quote}
       </blockquote>
-      <p className="break-all font-mono text-xs text-muted-foreground">
-        {passage.citation.citationId}
-      </p>
+      <EvidenceId identifier={passage.citation.citationId} label="passage" />
       <button
         type="button"
         className="quiet-action mt-5"

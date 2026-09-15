@@ -1,11 +1,9 @@
-import { DemoNotice } from '@/components/DemoNotice'
 import type { SampleCardProps } from './SampleCardProps'
 
 export function SamplePassages({ source }: SampleCardProps) {
   return (
     <div className="mt-6">
-      <DemoNotice />
-      <p className="mt-4 text-sm">
+      <p className="text-sm">
         {source.company} · {source.interviewDate}
       </p>
       {source.passages.map((passage) => (
