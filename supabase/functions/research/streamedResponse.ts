@@ -4,10 +4,11 @@ import type { Principal } from './Principal.ts'
 import type { ResearchRequest } from './ResearchRequest.ts'
 import { streamAsk } from './streamAsk.ts'
 import { streamCompare } from './streamCompare.ts'
+import { streamInvestigate } from './streamInvestigate.ts'
 
 /**
- * The two actions a caller may follow as an event stream, dispatched under the
- * same effective principal the JSON path would use. Undefined means the
+ * The three actions a caller may follow as an event stream, dispatched under
+ * the same effective principal the JSON path would use. Undefined means the
  * request takes the ordinary one-envelope path.
  */
 export function streamedResponse(
@@ -19,6 +20,12 @@ export function streamedResponse(
   const effective = effectivePrincipal(principal, request.viewAs)
   if (request.action === 'ask')
     return streamAsk(effective, askInputOf(request), envelope)
+  if (request.action === 'investigate')
+    return streamInvestigate(
+      effective,
+      { question: request.question, company: request.company },
+      envelope,
+    )
   return streamCompare(
     effective,
     { company: request.company, topic: request.topic },
