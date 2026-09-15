@@ -278,19 +278,6 @@
   }
 }
 
-@utility reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition:
-    opacity 0.9s cubic-bezier(0.16, 0.84, 0.44, 1),
-    transform 0.9s cubic-bezier(0.16, 0.84, 0.44, 1);
-  transition-delay: var(--delay, 0ms);
-  &[data-visible='true'] {
-    opacity: 1;
-    transform: none;
-  }
-}
-
 @utility grain {
   position: relative;
   isolation: isolate;
@@ -329,20 +316,6 @@
   }
 }
 
-@utility ticker-track {
-  display: inline-flex;
-  gap: 3rem;
-  padding-right: 3rem;
-  white-space: nowrap;
-  animation: ticker 38s linear infinite;
-}
-
-@keyframes ticker {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
 @utility hover-underline {
   background-image: linear-gradient(currentColor, currentColor);
   background-repeat: no-repeat;
@@ -366,33 +339,14 @@
 
 @media (prefers-reduced-motion: reduce) {
   .intro-fade,
-  .reveal,
   .beam::before {
     opacity: 1 !important;
   }
-  .intro-line > span,
-  .reveal,
-  .ticker-track,
-  .parallax-art {
+  .intro-line > span {
     transform: none !important;
   }
   .intro-wipe {
     clip-path: none !important;
-  }
-  .parallax-art {
-    inset-block: 0;
-    will-change: auto !important;
-  }
-  .ticker-track {
-    display: flex;
-    flex-wrap: wrap;
-    white-space: normal;
-  }
-  .ticker-track > span {
-    flex-wrap: wrap;
-  }
-  .ticker-track > span + span {
-    display: none;
   }
 }
 

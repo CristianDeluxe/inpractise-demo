@@ -8,13 +8,6 @@ export function SiteNav({ onNavigate }: SiteNavProps) {
       className="flex flex-col items-start gap-5 text-[13px] font-medium uppercase tracking-[0.12em] md:flex-row md:items-center md:gap-8"
     >
       <a
-        href="/#library"
-        onClick={onNavigate}
-        className="hover-underline text-muted-foreground transition-colors hover:text-foreground"
-      >
-        Library
-      </a>
-      <a
         href="/#evidence"
         onClick={onNavigate}
         className="hover-underline text-muted-foreground transition-colors hover:text-foreground"
