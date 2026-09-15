@@ -790,6 +790,22 @@ question on the warm function: first frame 0.59s, `result` 4.41s with
 `status=not_found`, no claims, no citations. Both ran with `mode=hybrid` and 30
 candidates.
 
+### 2026-09-15 — Public page on how the demo was built
+
+- `/built` ("Built with agents") states the thesis, a half-day timeline derived
+  from commit timestamps, the layered gates with their commands, the plan's
+  division of labour, the cuts with a link to the disposition table, and six
+  corrections taken from this log.
+- The numbers come from `scripts/build/collectBuildStats.mjs`, which reads the
+  history and writes `src/public/buildStats.ts` through prettier; the page
+  imports that file. `BuildHalfDayKey` derives from it, so a regenerated file
+  with a new half-day fails type-check until `buildTimelineThemes.ts` names it.
+- The baseline ignores every `build/` directory as compiler output, which would
+  have left the new scripts unlinted; `eslint.config.ts` and `.oxlintrc.json`
+  now un-ignore `scripts/build/` and apply the corpus-script size budget to it.
+- Footer About column links the page; `src/app/built.test.tsx` renders it and
+  checks every half-day theme and every gate command.
+
 ### 2026-09-16 — Landing "How it is built" strip points at /built
 
 `wf/built-page` shipped the public `/built` route this repository lacked when
