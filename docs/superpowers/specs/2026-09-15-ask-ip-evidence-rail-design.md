@@ -40,11 +40,19 @@ total unknown rather than smaller.
 question and its answer on the left, the evidence inspector on the right. The
 sidebar points at routes rather than hash anchors.
 
-An "Ask IP" bubble sits at the corner of every workspace page and opens the same
-ask session in a non-modal side panel, so a reader can ask without leaving the
-page they are reading. The panel is not a second implementation: it mounts the
-same component the route does, unscoped, and links to `/app/ask` for the company
-filter. It is hidden on `/app/ask` itself, where two mounted sessions would each
+An "Ask IP" bubble sits at the corner of every workspace page and opens a chat
+panel, so a reader can ask without leaving the page they are reading. The panel
+is a chat, not the route in miniature: questions and answers as bubbles, the
+live phase as one line under a typing indicator, and citations as chips that
+open the exact passage. The diagnostics, the stage trail, the search mode and
+the response metadata stay on `/app/ask`, which the panel links to.
+
+The transcript keeps the session's earlier exchanges on screen and sends none of
+them back: each question is retrieved on its own, so the chat shape is a record
+of what was asked rather than a context the model reads. Nothing is stored, per
+[ADR 0010](../../adr/0010-no-provisional-claims-or-stored-answers.md).
+
+The bubble is hidden on `/app/ask` itself, where two mounted sessions would each
 hold their own answer and each debit the allowance.
 
 The ask session is mounted under a key of the company scope, so narrowing the
