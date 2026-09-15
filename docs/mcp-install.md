@@ -174,7 +174,7 @@ values in your client's stdio transport configuration. The `mcpServers` wrapper
 is a client convention, not the protocol. Launch the process with stdin/stdout
 pipes, send MCP `initialize`, complete initialization and request `tools/list`.
 Do not configure the research HTTP URL as an MCP HTTP endpoint: it speaks the
-application's seven-action JSON contract, not MCP.
+application's eight-action JSON contract, not MCP.
 
 ## Verify the connection
 
