@@ -9,6 +9,7 @@ import {
   waitFor,
 } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { askStreamFixture } from './askStreamFixture'
 import { renderRouteFixture } from './renderRouteFixture'
 import { responseFixture } from './responseFixture'
 import { sessionFixture } from './sessionFixture'
@@ -37,7 +38,7 @@ describe('research request states', () => {
     expect(screen.getByText(/Cancelled./)).toBeTruthy()
     await act(async () => {
       pending.resolve(
-        responseFixture('ask', {
+        askStreamFixture({
           status: 'not_found',
           claims: [],
           citations: [],
@@ -93,7 +94,7 @@ describe('research request states', () => {
     await renderRouteFixture('/app/ask', runtime)
     await screen.findByLabelText(uiLabelsFixture.scope)
     fetcher.mockResolvedValueOnce(
-      responseFixture('ask', {
+      askStreamFixture({
         status: 'not_found',
         claims: [],
         citations: [],
@@ -111,7 +112,7 @@ describe('research request states', () => {
     ).toBeTruthy()
     const citation = citationFixture()
     fetcher.mockResolvedValueOnce(
-      responseFixture('ask', {
+      askStreamFixture({
         status: 'conflict',
         claims: [
           {

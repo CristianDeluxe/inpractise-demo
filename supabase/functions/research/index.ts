@@ -4,10 +4,12 @@ import { jsonResponse } from '../_shared/http/jsonResponse.ts'
 import { statusForCode } from '../_shared/http/statusForCode.ts'
 import { authenticate } from './authenticate.ts'
 import { buildId } from './buildId.ts'
+import { effectivePrincipal } from './effectivePrincipal.ts'
 import { maxBodyBytes } from './maxBodyBytes.ts'
 import { RequestSchema } from './RequestSchema.ts'
 import { researchResponse } from './researchResponse.ts'
 import { routeAction } from './routeAction.ts'
+import { streamAsk } from './streamAsk.ts'
 
 Deno.serve(async (request) => {
   const requestId = crypto.randomUUID()
@@ -29,6 +31,13 @@ Deno.serve(async (request) => {
     if (!parsed.success)
       throw new ApiError('invalid_request', 'Request failed its schema')
     const principal = await authenticate(request)
+    if (parsed.data.action === 'ask' && parsed.data.stream)
+      return streamAsk(
+        effectivePrincipal(principal, parsed.data.viewAs),
+        parsed.data.query,
+        parsed.data.company,
+        { buildId, requestId },
+      )
     const data = await routeAction(principal, parsed.data)
     return researchResponse(
       { action: parsed.data.action, data, buildId, requestId },
