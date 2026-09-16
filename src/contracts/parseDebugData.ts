@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { compareDiagnosticsOutput } from '../http-api/compareDiagnosticsOutput.ts'
 import { retrievalDiagnosticsOutput } from '../http-api/retrievalDiagnosticsOutput.ts'
 
 /**
@@ -24,7 +25,9 @@ export function parseDebugData(input: unknown) {
           requestId: z.string().min(1),
           recordedAt: z.string().min(1),
           totalTokens: z.number().int().nonnegative().nullable(),
-          diagnostics: retrievalDiagnosticsOutput.nullable(),
+          diagnostics: z
+            .union([retrievalDiagnosticsOutput, compareDiagnosticsOutput])
+            .nullable(),
         }),
       ),
     })
