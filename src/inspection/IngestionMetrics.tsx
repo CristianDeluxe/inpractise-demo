@@ -2,7 +2,7 @@ import { ingestionMetricsRecord } from './ingestionMetricsRecord'
 
 export function IngestionMetrics() {
   return (
-    <section className="mt-8">
+    <section className="mb-8 mt-8">
       <p className="eyebrow text-muted-foreground">Latest ingestion</p>
       <h2 className="mt-1 font-sans text-lg">
         {ingestionMetricsRecord.company} ({ingestionMetricsRecord.documentId})
