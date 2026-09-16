@@ -55,11 +55,13 @@ export default {
     'scripts/corpus': {
       entry: [
         'acquire.mjs',
+        'acquireAnnualReport.mjs',
         'auditGeneration.mjs',
         'auditRegeneration.mjs',
         'build.mjs',
         'generate.mjs',
         'prepareReview.mjs',
+        'reviewAnnualReport.mjs',
         'verify.mjs',
         'verifyPreservedCorpus.mjs',
         '**/*.test.mjs',

@@ -4,7 +4,7 @@
 // fails the suite rather than leaving a stale number on the first screen.
 export const demoCorpusStats = [
   { label: 'Synthetic interviews', value: '6' },
-  { label: 'Public filings', value: '4' },
-  { label: 'Indexed passages', value: '962' },
-  { label: 'Companies covered', value: '5' },
+  { label: 'Public filings', value: '5' },
+  { label: 'Indexed passages', value: '1094' },
+  { label: 'Companies covered', value: '6' },
 ] as const

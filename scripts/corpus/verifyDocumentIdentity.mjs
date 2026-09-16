@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { canonicalJson } from './canonicalJson.mjs'
 import { sha256 } from './sha256.mjs'
+import { verifyKindFields } from './verifyKindFields.mjs'
 
 export function verifyDocumentIdentity(document, entry) {
   const { revisionId, ...payload } = document
@@ -15,10 +16,7 @@ export function verifyDocumentIdentity(document, entry) {
   assert.equal(document.origin, entry.origin)
   assert.ok(['synthetic', 'public'].includes(document.origin))
   assert.equal(document.kind, entry.kind)
-  assert.equal(
-    document.kind,
-    document.origin === 'synthetic' ? 'synthetic_interview' : 'sec_filing',
-  )
+  verifyKindFields(document)
   assert.equal(Object.hasOwn(entry, 'sourceKind'), false)
   assert.equal(document.synthetic, document.origin === 'synthetic')
   assert.equal(document.fictional, document.synthetic)
