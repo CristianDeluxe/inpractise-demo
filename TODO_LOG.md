@@ -1,5 +1,19 @@
 # TODO Log
 
+- 2026-09-16 - **History rewritten before the CTO review.** `git filter-repo`
+  removed `docs/research/` (the six research documents, the verifier and its
+  hashes; the cleaned execution plan was re-added in `63c7306`) and the
+  conversation history index from every commit, and replaced the leaked strings
+  (home paths, the hosting account, host name, server IP and SSH port, the prior
+  project's name, the reviewer's and recruiter's names) across all blobs. 143
+  commits became 142; `main` force-pushed; a fresh bare clone shows 0 hits for
+  every string. Backup: `~/backups/git-rewrite-2026-09-16/<repo>.bundle` (all
+  refs before the rewrite) plus the filter-repo expression files under `expr/`.
+  Commit hashes quoted in this log before 2026-09-16 no longer resolve; look
+  them up by message in the bundle. Every other clone (the Mac mini) must
+  `git fetch origin && git reset --hard origin/main`, not pull. GitHub may still
+  serve the old commits by SHA from its cache until support purges them.
+
 - 2026-09-16 - **Research notebook, latency, cross-reference, investigate and
   annual-report ingestion released and verified live.** Migrations
   `20260915000013_research_notes.sql`,
@@ -531,11 +545,11 @@
 
 - 2026-09-14 — **Published the demo and deployed it on nova as a Node
   application.** The public repository `CristianDeluxe/inpractise-demo` carries
-  the full history. `A inpractise.cristiandeluxe.dev -> <server-ip>`
-  (unproxied) was created in the `cristiandeluxe.dev` Cloudflare zone, and the
-  subdomain, a CloudLinux Node selector application at
-  `/home/<account>/apps/inpractise-demo` (Node 24, `server.js`, Passenger) and a
-  Let's Encrypt certificate were created on nova.
+  the full history. `A inpractise.cristiandeluxe.dev -> <server-ip>` (unproxied)
+  was created in the `cristiandeluxe.dev` Cloudflare zone, and the subdomain, a
+  CloudLinux Node selector application at `/home/<account>/apps/inpractise-demo`
+  (Node 24, `server.js`, Passenger) and a Let's Encrypt certificate were created
+  on nova.
   - The origin is `server.js` plus `server/`: `dist/` with an index.html
     fallback for unknown paths, immutable caching for fingerprinted assets,
     `no-cache` for the entry document and `X-Robots-Tag: noindex, nofollow`
