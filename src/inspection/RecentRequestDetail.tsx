@@ -1,9 +1,9 @@
 import { RecentRequestDiagnostics } from './RecentRequestDiagnostics'
 import type { RecentRequestRowProps } from './RecentRequestRowProps'
 
-/** What an opened row shows: the retrieval record, or both sides of a compare. */
+/** What an opened row shows: the revisions read, per side for a compare. */
 export function RecentRequestDetail({ request }: RecentRequestRowProps) {
-  const { diagnostics, totalTokens } = request
+  const { diagnostics } = request
   if (diagnostics === null)
     return (
       <p className="text-sm">
@@ -12,23 +12,16 @@ export function RecentRequestDetail({ request }: RecentRequestRowProps) {
     )
   if ('filings' in diagnostics)
     return (
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2">
         <RecentRequestDiagnostics
           label="Interviews"
           diagnostics={diagnostics.interviews}
-          generatedTokens={totalTokens}
         />
         <RecentRequestDiagnostics
           label="Filings"
           diagnostics={diagnostics.filings}
-          generatedTokens={totalTokens}
         />
       </div>
     )
-  return (
-    <RecentRequestDiagnostics
-      diagnostics={diagnostics}
-      generatedTokens={totalTokens}
-    />
-  )
+  return <RecentRequestDiagnostics diagnostics={diagnostics} />
 }
