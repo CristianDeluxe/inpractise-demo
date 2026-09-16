@@ -272,39 +272,30 @@ Earlier research documents and dated reports keep their original scope, so they
 can predate later components; [architecture](docs/architecture.md) describes the
 current source.
 
-| Document                                                              | Purpose                                                                                    |
-| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| [CONTRIBUTING.md](CONTRIBUTING.md)                                    | Setup, enforced hooks, verification and review conventions.                                |
-| [CONTEXT.md](CONTEXT.md)                                              | Precise domain vocabulary.                                                                 |
-| [api.md](docs/api.md)                                                 | Caller-token HTTP facade, endpoints, examples, caching, limits and measured local latency. |
-| [openapi.json](docs/openapi.json)                                     | Generated OpenAPI 3.1 contract, checked against runtime schemas.                           |
-| [ADR 0008](docs/adr/0008-caller-token-http-facade.md)                 | No-credentials facade decision.                                                            |
-| [ADR 0009](docs/adr/0009-scope-immutable-passage-caching.md)          | Immutable evidence versus revocable access.                                                |
-| [architecture.md](docs/architecture.md)                               | Browser/MCP request paths, seven actions, RLS, retrieval and structured answers.           |
-| [mcp-install.md](docs/mcp-install.md)                                 | Client configuration, required environment, connection checks and troubleshooting.         |
-| [mcp.md](docs/mcp.md)                                                 | Tool behavior, parity evidence and recorded Claude session.                                |
-| [mcp-handshake.jsonl](docs/mcp-handshake.jsonl)                       | Untouched timestamps and protocol versions from the 2026-09-13 session.                    |
-| [baseline.md](docs/baseline.md)                                       | Runtime boundaries, quality gates and dated baseline evidence.                             |
-| [backend.md](docs/backend.md)                                         | Database/import foundations, frozen revisions and historical verification.                 |
-| [corpus.md](docs/corpus.md)                                           | Public/synthetic provenance, acceptance and corpus validation.                             |
-| [evals.md](docs/evals.md)                                             | Labeled evaluation method, retained runs, failures and limits.                             |
-| [frontend-contract.md](docs/frontend-contract.md)                     | Browser/API contract and intended UI states.                                               |
-| [frontend-port.md](docs/frontend-port.md)                             | Frontend implementation and dated browser checks.                                          |
-| [demo-script.md](docs/demo-script.md)                                 | Two-minute review script and failure fallback.                                             |
-| [deploy.md](docs/deploy.md)                                           | Hosting, route checks and historical Pages preparation.                                    |
-| [ADR 0001](docs/adr/0001-project-name.md)                             | One package/server name and independent-demo framing.                                      |
-| [ADR 0002](docs/adr/0002-handler-authentication.md)                   | Handler token validation, SDK deviation and forwarded RLS identity.                        |
-| [ADR 0003](docs/adr/0003-caller-scoped-retrieval.md)                  | No service-role retrieval.                                                                 |
-| [ADR 0004](docs/adr/0004-retrieval-before-selection.md)               | Candidate recall before selection and honest error classification.                         |
-| [ADR 0005](docs/adr/0005-retain-f03-selection-miss.md)                | Preserve the F03 selection miss.                                                           |
-| [ADR 0006](docs/adr/0006-require-complete-claim-evidence.md)          | Whole-claim evidence after revocation and ordinary refusal messages.                       |
-| [Research 01](docs/research/01-market-and-landing-research.md)        | Frozen market and landing research.                                                        |
-| [Research 02](docs/research/02-reusable-assets.md)                    | Frozen reusable-asset inventory.                                                           |
-| [Research 03](docs/research/03-lovable-landing-brief.md)              | Frozen landing brief.                                                                      |
-| [Research 04](docs/research/04-members-and-admin-spec.md)             | Frozen members/admin specification.                                                        |
-| [Research 05](docs/research/05-askbot-and-mcp-spec.md)                | Frozen answer and MCP specification.                                                       |
-| [Research 06](docs/research/06-build-plan.md)                         | Earlier build plan, subordinate to Research 07.                                            |
-| [Research 07](docs/research/07-one-day-execution-plan.md)             | Governing one-day execution plan.                                                          |
-| [Research progress](docs/research/research-a-progress.md)             | Frozen research work record.                                                               |
-| [Research verifier](docs/research/verify_specs.py)                    | Frozen specification-verification utility.                                                 |
-| [Research input hashes](docs/research/verification-input-hashes.json) | Frozen verification input identities.                                                      |
+| Document                                                     | Purpose                                                                                    |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| [CONTRIBUTING.md](CONTRIBUTING.md)                           | Setup, enforced hooks, verification and review conventions.                                |
+| [CONTEXT.md](CONTEXT.md)                                     | Precise domain vocabulary.                                                                 |
+| [api.md](docs/api.md)                                        | Caller-token HTTP facade, endpoints, examples, caching, limits and measured local latency. |
+| [openapi.json](docs/openapi.json)                            | Generated OpenAPI 3.1 contract, checked against runtime schemas.                           |
+| [ADR 0008](docs/adr/0008-caller-token-http-facade.md)        | No-credentials facade decision.                                                            |
+| [ADR 0009](docs/adr/0009-scope-immutable-passage-caching.md) | Immutable evidence versus revocable access.                                                |
+| [architecture.md](docs/architecture.md)                      | Browser/MCP request paths, seven actions, RLS, retrieval and structured answers.           |
+| [mcp-install.md](docs/mcp-install.md)                        | Client configuration, required environment, connection checks and troubleshooting.         |
+| [mcp.md](docs/mcp.md)                                        | Tool behavior, parity evidence and recorded Claude session.                                |
+| [mcp-handshake.jsonl](docs/mcp-handshake.jsonl)              | Untouched timestamps and protocol versions from the 2026-09-13 session.                    |
+| [baseline.md](docs/baseline.md)                              | Runtime boundaries, quality gates and dated baseline evidence.                             |
+| [backend.md](docs/backend.md)                                | Database/import foundations, frozen revisions and historical verification.                 |
+| [corpus.md](docs/corpus.md)                                  | Public/synthetic provenance, acceptance and corpus validation.                             |
+| [evals.md](docs/evals.md)                                    | Labeled evaluation method, retained runs, failures and limits.                             |
+| [frontend-contract.md](docs/frontend-contract.md)            | Browser/API contract and intended UI states.                                               |
+| [frontend-port.md](docs/frontend-port.md)                    | Frontend implementation and dated browser checks.                                          |
+| [demo-script.md](docs/demo-script.md)                        | Two-minute review script and failure fallback.                                             |
+| [deploy.md](docs/deploy.md)                                  | Hosting, route checks and historical Pages preparation.                                    |
+| [ADR 0001](docs/adr/0001-project-name.md)                    | One package/server name and independent-demo framing.                                      |
+| [ADR 0002](docs/adr/0002-handler-authentication.md)          | Handler token validation, SDK deviation and forwarded RLS identity.                        |
+| [ADR 0003](docs/adr/0003-caller-scoped-retrieval.md)         | No service-role retrieval.                                                                 |
+| [ADR 0004](docs/adr/0004-retrieval-before-selection.md)      | Candidate recall before selection and honest error classification.                         |
+| [ADR 0005](docs/adr/0005-retain-f03-selection-miss.md)       | Preserve the F03 selection miss.                                                           |
+| [ADR 0006](docs/adr/0006-require-complete-claim-evidence.md) | Whole-claim evidence after revocation and ordinary refusal messages.                       |
+| [Execution plan](docs/research/07-one-day-execution-plan.md) | Governing one-day execution plan.                                                          |

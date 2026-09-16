@@ -14,3 +14,4 @@ reports/
 
 server/build/
 scripts/api/__pycache__/
+TODO_HISTORY_INDEX.jsonl

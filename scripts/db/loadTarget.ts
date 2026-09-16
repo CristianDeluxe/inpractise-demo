@@ -1,10 +1,15 @@
 import { readFileSync, realpathSync } from 'node:fs'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { parseEnv } from 'node:util'
 import { requireVariable } from './requireVariable.ts'
 import type { Target } from './Target.ts'
 
 export function loadTarget(): Target {
-  if (realpathSync(process.cwd()) !== '<demo-root>')
+  const root = realpathSync(
+    resolve(dirname(fileURLToPath(import.meta.url)), '../..'),
+  )
+  if (realpathSync(process.cwd()) !== root)
     throw new Error('Run from the dedicated inpractise-demo repository')
   const values = parseEnv(readFileSync('.env.remote', 'utf8')) as Record<
     string,
