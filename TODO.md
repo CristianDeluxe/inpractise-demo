@@ -61,6 +61,15 @@ plan wins.
   `shell: true` or resolves the pnpm binary path directly; compare against a
   machine where `pnpm dupes` succeeds.
 
+- [ ] **`pnpm db:verify` fails on a stale table list.** `scripts/db/verify.ts`
+      asserts the exact set of public tables and does not know about
+      `query_embeddings` or `research_notes`, added by
+      `20260915000014_query_embedding_cache.sql` and
+      `20260915000013_research_notes.sql`. Not touched while adding the
+      `annual_report_pdf` migration and import (`wf/intl-filing`); counts were
+      confirmed instead with `reportDatabaseCounts`. Found 2026-09-16. Smallest
+      step: add both table names to the expected list in `verifyDatabase`.
+
 - [~] **Upstream ESLint 10 peer metadata.** Strict runtime lint passes, but
   `pnpm peers check` exits 1 for `eslint-plugin-import@2.32.0`,
   `eslint-plugin-jsx-a11y@6.10.2`, and `eslint-plugin-react@7.37.5`: their
