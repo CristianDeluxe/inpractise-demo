@@ -437,7 +437,7 @@ This check includes the adapter and its colocated tests under strict mode,
 ```text
 $ pnpm exec vitest run --dir src/api --maxWorkers=1 --no-file-parallelism
 
- RUN  v4.1.6 <demo-root>
+ RUN  v4.1.6 <repository root>
 
 
  Test Files  6 passed (6)

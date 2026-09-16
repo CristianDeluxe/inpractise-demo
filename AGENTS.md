@@ -1,8 +1,8 @@
 # AGENTS.md — inpractise-demo
 
 Independent engineering demo built for a hiring conversation with In Practise
-(investment-research platform; CTO the CTO). It is **not** an In Practise
-product and touches none of their systems or content.
+(investment-research platform). It is **not** an In Practise product and touches
+none of their systems or content.
 
 The corpus is public filings plus synthetic interviews about invented companies.
 Every surface that shows a source must say so. Never present generated material
@@ -30,9 +30,7 @@ rescue a prettier screen:
 
 ## Authority
 
-`docs/research/07-one-day-execution-plan.md` governs the build. The earlier
-specifications in `docs/research/` are reference; where they disagree with the
-plan, the plan wins.
+`docs/research/07-one-day-execution-plan.md` governs the build.
 
 ## Conventions
 
@@ -47,8 +45,7 @@ authenticates as a different account and must not be used against this project.
 ## Continuous TODO, Work Log, and History Coverage
 
 Maintain `TODO.md` as the active backlog and `TODO_LOG.md` as the searchable
-record of closed work. Use `TODO_HISTORY_INDEX.jsonl` to avoid parsing unchanged
-conversations more than once.
+record of closed work.
 
 - Read `TODO.md` at the beginning and end of related work. Search `TODO_LOG.md`
   before reopening an old task or repeating a previous solution.

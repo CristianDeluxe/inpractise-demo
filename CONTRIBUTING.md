@@ -196,8 +196,6 @@ a discovered bug or missing validation, with observation, evidence and the
 smallest next step. States are `[ ]` pending, `[~]` partial/unverified, `[!]`
 blocked, `[x]` verified complete and `[-]` superseded. Move closed work into the
 dated year/month section of TODO_LOG.md and remove it from the active backlog.
-Consult `TODO_HISTORY_INDEX.jsonl` before reviewing past conversations;
-unchanged complete or irrelevant records need not be parsed again.
 
 A reviewer should receive the concrete before/after behavior, every affected
 surface, exact verification commands and results, and explicit limits. Separate

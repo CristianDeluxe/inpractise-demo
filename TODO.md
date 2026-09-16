@@ -136,14 +136,6 @@ plan wins.
 
 ## Documentation
 
-- [!] **Resolve the identity scan's historical-artifact exception.** The exact
-  recursive search from the identity briefing also reads ignored `work/` logs,
-  backup snapshots and caches, plus another session's `.superpowers/` records.
-  Those retain the retired name. They were preserved pending the owner's cleanup
-  decision; source and documentation use the new identity. Next: confirm whether
-  to preserve these historical artifacts as explicit exceptions or authorize
-  scrubbing them. Credential and frozen files stay untouched.
-
 - [~] **Rehearse the two-minute script against an authorized deployment.** Every
   request in `docs/demo-script.md` has now been timed against
   `https://inpractise.cristiandeluxe.dev` as the demo reviewer and each fits the
@@ -162,11 +154,9 @@ plan wins.
 
 ## Notes that change how commands behave
 
-- The Supabase MCP server on this machine authenticates as `<work-account>`
-  and can therefore only see the Favish organisation. This project was created
-  with the personal account's token in the `<personal-org>` organisation; the
-  project reference is in `.env.remote`. Do not create project resources through
-  that MCP server.
+- The Supabase project reference lives in the ignored `.env.remote`. Create and
+  change project resources with that project's own token, never through an MCP
+  server authenticated as another account.
 
 - Node here is v24.20.0, not the v26.8.2 the execution plan claims to have
   observed. Set `engines` accordingly and do not trust that plan's version

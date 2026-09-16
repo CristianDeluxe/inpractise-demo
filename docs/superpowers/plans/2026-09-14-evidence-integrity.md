@@ -1,10 +1,5 @@
 # Evidence Integrity Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use
-> superpowers:subagent-driven-development (recommended) or
-> superpowers:executing-plans to implement this plan task-by-task. Steps use
-> checkbox (`- [ ]`) syntax for tracking.
-
 **Goal:** Make the demo defensible on the four things an investment-research
 reviewer checks next: hostile source text, evidence age, legible disagreement,
 and an answer that can be audited months later.

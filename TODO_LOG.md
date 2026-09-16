@@ -402,14 +402,14 @@
     execution plan that cuts the 92-128 hour target down to a single day.
   - Evidence: `docs/research/01-market-and-landing-research.md` through
     `07-one-day-execution-plan.md`; `python3 docs/research/verify_specs.py`
-    passed. Committed in the portfolio repository as `79114ab` and `f539cf5`.
+    passed.
 
 - [x] 2026-09-13 — **Infrastructure:** Dedicated Supabase project created for
       the demo.
-  - Result: A new free project in the personal `<personal-org>` organisation,
-    region eu-west-3, empty and owned by this repository. The Supabase MCP
-    server was not used because it authenticates as the Favish account and sees
-    only that organisation; the personal access token was used instead.
+  - Result: A new free project in a personal organisation, region eu-west-3,
+    empty and owned by this repository. The Supabase MCP server was not used
+    because it authenticates as another account; the project's own access token
+    was used instead.
   - Evidence: project reference and credentials in the ignored `.env.remote`;
     the OpenAI key was probed against the embeddings endpoint and returned HTTP
     200 with 1,536 dimensions.
@@ -534,8 +534,8 @@
   the full history. `A inpractise.cristiandeluxe.dev -> <server-ip>`
   (unproxied) was created in the `cristiandeluxe.dev` Cloudflare zone, and the
   subdomain, a CloudLinux Node selector application at
-  `/home/<account>/apps/inpractise-demo` (Node 24, `server.js`, Passenger) and
-  a Let's Encrypt certificate were created on nova.
+  `/home/<account>/apps/inpractise-demo` (Node 24, `server.js`, Passenger) and a
+  Let's Encrypt certificate were created on nova.
   - The origin is `server.js` plus `server/`: `dist/` with an index.html
     fallback for unknown paths, immutable caching for fingerprinted assets,
     `no-cache` for the entry document and `X-Robots-Tag: noindex, nofollow`

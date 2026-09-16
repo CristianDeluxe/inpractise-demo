@@ -240,9 +240,9 @@ The current command matrix and passing results are in
 replaced by `pnpm lint` (strict code-policy) and `pnpm format` (shared
 Prettier).
 
-Run commands from `<demo-root>`. Scripts load only
-this repository's `.env.remote` and verify its exact project URL/ref pairing.
-Direct SQL tests require the link metadata written by `db:prepare`.
+Run commands from the repository root. Scripts load only this repository's
+`.env.remote` and verify its exact project URL/ref pairing. Direct SQL tests
+require the link metadata written by `db:prepare`.
 
 | Command                                                              | Responsibility                                                                      | Executed result                                                                         |
 | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |

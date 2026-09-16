@@ -1,19 +1,19 @@
 # Deployment
 
 The demo is live at <https://inpractise.cristiandeluxe.dev>, served by a Node
-origin on nova (`<account>` cPanel account) behind Phusion Passenger under the
-CloudLinux Node selector. The source is the public repository
+origin on a cPanel host behind Phusion Passenger under the CloudLinux Node
+selector. The source is the public repository
 [CristianDeluxe/inpractise-demo](https://github.com/CristianDeluxe/inpractise-demo).
 
 ## Topology
 
 | Piece         | Value                                                           |
 | ------------- | --------------------------------------------------------------- |
-| DNS           | `A inpractise.cristiandeluxe.dev -> <server-ip>`, not proxied  |
+| DNS           | `A inpractise.cristiandeluxe.dev -> <server-ip>`, not proxied   |
 | TLS           | cPanel AutoSSL, Let's Encrypt, issued 2026-09-14                |
-| Account       | `<account>` on <host>                              |
-| Application   | `/home/<account>/apps/inpractise-demo`, Node 24, `server.js`  |
-| Document root | `/home/<account>/inpractise.cristiandeluxe.dev` (Passenger)   |
+| Account       | `<account>` on <host>                                           |
+| Application   | `/home/<account>/apps/inpractise-demo`, Node 24, `server.js`    |
+| Document root | `/home/<account>/inpractise.cristiandeluxe.dev` (Passenger)     |
 | Backend       | the existing Supabase research endpoint; nothing else is hosted |
 
 `server.js` and `server/` are the origin: they serve `dist/` and return
@@ -41,9 +41,9 @@ or evaluation reports into `dist`.
 DEPLOY_SSH_KEY=/path/to/owner-supplied-private-key
 rsync -az --delete --exclude '.env' --exclude 'node_modules' --exclude 'tmp' \
   -e "ssh -p <port> -i \"$DEPLOY_SSH_KEY\"" \
-  dist server server.js root@<host>:/home/<account>/apps/inpractise-demo/
+  dist server server.js <deploy-user>@<host>:/home/<account>/apps/inpractise-demo/
 
-ssh -p <port> -i "$DEPLOY_SSH_KEY" root@<host> '
+ssh -p <port> -i "$DEPLOY_SSH_KEY" <deploy-user>@<host> '
   chown -R <account>:<account> /home/<account>/apps/inpractise-demo
   cloudlinux-selector restart --json --interpreter nodejs \
     --domain inpractise.cristiandeluxe.dev --app-root apps/inpractise-demo'
