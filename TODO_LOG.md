@@ -1,5 +1,21 @@
 # TODO Log
 
+- 2026-09-16 - **Research notebook, latency, cross-reference, investigate and
+  annual-report ingestion released and verified live.** Migrations
+  `20260915000013_research_notes.sql`,
+  `20260915000014_query_embedding_cache.sql`,
+  `20260915000015_search_candidates_kind_filter.sql` and the corpus stage's
+  `20260916000016_annual_report_kind.sql` were already applied remotely
+  (`supabase migration list` matched all sixteen); the `research` Edge function
+  and the frontend were redeployed to `https://inpractise.cristiandeluxe.dev`.
+  Live, one call each as the reviewer: `search` 200/2342ms, `ask` 200/2204ms
+  `answered`, `investigate` 200/3676ms `not_found`, `compare` 200/1378ms,
+  `note_save`/`note_list`/`note_delete` each 200. `pnpm api:latency deployed`
+  recorded warm p50s of 1394ms search, 437ms read, 468ms ask first phase, 3112ms
+  ask answer in `docs/api-latency.json`. Chromium screenshots of `/` and
+  `/built` showed no empty band over 80px. Full record in `docs/deploy.md`.
+  Closes the "remote deployment pending" note below.
+
 - 2026-09-15 - **Research notebook implemented and locally verified; remote
   deployment pending.** Members can now save a citation (passage identity plus
   the question and a one-line note, never the quotation itself), list saved
