@@ -1,33 +1,36 @@
 import { formatCount } from './formatters/formatCount'
 import { formatRecordedAt } from './formatters/formatRecordedAt'
-import { recentRequestColumns } from './recentRequestColumns'
-import type { RecentRequestRowProps } from './RecentRequestRowProps'
+import type { RecentRequestSummaryLineProps } from './RecentRequestSummaryLineProps'
 import { summariseRequest } from './summariseRequest'
 
 /** The one-line summary a reviewer scans before opening a row. */
-export function RecentRequestSummaryLine({ request }: RecentRequestRowProps) {
+export function RecentRequestSummaryLine({
+  request,
+  isOpen,
+  onToggle,
+}: RecentRequestSummaryLineProps) {
   const summary = summariseRequest(request.diagnostics)
+  const numeric = 'px-3 py-3 text-right font-mono tabular-nums'
   return (
-    <summary
-      className={`${recentRequestColumns} cursor-pointer list-none items-baseline py-3 text-sm hover:bg-muted/40`}
+    <tr
+      className="cursor-pointer hover:bg-muted/40"
+      aria-expanded={isOpen}
+      onClick={onToggle}
     >
-      <span
-        className="font-mono text-xs text-muted-foreground"
+      <td
+        className="px-3 py-3 font-mono text-xs text-muted-foreground"
         title={request.recordedAt}
       >
         {formatRecordedAt(request.recordedAt)}
-      </span>
-      <span className="font-medium">{summary.kind}</span>
-      <span className="font-mono">{formatCount(summary.ranked)}</span>
-      <span className="font-mono">{formatCount(summary.selected)}</span>
-      <span className="font-mono">{formatCount(summary.contextTokens)}</span>
-      <span className="font-mono">{formatCount(request.totalTokens)}</span>
-      <span className="text-xs text-muted-foreground group-open:hidden">
-        Open
-      </span>
-      <span className="hidden text-xs text-muted-foreground group-open:inline">
-        Close
-      </span>
-    </summary>
+      </td>
+      <td className="px-3 py-3 font-medium">{summary.kind}</td>
+      <td className={numeric}>{formatCount(summary.ranked)}</td>
+      <td className={numeric}>{formatCount(summary.selected)}</td>
+      <td className={numeric}>{formatCount(summary.contextTokens)}</td>
+      <td className={numeric}>{formatCount(request.totalTokens)}</td>
+      <td className="px-3 py-3 text-right text-xs text-muted-foreground">
+        {isOpen ? 'Close' : 'Open'}
+      </td>
+    </tr>
   )
 }

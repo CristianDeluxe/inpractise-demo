@@ -1,8 +1,9 @@
-import { recentRequestColumns } from './recentRequestColumns'
 import { RecentRequestRow } from './RecentRequestRow'
 import type { RecentRequestsProps } from './RecentRequestsProps'
 
 export function RecentRequests({ requests }: RecentRequestsProps) {
+  const head = 'px-3 pb-2 text-left'
+  const numeric = 'px-3 pb-2 text-right'
   return (
     <section className="mb-8 rounded-lg border border-border bg-card p-6">
       <h2 className="font-sans text-xl">Your recent questions</h2>
@@ -18,22 +19,24 @@ export function RecentRequests({ requests }: RecentRequestsProps) {
         </p>
       ) : (
         <div className="mt-6 overflow-x-auto">
-          <div
-            className={`${recentRequestColumns} eyebrow border-b border-border pb-2 text-muted-foreground`}
-          >
-            <span>Recorded</span>
-            <span>Kind</span>
-            <span>Ranked</span>
-            <span>Selected</span>
-            <span>Context</span>
-            <span>Generated</span>
-            <span />
-          </div>
-          <ul className="divide-y divide-border">
-            {requests.map((request) => (
-              <RecentRequestRow key={request.requestId} request={request} />
-            ))}
-          </ul>
+          <table className="w-full border-collapse text-sm">
+            <thead className="eyebrow text-muted-foreground">
+              <tr className="border-b border-border">
+                <th className={head}>Recorded</th>
+                <th className={head}>Kind</th>
+                <th className={numeric}>Ranked</th>
+                <th className={numeric}>Selected</th>
+                <th className={numeric}>Context tokens</th>
+                <th className={numeric}>Generated tokens</th>
+                <th className={numeric} />
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {requests.map((request) => (
+                <RecentRequestRow key={request.requestId} request={request} />
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </section>
