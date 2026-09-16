@@ -1,7 +1,9 @@
 import { writeFile } from 'node:fs/promises'
 import { ANNUAL_REPORT_REVIEW_INTRO } from './annualReportReviewIntro.mjs'
 import { appendAnnualReportReviewLines } from './appendAnnualReportReviewLines.mjs'
+import { logReviewCandidateParsed } from './logReviewCandidateParsed.mjs'
 import { readJson } from './readJson.mjs'
+import { recordReviewParseFailure } from './recordReviewParseFailure.mjs'
 import { reviewOneAnnualReport } from './reviewOneAnnualReport.mjs'
 import { writeJson } from './writeJson.mjs'
 
@@ -23,21 +25,9 @@ export async function prepareAnnualReportReview(root) {
       const result = await reviewOneAnnualReport(root, entry)
       report.documents.push(result)
       appendAnnualReportReviewLines(lines, entry, result)
-      console.log(
-        `${entry.documentId}: parsed ${result.passageCount} passages (${result.totalTokens} tokens), pending owner review`,
-      )
+      logReviewCandidateParsed(entry, result)
     } catch (error) {
-      report.documents.push({
-        ...entry,
-        status: 'parse_failed',
-        error: error.message,
-      })
-      lines.push(
-        `## ${entry.documentId}`,
-        '',
-        `Parsing failed: ${error.message}`,
-        '',
-      )
+      recordReviewParseFailure(report, lines, entry, error)
       failed = true
     }
   }

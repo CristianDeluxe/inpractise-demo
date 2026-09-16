@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
+import { assertReviewCandidateReplay } from './assertReviewCandidateReplay.mjs'
 import { canonicalJson } from './canonicalJson.mjs'
-import { normaliseDocument } from './normaliseDocument.mjs'
 import { parseAnnualReportNarrative } from './parseAnnualReportNarrative.mjs'
 import { readJson } from './readJson.mjs'
 import { resolveCorpusPath } from './resolveCorpusPath.mjs'
@@ -31,16 +31,7 @@ export async function verifyAnnualReportCandidates(root) {
       canonicalJson(parsed.turns),
       'ANNUAL_REPORT_RAW_TO_PASSAGE_REPLAY',
     )
-    assert.equal(
-      canonicalJson(candidate.coverage),
-      canonicalJson(parsed.coverage),
-    )
-    assert.equal(
-      canonicalJson(document),
-      canonicalJson(normaliseDocument(document, parsed.turns)),
-    )
-    assert.equal(document.revisionId, candidate.revisionId)
-    assert.equal(document.passages.length, candidate.passageCount)
+    assertReviewCandidateReplay(document, candidate, parsed)
     candidatePassages += candidate.passageCount
   }
   return { reviews, candidates, candidatePassages }

@@ -1,9 +1,12 @@
 import { readFile, writeFile } from 'node:fs/promises'
 import { appendReviewLines } from './appendReviewLines.mjs'
 import { assertRuntime } from './assertRuntime.mjs'
+import { createParsedReviewCandidate } from './createParsedReviewCandidate.mjs'
+import { logReviewCandidateParsed } from './logReviewCandidateParsed.mjs'
 import { normaliseDocument } from './normaliseDocument.mjs'
 import { parseSecNarrative } from './parseSecNarrative.mjs'
 import { readJson } from './readJson.mjs'
+import { recordReviewParseFailure } from './recordReviewParseFailure.mjs'
 import { sha256 } from './sha256.mjs'
 import { writeJson } from './writeJson.mjs'
 
@@ -38,49 +41,23 @@ try {
       const normalised = normaliseDocument(document, parsed.turns)
       const normalisedPath = `corpus/review/${entry.documentId}.json`
       await writeJson(`${root}/${normalisedPath}`, normalised)
-      const result = {
-        ...entry,
-        origin: 'public',
-        sourceType: 'public_filing',
-        synthetic: false,
-        fictional: false,
-        disclosure: document.disclosure,
-        rights: {
-          status: 'review_required',
-          basis:
-            'SEC permits EDGAR filing text reuse; selected narrative boundaries await explicit owner review.',
-          policyUrl:
-            'https://www.sec.gov/about/webmaster-frequently-asked-questions',
-          reviewedAt: null,
-        },
-        status: 'parsed_pending_review',
+      const result = createParsedReviewCandidate({
+        entry,
+        document,
+        normalised,
         normalisedPath,
         normalisedSha256: sha256(await readFile(`${root}/${normalisedPath}`)),
-        revisionId: normalised.revisionId,
-        passageCount: normalised.passages.length,
-        totalTokens: normalised.passages.reduce(
-          (sum, passage) => sum + passage.tokenCount,
-          0,
-        ),
         coverage: parsed.coverage,
-      }
+        rightsBasis:
+          'SEC permits EDGAR filing text reuse; selected narrative boundaries await explicit owner review.',
+        rightsPolicyUrl:
+          'https://www.sec.gov/about/webmaster-frequently-asked-questions',
+      })
       report.documents.push(result)
       appendReviewLines(lines, entry, result)
-      console.log(
-        `${entry.documentId}: parsed ${result.passageCount} passages (${result.totalTokens} tokens), pending owner review`,
-      )
+      logReviewCandidateParsed(entry, result)
     } catch (error) {
-      report.documents.push({
-        ...entry,
-        status: 'parse_failed',
-        error: error.message,
-      })
-      lines.push(
-        `## ${entry.documentId}`,
-        '',
-        `Parsing failed: ${error.message}`,
-        '',
-      )
+      recordReviewParseFailure(report, lines, entry, error)
       process.exitCode = 1
     }
   }
