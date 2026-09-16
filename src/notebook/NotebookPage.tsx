@@ -11,7 +11,10 @@ export function NotebookPage() {
       ? groupNotesByCompany(notebook.state.data.data.notes)
       : []
   return (
-    <main id="main-content" className="mx-auto max-w-4xl px-5 py-10 md:px-10">
+    <main
+      id="main-content"
+      className="mx-auto max-w-[1500px] px-4 py-8 sm:px-6 lg:px-8"
+    >
       <p className="eyebrow text-muted-foreground">Research notebook</p>
       <h1 className="mt-3 font-sans text-3xl">Your saved citations</h1>
       <p className="mt-4 max-w-2xl text-sm text-muted-foreground">

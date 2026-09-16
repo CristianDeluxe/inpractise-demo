@@ -15,7 +15,7 @@ export function LibraryStatsRow({ library, company }: LibraryPanelProps) {
         <StatTile
           label="Filings"
           value={stats.filings}
-          note="Public SEC sources"
+          note="SEC filings and annual reports"
         />
         <StatTile
           label="Interviews"
