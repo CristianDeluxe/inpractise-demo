@@ -141,6 +141,30 @@ and `compareUncovered.test.ts`. Extending the gold schema with a
 `kind: 'compare'` case (two claim sets, a relation list, an uncovered-side
 expectation) is deferred.
 
+## Pending: no retrieval-only case kind, so the new document has no gold case yet
+
+`GoldCaseSchema` only models a full `ask` round trip: every case runs retrieval,
+generation, citation re-authorization and grounding judgment together, with
+`expectedStatus` covering the answer, not the retrieval step in isolation. There
+is no `kind: 'retrieval'` case that stops after `candidateAt10` and skips
+generation, so a retrieval-only gold case for the Rolls-Royce Holdings annual
+report (`rr-2024`) cannot be expressed today.
+
+A full `answered` case was considered instead, but
+`tests/unit/falseRefusalGate.test.ts` checks every retained
+`evals/report-run-*.json` against the exact case set in `evals/gold.json`
+(`assertCaseCoverage`), and those reports are frozen snapshots of a past
+`pnpm eval:answers` run against the deployed Edge function. Adding a case to
+`gold.json` without a matching entry in every retained report fails that check
+offline, and producing a matching entry needs a fresh live run against the
+deployed endpoint with the new document already imported and embedded there -
+both outside this branch's scope (`pnpm eval:answers` is a live measurement
+step, not part of `check:ci`'s credential-free gate, and this task does not
+deploy the Edge function). Adding the `rr-2024` gold case is deferred until the
+corresponding `pnpm eval:answers` run can be made and its report retained
+alongside the existing ones. A retrieval-only case kind is deferred alongside
+the `compare` gold gap above.
+
 The allowance is enforced by `debit_request` before Ask retrieval. Failed calls
 and no-evidence results consume one of the 100 daily units. Completion token
 totals are persisted when the provider reports them and stay unknown otherwise;
