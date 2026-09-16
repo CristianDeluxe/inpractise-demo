@@ -40,6 +40,30 @@ it('reports the cross-reference progress and renders both sides with their relat
   expect(result.textContent).toContain('Agrees with')
 })
 
+it('cross-references a topic across every authorized company with none chosen', async () => {
+  vi.stubGlobal('scrollTo', vi.fn())
+  const { runtime, fetcher } = uiRuntimeFixture()
+  await renderRouteFixture('/app/compare', runtime)
+  await screen.findByLabelText(uiLabelsFixture.scope)
+  fireEvent.change(screen.getByLabelText('Topic to cross-reference'), {
+    target: { value: 'supply chain risk' },
+  })
+  expect(
+    screen.getByText(
+      /Compares interviews against filings across every company you may read/i,
+    ),
+  ).toBeTruthy()
+  fetcher.mockResolvedValueOnce(
+    compareStreamFixture(
+      comparePayloadFixture({ extra: { company: undefined } }),
+    ),
+  )
+  fireEvent.click(screen.getByRole('button', { name: /Compare/ }))
+
+  const result = await screen.findByRole('region', { name: 'Cross-reference' })
+  expect(result.textContent).toContain('All authorized companies')
+})
+
 it('shows the no-filing-evidence state for a company with only interviews', async () => {
   vi.stubGlobal('scrollTo', vi.fn())
   const { runtime, fetcher } = uiRuntimeFixture()

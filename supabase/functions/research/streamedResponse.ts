@@ -1,4 +1,5 @@
 import { askInputOf } from './answer/askInputOf.ts'
+import { compareInputOf } from './compare/compareInputOf.ts'
 import { effectivePrincipal } from './effectivePrincipal.ts'
 import type { Principal } from './Principal.ts'
 import type { ResearchRequest } from './ResearchRequest.ts'
@@ -26,9 +27,5 @@ export function streamedResponse(
       { question: request.question, company: request.company },
       envelope,
     )
-  return streamCompare(
-    effective,
-    { company: request.company, topic: request.topic },
-    envelope,
-  )
+  return streamCompare(effective, compareInputOf(request), envelope)
 }

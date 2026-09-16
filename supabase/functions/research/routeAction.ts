@@ -5,6 +5,7 @@ import { handleList } from './actions/handleList.ts'
 import { handleMe } from './actions/handleMe.ts'
 import { handleRead } from './actions/handleRead.ts'
 import { handleSearch } from './actions/handleSearch.ts'
+import { compareInputOf } from './compare/compareInputOf.ts'
 import { effectivePrincipal } from './effectivePrincipal.ts'
 import { isRecordRequest } from './isRecordRequest.ts'
 import type { Principal } from './Principal.ts'
@@ -49,10 +50,7 @@ export async function routeAction(
         request.history,
       )
     case 'compare':
-      return await handleCompare(principal, {
-        company: request.company,
-        topic: request.topic,
-      })
+      return await handleCompare(principal, compareInputOf(request))
     case 'investigate':
       return await handleInvestigate(
         principal,

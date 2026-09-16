@@ -46,7 +46,7 @@ export const RequestSchema = z.discriminatedUnion('action', [
   z.strictObject({
     action: z.literal('compare'),
     viewAs: ViewAsSchema.optional(),
-    company: scopedCompanySchema,
+    company: scopedCompanySchema.optional(),
     topic: querySchema,
     stream: z.literal(true).optional(),
   }),
