@@ -152,6 +152,54 @@ retrieval outcome, not an error); `compare` (microsoft, "cloud growth") 200 in
 Chromium screenshots of the live `/` and `/built` at 1440x900 full-page showed
 no empty band taller than 80px on either page.
 
+### Research agent, cross-reference, notebook and ingestion release on 2026-09-16
+
+Head commit `64754e6` (`main`), deployed from the `ship-main` worktree (the
+primary checkout stayed detached at the same commit for an earlier fix, so
+`main` itself was only checked out there). Confirmed migrations first:
+`supabase migration list --project-ref <ref>` showed all sixteen local
+migrations, including `20260915000013_research_notes.sql`,
+`20260915000014_query_embedding_cache.sql`,
+`20260915000015_search_candidates_kind_filter.sql` and the corpus stage's
+`20260916000016_annual_report_kind.sql`, matched on the remote project - none
+needed a `db push`. `pnpm db:verify` still refuses to run from a worktree path
+(its guard hardcodes the primary checkout); run from the primary checkout it
+failed exactly as `TODO.md` records, asserting a stale table list that does not
+know about `query_embeddings` or `research_notes` - and its `actual` list proved
+both new tables exist, which stood as the confirmation.
+
+`supabase functions deploy research --use-api --no-verify-jwt --import-map supabase/functions/deploy-import-map.json --project-ref <ref>`
+returned
+`{"project_ref":"...","functions":["research"],"message":"Deployed Functions."}`.
+
+`pnpm build` with the real `VITE_` environment, the rsync above for
+`dist server server.js`, then
+`cloudlinux-selector restart --json --interpreter nodejs --domain inpractise.cristiandeluxe.dev --app-root apps/inpractise-demo`
+returned `{"result": "success"}`.
+
+Re-probed `/`, `/method`, `/connect`, `/built`, `/login`, `/app`, `/app/ask`,
+`/app/compare`, `/app/notes` and `/inspect`: all returned 200. The served
+`/assets/index-URcuHN0p.js` matched the just-built artifact byte-for-byte.
+
+As the reviewer (`me@cristiandeluxe.dev`) against the live function, one call
+each, no retries: `search` (microsoft, "revenue growth") 200 in 2342 ms; `ask`
+("What drove revenue growth?", microsoft) 200 in 2204 ms, `answered`;
+`investigate` ("How has margin trended?", microsoft) 200 in 3676 ms, `not_found`
+(a valid retrieval outcome, not an error); `compare` (microsoft, "cloud growth")
+200 in 1378 ms, both sides `not_found` for that exact phrasing; `note_save`
+against the search's first citation 200 in 499 ms; `note_list` 200 in 400 ms,
+one row; `note_delete` of that note 200 in 470 ms.
+
+`pnpm api:latency deployed` (`scripts/api/measureLatency.ts`) recorded one
+labelled run against `zkcervfahhmyzmrdpgjx.supabase.co` in
+[api-latency.json](api-latency.json): sign-in 460 ms, cold search 4790 ms, warm
+`searchMs` p50 1394 ms / p95 1727 ms, `readMs` p50 437 ms / p95 509 ms,
+`askFirstPhaseMs` p50 468 ms / p95 1002 ms, `askAnswerMs` p50 3112 ms / p95 4325
+ms, all ten sampled asks `answered`.
+
+Chromium screenshots of the live `/` and `/built` at 1440x900 full-page showed
+no empty band taller than 80px on either page.
+
 ## HTTP API on the origin
 
 `server.js` routes `/api/v1` to the facade built from `server/api/` and every

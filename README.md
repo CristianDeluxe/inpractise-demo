@@ -62,6 +62,14 @@ each question once and describe the outcome you see.
 | 3:10–4:15 | Read [method](https://inpractise.cristiandeluxe.dev/method) and [F03's recorded failure](docs/evals.md). The answer was retrieved but dropped during selection. The induced missing-gold test in `tests/unit/ranking.test.ts` is the other failure kind: retrieval. |
 | 4:15–5:00 | Open [Connect](https://inpractise.cristiandeluxe.dev/connect) and the [MCP install guide](docs/mcp-install.md). Check how database authorization and exact passage IDs reach both clients.                                                                          |
 
+Three more surfaces sit past the five-minute path: switching Ask to Investigate
+mode at `/app/ask` runs a bounded multi-step research loop instead of one
+retrieval pass; [Compare](https://inpractise.cristiandeluxe.dev/app/compare)
+cross-references interview and filing evidence for one company and topic side by
+side; and the [notebook](https://inpractise.cristiandeluxe.dev/app/notes) holds
+passages the reviewer has saved from any citation. All three read from the same
+reviewer allowance and database authorization as Ask.
+
 The [two-minute presentation script](docs/demo-script.md) opens a premium
 passage with the reviewer account and points at the tests that cover the
 denied-fixture boundary. The workspace also carries a view switcher: the
@@ -100,10 +108,11 @@ pnpm dev --host 127.0.0.1 --port 5173 --strictPort
 ```
 
 Open `http://127.0.0.1:5173/`, then `/login` as `me@cristiandeluxe.dev` with
-`DEMO_PASSWORD`. `/app` contains the library, passage search and Ask; `/method`
-explains measurements and `/connect` describes MCP. Stop with Ctrl-C.
-[Frontend setup](docs/frontend-port.md) records the browser contract and dated
-live checks.
+`DEMO_PASSWORD`. `/app` contains the library, passage search, Ask (with an
+Investigate mode toggle) and the notebook; `/app/compare` cross-references
+interviews against filings; `/method` explains measurements and `/connect`
+describes MCP. Stop with Ctrl-C. [Frontend setup](docs/frontend-port.md) records
+the browser contract and dated live checks.
 
 To build and inspect the production artifact locally:
 
