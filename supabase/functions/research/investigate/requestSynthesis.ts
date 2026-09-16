@@ -1,4 +1,5 @@
 import { requestChatCompletion } from '../answer/requestChatCompletion.ts'
+import { budgetUsageSink } from './budgetUsageSink.ts'
 import type { MergedEvidence } from './MergedEvidence.ts'
 import { parseSynthesis } from './parseSynthesis.ts'
 import type { SubQuestion } from './SubQuestion.ts'
@@ -13,9 +14,11 @@ import type { TokenBudget } from './TokenBudget.ts'
  * Step four: one grounded synthesis over the merged context, with one bounded
  * retry when every schema failure was a claim over the length cap - the same
  * transcript with the limit restated, never a second attempt at anything
- * else. Usage reaches the caller's ledger through `onUsage` once the budget
- * has added it, before the content is inspected, so a paid but malformed
- * answer keeps its cost.
+ * else. Each call only adds to the budget as it lands; the ledger accepts one
+ * write per request, so `onUsage` runs exactly once, with the cumulative
+ * total of both calls, before the final content is inspected - a paid but
+ * malformed answer keeps its cost, and a retried one is billed once, not
+ * twice.
  */
 export async function requestSynthesis(
   input: {
@@ -35,10 +38,12 @@ export async function requestSynthesis(
       json: true,
       failureMessage: 'Synthesis failed',
     },
-    async (usage) => onUsage(budget.consume(usage)),
+    budgetUsageSink(budget),
   )
-  if (!synthesisTooBigOnly(content))
+  if (!synthesisTooBigOnly(content)) {
+    await onUsage(budget.totals())
     return parseSynthesis(content, input.plan, input.merged.sources.length)
+  }
   budget.assertAvailable()
   const retried = await requestChatCompletion(
     {
@@ -48,7 +53,8 @@ export async function requestSynthesis(
       json: true,
       failureMessage: 'Synthesis failed',
     },
-    async (usage) => onUsage(budget.consume(usage)),
+    budgetUsageSink(budget),
   )
+  await onUsage(budget.totals())
   return parseSynthesis(retried, input.plan, input.merged.sources.length)
 }
