@@ -94,6 +94,28 @@ Other verification: `pnpm build`, the U3 browser evidence linked in
 [frontend-port.md](frontend-port.md), and the local routing checks in
 [deploy.md](deploy.md).
 
+## Optional slots: Compare and Investigate
+
+Two additional surfaces exist beyond the 120-second core script, each fitting
+one optional slot if the conversation asks for it:
+
+- **Investigate** is a mode toggle inside `/app/ask`, not a separate route: it
+  runs a bounded multi-step research loop instead of a single retrieval pass and
+  reports `status`, `subQuestions` and a `trace` of the candidates it considered
+  at each step. Measured live against the deployment on 2026-09-16, a
+  margin-trend question against Microsoft returned `not_found` in 3676ms with
+  one sub-question, which is the honest outcome: the corpus does not carry a
+  margin trend narrative.
+- **Compare** at `/app/compare` cross-references interview and filing evidence
+  for one company and topic side by side, returning `sides.interviews` and
+  `sides.filings` each with their own status and citations. Measured live on
+  2026-09-16, a cloud-growth comparison for Microsoft returned in 1378ms with
+  both sides `not_found` for that exact topic phrasing, which the page shows as
+  `uncovered: ["interviews"]` rather than fabricating a relation.
+
+Both are read from the reviewer's own allowance like Ask; treat a live
+`not_found` as a valid outcome to narrate, not a failed demo.
+
 The database enforces 100 Ask calls per member per UTC day before provider work.
 A failure, refusal, no-evidence result or cancellation still costs one unit; the
 browser renders exhaustion as `allowance_exhausted`. Completion usage is
