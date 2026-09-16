@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { verifyAnnualReportDocument } from './verifyAnnualReportDocument.mjs'
 import { verifyDocument } from './verifyDocument.mjs'
 
 import { verifyPublicDocument } from './verifyPublicDocument.mjs'
@@ -14,6 +15,8 @@ export async function verifyAcceptedDocuments(root, manifest, context) {
     accepted.push(document)
     if (entry.origin === 'synthetic')
       await verifySyntheticDocument(root, entry, document, context)
+    else if (entry.kind === 'annual_report_pdf')
+      await verifyAnnualReportDocument(root, entry, document)
     else await verifyPublicDocument(root, entry, document)
   }
   return accepted

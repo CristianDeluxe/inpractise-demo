@@ -35,7 +35,7 @@ export function CompanyCard({ summary }: CompanyCardProps) {
         )}
         {summary.filings > 0 ? (
           <>
-            <dt className="text-muted-foreground">SEC filings</dt>
+            <dt className="text-muted-foreground">Public filings</dt>
             <dd>{summary.filings}</dd>
           </>
         ) : null}

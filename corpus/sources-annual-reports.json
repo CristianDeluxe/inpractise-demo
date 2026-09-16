@@ -1,0 +1,24 @@
+{
+  "selectors": [
+    {
+      "documentId": "rr-2024",
+      "company": "Rolls-Royce Holdings",
+      "companySlug": "rolls-royce",
+      "kind": "annual_report_pdf",
+      "jurisdiction": "GB",
+      "listing": "London Stock Exchange: RR.",
+      "reportTitle": "Annual Report 2024",
+      "reportingPeriod": { "start": "2024-01-01", "end": "2024-12-31" },
+      "reportDate": "2024-12-31",
+      "sourceUrl": "https://www.rolls-royce.com/~/media/Files/R/Rolls-Royce/documents/annual-report/2025/2024-annual-report.pdf",
+      "landingPage": "https://www.rolls-royce.com/investors/results-reports-and-presentations/annual-report-2024.aspx",
+      "rights": {
+        "basis": "Annual report of a UK premium-listed company, published on its own investor relations site as a regulated public disclosure (Companies Act 2006 s.430; FCA DTR 4.1). Selected strategic report narrative is quoted with attribution and a link to the original; artwork, tables, charts and financial statements are not reproduced.",
+        "policyUrl": "https://www.rolls-royce.com/site-services/legal-information.aspx",
+        "notice": "The site legal notice reserves reproduction of website material. This independent, non-commercial engineering demo quotes limited narrative passages with attribution and links to the original report; it does not redistribute the document."
+      }
+    }
+  ],
+  "userAgent": "Cristian Quintanilla info@busirocket.com",
+  "maxBytes": 20000000
+}
