@@ -200,6 +200,82 @@ ms, all ten sampled asks `answered`.
 Chromium screenshots of the live `/` and `/built` at 1440x900 full-page showed
 no empty band taller than 80px on either page.
 
+### Investigate-length and compare-scope hotfix on 2026-09-16
+
+Head commit `40d9edd` (`main`), two live defects: `investigate` rejected any
+question whose synthesis spanned more than one company, because the prompt never
+stated the schema's 500-character claim cap; and `compare` required a company,
+but no company in the corpus carries both interviews and filings, so every
+cross-reference reported both sides uncovered. Fixed the prompt (state the cap,
+one sentence per claim) plus one bounded retry restating the limit when every
+schema failure is `too_big`, and made the compare company scope optional end to
+end, server and client, defaulting to every authorized company.
+
+Function deployed first, since the client would start sending `compare` without
+a company:
+`supabase functions deploy research --use-api --no-verify-jwt --import-map supabase/functions/deploy-import-map.json --project-ref <ref>`
+returned
+`{"project_ref":"...","functions":["research"], "message":"Deployed Functions."}`.
+`pnpm build` with the real `VITE_` environment, the rsync above for
+`dist server server.js`, then
+`cloudlinux-selector restart --json --interpreter nodejs --domain inpractise.cristiandeluxe.dev --app-root apps/inpractise-demo`
+returned `{"result": "success"}`.
+
+Re-probed `/`, `/method`, `/connect`, `/login`, `/app`, `/app/ask`,
+`/app/compare`, `/app/notes` and `/inspect`: all returned 200, and
+`/api/v1/health` returned
+`{"status":"ok","scope":"facade-only", "backendChecked":false}`. The served
+`/assets/index-BRz6tZxk.js` matched the just-built artifact byte-for-byte, and
+the lazy `ComparePage-BI0UgVDx.js` (200) contains
+`across every company you may read`.
+
+As the reviewer (`me@cristiandeluxe.dev`) against the live function:
+`investigate` with the exact failing question, "How do Microsoft and Costco each
+describe their principal competitive risks?", returned `partial` (four claims,
+both sub-questions covered) instead of `invalid_model_answer`.
+
+A follow-up question ("How does Rolls-Royce describe its exposure to supply
+chain and raw material risk compared to how Microsoft describes its
+cybersecurity risk?") reproducibly returned `dependency_failure` ("Usage
+recording failed") on this first deployment. That traced to a bug in the retry
+itself, not the prompt fix: `requestSynthesis.ts` called the real `onUsage`
+callback once per completion, so a retried request called `record_request_usage`
+twice for the same `request_id`; that RPC accepts exactly one write per request
+(`WHERE total_tokens IS NULL`), and the second call always failed. Fixed by
+accounting both the original and retried completions against the local
+`TokenBudget` only (via the existing `budgetUsageSink` pattern used elsewhere
+for discardable calls) and calling the real `onUsage` exactly once, with the
+cumulative totals, after whichever attempt is final. Added a regression test
+asserting exactly one `record_request_usage` call across a retried pair
+(`investigateSynthesisRetry.test.ts`); confirmed it fails against the old code
+("Expected one usage write covering both attempts, saw 2") and passes against
+the fix. Redeployed the `research` function with the fix; the same question then
+returned `502 invalid_model_answer` ("claims/too_big") instead of
+`dependency_failure` - a different, genuine schema failure: the model's `claims`
+array itself (not one claim's text) exceeded its 4-entry cap, which this
+hotfix's retry prompt does not address (it only restates the per-claim-text
+limit). Re-running "What does Costco say about membership fee income?" three
+times in a row live returned `partial` (4 claims), then the same
+`claims/too_big` error, then `partial` (4 claims) again with nothing else
+changed, confirming this is pre-existing model non-determinism at the 4-claims
+boundary, not a regression from this change. Recorded as a distinct, separate
+finding in `TODO.md`.
+
+Two more `investigate` questions, chosen because they were stable across
+repeated calls: "What do Microsoft, Costco and Rolls-Royce each say about
+regulatory and legal risk in their filings?" returned `partial` (three claims);
+a repeat of "What does Costco say about membership fee income?" returned
+`partial` (four claims).
+
+`compare` with no company: topic "how hard is it to replace an installed system"
+returned `company: null`, both sides `partial` (one claim each) with one
+`extends` relation; topic "supply chain and supplier concentration risk"
+returned `company: null`, both sides `partial` (three interview claims, one
+filing claim) with three `extends` relations. A scoped regression check,
+`compare` with `company: "microsoft"` and topic "cloud growth", still returned
+`company: "microsoft"` with `uncovered: ["interviews"]`, matching prior
+behaviour.
+
 ## HTTP API on the origin
 
 `server.js` routes `/api/v1` to the facade built from `server/api/` and every

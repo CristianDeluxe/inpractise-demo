@@ -25,6 +25,25 @@ plan wins.
       `askStages` before one `recordUsage`. Found 2026-09-15 while adding
       follow-ups to the chat.
 
+- [ ] **A broad multi-part `investigate` question occasionally exceeds the
+      4-claim array cap, not the per-claim length cap.** Live against the
+      deployed function, "What does Costco say about membership fee income?"
+      returned `partial` on two calls and `invalid_model_answer` ("claims/
+      too_big") on a third, with nothing else changed; a two-company, two-topic
+      question ("How does Rolls-Royce describe its exposure to supply chain and
+      raw material risk compared to how Microsoft describes its cybersecurity
+      risk?") hit the same array-length `too_big` on both the first attempt and
+      the length-focused retry, so it still surfaces as an error after the
+      2026-09-16 investigate hotfix. That hotfix's retry
+      (`synthesisRetryTranscript.ts`) restates the 500-character per-claim limit
+      but says nothing about the 4-claim array limit
+      (`ProviderAnswerSchema.claims.max(4)`), so it does not help when the
+      model's extra granularity is more claims rather than longer ones. Found
+      2026-09-16 while verifying that hotfix live; see `docs/deploy.md`.
+      Smallest step: have the retry prompt also say "at most 4 claims,
+      consolidating related points" when the schema failure is the `claims`
+      array itself rather than one claim's `text`.
+
 ## Frontend
 
 - [ ] **Register the router types.** `@tanstack/react-router` has no
@@ -98,6 +117,22 @@ plan wins.
   published ranges stop at ESLint 9. Keep the required ESLint 10 baseline; adopt
   compatible upstream releases when available. No metadata override or lint
   suppression masks this. See `docs/baseline.md`.
+
+- [ ] **`pnpm test:ci` fails its own branch-coverage threshold (80%) even on a
+      clean checkout.** `vitest.config.ts` sets `coverage.include` to
+      `src/**/*.{ts,tsx}` and `supabase/functions/_shared/**/*.ts`, but
+      `_shared/**` is exercised only by the Deno edge suite (`pnpm test:edge`),
+      never by Vitest, so files like `_shared/search/retrieveCandidates.ts` and
+      `_shared/http/errorFrame.ts` report 0% and drag the global branch number
+      under 80% (measured 79.6% on `227d099`, unrelated to any code change).
+      Because `test:ci` is `vitest run --coverage && pnpm test:edge`, the `&&`
+      also means a coverage-threshold failure skips the edge suite entirely when
+      run through this one script; run `pnpm test:edge` directly to get a real
+      signal meanwhile. Found 2026-09-16 while shipping the investigate/compare
+      hotfix, whose own tests passed in full (unit and edge) with only this
+      global threshold red. Smallest step: drop `supabase/functions/_shared/**`
+      from Vitest's `coverage.include` (it has no Vitest tests to instrument) or
+      raise it via the Deno suite's own coverage instead.
 
 ## Documentation
 
