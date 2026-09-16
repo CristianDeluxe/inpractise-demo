@@ -370,6 +370,35 @@ security gate is its own step.
 Evidence: `work/briefing-k/verify-first.log`, `verify-final.log`,
 `security.log`, `gitleaks-redacted.json` and `audit.log`.
 
+## Annual report publication, 2026-09-16
+
+The `documents.kind` check constraint needed a new migration
+(`supabase/migrations/20260916000016_annual_report_kind.sql`, the existing
+migration stays immutable) admitting `annual_report_pdf` with a non-SEC
+`https://` source URL. It was applied to the deployed project with
+`pnpm exec supabase link` then `pnpm exec supabase db push` (dry run first,
+confirming exactly that one migration was pending) before any import.
+
+`pnpm db:embed` created 126 new vectors for the 132 `rr-2024` passages (6 reused
+from cross-document duplicate text), then `pnpm db:import` published `rr-2024`
+for both `org-a` and `org-b`; all twenty pre-existing pairs reported
+`unchanged`. `pnpm db:verify` itself fails on an unrelated, pre-existing table
+list (`scripts/db/verify.ts` does not yet know about the `query_embeddings` and
+`research_notes` tables added by earlier migrations - not touched by this
+change), so counts were confirmed instead with `reportDatabaseCounts`:
+
+| Measure                      | Before | After |
+| ---------------------------- | -----: | ----: |
+| Documents                    |     20 |    22 |
+| Revisions, including history |     21 |    23 |
+| Current revisions            |     20 |    22 |
+| Passages, including history  |  1,928 | 2,192 |
+| Stored vectors               |  1,924 | 2,188 |
+
+The deltas are exactly 264 passages and 264 vectors (132 passages times two
+organisation copies), and every pre-existing count is unchanged, confirming the
+new revision published without touching the frozen documents.
+
 ## Remaining work
 
 - The twelve-request Briefing I budget is exhausted. Expanded S1–S3 versions
