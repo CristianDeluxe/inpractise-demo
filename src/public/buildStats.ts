@@ -4,20 +4,20 @@
 // result. The page at /built imports this file and never reads git at runtime.
 export const buildStats = {
   head: {
-    hash: '5ad2f3d',
-    date: '2026-09-15T18:29:14+02:00',
+    hash: '0ce60d8',
+    date: '2026-09-16T02:17:50+02:00',
   },
   firstCommitAt: '13 September 2026, 19:59',
-  lastCommitAt: '15 September 2026, 18:29',
-  elapsedHours: 46,
-  calendarDays: 3,
-  commitCount: 84,
+  lastCommitAt: '16 September 2026, 02:17',
+  elapsedHours: 54,
+  calendarDays: 4,
+  commitCount: 129,
   files: {
-    tracked: 1286,
-    source: 552,
-    edge: 181,
-    migrations: 12,
-    tests: 96,
+    tracked: 1662,
+    source: 673,
+    edge: 354,
+    migrations: 16,
+    tests: 104,
     docs: 39,
   },
   halfDays: [
@@ -56,10 +56,18 @@ export const buildStats = {
     {
       key: '2026-09-15-pm',
       label: '15 September, after noon',
-      commitCount: 19,
+      commitCount: 33,
       firstAt: '12:03',
-      lastAt: '18:29',
-      scopes: ['ui 4', 'research 3', 'docs 2', 'public 2', 'workspace 2'],
+      lastAt: '18:31',
+      scopes: ['research 4', 'ui 4', 'docs 3', 'landing 3', 'public 3'],
+    },
+    {
+      key: '2026-09-16-am',
+      label: '16 September, before noon',
+      commitCount: 31,
+      firstAt: '00:07',
+      lastAt: '02:17',
+      scopes: ['research 5', 'docs 4', 'client 2', 'corpus 2', 'db 2'],
     },
   ],
 } as const
