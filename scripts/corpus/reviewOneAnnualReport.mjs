@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises'
+import { createParsedReviewCandidate } from './createParsedReviewCandidate.mjs'
 import { normaliseDocument } from './normaliseDocument.mjs'
 import { parseAnnualReportNarrative } from './parseAnnualReportNarrative.mjs'
 import { sha256 } from './sha256.mjs'
@@ -25,30 +26,18 @@ export async function reviewOneAnnualReport(root, entry) {
   const normalised = normaliseDocument(document, parsed.turns)
   const normalisedPath = `corpus/review/${entry.documentId}.json`
   await writeJson(`${root}/${normalisedPath}`, normalised)
-  return {
-    ...entry,
-    origin: 'public',
-    sourceType: 'public_filing',
-    synthetic: false,
-    fictional: false,
-    disclosure: document.disclosure,
-    rights: {
-      status: 'review_required',
-      basis: entry.rights.basis,
-      policyUrl: entry.rights.policyUrl,
-      reviewedAt: null,
-    },
-    status: 'parsed_pending_review',
+  return createParsedReviewCandidate({
+    entry,
+    document,
+    normalised,
     normalisedPath,
     normalisedSha256: sha256(await readFile(`${root}/${normalisedPath}`)),
-    revisionId: normalised.revisionId,
-    passageCount: normalised.passages.length,
-    totalTokens: normalised.passages.reduce(
-      (sum, passage) => sum + passage.tokenCount,
-      0,
-    ),
     coverage: parsed.coverage,
-    metrics: parsed.metrics,
-    creationDate: parsed.creationDate,
-  }
+    rightsBasis: entry.rights.basis,
+    rightsPolicyUrl: entry.rights.policyUrl,
+    extra: {
+      metrics: parsed.metrics,
+      creationDate: parsed.creationDate,
+    },
+  })
 }
