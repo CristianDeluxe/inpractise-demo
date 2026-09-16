@@ -1,0 +1,1 @@
+export const PDF_BLOCK_COLUMN_WIDTH = 90

@@ -1,0 +1,1 @@
+export const ANNUAL_REPORT_SCAN_PAGE_LIMIT = 80

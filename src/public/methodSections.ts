@@ -17,7 +17,7 @@ export const methodSections = [
   },
   {
     title: 'Provenance',
-    body: 'The corpus contains four public SEC filings and six synthetic interviews about fictional companies and speakers. Public filings are labelled separately. This is an independent demo: everything it searches is public or invented.',
+    body: 'The corpus contains four public SEC filings, one public UK annual report and six synthetic interviews about fictional companies and speakers. Public filings are labelled separately. This is an independent demo: everything it searches is public or invented.',
   },
   {
     title: 'Local MCP',

@@ -34,6 +34,14 @@
       "status": "approved",
       "reviewedBy": "owner",
       "reviewedAt": "2026-09-13T17:30:00.466986Z"
+    },
+    {
+      "documentId": "rr-2024",
+      "revisionId": "6b6ed5b07a9ee63fd2992238c539837395a8f8f431b080b0fde3253e415b056e",
+      "normalisedSha256": "c96e718da6dc8723c192dd9fa130557a7f5757fdc0e18b08d7e8fc0f026b0d59",
+      "status": "approved",
+      "reviewedBy": "owner",
+      "reviewedAt": "2026-09-16T00:00:00.000000Z"
     }
   ]
 }

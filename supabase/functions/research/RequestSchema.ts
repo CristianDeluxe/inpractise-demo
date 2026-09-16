@@ -17,7 +17,9 @@ export const RequestSchema = z.discriminatedUnion('action', [
     action: z.literal('list'),
     viewAs: ViewAsSchema.optional(),
     company: companySchema,
-    kind: z.enum(['synthetic_interview', 'sec_filing']).optional(),
+    kind: z
+      .enum(['synthetic_interview', 'sec_filing', 'annual_report_pdf'])
+      .optional(),
   }),
   z.strictObject({
     action: z.literal('read'),

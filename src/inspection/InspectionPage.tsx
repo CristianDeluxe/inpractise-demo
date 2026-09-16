@@ -5,6 +5,7 @@ import { useLibrary } from '@/workspace/hooks/useLibrary'
 import { AuthorizedLibrary } from './AuthorizedLibrary'
 import { CorpusCounts } from './CorpusCounts'
 import { EvaluationReportNotice } from './EvaluationReportNotice'
+import { IngestionMetrics } from './IngestionMetrics'
 import { RecentRequests } from './RecentRequests'
 
 export function InspectionPage() {
@@ -28,6 +29,7 @@ export function InspectionPage() {
       {request.state.status === 'success' ? (
         <>
           <CorpusCounts corpus={request.state.data.data.corpus} />
+          <IngestionMetrics />
           <RecentRequests requests={request.state.data.data.recentRequests} />
           <EvaluationReportNotice
             diagnosis={request.state.data.data.corpus.diagnosis}
