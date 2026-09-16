@@ -20,13 +20,19 @@ Deno.test(
     await t.step(
       'a second, valid reply is accepted and reaches the reader',
       async () => {
-        const { result, failure, completions } = await investigateScenario({
-          completions: [
-            plan,
-            synthesisTooBigContentFixture(coverage),
-            synthesisContentFixture(coverage),
-          ],
-        })
+        const { result, failure, completions, requests } =
+          await investigateScenario({
+            completions: [
+              plan,
+              synthesisTooBigContentFixture(coverage),
+              synthesisContentFixture(coverage),
+            ],
+            usage: {
+              prompt_tokens: 100,
+              completion_tokens: 50,
+              total_tokens: 150,
+            },
+          })
         if (failure)
           throw new Error(`Unexpected failure: ${String(failure.code)}`)
         if (completions.length !== 3)
@@ -42,6 +48,13 @@ Deno.test(
           throw new Error('The retry did not restate the length limit')
         if ((result as { status?: string }).status !== 'answered')
           throw new Error('The retried synthesis was not accepted')
+        const usageWrites = requests.filter((request) =>
+          request.url.endsWith('/rpc/record_request_usage'),
+        )
+        if (usageWrites.length !== 1)
+          throw new Error(
+            `Expected one usage write covering both attempts, saw ${String(usageWrites.length)}`,
+          )
       },
     )
 
