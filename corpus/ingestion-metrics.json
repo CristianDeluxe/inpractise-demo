@@ -1,0 +1,12 @@
+{
+  "documentId": "rr-2024",
+  "company": "Rolls-Royce Holdings",
+  "kind": "annual_report_pdf",
+  "pagesScanned": 80,
+  "pagesRead": 11,
+  "blocks": 132,
+  "passages": 132,
+  "tokens": 5524,
+  "parseMs": 349,
+  "parserVersion": "corpus-pdf-narrative-v1"
+}
