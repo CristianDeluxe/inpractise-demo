@@ -1,0 +1,1 @@
+export const SYNTHETIC_DOCUMENT_COUNT = 6

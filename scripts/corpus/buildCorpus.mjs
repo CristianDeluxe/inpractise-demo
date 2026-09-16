@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises'
-import { buildPublicDocuments } from './buildPublicDocuments.mjs'
-import { buildSyntheticDocuments } from './buildSyntheticDocuments.mjs'
+import { buildAllDocuments } from './buildAllDocuments.mjs'
 import { createCorpusManifest } from './createCorpusManifest.mjs'
+import { readApprovals } from './readApprovals.mjs'
 import { readJson } from './readJson.mjs'
 import { sha256 } from './sha256.mjs'
 import { writeCorpusSupportingArtifacts } from './writeCorpusSupportingArtifacts.mjs'
@@ -16,34 +16,30 @@ export async function buildCorpus(root, syntheticOnly) {
     throw new Error('CORE_HASH_MISMATCH')
   const acquisition = await readJson(`${root}/corpus/acquisition.json`)
   const reviews = await readJson(`${root}/corpus/review/sec.json`)
-  let approvals = { documents: [] }
-  try {
-    approvals = await readJson(`${root}/corpus/review/approvals.json`)
-  } catch (error) {
-    if (error.code !== 'ENOENT') throw error
-  }
-  const synthetic = await buildSyntheticDocuments(root, core)
-  const publicDocuments = await buildPublicDocuments(
-    root,
+  const annualReportReviews = await readJson(
+    `${root}/corpus/review/annual-reports.json`,
+  )
+  const approvals = await readApprovals(root)
+  const built = await buildAllDocuments(root, {
+    core,
     reviews,
+    annualReportReviews,
     approvals,
     syntheticOnly,
-  )
-  const documents = [...synthetic.documents, ...publicDocuments.documents]
+  })
   const fixtures = await writeCorpusSupportingArtifacts(root, core)
-  const excluded = publicDocuments.excluded
   const manifest = await createCorpusManifest(root, {
     core,
     authority,
-    documents,
+    documents: built.documents,
     fixtures,
-    excluded,
+    excluded: built.excluded,
     acquisition,
-    generation: synthetic.generation,
+    generation: built.generation,
   })
   await writeJson(`${root}/corpus/manifest.json`, manifest)
   console.log(
-    `BUILD: ${manifest.documentCount} accepted documents; ${manifest.passageCount} passages; ${excluded.length} public candidates excluded; lexical_only.`,
+    `BUILD: ${manifest.documentCount} accepted documents; ${manifest.passageCount} passages; ${built.excluded.length} public candidates excluded; lexical_only.`,
   )
   return manifest
 }

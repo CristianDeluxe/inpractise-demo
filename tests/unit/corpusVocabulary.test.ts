@@ -4,17 +4,18 @@ import { loadCorpus } from '../../scripts/db/loadCorpus.ts'
 import { loadManifestEntry } from '../../scripts/db/loadManifestEntry.ts'
 
 describe('accepted corpus database vocabulary', () => {
-  it('loads all ten accepted sources with matching origin and kind', () => {
+  it('loads all eleven accepted sources with matching origin and kind', () => {
     const documents = loadCorpus()
-    expect(documents).toHaveLength(10)
+    expect(documents).toHaveLength(11)
     expect(
       documents.filter((document) => document.origin === 'public'),
-    ).toHaveLength(4)
+    ).toHaveLength(5)
+    const publicKinds = ['sec_filing', 'annual_report_pdf']
     for (const document of documents) {
       const manifest = loadManifestEntry(document.documentId)
-      expect(document.kind).toBe(
-        document.origin === 'public' ? 'sec_filing' : 'synthetic_interview',
-      )
+      const expectedKinds =
+        document.origin === 'public' ? publicKinds : ['synthetic_interview']
+      expect(expectedKinds).toContain(document.kind)
       expect(manifest['kind']).toBe(document.kind)
       expect(manifest['origin']).toBe(document.origin)
       expect(manifest).not.toHaveProperty('sourceKind')
@@ -23,10 +24,10 @@ describe('accepted corpus database vocabulary', () => {
 
   it('rejects a filing kind used as an origin at the database import boundary', () => {
     for (const document of loadCorpus().filter(
-      (item) => item.kind === 'sec_filing',
+      (item) => item.kind === 'sec_filing' || item.kind === 'annual_report_pdf',
     ))
       expect(
-        CorpusDocumentSchema.safeParse({ ...document, origin: 'sec_filing' })
+        CorpusDocumentSchema.safeParse({ ...document, origin: document.kind })
           .success,
       ).toBe(false)
   })
