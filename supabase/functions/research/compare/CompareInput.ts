@@ -1,1 +1,1 @@
-export type CompareInput = { company: string; topic: string }
+export type CompareInput = { company?: string; topic: string }

@@ -24,8 +24,8 @@ export async function retrieveSide(
       premium: principal.premium,
       query: input.topic,
       embedding,
-      company: input.company,
       kind,
+      ...(input.company === undefined ? {} : { company: input.company }),
     },
   )
   const selected = selectedCandidates(

@@ -3,7 +3,7 @@ import { compareSideSchema } from './compareSideSchema'
 
 /** Strict: a key the server did not document fails the whole cross-reference. */
 export const compareSchema = z.strictObject({
-  company: z.string().min(1),
+  company: z.string().min(1).optional(),
   topic: z.string().min(1),
   mode: z.enum(['hybrid', 'lexical_only']),
   sides: z.strictObject({

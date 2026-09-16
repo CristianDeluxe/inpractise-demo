@@ -22,9 +22,11 @@ export async function runCompareScenario(options: CompareScenarioOptions = {}) {
         OPENAI_API_KEY: 'test-provider-key',
       },
       async () => {
+        const company =
+          'company' in options ? options.company : 'northstar-workflow'
         const run = compareStages(principal, {
-          company: 'northstar-workflow',
           topic: 'deployment time',
+          ...(company === undefined ? {} : { company }),
         })
         let step = await run.next()
         while (!step.done) {

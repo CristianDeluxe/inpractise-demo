@@ -5,11 +5,14 @@ import { CompareSideView } from './CompareSideView'
 import { CompareUncoveredNotice } from './CompareUncoveredNotice'
 
 export function CompareResultView({ comparison }: CompareResultViewProps) {
+  const scope = comparison.company
+    ? formatCompanyName(comparison.company)
+    : 'All authorized companies'
   return (
     <section aria-label="Cross-reference" className="mt-8">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4">
         <h2 className="font-sans text-xl">
-          {formatCompanyName(comparison.company)} — {comparison.topic}
+          {scope} — {comparison.topic}
         </h2>
         <p className="text-xs text-muted-foreground">
           {comparison.mode === 'hybrid' ? 'Hybrid' : 'Lexical only'}
@@ -18,7 +21,11 @@ export function CompareResultView({ comparison }: CompareResultViewProps) {
       {comparison.uncovered.length > 0 ? (
         <div className="mt-4 space-y-2">
           {comparison.uncovered.map((side) => (
-            <CompareUncoveredNotice key={side} side={side} />
+            <CompareUncoveredNotice
+              key={side}
+              side={side}
+              company={comparison.company}
+            />
           ))}
         </div>
       ) : null}

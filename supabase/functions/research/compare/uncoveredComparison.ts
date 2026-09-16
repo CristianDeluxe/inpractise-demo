@@ -16,12 +16,15 @@ export function uncoveredComparison(
   sides: SidesRetrieval,
   uncovered: readonly CompareSideName[],
 ): CompareResult {
+  const forScope = scope.company
+    ? `for ${scope.company}`
+    : 'across all authorized companies'
   const side = (name: CompareSideName): CompareSide => ({
     status: 'not_found',
     claims: [],
     missingEvidence: [
       uncovered.includes(name)
-        ? `No ${sideLabels[name]} passage matched this topic for ${scope.company}.`
+        ? `No ${sideLabels[name]} passage matched this topic ${forScope}.`
         : 'Nothing to cross-reference: the other side has no evidence.',
     ],
     citations: [],

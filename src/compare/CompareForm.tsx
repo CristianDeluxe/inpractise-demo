@@ -1,7 +1,7 @@
 import type { CompareFormProps } from './CompareFormProps'
 
 export function CompareForm({ compare }: CompareFormProps) {
-  const disabled = !compare.topic.trim() || !compare.company
+  const disabled = !compare.topic.trim()
   return (
     <form
       onSubmit={compare.submit}
@@ -26,7 +26,7 @@ export function CompareForm({ compare }: CompareFormProps) {
         <p className="text-xs text-muted-foreground">
           {compare.company
             ? "Compares this company's interviews against its filings."
-            : 'Choose a company above first.'}
+            : 'Compares interviews against filings across every company you may read.'}
         </p>
         <button type="submit" className="action" disabled={disabled}>
           Compare →
