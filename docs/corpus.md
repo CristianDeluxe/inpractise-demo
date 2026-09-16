@@ -1,12 +1,60 @@
 # Demo corpus
 
-The accepted corpus contains **four real public SEC filings and six unchanged
-short synthetic interviews: 962 passages total**. The filings contribute 938
-passages. The interviews contribute 24 passages, all immutable gold: **S1–S6,
-P1–P4 in each source**; the gold paragraphs live only in the interviews. Every
-source carries its own public or synthetic disclosure. This is an independent
-engineering demo, and the corpus is entirely public filings and synthetic
-interviews.
+The accepted corpus contains **four real public SEC filings, one public UK
+annual report and six unchanged short synthetic interviews: 1094 passages
+total**. The filings and the annual report contribute 1070 passages. The
+interviews contribute 24 passages, all immutable gold: **S1–S6, P1–P4 in each
+source**; the gold paragraphs live only in the interviews. Every source carries
+its own public or synthetic disclosure. This is an independent engineering demo,
+and the corpus is entirely public filings, one public annual report and
+synthetic interviews.
+
+## Approved international non-SEC filing
+
+Rolls-Royce Holdings plc's 2024 Annual Report is a PDF, not an SEC filing, so it
+exercises document processing beyond US HTML filings. It is a UK premium-listed
+company's own regulated public disclosure (Companies Act 2006 s.430; FCA DTR
+4.1), fetched directly from its investor-relations site:
+
+| Document                                | Jurisdiction | Reporting period         | Accepted passages |
+| --------------------------------------- | ------------ | ------------------------ | ----------------: |
+| Rolls-Royce Holdings Annual Report 2024 | GB           | 2024-01-01 to 2024-12-31 |               132 |
+
+- Source URL:
+  `https://www.rolls-royce.com/~/media/Files/R/Rolls-Royce/documents/annual-report/2025/2024-annual-report.pdf`
+- Fetch date: 2026-09-15
+- Selector, acquisition and review live in `corpus/sources-annual-reports.json`,
+  `corpus/acquisition-annual-reports.json` and
+  `corpus/review/annual-reports.json` (new files, alongside the frozen SEC
+  intake, never inside it).
+- Manifest `kind` is `annual_report_pdf`, `origin: "public"`,
+  `synthetic: false`, `fictional: false`.
+- Extraction covers only the strategic-report narrative that corresponds to the
+  SEC Item 1 / 1A scope: "Business model" and "Principal risks". Heading
+  detection (`locateAnnualReportSections.mjs`) bounds each section between its
+  own title and the next one at the same heading size; page furniture, running
+  headers/footers, tables and financial statements are excluded the same way
+  `isPageFurniture.mjs` excludes SEC page furniture (see
+  `isPdfItemFurniture.mjs`).
+- Throughput for this document (pages scanned, pages read, blocks, passages,
+  parse time) is recorded in `corpus/ingestion-metrics.json` and shown on the
+  `/inspect` page next to the existing document/revision/passage/vector counts.
+
+Build and verify after this intake:
+
+```text
+BUILD: 11 accepted documents; 1094 passages; 0 public candidates excluded; lexical_only.
+PASS: 11 accepted documents; 1094 passages; 24/24 immutable gold paragraphs.
+PASS: raw/canonical hashes, deterministic replay, Unicode offsets, attribution, token bounds and S1/S2-only sample.
+PASS: 2 isolated revision/access fixtures; 4 acquired SEC candidates; 938 candidate passages replayed from raw HTML.
+PASS: 1 acquired annual-report candidate(s); 132 candidate passages replayed from raw PDF bytes.
+MODE: public_and_synthetic; public accepted=5; public excluded=0; short synthetic fixtures.
+```
+
+The ten pre-existing documents' revision ids and the corpus fingerprint are
+unchanged by this intake; `normaliseDocument.mjs` derives the new
+`annual_report_pdf` kind and its jurisdiction/reporting-period fields without
+altering the canonical payload shape for any other document.
 
 Briefing I explicitly approved the four parsed filings and authorized a new
 bounded generation round. That round used 12 requests and produced two drafts
@@ -321,6 +369,35 @@ security gate is its own step.
 
 Evidence: `work/briefing-k/verify-first.log`, `verify-final.log`,
 `security.log`, `gitleaks-redacted.json` and `audit.log`.
+
+## Annual report publication, 2026-09-16
+
+The `documents.kind` check constraint needed a new migration
+(`supabase/migrations/20260916000016_annual_report_kind.sql`, the existing
+migration stays immutable) admitting `annual_report_pdf` with a non-SEC
+`https://` source URL. It was applied to the deployed project with
+`pnpm exec supabase link` then `pnpm exec supabase db push` (dry run first,
+confirming exactly that one migration was pending) before any import.
+
+`pnpm db:embed` created 126 new vectors for the 132 `rr-2024` passages (6 reused
+from cross-document duplicate text), then `pnpm db:import` published `rr-2024`
+for both `org-a` and `org-b`; all twenty pre-existing pairs reported
+`unchanged`. `pnpm db:verify` itself fails on an unrelated, pre-existing table
+list (`scripts/db/verify.ts` does not yet know about the `query_embeddings` and
+`research_notes` tables added by earlier migrations - not touched by this
+change), so counts were confirmed instead with `reportDatabaseCounts`:
+
+| Measure                      | Before | After |
+| ---------------------------- | -----: | ----: |
+| Documents                    |     20 |    22 |
+| Revisions, including history |     21 |    23 |
+| Current revisions            |     20 |    22 |
+| Passages, including history  |  1,928 | 2,192 |
+| Stored vectors               |  1,924 | 2,188 |
+
+The deltas are exactly 264 passages and 264 vectors (132 passages times two
+organisation copies), and every pre-existing count is unchanged, confirming the
+new revision published without touching the frozen documents.
 
 ## Remaining work
 

@@ -24,7 +24,9 @@ export function summariseLibrary(
   const published = items.map((item) => item.published_at).toSorted()
   return {
     documents: items.length,
-    filings: items.filter((item) => item.kind === 'sec_filing').length,
+    filings: items.filter(
+      (item) => item.kind === 'sec_filing' || item.kind === 'annual_report_pdf',
+    ).length,
     interviews: items.filter((item) => item.kind === 'synthetic_interview')
       .length,
     companies: new Set(items.map((item) => item.company)).size,
