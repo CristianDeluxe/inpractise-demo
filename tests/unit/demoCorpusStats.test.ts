@@ -18,7 +18,8 @@ describe('landing page corpus figures', () => {
 
   it('counts the public filings the manifest accepts', () => {
     const filings = documents.filter(
-      (document) => document.kind === 'sec_filing',
+      (document) =>
+        document.kind === 'sec_filing' || document.kind === 'annual_report_pdf',
     )
     expect(shown.get('Public filings')).toBe(String(filings.length))
   })

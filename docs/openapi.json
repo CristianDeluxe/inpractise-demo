@@ -80,7 +80,7 @@
             "schema": {
               "$schema": "https://json-schema.org/draft/2020-12/schema",
               "type": "string",
-              "enum": ["synthetic_interview", "sec_filing"]
+              "enum": ["synthetic_interview", "sec_filing", "annual_report_pdf"]
             }
           },
           {
@@ -169,7 +169,11 @@
                           },
                           "kind": {
                             "type": "string",
-                            "enum": ["synthetic_interview", "sec_filing"]
+                            "enum": [
+                              "synthetic_interview",
+                              "sec_filing",
+                              "annual_report_pdf"
+                            ]
                           },
                           "origin": {
                             "type": "string",
@@ -1583,7 +1587,11 @@
                         },
                         "kind": {
                           "type": "string",
-                          "enum": ["synthetic_interview", "sec_filing"]
+                          "enum": [
+                            "synthetic_interview",
+                            "sec_filing",
+                            "annual_report_pdf"
+                          ]
                         },
                         "speaker": {
                           "type": ["string", "null"]
@@ -3027,7 +3035,11 @@
                           },
                           "kind": {
                             "type": "string",
-                            "enum": ["synthetic_interview", "sec_filing"]
+                            "enum": [
+                              "synthetic_interview",
+                              "sec_filing",
+                              "annual_report_pdf"
+                            ]
                           },
                           "speaker": {
                             "type": ["string", "null"]
@@ -4451,7 +4463,11 @@
                           },
                           "kind": {
                             "type": "string",
-                            "enum": ["synthetic_interview", "sec_filing"]
+                            "enum": [
+                              "synthetic_interview",
+                              "sec_filing",
+                              "annual_report_pdf"
+                            ]
                           },
                           "speaker": {
                             "type": ["string", "null"]
