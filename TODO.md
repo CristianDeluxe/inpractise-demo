@@ -44,6 +44,28 @@ plan wins.
 
 ## Infrastructure
 
+- [!] **CI is red on `main`: `jscpd` duplication (1.08%) exceeds the 1.0%
+  threshold.** GitHub Actions run 35041706617 (commit `e135dd1`, the first CI
+  run to cover the `wf/intl-filing` annual-report ingestion merged as `0ce60d8`)
+  failed `check:ci` on `baseline-dupes` alone; every other check in that job
+  (type-check, lint, deno, format, edge and vitest suites, corpus checks, knip)
+  passed. The prior green run (`d3caa6b`, run 35036070675) measured 0.78% (13
+  clones); the five new clones are all in the annual-report corpus scripts added
+  by that merge: `corpus/buildAnnualReportDocuments.mjs` duplicates
+  `corpus/buildPublicDocuments.mjs`, and likewise
+  `prepareAnnualReportReview.mjs`/`prepareReview.mjs`,
+  `verifyAnnualReportCandidates.mjs`/`verifyReviewCandidates.mjs`, and
+  `verifyAnnualReportDocument.mjs`/`verifyPublicDocument.mjs`. This was
+  undetected locally because of the `pnpm dupes` ENOEXEC bug below, which
+  silently skipped the check on this machine before every commit in that merge.
+  The deployed application on `https://inpractise.cristiandeluxe.dev` is
+  unaffected: the 2026-09-16 release probes and `docs/deploy.md` confirm it is
+  live and correct; only the CI badge on `main` is red. Smallest step: extract
+  the shared logic between each annual-report/public pair into one imported
+  helper (matches the file-per- responsibility convention anyway), then confirm
+  with `pnpm dupes` on a machine where the ENOEXEC bug does not reproduce, or
+  re-run the GitHub Actions job after the fix.
+
 - [!] **`pnpm dupes` and `pnpm check:quality` (type-coverage) fail with
   `spawnSync pnpm ENOEXEC` on this machine.** Both `baseline-dupes` and
   `baseline-type-coverage` (from `@syntopica/quality-config`) shell out to
