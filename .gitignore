@@ -15,3 +15,7 @@ reports/
 server/build/
 scripts/api/__pycache__/
 TODO_HISTORY_INDEX.jsonl
+TODO.md
+TODO_LOG.md
+CLAUDE.md
+docs/superpowers/

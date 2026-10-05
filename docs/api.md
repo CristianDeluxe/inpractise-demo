@@ -417,8 +417,8 @@ The seven requested gates are `pnpm type-check`, `pnpm lint`,
 `pnpm format:check`, `pnpm build`, `pnpm test:ci`, `pnpm knip`, and
 `pnpm dupes`, using the documented installation-check environment override. The
 focused contract gate is `pnpm exec vitest run tests/api --no-coverage`; the
-built-origin examples are verified by `python3 scripts/api/exercise.py`. See
-`TODO_LOG.md` and the task's `FINDINGS.md` for actual gate outcomes.
+built-origin examples are verified by `python3 scripts/api/exercise.py`. See the
+commit history and the task's `FINDINGS.md` for actual gate outcomes.
 
 No API deployment, commit, push, migration, seed, import, embedding, token
 provisioning or provider generation was performed. The API bundle must accompany

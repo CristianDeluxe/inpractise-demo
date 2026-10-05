@@ -1,4 +1,3 @@
-import { buildSourceLinks } from './buildSourceLinks'
 import { correctionContent } from './correctionContent'
 
 export function BuildCorrections() {
@@ -6,16 +5,9 @@ export function BuildCorrections() {
     <section className="page-shell py-16">
       <h2>What the agents got wrong</h2>
       <p className="prose-measure mt-5 text-muted-foreground">
-        Six corrections from{' '}
-        <a
-          className="hover-underline text-foreground"
-          href={buildSourceLinks.workLog}
-        >
-          the work log
-        </a>
-        , each recorded with the evidence that closed it. Four were found by a
-        live request against the deployment or the browser, two by a gate; none
-        was found by reading.
+        Six corrections from the work log, each recorded with the evidence that
+        closed it. Four were found by a live request against the deployment or
+        the browser, two by a gate; none was found by reading.
       </p>
       <ol className="mt-8 grid gap-6 md:grid-cols-2">
         {correctionContent.map((item, index) => (

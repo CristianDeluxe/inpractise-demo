@@ -363,9 +363,9 @@ The separate `pnpm check:security` exited **1** for three pre-existing
 `generic-api-key` matches in the historical `before-hashes.json`. Each was
 independently verified as the SHA-256 of `countTokens.mjs`, `tokenizer.mjs` or
 `loadApiKey.mjs`, not a credential. Scanner exclusions were unchanged; the
-false-positive policy is recorded in `TODO.md`. `pnpm audit:check` separately
-exited **0**, reporting zero advisories. `pnpm verify` runs neither command; the
-security gate is its own step.
+false-positive policy is recorded in the project backlog. `pnpm audit:check`
+separately exited **0**, reporting zero advisories. `pnpm verify` runs neither
+command; the security gate is its own step.
 
 Evidence: `work/briefing-k/verify-first.log`, `verify-final.log`,
 `security.log`, `gitleaks-redacted.json` and `audit.log`.

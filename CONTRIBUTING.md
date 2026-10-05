@@ -190,9 +190,9 @@ files.
 
 ## Backlog and review evidence
 
-Read [TODO.md](TODO.md) at the start and end of related work; search
-[TODO_LOG.md](TODO_LOG.md) before reopening a task. Update an existing entry for
-a discovered bug or missing validation, with observation, evidence and the
+Read `TODO.md` (local, not published) at the start and end of related work;
+search `TODO_LOG.md` before reopening a task. Update an existing entry for a
+discovered bug or missing validation, with observation, evidence and the
 smallest next step. States are `[ ]` pending, `[~]` partial/unverified, `[!]`
 blocked, `[x]` verified complete and `[-]` superseded. Move closed work into the
 dated year/month section of TODO_LOG.md and remove it from the active backlog.

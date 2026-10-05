@@ -15,11 +15,10 @@ systems. See [corpus provenance](docs/corpus.md).
 ## Built with agents
 
 The repository was built over four calendar days (13-16 September 2026, 54
-elapsed hours from first to last commit) under
-[the execution plan](docs/research/07-one-day-execution-plan.md), with coding
-agents doing most of the typing and a person deciding what shipped, what was
-retained as a measured failure and what was cut. The story of those days, and
-how the work was split, is at
+elapsed hours from first to last commit) under a written execution plan, with
+coding agents doing most of the typing and a person deciding what shipped, what
+was retained as a measured failure and what was cut. The story of those days,
+and how the work was split, is at
 [/built](https://inpractise.cristiandeluxe.dev/built).
 
 Live demo: <https://inpractise.cristiandeluxe.dev>. Sign in as
@@ -261,17 +260,14 @@ reads.
   Claude Code or Cursor, through the same database authorization and allowance
   the two read tools use.
 - **Eval-driven ranking.** A reranker admitted only when the gold set shows a
-  gain with no new failures (the Voyage `rerank-2.5` experiment in `TODO.md`
-  states that condition), and a gold set that grows with every corpus addition,
-  so F03-class selection misses move the numbers before anyone touches the cap.
+  gain with no new failures (the Voyage `rerank-2.5` experiment was held to that
+  condition), and a gold set that grows with every corpus addition, so F03-class
+  selection misses move the numbers before anyone touches the cap.
 
 ## Documentation map
 
-The build authority is
-[the one-day execution plan](docs/research/07-one-day-execution-plan.md).
-Earlier research documents and dated reports keep their original scope, so they
-can predate later components; [architecture](docs/architecture.md) describes the
-current source.
+[Architecture](docs/architecture.md) describes the current source. Dated reports
+keep their original scope, so they can predate later components.
 
 | Document                                                     | Purpose                                                                                    |
 | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
@@ -299,4 +295,3 @@ current source.
 | [ADR 0004](docs/adr/0004-retrieval-before-selection.md)      | Candidate recall before selection and honest error classification.                         |
 | [ADR 0005](docs/adr/0005-retain-f03-selection-miss.md)       | Preserve the F03 selection miss.                                                           |
 | [ADR 0006](docs/adr/0006-require-complete-claim-evidence.md) | Whole-claim evidence after revocation and ordinary refusal messages.                       |
-| [Execution plan](docs/research/07-one-day-execution-plan.md) | Governing one-day execution plan.                                                          |

@@ -9,14 +9,10 @@ export const buildSourceLinks = {
   commits: 'https://github.com/CristianDeluxe/inpractise-demo/commits/main',
   collector:
     'https://github.com/CristianDeluxe/inpractise-demo/blob/main/scripts/build/collectBuildStats.mjs',
-  workLog:
-    'https://github.com/CristianDeluxe/inpractise-demo/blob/main/TODO_LOG.md',
   baseline:
     'https://github.com/CristianDeluxe/inpractise-demo/blob/main/docs/baseline.md',
   evals:
     'https://github.com/CristianDeluxe/inpractise-demo/blob/main/docs/evals.md',
   decisions:
     'https://github.com/CristianDeluxe/inpractise-demo/tree/main/docs/adr',
-  slices:
-    'https://github.com/CristianDeluxe/inpractise-demo/tree/main/docs/superpowers',
 } as const

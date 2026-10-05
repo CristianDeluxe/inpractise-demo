@@ -164,9 +164,9 @@ migrations, including `20260915000013_research_notes.sql`,
 `20260916000016_annual_report_kind.sql`, matched on the remote project - none
 needed a `db push`. `pnpm db:verify` still refuses to run from a worktree path
 (its guard hardcodes the primary checkout); run from the primary checkout it
-failed exactly as `TODO.md` records, asserting a stale table list that does not
-know about `query_embeddings` or `research_notes` - and its `actual` list proved
-both new tables exist, which stood as the confirmation.
+failed exactly as the project backlog records, asserting a stale table list that
+does not know about `query_embeddings` or `research_notes` - and its `actual`
+list proved both new tables exist, which stood as the confirmation.
 
 `supabase functions deploy research --use-api --no-verify-jwt --import-map supabase/functions/deploy-import-map.json --project-ref <ref>`
 returned
@@ -259,7 +259,7 @@ times in a row live returned `partial` (4 claims), then the same
 `claims/too_big` error, then `partial` (4 claims) again with nothing else
 changed, confirming this is pre-existing model non-determinism at the 4-claims
 boundary, not a regression from this change. Recorded as a distinct, separate
-finding in `TODO.md`.
+finding in the project backlog.
 
 Two more `investigate` questions, chosen because they were stable across
 repeated calls: "What do Microsoft, Costco and Rolls-Royce each say about
@@ -449,7 +449,7 @@ This avoids writing tool caches outside the authorized roots. See
 ## Owner-controlled publication steps — not executed
 
 1. Resolve the remote signup policy and the mid-request claim-revocation risk
-   recorded in [TODO.md](../TODO.md). Review the final artifact and approve
+   recorded in the project backlog. Review the final artifact and approve
    publication under the intended personal/side-project Cloudflare account.
 2. Authenticate Wrangler in that account. Select a Pages project name and
    production branch. Create a **Direct Upload** project through Workers & Pages

@@ -280,8 +280,9 @@ eslint-plugin-react@7.37.5
 All three are installed and their real rules execute successfully, including
 negative React/accessibility probes. No package metadata override hides the
 mismatch. The smallest next step is to adopt upstream versions declaring ESLint
-10 compatibility; this is recorded in `TODO.md`. Baseline-provided Knip
-configuration hints are informational, not unused-source or dependency errors.
+10 compatibility; this is recorded in the project backlog. Baseline-provided
+Knip configuration hints are informational, not unused-source or dependency
+errors.
 
 `.github/workflows/ci.yml` uses pinned actions and four independent jobs:
 `check:ci`, `check:quality` plus conformance, dependency advisories after an
@@ -337,8 +338,8 @@ metadata and embedding artifacts; missing inputs fail rather than produce a
 false pass.
 
 Outstanding UI, HTTP, answer-generation, MCP, live evaluation and public-filing
-approval work stays in `TODO.md`; baseline adoption does not claim those product
-features are delivered.
+approval work stays in the project backlog; baseline adoption does not claim
+those product features are delivered.
 
 Browser regression runner: see [CONTRIBUTING](../CONTRIBUTING.md#browser-probe)
 for its pinned dependency, installation, execution and timeout boundaries.

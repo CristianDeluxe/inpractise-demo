@@ -44,6 +44,7 @@ authenticates as a different account and must not be used against this project.
 
 ## Continuous TODO, Work Log, and History Coverage
 
+`TODO.md` and `TODO_LOG.md` are local working files and are not published.
 Maintain `TODO.md` as the active backlog and `TODO_LOG.md` as the searchable
 record of closed work.
 

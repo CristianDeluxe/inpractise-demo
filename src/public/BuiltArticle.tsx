@@ -28,20 +28,13 @@ export function BuiltArticle() {
               href={buildSourceLinks.plan}
             >
               the execution plan
-            </a>
-            ,{' '}
+            </a>{' '}
+            and{' '}
             <a
               className="hover-underline text-ink-foreground"
               href={buildSourceLinks.commits}
             >
               the commit log
-            </a>{' '}
-            and{' '}
-            <a
-              className="hover-underline text-ink-foreground"
-              href={buildSourceLinks.workLog}
-            >
-              the work log
             </a>
             . Nothing here describes In Practise systems or content.
           </p>

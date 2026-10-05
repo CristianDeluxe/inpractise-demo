@@ -15,14 +15,7 @@ export function BuildLanes() {
           its section 4.4
         </a>
         , not a reconstruction. The commit log carries one human author and does
-        not attribute commits to a lane; the later slices under{' '}
-        <a
-          className="hover-underline text-foreground"
-          href={buildSourceLinks.slices}
-        >
-          docs/superpowers
-        </a>{' '}
-        and the{' '}
+        not attribute commits to a lane; the{' '}
         <a
           className="hover-underline text-foreground"
           href={buildSourceLinks.decisions}

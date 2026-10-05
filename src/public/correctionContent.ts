@@ -1,4 +1,4 @@
-// Corrections recorded in TODO_LOG.md, in the words of the entries that closed
+// Corrections recorded in the work log, in the words of the entries that closed
 // them. Each was found by a gate or a live check, not by rereading the code.
 export const correctionContent = [
   {
