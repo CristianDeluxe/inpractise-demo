@@ -15,7 +15,7 @@ systems. See [corpus provenance](docs/corpus.md).
 ## Built with agents
 
 The repository was built over four calendar days (13-16 September 2026, 54
-elapsed hours from first to last commit, part-time) under
+elapsed hours from first to last commit) under
 [the execution plan](docs/research/07-one-day-execution-plan.md), with coding
 agents doing most of the typing and a person deciding what shipped, what was
 retained as a measured failure and what was cut. The story of those days, and
