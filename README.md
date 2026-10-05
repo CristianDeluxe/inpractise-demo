@@ -12,12 +12,13 @@ interviews about invented companies and fictional speakers; every source-bearing
 screen labels its provenance, and nothing here touches In Practise data or
 systems. See [corpus provenance](docs/corpus.md).
 
-## Built in 24 hours with agents
+## Built with agents
 
-The repository was built in a single day under
-[the one-day execution plan](docs/research/07-one-day-execution-plan.md), with
-coding agents doing most of the typing and a person deciding what shipped, what
-was retained as a measured failure and what was cut. The story of that day, and
+The repository was built over four calendar days (13-16 September 2026, 54
+elapsed hours from first to last commit, part-time) under
+[the execution plan](docs/research/07-one-day-execution-plan.md), with coding
+agents doing most of the typing and a person deciding what shipped, what was
+retained as a measured failure and what was cut. The story of those days, and
 how the work was split, is at
 [/built](https://inpractise.cristiandeluxe.dev/built).
 
