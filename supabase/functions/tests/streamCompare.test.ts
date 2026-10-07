@@ -1,4 +1,5 @@
 import { streamCompare } from '../research/streamCompare.ts'
+import type { CompareTerminalData } from './CompareTerminalData.ts'
 import { compareTransportFixture } from './compareTransportFixture.ts'
 import { parseSseFrames } from './parseSseFrames.ts'
 import { viewAsPrincipalFixture } from './viewAsPrincipalFixture.ts'
@@ -44,10 +45,7 @@ Deno.test(
       result['requestId'] !== 'request-test'
     )
       throw new Error('The terminal envelope did not carry the compare action')
-    const data = result['data'] as {
-      relations: unknown[]
-      uncovered: unknown[]
-    }
+    const data = result['data'] as CompareTerminalData
     if (data.relations.length !== 1 || data.uncovered.length !== 0)
       throw new Error('The terminal envelope lost the comparison')
   },

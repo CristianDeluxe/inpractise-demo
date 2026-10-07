@@ -1,4 +1,4 @@
-import type { Json } from '../../_shared/types/Json.ts'
+import type { RequestLedgerRow } from './RequestLedgerRow.ts'
 
 /**
  * The ledger stores the diagnostic record as opaque JSON. It is returned as it
@@ -6,12 +6,7 @@ import type { Json } from '../../_shared/types/Json.ts'
  * row whose shape the UI cannot read is more useful visible than silently
  * dropped.
  */
-export function toRequestRecord(row: {
-  request_id: string
-  recorded_at: string
-  total_tokens: number | null
-  diagnostics: Json | null
-}) {
+export function toRequestRecord(row: RequestLedgerRow) {
   return {
     requestId: row.request_id,
     recordedAt: row.recorded_at,

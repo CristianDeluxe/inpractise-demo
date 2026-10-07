@@ -1,12 +1,11 @@
 import { ApiError } from './ApiError.ts'
+import type { ResponseQueueEntry } from './ResponseQueueEntry.ts'
 
 /** Traverses JSON without assigning undocumented action fields or nesting. */
 export function collectResponseObjects(
   input: unknown,
 ): Record<string, unknown>[] {
-  const queue: { value: unknown; depth: number }[] = [
-    { value: input, depth: 0 },
-  ]
+  const queue: ResponseQueueEntry[] = [{ value: input, depth: 0 }]
   const objects: Record<string, unknown>[] = []
   const seen = new Set<object>()
   while (queue.length) {

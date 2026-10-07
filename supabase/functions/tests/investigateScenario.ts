@@ -3,6 +3,7 @@ import { effectivePrincipal } from '../research/effectivePrincipal.ts'
 import type { InvestigateStage } from '../research/investigate/InvestigateStage.ts'
 import type { InvestigateScenarioOptions } from './InvestigateScenarioOptions.ts'
 import { investigateTransportFixture } from './investigateTransportFixture.ts'
+import type { ScenarioFailure } from './ScenarioFailure.ts'
 import { viewAsPrincipalFixture } from './viewAsPrincipalFixture.ts'
 import { withTestEnvironment } from './withTestEnvironment.ts'
 
@@ -53,7 +54,7 @@ export async function investigateScenario(options: InvestigateScenarioOptions) {
   return {
     stages,
     result: result as Record<string, unknown> | undefined,
-    failure: failure as { code?: string; message?: string } | undefined,
+    failure: failure as ScenarioFailure | undefined,
     requests,
     completions: requests.filter(
       (request) => request.url === 'https://api.openai.com/v1/chat/completions',

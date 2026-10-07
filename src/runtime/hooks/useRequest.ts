@@ -3,6 +3,7 @@ import type { RequestState } from '@/runtime/RequestState'
 import { useRuntime } from '@/runtime/hooks/useRuntime'
 import { requestFailure } from '@/runtime/requestFailure'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import type { RequestArguments } from './RequestArguments'
 
 /**
  * Only the latest controller may publish state, even if an operation ignores abort.
@@ -12,7 +13,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
  */
 export function useRequest<A, T>(operation: Operation<A, T>) {
   const runtime = useRuntime()
-  const last = useRef<{ args: A } | null>(null)
+  const last = useRef<RequestArguments<A> | null>(null)
   const active = useRef<AbortController | null>(null)
   const [state, setState] = useState<RequestState<T>>({ status: 'idle' })
   const cancel = useCallback(() => {

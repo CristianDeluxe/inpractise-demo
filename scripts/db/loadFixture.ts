@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs'
-import { CorpusDocumentSchema } from './CorpusDocumentSchema.ts'
 import { canonicalJson } from './canonicalJson.ts'
+import { CorpusDocumentSchema } from './CorpusDocumentSchema.ts'
+import type { FixtureManifest } from './FixtureManifest.ts'
 import { sha256 } from './sha256.ts'
 
 export function loadFixture(name: 's5-v2' | 's6-org-b') {
@@ -10,10 +11,9 @@ export function loadFixture(name: 's5-v2' | 's6-org-b') {
   if (sha256(`${canonicalJson(payload)}\n`) !== revisionId)
     throw new Error('Fixture revision hash mismatch')
   const document = CorpusDocumentSchema.parse(raw)
-  const manifest = JSON.parse(readFileSync('corpus/manifest.json', 'utf8')) as {
-    fixtures: Record<string, unknown>[]
-    documents: Record<string, unknown>[]
-  }
+  const manifest = JSON.parse(
+    readFileSync('corpus/manifest.json', 'utf8'),
+  ) as FixtureManifest
   const fixture = manifest.fixtures.find(
     (entry) => entry['normalisedPath'] === path,
   )

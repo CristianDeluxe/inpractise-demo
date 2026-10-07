@@ -1,4 +1,5 @@
 import type { ResearchRequest } from '@/api/ResearchRequest.ts'
+import type { BackendResult } from './BackendResult.ts'
 import { FacadeError } from './FacadeError.ts'
 import type { matchOperation } from './matchOperation.ts'
 import { projectResponse } from './projectResponse.ts'
@@ -6,7 +7,7 @@ import { projectResponse } from './projectResponse.ts'
 export function parseOperationData(
   route: ReturnType<typeof matchOperation>,
   payload: ResearchRequest,
-  backend: { data: unknown; requestId: string },
+  backend: BackendResult,
   input: Record<string, unknown>,
 ) {
   try {

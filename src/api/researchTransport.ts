@@ -1,3 +1,4 @@
+import type { ActionRequest } from './ActionRequest.ts'
 import { performRequest } from './performRequest.ts'
 import { RequestLifecycle } from './RequestLifecycle.ts'
 import type { RequestOptions } from './RequestOptions.ts'
@@ -13,7 +14,7 @@ import { validateRequest } from './validators/validateRequest.ts'
  */
 export async function researchTransport<T, A extends ResearchRequest['action']>(
   client: ResearchClient,
-  request: ResearchRequest & { action: A },
+  request: ActionRequest<A>,
   validate: (input: unknown) => T,
   options: RequestOptions = {},
 ): Promise<ResponseEnvelope<T, A>> {

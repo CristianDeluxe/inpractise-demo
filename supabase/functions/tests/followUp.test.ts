@@ -1,4 +1,7 @@
+import type { CompletionRequestBody } from './CompletionRequestBody.ts'
+import type { FailureCode } from './FailureCode.ts'
 import { followUpScenario } from './followUpScenario.ts'
+import type { RetrievalRequestBody } from './RetrievalRequestBody.ts'
 
 Deno.test('a follow-up is rewritten before anything is measured', async (t) => {
   const history = [
@@ -35,10 +38,9 @@ Deno.test('a follow-up is rewritten before anything is measured', async (t) => {
         throw new Error(
           `Expected two completions, saw ${String(completions.length)}`,
         )
-      const rewrite = (await completions[0]?.clone().json()) as {
-        messages: { content: string }[]
-        response_format?: unknown
-      }
+      const rewrite = (await completions[0]
+        ?.clone()
+        .json()) as CompletionRequestBody
       if (rewrite.response_format !== undefined)
         throw new Error('The rewrite must ask for plain text, not JSON')
       if (!rewrite.messages[1]?.content.includes(history[0]?.question ?? ''))
@@ -52,12 +54,12 @@ Deno.test('a follow-up is rewritten before anything is measured', async (t) => {
         history,
         [`  ${rewritten}\n`],
       )
-      const body = (await retrieval?.clone().json()) as { query_text?: string }
+      const body = (await retrieval?.clone().json()) as RetrievalRequestBody
       if (body.query_text !== rewritten)
         throw new Error(`Retrieval ran on: ${String(body.query_text)}`)
-      const generation = (await completions[1]?.clone().json()) as {
-        messages: { content: string }[]
-      }
+      const generation = (await completions[1]
+        ?.clone()
+        .json()) as CompletionRequestBody
       if (!generation.messages[1]?.content.startsWith(`Question: ${rewritten}`))
         throw new Error('Generation did not receive the rewritten question')
       if (result.resolvedQuery !== rewritten)
@@ -75,7 +77,7 @@ Deno.test('a follow-up is rewritten before anything is measured', async (t) => {
       } catch (error) {
         failure = error
       }
-      const code = (failure as { code?: string } | undefined)?.code
+      const code = (failure as FailureCode | undefined)?.code
       if (code !== 'invalid_model_answer')
         throw new Error(`Expected invalid_model_answer, saw ${String(code)}`)
     },

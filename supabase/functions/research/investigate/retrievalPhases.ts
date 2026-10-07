@@ -1,8 +1,8 @@
+import type { GatheredEvidence } from './GatheredEvidence.ts'
 import type { InvestigateStage } from './InvestigateStage.ts'
 import { investigateSubQuestion } from './investigateSubQuestion.ts'
 import type { InvestigationContext } from './InvestigationContext.ts'
 import { refineInvestigation } from './refineInvestigation.ts'
-import type { RefinementOutcome } from './RefinementOutcome.ts'
 import type { SubQuestion } from './SubQuestion.ts'
 import type { SubQuestionEvidence } from './SubQuestionEvidence.ts'
 import { summariseRetrieval } from './summariseRetrieval.ts'
@@ -15,10 +15,7 @@ import { summariseRetrieval } from './summariseRetrieval.ts'
 export async function* retrievalPhases(
   context: InvestigationContext,
   plan: readonly SubQuestion[],
-): AsyncGenerator<
-  InvestigateStage,
-  { evidence: SubQuestionEvidence[]; refinement: RefinementOutcome }
-> {
+): AsyncGenerator<InvestigateStage, GatheredEvidence> {
   const evidence: SubQuestionEvidence[] = []
   for (const subQuestion of plan) {
     const found = await investigateSubQuestion(context.principal, subQuestion)

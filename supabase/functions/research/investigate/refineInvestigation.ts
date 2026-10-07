@@ -1,7 +1,7 @@
 import type { Principal } from '../Principal.ts'
 import { investigateSubQuestion } from './investigateSubQuestion.ts'
-import type { RefinementOutcome } from './RefinementOutcome.ts'
 import { refinementReserve } from './refinementReserve.ts'
+import type { RefinementResult } from './RefinementResult.ts'
 import { requestRefinement } from './requestRefinement.ts'
 import type { SubQuestionEvidence } from './SubQuestionEvidence.ts'
 import type { TokenBudget } from './TokenBudget.ts'
@@ -17,7 +17,7 @@ export async function refineInvestigation(
   question: string,
   evidence: readonly SubQuestionEvidence[],
   budget: TokenBudget,
-): Promise<{ outcome: RefinementOutcome; evidence?: SubQuestionEvidence }> {
+): Promise<RefinementResult> {
   const empty = evidence
     .filter((entry) => entry.sources.length === 0)
     .map((entry) => entry.subQuestion)

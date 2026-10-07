@@ -1,3 +1,4 @@
+import type { ResearchResponsePayload } from './ResearchResponsePayload.ts'
 import type { ResearchSession } from './ResearchSession.ts'
 import { signIn } from './signIn.ts'
 
@@ -24,10 +25,7 @@ export async function callResearch(
         signal: AbortSignal.timeout(45_000),
       },
     )
-    const payload = (await response.json()) as {
-      data?: unknown
-      error?: { code?: string; message?: string }
-    }
+    const payload = (await response.json()) as ResearchResponsePayload
     if (response.ok) return payload.data
     if (response.status === 401 && attempt === 0) {
       session.token = await signIn(session.config)

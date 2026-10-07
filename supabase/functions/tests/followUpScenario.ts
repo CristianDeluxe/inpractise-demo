@@ -1,8 +1,10 @@
 import { askStages } from '../research/actions/askStages.ts'
+import type { AskHistoryTurn } from '../research/answer/AskHistoryTurn.ts'
 import { effectivePrincipal } from '../research/effectivePrincipal.ts'
 import { answerTransportFixture } from './answerTransportFixture.ts'
 import { completionResponseFixture } from './completionResponseFixture.ts'
 import { providerContentFixture } from './providerContentFixture.ts'
+import type { ResolvedQueryResult } from './ResolvedQueryResult.ts'
 import { viewAsPrincipalFixture } from './viewAsPrincipalFixture.ts'
 import { withTestEnvironment } from './withTestEnvironment.ts'
 
@@ -12,7 +14,7 @@ import { withTestEnvironment } from './withTestEnvironment.ts'
  * rewrite comes first when there is history and the generation follows.
  */
 export async function followUpScenario(
-  history: { question: string; answer: string }[],
+  history: AskHistoryTurn[],
   completions: string[],
 ) {
   const queue = [...completions]
@@ -44,7 +46,7 @@ export async function followUpScenario(
     globalThis.fetch = original
   }
   return {
-    result: result as { resolvedQuery?: string },
+    result: result as ResolvedQueryResult,
     completions: requests.filter(
       (request) => request.url === 'https://api.openai.com/v1/chat/completions',
     ),

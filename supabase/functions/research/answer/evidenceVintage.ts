@@ -1,4 +1,5 @@
 import type { CitationSource } from '../citations/CitationSource.ts'
+import type { VintageSpan } from './VintageSpan.ts'
 
 /**
  * Interviews age. An answer whose evidence is two years old can be correct in
@@ -9,14 +10,7 @@ import type { CitationSource } from '../citations/CitationSource.ts'
 export function evidenceVintage(
   sources: readonly CitationSource[],
   now: Date,
-):
-  | {
-      oldest: string
-      newest: string
-      oldestAgeDays: number
-      newestAgeDays: number
-    }
-  | undefined {
+): VintageSpan | undefined {
   const dayMs = 86_400_000
   const dates = sources
     .map((source) => (source.interviewDate ?? source.publishedAt).slice(0, 10))

@@ -1,6 +1,7 @@
 import { ApiError } from '../../_shared/http/ApiError.ts'
 import { requireEnv } from '../requireEnv.ts'
 import { embeddingModel } from './embeddingModel.ts'
+import type { EmbeddingResponseBody } from './EmbeddingResponseBody.ts'
 
 /**
  * The provider call itself; `acquireEmbedding` consults the cache first.
@@ -26,9 +27,7 @@ export async function embedQuery(query: string): Promise<number[] | null> {
       }),
     })
     if (!response.ok) return null
-    const body = (await response.json()) as {
-      data?: { embedding?: number[] }[]
-    }
+    const body = (await response.json()) as EmbeddingResponseBody
     const embedding = body.data?.[0]?.embedding
     if (!embedding || embedding.length !== 1_536) return null
     return embedding

@@ -1,13 +1,12 @@
 import type { Principal } from '../Principal.ts'
+import type { NoteCount } from './NoteCount.ts'
 
 /**
  * The caller's own note count for the workspace badge, read under their row
  * level security. Best effort by design: identity must not depend on the
  * notebook, so an unavailable count is simply absent from `me`.
  */
-export async function countNotes(
-  principal: Principal,
-): Promise<{ noteCount?: number }> {
+export async function countNotes(principal: Principal): Promise<NoteCount> {
   const result = await principal.client
     .from('research_notes')
     .select('note_id', { count: 'exact', head: true })

@@ -6,6 +6,9 @@ import { localLexicalTransport } from '../helpers/localLexicalTransport.ts'
 import { mcpSession } from '../helpers/mcpSession.ts'
 import { mcpToolText } from '../helpers/mcpToolText.ts'
 import { premiumPassageRef } from '../helpers/premiumPassageRef.ts'
+import type { ResearchErrorBody } from '../helpers/ResearchErrorBody.ts'
+import type { SearchParityData } from '../helpers/SearchParityData.ts'
+import type { SearchParityResponse } from '../helpers/SearchParityResponse.ts'
 
 afterEach(() => {
   vi.unstubAllGlobals()
@@ -38,9 +41,7 @@ describe('MCP and browser parity for equivalent basic-tier principals', () => {
       },
       body: JSON.stringify({ action: 'read', ...premiumPassageRef }),
     })
-    const browserBody = (await browser.json()) as {
-      error?: { code?: string }
-    }
+    const browserBody = (await browser.json()) as ResearchErrorBody
     expect([browser.status, browserBody.error?.code]).toEqual([
       404,
       'not_found',
@@ -86,18 +87,13 @@ describe('MCP and browser parity for equivalent basic-tier principals', () => {
       },
       body: JSON.stringify(request),
     })
-    const browserBody = (await browser.json()) as {
-      data: { items: { citationId: string }[]; mode: string }
-    }
+    const browserBody = (await browser.json()) as SearchParityResponse
     const client = await connectMcpClient(await mcpSession('mcp'))
     const viaMcp = await client.callTool({
       name: 'search_research',
       arguments: { query: 'Harbor June deliveries', limit: 5 },
     })
-    const mcpData = JSON.parse(mcpToolText(viaMcp)) as {
-      items: { citationId: string }[]
-      mode: string
-    }
+    const mcpData = JSON.parse(mcpToolText(viaMcp)) as SearchParityData
     expect([browserBody.data.mode, mcpData.mode]).toEqual([
       'lexical_only',
       'lexical_only',

@@ -1,6 +1,7 @@
 import { handleAsk } from '../research/actions/handleAsk.ts'
 import { effectivePrincipal } from '../research/effectivePrincipal.ts'
 import type { ViewAs } from '../research/ViewAs.ts'
+import type { DiagnosticsResult } from './DiagnosticsResult.ts'
 import { diagnosticsTransportFixture } from './diagnosticsTransportFixture.ts'
 import { viewAsPrincipalFixture } from './viewAsPrincipalFixture.ts'
 import { withTestEnvironment } from './withTestEnvironment.ts'
@@ -31,5 +32,5 @@ export async function runDiagnosticsScenario(viewAs: ViewAs | undefined) {
   } finally {
     globalThis.fetch = original
   }
-  return (result as { diagnostics?: unknown }).diagnostics
+  return (result as DiagnosticsResult).diagnostics
 }

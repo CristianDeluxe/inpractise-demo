@@ -1,9 +1,8 @@
 import { requestChatCompletion } from '../answer/requestChatCompletion.ts'
 import { budgetUsageSink } from './budgetUsageSink.ts'
-import type { MergedEvidence } from './MergedEvidence.ts'
 import { parseSynthesis } from './parseSynthesis.ts'
-import type { SubQuestion } from './SubQuestion.ts'
 import type { Synthesis } from './Synthesis.ts'
+import type { SynthesisInput } from './SynthesisInput.ts'
 import { synthesisPrompt } from './synthesisPrompt.ts'
 import { synthesisRetryTranscript } from './synthesisRetryTranscript.ts'
 import { synthesisTooBigOnly } from './synthesisTooBigOnly.ts'
@@ -21,11 +20,7 @@ import type { TokenBudget } from './TokenBudget.ts'
  * twice.
  */
 export async function requestSynthesis(
-  input: {
-    question: string
-    plan: readonly SubQuestion[]
-    merged: MergedEvidence
-  },
+  input: SynthesisInput,
   budget: TokenBudget,
   onUsage: (totals: unknown) => Promise<void>,
 ): Promise<Synthesis> {

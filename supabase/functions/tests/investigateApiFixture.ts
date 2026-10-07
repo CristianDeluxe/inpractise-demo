@@ -1,5 +1,6 @@
 import type { InvestigateScenarioOptions } from './InvestigateScenarioOptions.ts'
 import { researchApiFixture } from './researchApiFixture.ts'
+import type { RetrievalRequestBody } from './RetrievalRequestBody.ts'
 
 /**
  * The Supabase routes an investigation adds to a standalone ask: the company
@@ -14,7 +15,7 @@ export async function investigateApiFixture(
   if (key === '/rest/v1/document_revisions?companies')
     return [{ company: 'northstar-workflow' }, { company: 'harbor-logistics' }]
   if (key.startsWith('/rest/v1/rpc/search_candidates')) {
-    const body = (await request.clone().json()) as { query_text?: string }
+    const body = (await request.clone().json()) as RetrievalRequestBody
     if (options.emptyQueries?.includes(body.query_text ?? '')) return []
   }
   return researchApiFixture(key)

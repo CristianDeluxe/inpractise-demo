@@ -1,10 +1,10 @@
+import type { ViewAs } from '@/api/ViewAs'
 import { libraryPayloadFixture } from './libraryPayloadFixture'
 import { uiPayloadFixture } from './uiPayloadFixture'
 
 export function viewAsPayloadFixture(request: Record<string, unknown>) {
   const action = String(request['action'])
-  const mode = request['viewAs'] as
-    { role?: 'member'; premium?: false } | undefined
+  const mode = request['viewAs'] as ViewAs | undefined
   const realPrincipal = { orgId: 'demo-org', role: 'reviewer', premium: true }
   const effectivePrincipal = {
     ...realPrincipal,

@@ -1,5 +1,8 @@
 import { investigateScenario } from './investigateScenario.ts'
 import { planContentFixture } from './planContentFixture.ts'
+import type { RefinedSubQuestionPart } from './RefinedSubQuestionPart.ts'
+import type { RetrievalRequestBody } from './RetrievalRequestBody.ts'
+import type { SubQuestionStatus } from './SubQuestionStatus.ts'
 import { synthesisContentFixture } from './synthesisContentFixture.ts'
 
 Deno.test('one refinement round runs only for a miss', async (t) => {
@@ -28,17 +31,13 @@ Deno.test('one refinement round runs only for a miss', async (t) => {
       throw new Error(`Unexpected phase order: ${order}`)
     const queries = await Promise.all(
       retrievals.map(async (request) => {
-        const body = (await request.clone().json()) as { query_text: string }
+        const body = (await request.clone().json()) as RetrievalRequestBody
         return body.query_text
       }),
     )
     if (queries.at(-1) !== 'How long did Harbor take?')
       throw new Error(`Refinement did not run: ${queries.join(' | ')}`)
-    const parts = result?.['subQuestions'] as {
-      question: string
-      originalQuestion?: string
-      status: string
-    }[]
+    const parts = result?.['subQuestions'] as RefinedSubQuestionPart[]
     if (
       parts[1]?.originalQuestion !== obscure ||
       parts[1].status !== 'answered'
@@ -58,7 +57,7 @@ Deno.test('one refinement round runs only for a miss', async (t) => {
     })
     if (stages.some((stage) => stage.phase === 'refine'))
       throw new Error('A declined refinement produced a stage')
-    const parts = result?.['subQuestions'] as { status: string }[]
+    const parts = result?.['subQuestions'] as SubQuestionStatus[]
     if (
       result?.['refinement'] !== 'declined' ||
       parts[1]?.status !== 'not_found'

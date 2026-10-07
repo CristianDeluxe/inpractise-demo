@@ -1,4 +1,5 @@
 import type { McpConfig } from './McpConfig.ts'
+import type { SignInResponse } from './SignInResponse.ts'
 
 /** A password grant for one ordinary member. The server holds no other key. */
 export async function signIn(config: McpConfig): Promise<string> {
@@ -15,7 +16,7 @@ export async function signIn(config: McpConfig): Promise<string> {
     },
   )
   if (!response.ok) throw new Error('Research sign-in failed')
-  const body = (await response.json()) as { access_token?: string }
+  const body = (await response.json()) as SignInResponse
   if (!body.access_token) throw new Error('Research sign-in returned no token')
   return body.access_token
 }

@@ -1,15 +1,12 @@
 import { requestChatCompletion } from '../answer/requestChatCompletion.ts'
-import type { CitationSource } from '../citations/CitationSource.ts'
 import { compareSystemPrompt } from './compareSystemPrompt.ts'
 import { comparisonPrompt } from './comparisonPrompt.ts'
+import type { ComparisonSources } from './ComparisonSources.ts'
 
 /** One cross-reference as JSON, under the same transport and deadline as an answer. */
 export async function requestComparison(
   topic: string,
-  sides: {
-    interviews: readonly CitationSource[]
-    filings: readonly CitationSource[]
-  },
+  sides: ComparisonSources,
   onUsage: (usage: unknown) => Promise<void>,
 ): Promise<string> {
   return requestChatCompletion(

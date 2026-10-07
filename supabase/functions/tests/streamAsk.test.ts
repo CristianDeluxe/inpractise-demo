@@ -1,3 +1,5 @@
+import type { AnswerCounts } from './AnswerCounts.ts'
+import type { CitedAnswerShape } from './CitedAnswerShape.ts'
 import { runStreamScenario } from './runStreamScenario.ts'
 
 Deno.test(
@@ -43,20 +45,14 @@ Deno.test(
           result['requestId'] !== 'request-test'
         )
           throw new Error('The terminal envelope lost its protocol fields')
-        const data = result['data'] as {
-          claims: unknown[]
-          citations: unknown[]
-        }
+        const data = result['data'] as AnswerCounts
         if (!data.claims.length || !data.citations.length)
           throw new Error('The terminal envelope carried no cited claim')
       },
     )
     await t.step('no stage frame carries the answer prose', async () => {
       const { frames } = await runStreamScenario(undefined)
-      const answer = (frames.at(-1)?.data['data'] ?? {}) as {
-        claims: { text: string }[]
-        citations: { quote: string }[]
-      }
+      const answer = (frames.at(-1)?.data['data'] ?? {}) as CitedAnswerShape
       for (const frame of frames.slice(0, -1)) {
         const serialised = JSON.stringify(frame.data)
         for (const claim of answer.claims)

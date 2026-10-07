@@ -1,10 +1,11 @@
-import type { CompareSide } from '@/contracts/CompareSide'
 import { ApiError } from '../ApiError.ts'
+import type { CompareRelationClaims } from './CompareRelationClaims.ts'
+import type { CompareSides } from './CompareSides.ts'
 
 /** A relation may only join a claim that exists on each side. */
 export function validateCompareRelations(
-  relations: readonly { interviewClaimId: string; filingClaimId: string }[],
-  sides: { interviews: CompareSide; filings: CompareSide },
+  relations: readonly CompareRelationClaims[],
+  sides: CompareSides,
 ): void {
   const interviewIds = new Set(
     sides.interviews.claims.map((claim) => claim.claimId),

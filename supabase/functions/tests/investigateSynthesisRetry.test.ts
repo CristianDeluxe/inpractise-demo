@@ -1,5 +1,7 @@
+import type { CompletionRequestBody } from './CompletionRequestBody.ts'
 import { investigateScenario } from './investigateScenario.ts'
 import { planContentFixture } from './planContentFixture.ts'
+import type { StatusResult } from './StatusResult.ts'
 import { synthesisContentFixture } from './synthesisContentFixture.ts'
 import { synthesisTooBigContentFixture } from './synthesisTooBigContentFixture.ts'
 
@@ -41,12 +43,12 @@ Deno.test(
           )
         const retryRequest = completions[2]
         if (!retryRequest) throw new Error('The retry completion was missing')
-        const retryBody = JSON.parse(await retryRequest.clone().text()) as {
-          messages: { content: string }[]
-        }
+        const retryBody = JSON.parse(
+          await retryRequest.clone().text(),
+        ) as CompletionRequestBody
         if (!retryBody.messages[1]?.content.includes('500 characters'))
           throw new Error('The retry did not restate the length limit')
-        if ((result as { status?: string }).status !== 'answered')
+        if ((result as StatusResult).status !== 'answered')
           throw new Error('The retried synthesis was not accepted')
         const usageWrites = requests.filter((request) =>
           request.url.endsWith('/rpc/record_request_usage'),

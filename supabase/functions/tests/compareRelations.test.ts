@@ -2,6 +2,7 @@ import { assertAgreeingPair } from './assertAgreeingPair.ts'
 import { assertNoCompareDisclosure } from './assertNoCompareDisclosure.ts'
 import { compareContentFixture } from './compareContentFixture.ts'
 import { completionResponseFixture } from './completionResponseFixture.ts'
+import type { KindFilterBody } from './KindFilterBody.ts'
 import { runCompareScenario } from './runCompareScenario.ts'
 
 Deno.test('a cross-reference pairs grounded claims across sides', async (t) => {
@@ -39,7 +40,7 @@ Deno.test('a cross-reference pairs grounded claims across sides', async (t) => {
       const { requests } = await runCompareScenario()
       const kinds = requests
         .filter((request) => request.url.includes('/rpc/search_candidates'))
-        .map((request) => JSON.parse(request.body) as { kind_filter?: string })
+        .map((request) => JSON.parse(request.body) as KindFilterBody)
         .map((body) => body.kind_filter)
       if (kinds.join(' ') !== 'synthetic_interview sec_filing')
         throw new Error(`Unexpected kind filters: ${kinds.join(' ')}`)

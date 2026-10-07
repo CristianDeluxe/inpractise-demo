@@ -1,4 +1,5 @@
 import { ApiError } from '../../_shared/http/ApiError.ts'
+import type { CompletionBody } from './CompletionBody.ts'
 
 /**
  * Record reported usage before checking content or validating the answer.
@@ -9,10 +10,7 @@ export async function readCompletion(
   response: Response,
   onUsage: (usage: unknown) => Promise<void>,
 ): Promise<string> {
-  const body = (await response.json()) as {
-    choices?: { message?: { content?: string } }[]
-    usage?: unknown
-  }
+  const body = (await response.json()) as CompletionBody
   await onUsage(body.usage)
   const content = body.choices?.[0]?.message?.content
   if (!content) throw new ApiError('invalid_model_answer', 'Empty answer')

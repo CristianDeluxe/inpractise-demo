@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js'
 import { ApiError } from '../_shared/http/ApiError.ts'
 import type { Database } from '../_shared/types/Database.ts'
 import { handleCompare } from '../research/actions/handleCompare.ts'
+import type { RecordedRequest } from './RecordedRequest.ts'
 import { runCompareScenario } from './runCompareScenario.ts'
 
 Deno.test('a side without evidence is reported, not judged', async (t) => {
@@ -47,10 +48,7 @@ Deno.test('a side without evidence is reported, not judged', async (t) => {
       )
       if (debits.length !== 1)
         throw new Error(`Debited ${String(debits.length)} times`)
-      if (
-        requests.indexOf(debits[0] as { url: string; body: string }) >
-        generation
-      )
+      if (requests.indexOf(debits[0] as RecordedRequest) > generation)
         throw new Error('Generation ran before the debit')
       if (
         requests.filter((request) => request.url.endsWith('/chat/completions'))

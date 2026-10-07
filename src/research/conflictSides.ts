@@ -1,6 +1,7 @@
 import type { Citation } from '@/api/Citation'
 import type { Claim } from '@/api/Claim'
 import { citationAttribution } from './citationAttribution'
+import type { ConflictAccount } from './ConflictAccount'
 import type { ConflictSide } from './ConflictSide'
 
 /**
@@ -15,10 +16,7 @@ export function conflictSides(
   const byId = new Map(
     citations.map((citation) => [citation.citationId, citation]),
   )
-  const sides = new Map<
-    string,
-    { interviewDate: string | null; claims: Claim[] }
-  >()
+  const sides = new Map<string, ConflictAccount>()
   for (const claim of claims) {
     const citation = claim.citationIds
       .map((id) => byId.get(id))

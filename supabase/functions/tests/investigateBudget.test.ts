@@ -1,6 +1,7 @@
 import { investigateScenario } from './investigateScenario.ts'
 import { planContentFixture } from './planContentFixture.ts'
 import { synthesisContentFixture } from './synthesisContentFixture.ts'
+import type { UsageBody } from './UsageBody.ts'
 
 Deno.test('one token budget bounds the whole loop', async (t) => {
   const plan = planContentFixture([
@@ -49,7 +50,7 @@ Deno.test('one token budget bounds the whole loop', async (t) => {
       throw new Error(
         `Expected one usage record, saw ${String(recorded.length)}`,
       )
-    const body = (await recorded[0]?.clone().json()) as { total?: number }
+    const body = (await recorded[0]?.clone().json()) as UsageBody
     if (body.total !== 30)
       throw new Error(`Recorded total was ${String(body.total)}, expected 30`)
     const debit = requests.findIndex((request) =>

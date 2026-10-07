@@ -3,15 +3,14 @@ import { recordDiagnostics } from '../answer/recordDiagnostics.ts'
 import { recordUsage } from '../answer/recordUsage.ts'
 import { readCitationSources } from '../citations/readCitationSources.ts'
 import { buildInvestigationResult } from './buildInvestigationResult.ts'
+import type { GatheredEvidence } from './GatheredEvidence.ts'
 import type { InvestigateStage } from './InvestigateStage.ts'
 import type { InvestigationContext } from './InvestigationContext.ts'
 import { investigationRecord } from './investigationRecord.ts'
 import { investigationScope } from './investigationScope.ts'
 import { mergeEvidence } from './mergeEvidence.ts'
-import type { RefinementOutcome } from './RefinementOutcome.ts'
 import { requestSynthesis } from './requestSynthesis.ts'
 import type { SubQuestion } from './SubQuestion.ts'
-import type { SubQuestionEvidence } from './SubQuestionEvidence.ts'
 
 /**
  * Step four. The steps' evidence is merged into one context, the ledger
@@ -23,7 +22,7 @@ import type { SubQuestionEvidence } from './SubQuestionEvidence.ts'
 export async function* synthesisPhase(
   context: InvestigationContext,
   plan: readonly SubQuestion[],
-  gathered: { evidence: SubQuestionEvidence[]; refinement: RefinementOutcome },
+  gathered: GatheredEvidence,
 ): AsyncGenerator<
   InvestigateStage,
   ReturnType<typeof buildInvestigationResult>

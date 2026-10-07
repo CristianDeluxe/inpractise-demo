@@ -1,13 +1,11 @@
 import type { ViewAs } from '../research/ViewAs.ts'
+import type { CitedAnswerShape } from './CitedAnswerShape.ts'
 import { runStageScenario } from './runStageScenario.ts'
 
 Deno.test('no stage discloses evidence before the recheck', async (t) => {
   await t.step('stages carry counts and phases, never prose', async () => {
     const { stages, result } = await runStageScenario(undefined)
-    const answer = result as {
-      claims: { text: string }[]
-      citations: { quote: string }[]
-    }
+    const answer = result as CitedAnswerShape
     if (!answer.claims.length || !answer.citations.length)
       throw new Error('Expected the fixture to produce a cited claim')
     for (const stage of stages) {

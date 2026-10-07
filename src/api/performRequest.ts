@@ -1,3 +1,4 @@
+import type { ActionRequest } from './ActionRequest.ts'
 import { parseEnvelope } from './parseEnvelope.ts'
 import { parseHttpError } from './parseHttpError.ts'
 import { readResponseBody } from './readResponseBody.ts'
@@ -10,7 +11,7 @@ import { throwIfCancelled } from './throwIfCancelled.ts'
 /** One request, one JSON envelope, bound to the action that was asked for. */
 export async function performRequest<T, A extends ResearchRequest['action']>(
   client: ResearchClient,
-  request: ResearchRequest & { action: A },
+  request: ActionRequest<A>,
   validate: (input: unknown) => T,
   signal: AbortSignal,
 ): Promise<ResponseEnvelope<T, A>> {

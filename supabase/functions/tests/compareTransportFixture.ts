@@ -3,10 +3,11 @@ import { compareContentFixture } from './compareContentFixture.ts'
 import type { CompareScenarioOptions } from './CompareScenarioOptions.ts'
 import { completionResponseFixture } from './completionResponseFixture.ts'
 import { kindFilterOf } from './kindFilterOf.ts'
+import type { RecordedRequest } from './RecordedRequest.ts'
 
 /** A fetch that records every call and answers the provider and the database. */
 export function compareTransportFixture(options: CompareScenarioOptions) {
-  const requests: { url: string; body: string }[] = []
+  const requests: RecordedRequest[] = []
   const sides = options.sides ?? { interviews: true, filings: true }
   const completion =
     options.completion ??

@@ -1,6 +1,6 @@
 import { ApiError } from './ApiError.ts'
 import type { ResearchClient } from './ResearchClient.ts'
-import type { ResearchRequest } from './ResearchRequest.ts'
+import type { StreamableRequest } from './StreamableRequest.ts'
 import { throwIfCancelled } from './throwIfCancelled.ts'
 
 /**
@@ -11,7 +11,7 @@ import { throwIfCancelled } from './throwIfCancelled.ts'
  */
 export async function sendResearchRequest(
   client: ResearchClient,
-  request: ResearchRequest & { stream?: true },
+  request: StreamableRequest,
   signal: AbortSignal,
 ): Promise<Response> {
   let token: string | null

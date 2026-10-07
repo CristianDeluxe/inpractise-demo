@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js'
 import type { Target } from '../../scripts/db/Target.ts'
 import type { Database } from '../../supabase/functions/_shared/types/Database.ts'
 import { searchEvidence } from '../../supabase/functions/research/actions/searchEvidence.ts'
+import type { LexicalSearchBody } from './LexicalSearchBody.ts'
 
 /** Real caller-scoped SQL and MCP transport with controlled query embeddings. */
 export function localLexicalTransport(
@@ -14,11 +15,7 @@ export function localLexicalTransport(
       throw new Error('Paid providers are forbidden in parity tests')
     if (!request.url.endsWith('/functions/v1/research'))
       return original(input, init)
-    const body = (await request.clone().json()) as {
-      action: string
-      query: string
-      limit: number
-    }
+    const body = (await request.clone().json()) as LexicalSearchBody
     if (body.action !== 'search') return original(input, init)
     const client = createClient<Database>(target.url, target.publishableKey, {
       auth: { persistSession: false, autoRefreshToken: false },

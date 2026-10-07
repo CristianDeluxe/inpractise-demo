@@ -1,3 +1,5 @@
+import type { CitedAnswerShape } from './CitedAnswerShape.ts'
+import type { CitedSubQuestionPart } from './CitedSubQuestionPart.ts'
 import { investigateScenario } from './investigateScenario.ts'
 import { planContentFixture } from './planContentFixture.ts'
 import { synthesisContentFixture } from './synthesisContentFixture.ts'
@@ -62,10 +64,7 @@ Deno.test('synthesis is held to the grounded-claim contract', async (t) => {
       })
       if (failure)
         throw new Error(`Unexpected failure: ${String(failure.code)}`)
-      const parts = result?.['subQuestions'] as {
-        status: string
-        citationIds: string[]
-      }[]
+      const parts = result?.['subQuestions'] as CitedSubQuestionPart[]
       if (parts[1]?.status !== 'not_found' || parts[1].citationIds.length)
         throw new Error('An unsupported part was reported established')
       if (parts[0]?.status !== 'answered' || !parts[0].citationIds.length)
@@ -95,10 +94,7 @@ Deno.test('synthesis is held to the grounded-claim contract', async (t) => {
         ]),
       ],
     })
-    const answer = result as {
-      claims: { text: string }[]
-      citations: { quote: string }[]
-    }
+    const answer = result as CitedAnswerShape
     if (!answer.claims.length || !answer.citations.length)
       throw new Error('Expected the fixture to produce a cited claim')
     for (const stage of stages) {

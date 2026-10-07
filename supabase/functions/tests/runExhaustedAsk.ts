@@ -2,14 +2,13 @@ import { createClient } from '@supabase/supabase-js'
 import { ApiError } from '../_shared/http/ApiError.ts'
 import type { Database } from '../_shared/types/Database.ts'
 import { handleAsk } from '../research/actions/handleAsk.ts'
+import type { AskHistoryTurn } from '../research/answer/AskHistoryTurn.ts'
 
 /**
  * Runs one Ask against a stub client whose allowance is already exhausted and
  * asserts it fails with `allowance_exhausted` after the debit and nothing else.
  */
-export async function runExhaustedAsk(
-  history: readonly { question: string; answer: string }[],
-) {
+export async function runExhaustedAsk(history: readonly AskHistoryTurn[]) {
   const requests: string[] = []
   const client = createClient<Database>(
     'https://example.supabase.co',

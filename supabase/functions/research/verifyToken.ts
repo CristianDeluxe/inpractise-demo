@@ -1,4 +1,5 @@
 import { ApiError } from '../_shared/http/ApiError.ts'
+import type { AuthUserBody } from './AuthUserBody.ts'
 
 /**
  * Validates the caller's token against GoAuth directly rather than through the
@@ -17,7 +18,7 @@ export async function verifyToken(
     throw new ApiError('unauthenticated', 'Invalid session')
   if (!response.ok)
     throw new ApiError('dependency_failure', 'Session check failed', true)
-  const body = (await response.json()) as { id?: string }
+  const body = (await response.json()) as AuthUserBody
   if (!body.id) throw new ApiError('unauthenticated', 'Invalid session')
   return body.id
 }

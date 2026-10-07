@@ -1,6 +1,7 @@
 import { corsHeaders } from '../_shared/http/corsHeaders.ts'
 import { errorFrame } from '../_shared/http/errorFrame.ts'
 import { sseFrame } from '../_shared/http/sseFrame.ts'
+import type { StageStreamEnvelope } from './StageStreamEnvelope.ts'
 
 /**
  * Progress as it happens, then one terminal event. Stages carry counts and
@@ -11,12 +12,7 @@ import { sseFrame } from '../_shared/http/sseFrame.ts'
  */
 export function streamStages(
   run: AsyncGenerator<unknown, unknown>,
-  envelope: {
-    action: string
-    orgId: string
-    buildId: string
-    requestId: string
-  },
+  envelope: StageStreamEnvelope,
 ): Response {
   const { action, orgId, buildId, requestId } = envelope
   const body = new ReadableStream<Uint8Array>({

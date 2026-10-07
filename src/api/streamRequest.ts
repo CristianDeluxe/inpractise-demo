@@ -1,3 +1,4 @@
+import type { ActionRequest } from './ActionRequest.ts'
 import { ApiError } from './ApiError.ts'
 import { parseActionData } from './parseActionData.ts'
 import { parseEnvelope } from './parseEnvelope.ts'
@@ -8,7 +9,6 @@ import { readEventStream } from './readEventStream.ts'
 import { readResponseBody } from './readResponseBody.ts'
 import { RequestLifecycle } from './RequestLifecycle.ts'
 import type { ResearchClient } from './ResearchClient.ts'
-import type { ResearchRequest } from './ResearchRequest.ts'
 import type { ResponseEnvelope } from './ResponseEnvelope.ts'
 import { sendResearchRequest } from './sendResearchRequest.ts'
 import type { StreamContract } from './StreamContract.ts'
@@ -27,7 +27,7 @@ export async function streamRequest<
   S,
 >(
   client: ResearchClient,
-  request: ResearchRequest & { action: A },
+  request: ActionRequest<A>,
   contract: StreamContract<T, S>,
   options: StreamOptions<S>,
 ): Promise<ResponseEnvelope<T, A>> {

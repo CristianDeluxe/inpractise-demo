@@ -1,4 +1,5 @@
 import { companySearchSchema } from '@/routes/companySearchSchema'
+import type { CompanyNavigationOptions } from '@/workspace/hooks/CompanyNavigationOptions'
 import { useLibrary } from '@/workspace/hooks/useLibrary'
 import { useLocation, useNavigate } from '@tanstack/react-router'
 
@@ -14,11 +15,11 @@ export function useResearchWorkspace() {
   const navigate = useNavigate()
   const company = companySearchSchema.parse(search).company ?? ''
   const setCompany = (value: string) => {
-    const options: {
-      to: string
-      search: Record<string, string>
-      replace: boolean
-    } = { to: '.', search: value ? { company: value } : {}, replace: true }
+    const options: CompanyNavigationOptions = {
+      to: '.',
+      search: value ? { company: value } : {},
+      replace: true,
+    }
     void navigate(options)
   }
   return { library, company, setCompany }

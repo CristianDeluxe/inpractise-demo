@@ -1,5 +1,6 @@
 import type { Transport } from '@modelcontextprotocol/sdk/shared/transport.js'
 import { appendFileSync } from 'node:fs'
+import type { InitializeResultMessage } from './InitializeResultMessage.ts'
 
 /**
  * Records the negotiated protocol version and the client that connected, taken
@@ -12,7 +13,7 @@ export function recordHandshake(
 ): void {
   const send = transport.send.bind(transport)
   transport.send = async (message, options) => {
-    const result = (message as { result?: { protocolVersion?: string } }).result
+    const result = (message as InitializeResultMessage).result
     if (result?.protocolVersion) {
       const line = JSON.stringify({
         at: new Date().toISOString(),

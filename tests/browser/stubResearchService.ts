@@ -1,4 +1,5 @@
 import type { Page } from '@playwright/test'
+import type { ResearchActionBody } from './ResearchActionBody.ts'
 import { researchPayload } from './researchPayload.ts'
 
 /**
@@ -30,7 +31,7 @@ export async function stubResearchService(page: Page) {
     })
   })
   await page.route('**/functions/v1/research', async (route) => {
-    const request = route.request().postDataJSON() as { action: string }
+    const request = route.request().postDataJSON() as ResearchActionBody
     await route.fulfill({
       contentType: 'application/json',
       body: JSON.stringify({

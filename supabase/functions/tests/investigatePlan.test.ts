@@ -1,5 +1,6 @@
 import { investigateScenario } from './investigateScenario.ts'
 import { planContentFixture } from './planContentFixture.ts'
+import type { SubQuestionStatus } from './SubQuestionStatus.ts'
 import { synthesisContentFixture } from './synthesisContentFixture.ts'
 
 Deno.test('the plan is bounded and scoped to the visible corpus', async (t) => {
@@ -37,7 +38,7 @@ Deno.test('the plan is bounded and scoped to the visible corpus', async (t) => {
       plan?.phase === 'plan' ? plan.subQuestions[0]?.company : undefined
     if (scoped !== 'northstar-workflow')
       throw new Error('The plan stage lost the sub-question scope')
-    const parts = result?.['subQuestions'] as { status: string }[]
+    const parts = result?.['subQuestions'] as SubQuestionStatus[]
     if (parts.map((part) => part.status).join(' ') !== 'answered partial')
       throw new Error('The per-part statuses were not carried')
   })

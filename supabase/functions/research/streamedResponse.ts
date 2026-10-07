@@ -5,6 +5,7 @@ import type { Principal } from './Principal.ts'
 import type { ResearchRequest } from './ResearchRequest.ts'
 import { streamAsk } from './streamAsk.ts'
 import { streamCompare } from './streamCompare.ts'
+import type { StreamEnvelope } from './StreamEnvelope.ts'
 import { streamInvestigate } from './streamInvestigate.ts'
 
 /**
@@ -15,7 +16,7 @@ import { streamInvestigate } from './streamInvestigate.ts'
 export function streamedResponse(
   principal: Principal,
   request: ResearchRequest,
-  envelope: { buildId: string; requestId: string },
+  envelope: StreamEnvelope,
 ): Response | undefined {
   if (!('stream' in request) || request.stream !== true) return undefined
   const effective = effectivePrincipal(principal, request.viewAs)
