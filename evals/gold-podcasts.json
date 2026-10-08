@@ -1,0 +1,77 @@
+{
+  "corpusNote": "Gold ids are documentId:passageId over the two public podcast interviews (pod-roche-2024, pod-novartis-2025). The runner resolves the current revision from the database, so a republished revision does not invalidate the set. Several gold ids are alternatives: one retrieved passage is enough. Transcripts are automatic, so every expected fact was checked against the normalised passage text.",
+  "cases": [
+    {
+      "caseId": "P01",
+      "persona": "basic",
+      "question": "How much does Roche invest in research and development every year?",
+      "company": "roche",
+      "expectedStatus": "answered",
+      "goldIds": ["pod-roche-2024:T018.1"],
+      "mustNotContain": []
+    },
+    {
+      "caseId": "P02",
+      "persona": "basic",
+      "question": "How is Roche using AI in R&D?",
+      "company": "roche",
+      "expectedStatus": "answered",
+      "goldIds": ["pod-roche-2024:T030.1", "pod-roche-2024:T030.2"],
+      "mustNotContain": []
+    },
+    {
+      "caseId": "P03",
+      "persona": "basic",
+      "question": "How many new medicines has Roche launched per year over the last ten to fifteen years?",
+      "company": "roche",
+      "expectedStatus": "answered",
+      "goldIds": ["pod-roche-2024:T010"],
+      "mustNotContain": []
+    },
+    {
+      "caseId": "P04",
+      "persona": "basic",
+      "question": "Which partners does Novartis use for AI in drug discovery?",
+      "company": "novartis",
+      "expectedStatus": "answered",
+      "goldIds": ["pod-novartis-2025:T030.1", "pod-novartis-2025:T032"],
+      "mustNotContain": []
+    },
+    {
+      "caseId": "P05",
+      "persona": "basic",
+      "question": "How many manufacturing plants does Novartis still have in the UK?",
+      "company": "novartis",
+      "expectedStatus": "answered",
+      "goldIds": ["pod-novartis-2025:T040"],
+      "mustNotContain": []
+    },
+    {
+      "caseId": "P06",
+      "persona": "basic",
+      "question": "What did Novartis learn from chasing too many AI and data science projects?",
+      "company": "novartis",
+      "expectedStatus": "answered",
+      "goldIds": ["pod-novartis-2025:T034"],
+      "mustNotContain": []
+    },
+    {
+      "caseId": "N01",
+      "persona": "basic",
+      "question": "What will Roche's revenue be in 2030?",
+      "company": "roche",
+      "expectedStatus": "not_found",
+      "goldIds": [],
+      "mustNotContain": []
+    },
+    {
+      "caseId": "N02",
+      "persona": "basic",
+      "question": "What was Novartis's net income in 2024?",
+      "company": "novartis",
+      "expectedStatus": "not_found",
+      "goldIds": [],
+      "mustNotContain": []
+    }
+  ]
+}

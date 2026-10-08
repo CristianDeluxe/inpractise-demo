@@ -20,7 +20,7 @@ export function SiteFooter() {
           An independent engineering demonstration. No affiliation with In
           Practise.
         </p>
-        <p>Interviews shown here use fictional companies and speakers</p>
+        <p>Public podcast interviews, automatic transcripts</p>
       </div>
     </footer>
   )

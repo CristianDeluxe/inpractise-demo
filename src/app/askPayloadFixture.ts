@@ -14,8 +14,7 @@ export function askPayloadFixture(citation: Citation) {
     missingEvidence: ['No February figures.'],
     mode: 'hybrid',
     candidateCount: 4,
-    resolvedQuery:
-      'What makes complex Northstar installations hard to replace?',
+    resolvedQuery: 'How is Roche using AI in research and development?',
     diagnostics: diagnosticsFixture,
   }
 }

@@ -8,11 +8,11 @@ export function CorpusCounts({ corpus }: CorpusCountsProps) {
         <dd>{corpus.documents}</dd>
       </div>
       <div className="metric">
-        <dt>Revisions</dt>
+        <dt>Transcript versions</dt>
         <dd>{corpus.revisions}</dd>
       </div>
       <div className="metric">
-        <dt>Passages</dt>
+        <dt>Excerpts</dt>
         <dd>{corpus.passages}</dd>
       </div>
       <div className="metric">

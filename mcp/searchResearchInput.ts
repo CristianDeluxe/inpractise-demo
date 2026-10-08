@@ -3,7 +3,11 @@ import { z } from 'zod'
 /** No org, user or role argument exists: the server's own membership decides
  *  what it can see. */
 export const searchResearchInput = {
-  query: z.string().min(1).max(2000).describe('The research question'),
+  query: z
+    .string()
+    .min(1)
+    .max(2000)
+    .describe('The question to search the interview transcripts for'),
   company: z
     .string()
     .max(80)

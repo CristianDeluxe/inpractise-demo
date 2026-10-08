@@ -21,7 +21,7 @@ export function QuestionForm({ research }: QuestionFormProps) {
           research.setQuery(event.target.value)
         }}
         className="field"
-        placeholder="What does the evidence establish?"
+        placeholder="Ask about the Roche or Novartis interview"
       />
       <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
         <p className="text-xs text-muted-foreground">
@@ -36,7 +36,7 @@ export function QuestionForm({ research }: QuestionFormProps) {
             ? 'Search quotes'
             : research.mode === 'investigate'
               ? 'Investigate'
-              : 'Ask the library'}{' '}
+              : 'Ask the interviews'}{' '}
           →
         </button>
       </div>

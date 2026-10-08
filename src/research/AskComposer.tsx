@@ -20,13 +20,13 @@ export function AskComposer({
           onChange={(event) => {
             onChange(event.target.value)
           }}
-          placeholder="Ask a question about the corpus"
+          placeholder="Ask about the Roche or Novartis interview"
           className="field min-h-[3.5rem] resize-none rounded-2xl"
         />
         <button
           type="submit"
           disabled={pending || query.trim().length === 0}
-          aria-label="Ask the corpus"
+          aria-label="Send question"
           className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground transition-[background-color,scale] duration-150 motion-safe:active:scale-[0.96] hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100"
         >
           <SendHorizontal size={18} strokeWidth={1.5} aria-hidden="true" />
@@ -34,7 +34,7 @@ export function AskComposer({
       </div>
       <p className="mt-2 text-[11px] text-muted-foreground">
         Follow-ups are fine. One is rewritten into a standalone question before
-        the corpus is searched, and that rewrite is shown above its answer.
+        the interviews are searched, and that rewrite is shown above its answer.
       </p>
     </form>
   )

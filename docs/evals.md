@@ -1,8 +1,50 @@
-# Evaluation: method, retained runs and the one failure
+# Evaluation: method, gold sets, retained runs and the one failure
 
-`pnpm eval:answers` runs the frozen gold set in `evals/gold.json` against the
-**deployed** Edge function, through the same `src/api` client the browser uses,
-and writes a redacted `evals/report.json`.
+`pnpm eval:answers` runs the current gold set, `evals/gold-podcasts.json`,
+against the **deployed** Edge function, through the same `src/api` client the
+browser uses, and writes a redacted `evals/report.json`. `--out` names another
+report file.
+
+## Current status: podcast gold set, not yet measured live
+
+Readers see only the two public podcast interviews (`pod-roche-2024`,
+`pod-novartis-2025`), so the default gold set is now
+[gold-podcasts.json](../evals/gold-podcasts.json): eight cases.
+
+| Case | Company  | Expected  | Gold passage(s)                      | Question                                                                               |
+| ---- | -------- | --------- | ------------------------------------ | -------------------------------------------------------------------------------------- |
+| P01  | roche    | answered  | `pod-roche-2024:T018.1`              | How much does Roche invest in research and development every year?                     |
+| P02  | roche    | answered  | `pod-roche-2024:T030.1` or `T030.2`  | How is Roche using AI in R&D?                                                          |
+| P03  | roche    | answered  | `pod-roche-2024:T010`                | How many new medicines has Roche launched per year over the last ten to fifteen years? |
+| P04  | novartis | answered  | `pod-novartis-2025:T030.1` or `T032` | Which partners does Novartis use for AI in drug discovery?                             |
+| P05  | novartis | answered  | `pod-novartis-2025:T040`             | How many manufacturing plants does Novartis still have in the UK?                      |
+| P06  | novartis | answered  | `pod-novartis-2025:T034`             | What did Novartis learn from chasing too many AI and data science projects?            |
+| N01  | roche    | not_found | none                                 | What will Roche's revenue be in 2030?                                                  |
+| N02  | novartis | not_found | none                                 | What was Novartis's net income in 2024?                                                |
+
+Each expected fact was checked against the normalised passage text. The
+transcripts are automatic, so numbers appear as the recognizer wrote them (for
+example "about13 billion Swiss francs"). The induced missing-gold control is not
+a gold case: it removes a known gold candidate from a real candidate list and
+requires the retrieval gate to fail (`tests/integration/search.test.ts` and
+`tests/integration/database.test.ts` over `pod-roche-2024:T018.1`;
+`tests/unit/ranking.test.ts` offline). **No live run of this set has been
+made.** `pnpm eval:answers` against it still has to be run before any podcast
+number is quoted anywhere.
+
+The podcasts are indexed lexically (`lexical_only`, no vectors), so recall at
+ten here measures full-text search only.
+
+## Retired corpus: the earlier gold set and retained runs
+
+Everything from here down to "Cost and repeatability" describes the earlier
+corpus of SEC filings and synthetic interviews. That material is no longer
+readable (migration `20261008000017`), so `evals/gold.json` and the retained
+`evals/report-run-*.json` files are kept as **dated history**: they measured the
+retired corpus and say nothing about the podcasts. `pnpm eval:replay` still
+replays those reports, each against `evals/gold.json`; any other report replays
+against the current set. The F03 tolerance in the answer gate belongs to that
+history and cannot match a podcast case id.
 
 ## Method
 
@@ -34,10 +76,10 @@ have different fixes and are reported as two numbers.
 
 `pnpm eval:replay` re-reads every retained `evals/report-run-*.json`, recomputes
 its summary from the stored case results, checks coverage against
-[gold.json](../evals/gold.json) and puts the result back through the gate. It
-needs no key, no model account and no database: a reader who clones the
-repository can confirm that the retained measurements still satisfy the gate
-they were measured under.
+[gold.json](../evals/gold.json) (retired reports) or the current gold set and
+puts the result back through the gate. It needs no key, no model account and no
+database: a reader who clones the repository can confirm that the retained
+measurements still satisfy the gate they were measured under.
 
 Replay checks stored consistency and gate behavior. A fresh measurement of the
 live endpoint is `pnpm eval:answers`, which needs the deployed function and the
@@ -152,11 +194,11 @@ report (`rr-2024`) cannot be expressed today.
 
 A full `answered` case was considered instead, but
 `tests/unit/falseRefusalGate.test.ts` checks every retained
-`evals/report-run-*.json` against the exact case set in `evals/gold.json`
-(`assertCaseCoverage`), and those reports are frozen snapshots of a past
-`pnpm eval:answers` run against the deployed Edge function. Adding a case to
-`gold.json` without a matching entry in every retained report fails that check
-offline, and producing a matching entry needs a fresh live run against the
+`evals/report-run-*.json` against the exact case set in `evals/gold.json` (the
+retired set) (`assertCaseCoverage`), and those reports are frozen snapshots of a
+past `pnpm eval:answers` run against the deployed Edge function. Adding a case
+to `gold.json` without a matching entry in every retained report fails that
+check offline, and producing a matching entry needs a fresh live run against the
 deployed endpoint with the new document already imported and embedded there -
 both outside this branch's scope (`pnpm eval:answers` is a live measurement
 step, not part of `check:ci`'s credential-free gate, and this task does not

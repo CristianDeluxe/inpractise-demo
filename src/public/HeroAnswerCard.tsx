@@ -11,7 +11,7 @@ export function HeroAnswerCard() {
     >
       <header className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-border px-6 py-3">
         <p className="eyebrow text-muted-foreground">
-          Synthetic example · case {heroAnswer.caseId} · {heroAnswer.recordedOn}
+          Public podcast · {heroAnswer.episodeTitle}
         </p>
         <p className="rounded-full bg-success px-2.5 py-0.5 font-mono text-[11px] uppercase tracking-[0.12em] text-success-foreground">
           answered
@@ -29,12 +29,11 @@ export function HeroAnswerCard() {
               {heroAnswer.claim}
             </p>
             <p className="mt-2 font-mono text-xs text-primary">
-              Source: {heroAnswer.citation.documentId} ·{' '}
-              {heroAnswer.citation.passageId}
+              Source: {heroAnswer.speaker}, {heroAnswer.section}
             </p>
           </li>
         </ul>
-        <HeroCitation citation={heroAnswer.citation} />
+        <HeroCitation answer={heroAnswer} />
       </div>
     </article>
   )

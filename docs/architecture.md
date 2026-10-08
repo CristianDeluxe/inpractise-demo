@@ -1,7 +1,12 @@
 # Request architecture
 
-In Practise Demo is an independent engineering demonstration over public SEC
-filings and synthetic interviews, with one research endpoint and three clients.
+In Practise Demo is an independent engineering demonstration over two public
+podcast interview transcripts (Roche and Novartis CEOs, _In Good Company_,
+automatic transcripts), with one research endpoint and three clients. Since
+migration `20261008000017`, `private.can_access_revision` and the document read
+policy admit only revisions of kind `public_interview`: earlier synthetic
+interviews and filings are stored and immutable but unreadable by every client,
+premium and reviewer members included.
 
 ```text
 Browser session                         Local MCP member session
@@ -68,7 +73,7 @@ shows authentication stopping before membership or evidence access; an
 organically aged member token was also checked against Auth directly, accepted
 before `exp` and rejected after it.
 
-### Viewing the corpus as a lesser principal
+### Viewing the interviews as a lesser principal
 
 A reviewer can ask what a plain member sees without a second account. The
 request carries an optional `viewAs` object, and

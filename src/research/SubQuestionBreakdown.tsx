@@ -3,7 +3,7 @@ import type { SubQuestionBreakdownProps } from './SubQuestionBreakdownProps'
 
 /**
  * One row per planned sub-question, in plan order, so a reader sees which
- * parts of the question the corpus could establish before reading the
+ * parts of the question the interviews could establish before reading the
  * synthesised claims below.
  */
 export function SubQuestionBreakdown({
@@ -30,8 +30,8 @@ export function SubQuestionBreakdown({
           ) : null}
           <p className="mt-1 text-xs text-muted-foreground">
             {part.mode === 'hybrid' ? 'Hybrid' : 'Lexical only'} ·{' '}
-            {part.candidateCount} candidates · {part.selectedCount} selected ·{' '}
-            {part.citationIds.length} cited
+            {part.candidateCount} excerpts found · {part.selectedCount} selected
+            · {part.citationIds.length} cited
           </p>
         </li>
       ))}

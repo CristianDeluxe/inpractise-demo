@@ -18,7 +18,9 @@ describe('workspace standards', () => {
     const { runtime } = uiRuntimeFixture()
     await renderRouteFixture('/app/standards', runtime)
 
-    await screen.findByRole('heading', { name: 'How we handle evidence' })
+    await screen.findByRole('heading', {
+      name: 'How quotes and sources are checked',
+    })
     expect(
       screen.getAllByRole('navigation', { name: 'Workspace' }).length,
     ).toBeGreaterThan(0)

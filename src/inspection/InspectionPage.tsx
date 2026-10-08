@@ -1,23 +1,22 @@
 import { RequestFeedback } from '@/components/RequestFeedback'
 import { ResponseMeta } from '@/components/ResponseMeta'
 import { useInspection } from '@/inspection/hooks/useInspection'
-import { useLibrary } from '@/workspace/hooks/useLibrary'
+import { useInterviewLibrary } from '@/workspace/hooks/useInterviewLibrary'
 import { AuthorizedLibrary } from './AuthorizedLibrary'
 import { CorpusCounts } from './CorpusCounts'
 import { EvaluationReportNotice } from './EvaluationReportNotice'
-import { IngestionMetrics } from './IngestionMetrics'
 import { RecentRequests } from './RecentRequests'
 
 export function InspectionPage() {
   const request = useInspection()
-  const library = useLibrary()
+  const library = useInterviewLibrary()
   return (
     <main id="main-content" className="mx-auto max-w-6xl px-5 py-10">
       <p className="eyebrow text-muted-foreground">Reviewer diagnostics</p>
       <h1 className="mt-3 font-sans text-3xl">Inspect the evidence system.</h1>
       <p className="mt-4 text-sm text-muted-foreground">
-        Read-only counts for the current reviewer’s authorized corpus. Revisions
-        and passages may include retained history.
+        Read-only counts for the interviews the current reviewer may read.
+        Transcript versions and excerpts may include retained history.
       </p>
       <RequestFeedback
         state={request.state}
@@ -29,7 +28,6 @@ export function InspectionPage() {
       {request.state.status === 'success' ? (
         <>
           <CorpusCounts corpus={request.state.data.data.corpus} />
-          <IngestionMetrics />
           <RecentRequests requests={request.state.data.data.recentRequests} />
           <EvaluationReportNotice
             diagnosis={request.state.data.data.corpus.diagnosis}

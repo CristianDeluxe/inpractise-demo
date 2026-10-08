@@ -27,7 +27,7 @@ export function PassageLoader(props: PassageReference) {
         <>
           <PassageText passage={request.state.data.data} />
           <nav
-            aria-label="Adjacent passages"
+            aria-label="Nearby transcript excerpts"
             className="mt-6 flex flex-wrap gap-3"
           >
             {request.state.data.data.neighbourIds.map((id) => (
@@ -39,7 +39,7 @@ export function PassageLoader(props: PassageReference) {
                   neighbor.select(id)
                 }}
               >
-                Adjacent passage {id}
+                Nearby excerpt {id}
               </button>
             ))}
           </nav>
@@ -47,7 +47,7 @@ export function PassageLoader(props: PassageReference) {
             to={request.state.data.data.citation.readerPath}
             className="mt-5 block text-sm text-primary underline"
           >
-            Permalink to this exact passage
+            Permalink to this excerpt
           </Link>
           <ResponseMeta {...request.state.data} />
         </>

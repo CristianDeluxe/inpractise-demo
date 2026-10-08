@@ -15,15 +15,22 @@ describe('atomic publication and retained revisions', () => {
     'failed replacement preserves current source; complete replacement retains old citations',
     async () =>
       withRollback(async (sql) => {
-        const source = loadCorpus().find((d) => d.documentId === 's5')
-        if (!source) throw new Error('Missing S5')
-        const manifest = loadManifestEntry('s5')
+        const source = loadCorpus().find(
+          (d) => d.documentId === 'pod-roche-2024',
+        )
+        if (!source) throw new Error('Missing pod-roche-2024')
+        const manifest = loadManifestEntry('pod-roche-2024')
+        const secondPassageId = requireValue(source.passages[1]).passageId
         const id = `test-${randomUUID()}`
-        const first = reviseFixture(source, id)
+        const first = reviseFixture(
+          source,
+          id,
+          'The fixture transcript sentence reports 120,000 launches.',
+        )
         const second = reviseFixture(
           source,
           id,
-          'The corrected fictional January 2026 example has processing revenue of USD 100,000 on 2,000,000 transactions.',
+          'The corrected fixture transcript sentence reports 100,000 launches.',
         )
         const firstManifest = fixtureManifest(first, manifest)
         const secondManifest = fixtureManifest(second, manifest)
@@ -63,19 +70,19 @@ describe('atomic publication and retained revisions', () => {
         expect(
           requireValue(
             (
-              await sql`select text_content from public.passages where document_id=${id} and revision_id=${first.revisionId} and passage_id='P2'`
+              await sql`select text_content from public.passages where document_id=${id} and revision_id=${first.revisionId} and passage_id=${secondPassageId}`
             )[0],
           )['text_content'],
         ).toContain('120,000')
         expect(
           requireValue(
             (
-              await sql`select text_content from public.passages where document_id=${id} and revision_id=${second.revisionId} and passage_id='P2'`
+              await sql`select text_content from public.passages where document_id=${id} and revision_id=${second.revisionId} and passage_id=${secondPassageId}`
             )[0],
           )['text_content'],
         ).toContain('100,000')
         const candidates =
-          await sql`select * from public.search_candidates('corrected fictional January',null,null,30) where document_id=${id}`
+          await sql`select * from public.search_candidates('corrected fixture transcript',null,null,30) where document_id=${id}`
         expect(candidates.length).toBeGreaterThan(0)
         expect(
           candidates.every((c) => c['revision_id'] === second.revisionId),

@@ -34,21 +34,21 @@ export function researchPayload(action: string) {
         status: 'partial',
         claims: [
           {
-            text: 'Complex installations are hard to migrate because integrations must be rebuilt.',
+            text: 'Roche expects AI to play a role across research and development.',
             citationIds: [citation.citationId],
           },
         ],
         citations: [citation],
-        missingEvidence: ['No enterprise switching cost was measured.'],
+        missingEvidence: ['No revenue forecast was given.'],
         mode: 'lexical_only',
         candidateCount: 6,
       }
     case 'read':
       return {
         citation,
-        section: 'Interview',
+        section: '19:08',
         isCurrentRevision: true,
-        neighbourIds: ['P3'],
+        neighbourIds: ['T031'],
       }
     default:
       throw new Error(`Unstubbed action: ${action}`)

@@ -17,9 +17,9 @@ export function registerSearchResearch(
   server.registerTool(
     'search_research',
     {
-      title: 'Search research evidence',
+      title: 'Search podcast interview transcripts',
       description:
-        'Returns ranked passages from the research corpus this member may read, each with its immutable citation, source and date. It never returns text the member is not entitled to.',
+        'Returns ranked passages from the public podcast interview transcripts (two CEO interviews, automatic transcripts) this member may read, each with its immutable citation, speaker, source and date. It never returns text the member is not entitled to.',
       inputSchema: searchResearchInput,
     },
     async (args) => {

@@ -10,28 +10,32 @@ describe('authorized library pagination', () => {
       await (
         await handle(
           apiRequestFixture(
-            'documents?pageSize=1&company=northstar&kind=synthetic_interview',
+            'documents?pageSize=1&company=roche&kind=public_interview',
           ),
         )
       ).json(),
     )
-    expect(first.items.map((item) => item.document_id)).toEqual(['northstar'])
+    expect(first.items.map((item) => item.document_id)).toEqual([
+      'pod-novartis-2025',
+    ])
     expect(first.nextCursor).toBeTypeOf('string')
     const second = documentsOutput.parse(
       await (
         await handle(
           apiRequestFixture(
-            `documents?pageSize=1&company=northstar&kind=synthetic_interview&cursor=${first.nextCursor ?? ''}`,
+            `documents?pageSize=1&company=roche&kind=public_interview&cursor=${first.nextCursor ?? ''}`,
           ),
         )
       ).json(),
     )
-    expect(second.items.map((item) => item.document_id)).toEqual(['zenith'])
+    expect(second.items.map((item) => item.document_id)).toEqual([
+      'pod-roche-2024',
+    ])
     expect(second.nextCursor).toBeNull()
     expect(transport).toHaveBeenLastCalledWith(
       expect.any(String),
       expect.objectContaining({
-        body: '{"action":"list","company":"northstar","kind":"synthetic_interview"}',
+        body: '{"action":"list","company":"roche","kind":"public_interview"}',
       }),
     )
     expect(

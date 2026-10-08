@@ -28,7 +28,7 @@ describe('NotebookPage', () => {
     expect(within(northstar).getByText('Switching cost argument.')).toBeTruthy()
     expect(
       within(northstar)
-        .getByRole('link', { name: /Open exact passage/ })
+        .getByRole('link', { name: /Open exact excerpt/ })
         .getAttribute('href'),
     ).toBe('/read/northstar/rev-1/p-1')
     const hidden = screen.getByRole('region', {

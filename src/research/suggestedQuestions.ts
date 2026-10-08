@@ -1,4 +1,5 @@
 export const suggestedQuestions = [
-  'What makes complex Northstar installations hard to replace?',
-  'What is known about Meridian processing revenue in February 2026?',
+  'How is Roche using AI in research and development?',
+  'What did Novartis’s CEO say about drug pricing in Europe?',
+  'What will Roche’s revenue be in 2030?',
 ]

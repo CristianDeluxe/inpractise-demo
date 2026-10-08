@@ -6,26 +6,29 @@ import { signInPersona } from '../../scripts/db/signInPersona.ts'
 import type { Database } from '../../supabase/functions/_shared/types/Database.ts'
 
 describe('remote direct PostgREST RLS', () => {
-  it('allows the premium demo and denies basic/MCP fixtures access to its passages', async () => {
+  it('shows every persona the podcast interviews and no hidden kind, premium included', async () => {
     const target = loadTarget()
-    const demo = await signInPersona(target, 'demo')
-    const control = await demo.client
-      .from('passages')
-      .select('text_content')
-      .eq('document_id', 's6')
-    expect(control.error).toBeNull()
-    expect(control.data?.length).toBeGreaterThan(0)
-    expect(
-      control.data?.some((row) => row.text_content.includes('ORCHID-74')),
-    ).toBe(true)
-    for (const persona of ['basic', 'mcp']) {
+    const hidden = ['s1', 's6', 'msft-2024', 'cost-2025', 'rr-2024']
+    for (const persona of ['demo', 'basic', 'mcp']) {
       const { client } = await signInPersona(target, persona)
-      const result = await client
+      const podcast = await client
+        .from('passages')
+        .select('document_id')
+        .eq('document_id', 'pod-roche-2024')
+      expect(podcast.error).toBeNull()
+      expect(podcast.data?.length).toBeGreaterThan(0)
+      const withheld = await client
         .from('passages')
         .select('*')
-        .eq('document_id', 's6')
-      expect(result.error).toBeNull()
-      expect(result.data).toEqual([])
+        .in('document_id', hidden)
+      expect(withheld.error).toBeNull()
+      expect(withheld.data).toEqual([])
+      const titles = await client
+        .from('documents')
+        .select('document_id')
+        .in('document_id', hidden)
+      expect(titles.error).toBeNull()
+      expect(titles.data).toEqual([])
     }
   }, 60000)
   it('isolates both organisations and prevents self-promotion', async () => {
@@ -76,7 +79,7 @@ describe('remote direct PostgREST RLS', () => {
       expect(result.data).toBeNull()
     }
     const result = await client.rpc('search_candidates', {
-      query_text: 'migration',
+      query_text: 'medicines',
     })
     expect(result.error?.code).toBe('42501')
   }, 60000)

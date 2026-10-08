@@ -6,6 +6,6 @@
 export const demoCorpusStats = [
   { label: 'Public podcast interviews', value: '2' },
   { label: 'Minutes of audio', value: '98' },
-  { label: 'Indexed passages', value: '186' },
+  { label: 'Transcript excerpts', value: '186' },
   { label: 'Companies covered', value: '2' },
 ] as const

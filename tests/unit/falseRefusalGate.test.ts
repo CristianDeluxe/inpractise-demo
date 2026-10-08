@@ -4,6 +4,7 @@ import { assertCaseCoverage } from '../../evals/assertCaseCoverage.ts'
 import { loadGold } from '../../evals/loadGold.ts'
 import { replayReport } from '../../evals/replayReport.ts'
 import { retainedReportPaths } from '../../evals/retainedReportPaths.ts'
+import { retiredGoldPath } from '../../evals/retiredGoldPath.ts'
 import { summariseResults } from '../../evals/summariseResults.ts'
 import { acceptedF03Fixture } from '../helpers/acceptedF03Fixture.ts'
 import { caseResultFixture } from '../helpers/caseResultFixture.ts'
@@ -120,7 +121,7 @@ describe('the retained reports', () => {
     expect(paths.length).toBeGreaterThan(0)
     for (const path of paths) {
       const { summary } = replayReport(path)
-      expect(summary.cases).toBe(loadGold().length)
+      expect(summary.cases).toBe(loadGold(retiredGoldPath).length)
       expect(summary.statusMismatches.map((item) => item.caseId)).toEqual([
         'F03',
       ])

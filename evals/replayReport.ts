@@ -1,5 +1,6 @@
 import { assertAnswerGate } from './assertAnswerGate.ts'
 import { assertCaseCoverage } from './assertCaseCoverage.ts'
+import { goldPathForReport } from './goldPathForReport.ts'
 import { loadReport } from './loadReport.ts'
 import { summariseResults } from './summariseResults.ts'
 
@@ -11,7 +12,7 @@ import { summariseResults } from './summariseResults.ts'
  */
 export function replayReport(path: string) {
   const report = loadReport(path)
-  assertCaseCoverage(report.results)
+  assertCaseCoverage(report.results, goldPathForReport(path))
   const summary = summariseResults(report.results)
   assertAnswerGate(summary)
   return { path, generatedAt: report.generatedAt, summary }

@@ -40,7 +40,7 @@ describe('CitationCard', () => {
     fireEvent.change(screen.getByLabelText(uiLabelsFixture.question), {
       target: { value: 'question' },
     })
-    fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
+    fireEvent.click(screen.getByRole('button', { name: /Ask the interviews/ }))
     expect(await screen.findByText(quote)).toBeDefined()
     expect(documentHasScriptElement()).toBe(false)
   })

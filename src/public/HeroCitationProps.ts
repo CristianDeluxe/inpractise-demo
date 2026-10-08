@@ -1,5 +1,5 @@
-import type { Citation } from '@/api/Citation'
+import type { HeroAnswerRecord } from './HeroAnswerRecord'
 
 export type HeroCitationProps = {
-  citation: Citation
+  answer: HeroAnswerRecord
 }

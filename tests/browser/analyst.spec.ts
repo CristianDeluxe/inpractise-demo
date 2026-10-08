@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test'
-import { askTheCorpus } from './askTheCorpus.ts'
+import { askTheInterviews } from './askTheInterviews.ts'
 import { browserProbeTest as test } from './browserProbeTest.ts'
 import { openCitedPassage } from './openCitedPassage.ts'
 import { searchForPassage } from './searchForPassage.ts'
@@ -20,7 +20,7 @@ test('an analyst signs in, searches, asks and opens the cited passage', async ({
 
   await signInOffline(page)
   await searchForPassage(page)
-  await askTheCorpus(page)
+  await askTheInterviews(page)
   await openCitedPassage(page)
   expect(errors).toEqual([])
 })

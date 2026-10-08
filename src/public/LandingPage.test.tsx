@@ -14,40 +14,39 @@ afterEach(() => {
 })
 
 describe('landing page', () => {
-  it('shows a recorded answer with its exact citation in the hero', async () => {
+  it('shows a recorded podcast answer with its exact quote in the hero', async () => {
     await renderRouteFixture('/', null)
     const card = await screen.findByRole('article', {
       name: heroAnswer.question,
     })
     expect(card.textContent).toContain(heroAnswer.claim)
-    expect(card.textContent).toContain(heroAnswer.citation.quote)
-    expect(card.textContent).toContain(heroAnswer.citation.speaker)
-    expect(card.textContent).toContain('Interview: 2026-08-04')
-    expect(card.textContent).toContain('Published: 2026-08-06')
-    expect(card.textContent).toContain(heroAnswer.citation.revisionId)
-    expect(card.textContent).toContain(
-      'Synthetic interview — fictional company and speaker',
-    )
+    expect(card.textContent).toContain(heroAnswer.quote)
+    expect(card.textContent).toContain(heroAnswer.speaker)
+    expect(card.textContent).toContain(heroAnswer.podcast)
+    expect(card.textContent).toContain('Interview: 2024-11-20')
+    expect(card.textContent).toContain(heroAnswer.passageId)
+    expect(card.textContent).toContain('Public podcast - automatic transcript')
     expect(
       within(card)
-        .getByRole('link', { name: /Open exact passage/ })
+        .getByRole('link', { name: /Open the transcript excerpt/ })
         .getAttribute('href'),
-    ).toBe(heroAnswer.citation.readerPath)
+    ).toBe(heroAnswer.readerPath)
   })
-  it('links each engineering property to its page', async () => {
+  it('walks through the interview workflow', async () => {
     await renderRouteFixture('/', null)
-    const strip = await screen.findByRole('region', { name: 'How it is built' })
-    expect(
-      within(strip)
-        .getAllByRole('link')
-        .map((link) => link.getAttribute('href')),
-    ).toEqual(['/method', '/built', '/connect'])
+    const workflow = await screen.findByRole('region', {
+      name: 'How the workflow runs',
+    })
+    expect(within(workflow).getAllByRole('listitem')).toHaveLength(4)
   })
-  it('renders every section without scrolling or an observer', async () => {
+  it('names the sources and shows an unanswerable question', async () => {
     vi.stubGlobal('IntersectionObserver', undefined)
     await renderRouteFixture('/', null)
-    await screen.findByText('Two accounts. Different contexts.')
-    expect(screen.queryByText(/Five interviews/)).toBeNull()
-    expect(screen.queryByRole('link', { name: /podcast/i })).toBeNull()
+    await screen.findByText('A question the interviews cannot answer')
+    expect(
+      screen.getByText('No quote in these two interviews answers this.'),
+    ).toBeTruthy()
+    expect(screen.queryByText(/Northstar|Meridian|Costco|SEC/)).toBeNull()
+    expect(screen.queryByText(/case G01|F03|13\/14/)).toBeNull()
   })
 })

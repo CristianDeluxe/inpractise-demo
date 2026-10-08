@@ -1,6 +1,6 @@
 export const answerStatusLabels = {
-  answered: 'Answered from the corpus',
+  answered: 'Answered from the interviews',
   partial: 'Partly answered',
-  conflict: 'Sources disagree',
-  not_found: 'Not established by the corpus',
+  conflict: 'The interviews disagree',
+  not_found: 'Not established by these interviews',
 } as const

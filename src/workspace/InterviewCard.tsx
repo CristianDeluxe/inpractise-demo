@@ -2,14 +2,18 @@ import { formatCompanyName } from '@/components/formatters/formatCompanyName'
 import { SourceLabel } from '@/components/SourceLabel'
 import { Link } from '@tanstack/react-router'
 import type { InterviewCardProps } from './InterviewCardProps'
+import { InterviewFacts } from './InterviewFacts'
+import { interviewProfiles } from './interviewProfiles'
 
 /**
- * The list row carries no expert name or first excerpt id, so the card shows
- * only what it has and opens Ask scoped to the company rather than a reader
- * path it would have to invent.
+ * The list row carries no speaker names or excerpt ids, so the guest, the
+ * host and the first excerpt come from the typed profile for the document.
+ * A document without a profile still opens Ask, and shows no reader link
+ * rather than one built from a guessed identifier.
  */
 export function InterviewCard({ interview }: InterviewCardProps) {
   const name = formatCompanyName(interview.company)
+  const profile = interviewProfiles[interview.document_id]
   return (
     <article
       aria-label={interview.title}
@@ -20,26 +24,22 @@ export function InterviewCard({ interview }: InterviewCardProps) {
         {name}
       </p>
       <h3 className="mt-2 font-sans text-lg leading-snug">{interview.title}</h3>
-      <dl className="mb-5 mt-4 grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1.5 text-sm">
-        {interview.interview_date === null ? null : (
-          <>
-            <dt className="text-muted-foreground">Interview date</dt>
-            <dd>{interview.interview_date}</dd>
-          </>
+      <InterviewFacts interview={interview} />
+      <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-border pt-4">
+        {profile === undefined ? null : (
+          <Link
+            to={`/read/${interview.document_id}/${interview.revision_id}/${profile.firstPassageId}`}
+            aria-label={`Read the transcript: ${interview.title}`}
+            className="action"
+          >
+            Read the transcript
+          </Link>
         )}
-        {interview.passage_count === undefined ? null : (
-          <>
-            <dt className="text-muted-foreground">Excerpts</dt>
-            <dd>{interview.passage_count}</dd>
-          </>
-        )}
-      </dl>
-      <div className="mt-auto border-t border-border pt-4">
         <Link
           to="/app/ask"
           search={{ company: interview.company }}
           aria-label={`Ask about ${name}: ${interview.title}`}
-          className="action"
+          className="quiet-action"
         >
           Ask about {name}
         </Link>

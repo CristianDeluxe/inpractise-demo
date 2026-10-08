@@ -20,8 +20,9 @@ Node directly, as shown in the install guide.
 See the [client installation guide](mcp-install.md) for Claude Code, Claude
 Desktop, Cursor and generic stdio configuration, member provisioning, connection
 checks and troubleshooting. The package and server ID are `inpractise-demo`; see
-[ADR 0001](adr/0001-project-name.md). This is an independent demo over public
-filings and synthetic interviews.
+[ADR 0001](adr/0001-project-name.md). This is an independent demo over two
+public podcast interview transcripts (Roche and Novartis CEOs, automatic
+transcripts).
 
 The bundled server launches as the dedicated, basic-tier `mcp` member:
 `me+mcp@cristiandeluxe.dev`, a test fixture separate from the reviewer login
@@ -40,15 +41,21 @@ MCP member against the real server over an in-memory transport pair. It compares
 that member with the browser's equivalent basic-tier member and asserts:
 
 - exactly the two tools are exposed, neither taking an `orgId`;
-- the basic member is refused the premium passage `s6/P2` with the same
+- a retired synthetic-interview passage (`s1/P2`) is refused with the same
   `not_found` through MCP as the browser gets over HTTP (404, no title hint, no
-  canary text);
-- the premium `demo` reviewer receives that same passage through MCP, the
-  control that proves the canary was actually loaded rather than absent
-  everywhere;
-- a search returns the identical ordered `citationId` list through both paths.
+  quotation): since migration `20261008000017` no kind other than
+  `public_interview` is readable;
+- the podcast passage `pod-roche-2024/T018.1` is returned through MCP and the
+  browser path alike, the control that proves the refusal above is the access
+  boundary rather than an absent database;
+- a search for "billion Swiss francs research development" returns the identical
+  ordered `citationId` list through both paths.
 
-## A recorded Claude Code session
+## A recorded Claude Code session (earlier corpus)
+
+This session predates the podcast cut: it queried the synthetic Meridian
+interview, which readers can no longer open. It is kept as a dated record of the
+MCP protocol exchange, not as an example of current content.
 
 Claude Code launched the server from `.mcp.json` and negotiated protocol version
 **2025-11-25** (recorded in `docs/mcp-handshake.jsonl`). Session

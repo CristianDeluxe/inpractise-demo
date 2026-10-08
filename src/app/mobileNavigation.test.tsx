@@ -18,7 +18,9 @@ describe('public site navigation', () => {
     const menu = await screen.findByRole('dialog', { name: 'In Practise' })
     fireEvent.click(within(menu).getByRole('link', { name: 'Standards' }))
     expect(
-      await screen.findByRole('heading', { name: 'How we handle evidence' }),
+      await screen.findByRole('heading', {
+        name: 'How quotes and sources are checked',
+      }),
     ).toBeTruthy()
     expect(screen.queryByRole('dialog')).toBeNull()
     fireEvent.click(screen.getByRole('button', { name: 'Open menu' }))

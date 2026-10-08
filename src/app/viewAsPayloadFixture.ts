@@ -25,6 +25,7 @@ export function viewAsPayloadFixture(request: Record<string, unknown>) {
                 ...first,
                 document_id: 'premium-document',
                 company: 'Premium Company',
+                title: 'Premium interview',
                 passage_count: 7,
               },
             ]),

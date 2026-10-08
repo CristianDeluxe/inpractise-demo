@@ -30,9 +30,11 @@ describe('authorized research workflow', () => {
     expect(
       screen.getByLabelText<HTMLSelectElement>('Company scope').value,
     ).toBe('')
-    fireEvent.click(screen.getByRole('button', { name: /What makes complex/ }))
+    fireEvent.click(
+      screen.getByRole('button', { name: /How is Roche using AI/ }),
+    )
     expect(requests).toHaveLength(2)
-    fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
+    fireEvent.click(screen.getByRole('button', { name: /Ask the interviews/ }))
     expect(
       await screen.findByText('A supported claim with limits.'),
     ).toBeTruthy()
@@ -84,7 +86,7 @@ describe('authorized research workflow', () => {
       await screen.findByText('Retained historical revision', { exact: false }),
     ).toBeTruthy()
     expect(requests.at(-1)?.['revisionId']).toBe(citationFixture().revisionId)
-    fireEvent.click(screen.getByRole('button', { name: 'Adjacent passage P3' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Nearby excerpt P3' }))
     await waitFor(() => {
       expect(requests.at(-1)?.['passageId']).toBe('P3')
     })
@@ -126,21 +128,21 @@ describe('authorized research workflow', () => {
     const { runtime } = uiRuntimeFixture()
     await renderRouteFixture('/app/ask', runtime)
     await screen.findByLabelText(uiLabelsFixture.scope)
-    fireEvent.click(screen.getByRole('button', { name: /What makes complex/ }))
-    fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
+    fireEvent.click(
+      screen.getByRole('button', { name: /How is Roche using AI/ }),
+    )
+    fireEvent.click(screen.getByRole('button', { name: /Ask the interviews/ }))
     expect(
       await screen.findByText('A supported claim with limits.'),
     ).toBeTruthy()
-    expect(
-      screen.getByRole('heading', { name: 'Ranked candidates' }),
-    ).toBeTruthy()
+    expect(screen.getByRole('heading', { name: 'Excerpts found' })).toBeTruthy()
     const dropped = diagnosticsFixture.candidateAt10.filter(
       (candidateId) => !diagnosticsFixture.selectedIds.includes(candidateId),
     )
-    expect(screen.getAllByText('selected')).toHaveLength(
+    expect(screen.getAllByText('used')).toHaveLength(
       diagnosticsFixture.selectedIds.length,
     )
-    expect(screen.getAllByText('dropped')).toHaveLength(dropped.length)
+    expect(screen.getAllByText('left out')).toHaveLength(dropped.length)
     expect(screen.getByTitle(dropped[0] ?? '')).toBeTruthy()
   })
 })

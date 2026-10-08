@@ -1,9 +1,12 @@
 # HTTP API v1
 
-This is an independent engineering demo over **public filings and synthetic
-interviews about invented companies**. It is not an In Practise product and has
-no access to private In Practise research. The HTTP API is a third client of the
-same research backend used by the browser and MCP.
+This is an independent engineering demo over **two public podcast interview
+transcripts**: Roche CEO Thomas Schinecker (2024) and Novartis CEO Vasant
+Narasimhan (2025), from _In Good Company_. The transcripts are automatic and the
+speaker labels are inferred. It is not an In Practise product, the interviews
+are not In Practise research, and it has no access to private In Practise
+research. The HTTP API is a third client of the same research backend used by
+the browser and MCP.
 
 The facade owns no credential, issues no tokens, and stores no sessions. It
 forwards the caller's `Authorization` header unchanged to
@@ -73,7 +76,7 @@ neither, preserving byte-stable representations.
 
 | Method and path                                                                  | Input and result                                                                                                                                                                                     |
 | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `GET /api/v1/documents`                                                          | Optional `company` (max 80 characters), `kind` (`synthetic_interview`, `sec_filing` or `annual_report_pdf`), `pageSize` (1–50, default 20), `cursor`; returns `items` and nullable `nextCursor`.     |
+| `GET /api/v1/documents`                                                          | Optional `company` (max 80 characters), `kind` (`public_interview`, the only readable kind), `pageSize` (1–50, default 20), `cursor`; returns `items` and nullable `nextCursor`.                     |
 | `GET /api/v1/documents/{documentId}/revisions/{revisionId}/passages/{passageId}` | Each path ID is 1–200 characters and URL encoded. Returns exact `citation`, `section`, and `neighbourIds`.                                                                                           |
 | `POST /api/v1/search`                                                            | JSON `query` (1–2000 characters), optional `company`, `limit` (1–10); returns ranked `items`, `mode`, `truncated`.                                                                                   |
 | `POST /api/v1/answers`                                                           | JSON `query`, optional `company`; returns `status`, `claims`, `missingEvidence`, `citations`, `mode`, `candidateCount`, optional `diagnostics`. **Consumes the caller's backend request allowance.** |
@@ -81,10 +84,12 @@ neither, preserving byte-stable representations.
 | `GET /api/v1/health`                                                             | Returns `status: ok`, `scope: facade-only`, `backendChecked: false`; makes no backend request.                                                                                                       |
 | `GET /api/v1/openapi.json`                                                       | Returns the checked-in, generated OpenAPI 3.1.1 document; no backend request.                                                                                                                        |
 
-Source responses retain `origin` and `kind`: `synthetic` identifies invented
-interview material, `public` identifies a public filing. Clients must display
-this disclosure. Unknown fields, duplicate query parameters, unsupported methods
-and invalid media types are rejected. JSON request bodies are limited to 16,384
+Source responses retain `origin` and `kind`: every readable source is
+`origin: "public"` and `kind: "public_interview"`. Clients must display that
+disclosure and the automatic-transcript caveat. Earlier synthetic interviews and
+filings remain stored but are unreadable; the contract no longer offers their
+kinds. Unknown fields, duplicate query parameters, unsupported methods and
+invalid media types are rejected. JSON request bodies are limited to 16,384
 bytes at the Node boundary. Successful bodies are the action data, without the
 backend's changing envelope.
 
@@ -118,6 +123,17 @@ notebook) are browser-only and not part of this v1 surface;
 
 ### Executed curl examples
 
+The examples ran against the offline fixture backend
+(`tests/api/fixtureResearchListener.ts`), not against the live research
+function. The fixture does not apply the `company` filter, and pages by document
+id, so the first page lists the Novartis row. The fixture answers with document
+ids, titles, dates and a passage shaped like the Roche interview
+(`pod-roche-2024`, passage `T018.1`); its revision id `rev-1` and quotation are
+placeholders, so the real revision id
+(`de2592af8b23cd5cc39ea9aaa59cdc2ace7f77c54df9e71428ef14b83c1b56bc`) and
+transcript text differ. They demonstrate the facade contract, not live
+retrieval.
+
 For authenticated examples, the header is supplied through stdin to keep the
 token out of process arguments. The executed runner substitutes the same values
 shown here and stores full returned bodies and headers in
@@ -127,7 +143,7 @@ between runs.
 **documents** — observed HTTP 200.
 
 ```sh
-curl --silent --show-error --max-time 15 -i -X GET "$BASE/api/v1/documents?pageSize=1&company=northstar&kind=synthetic_interview" -H "X-Request-Id: example-documents" --config - <<EOF
+curl --silent --show-error --max-time 15 -i -X GET "$BASE/api/v1/documents?pageSize=1&company=roche&kind=public_interview" -H "X-Request-Id: example-documents" --config - <<EOF
 header = "Authorization: Bearer $TOKEN"
 EOF
 ```
@@ -135,7 +151,7 @@ EOF
 **passage** — observed HTTP 200.
 
 ```sh
-curl --silent --show-error --max-time 15 -i -X GET "$BASE/api/v1/documents/northstar/revisions/rev-1/passages/p-1" -H "X-Request-Id: example-passage" --config - <<EOF
+curl --silent --show-error --max-time 15 -i -X GET "$BASE/api/v1/documents/pod-roche-2024/revisions/rev-1/passages/T018.1" -H "X-Request-Id: example-passage" --config - <<EOF
 header = "Authorization: Bearer $TOKEN"
 EOF
 ```
@@ -143,7 +159,7 @@ EOF
 **search** — observed HTTP 200.
 
 ```sh
-curl --silent --show-error --max-time 15 -i -X POST "$BASE/api/v1/search" -H "X-Request-Id: example-search" -H "Content-Type: application/json" --data '{"query":"evidence"}' --config - <<EOF
+curl --silent --show-error --max-time 15 -i -X POST "$BASE/api/v1/search" -H "X-Request-Id: example-search" -H "Content-Type: application/json" --data '{"query":"How is Roche using AI in R&D?"}' --config - <<EOF
 header = "Authorization: Bearer $TOKEN"
 EOF
 ```
@@ -151,7 +167,7 @@ EOF
 **answers** — observed HTTP 200.
 
 ```sh
-curl --silent --show-error --max-time 15 -i -X POST "$BASE/api/v1/answers" -H "X-Request-Id: example-answers" -H "Content-Type: application/json" --data '{"query":"evidence"}' --config - <<EOF
+curl --silent --show-error --max-time 15 -i -X POST "$BASE/api/v1/answers" -H "X-Request-Id: example-answers" -H "Content-Type: application/json" --data '{"query":"How is Roche using AI in R&D?"}' --config - <<EOF
 header = "Authorization: Bearer $TOKEN"
 EOF
 ```
@@ -225,7 +241,7 @@ existing remote backend is unverified.
 The executed passage request returned:
 
 ```http
-ETag: "passage-v2-WyJkZW1vLW9yZyIsIm5vcnRoc3RhciIsInJldi0xIiwicC0xIl0"
+ETag: "passage-v2-WyJkZW1vLW9yZyIsInBvZC1yb2NoZS0yMDI0IiwicmV2LTEiLCJUMDE4LjEiXQ"
 Cache-Control: private, no-cache
 Vary: Authorization
 ```
@@ -234,7 +250,7 @@ The following conditional request was executed and returned **304 with an empty
 body**, the same ETag, current rate-limit headers and backend request ID:
 
 ```sh
-curl --silent --show-error --max-time 15 -i "$BASE/api/v1/documents/northstar/revisions/rev-1/passages/p-1" -H 'If-None-Match: "passage-v2-WyJkZW1vLW9yZyIsIm5vcnRoc3RhciIsInJldi0xIiwicC0xIl0"' -H 'X-Request-Id: example-not-modified' --config - <<EOF
+curl --silent --show-error --max-time 15 -i "$BASE/api/v1/documents/pod-roche-2024/revisions/rev-1/passages/T018.1" -H 'If-None-Match: "passage-v2-WyJkZW1vLW9yZyIsInBvZC1yb2NoZS0yMDI0IiwicmV2LTEiLCJUMDE4LjEiXQ"' -H 'X-Request-Id: example-not-modified' --config - <<EOF
 header = "Authorization: Bearer $TOKEN"
 EOF
 ```

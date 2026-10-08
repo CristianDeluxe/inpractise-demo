@@ -1,34 +1,16 @@
 import { EvidenceId } from '@/components/EvidenceId'
-import { formatCompanyName } from '@/components/formatters/formatCompanyName'
-import { formatPublishedDate } from '@/components/formatters/formatPublishedDate'
-import { SourceLabel } from '@/components/SourceLabel'
 import { SaveNoteButton } from '@/notebook/SaveNoteButton'
 import { useCopyPassage } from '@/reader/hooks/useCopyPassage'
+import { PassageHeading } from './PassageHeading'
 import type { PassageViewProps } from './PassageViewProps'
 
 export function PassageText({ passage }: PassageViewProps) {
   const copy = useCopyPassage(passage.citation.readerPath)
   return (
     <article className="mt-6">
-      <div>
-        <SourceLabel
-          origin={passage.citation.origin}
-          kind={passage.citation.kind}
-        />
-      </div>
-      <h2 className="mt-4 text-2xl">{passage.citation.title}</h2>
-      <p className="mt-3 text-sm text-muted-foreground">
-        {formatCompanyName(passage.citation.company)} ·{' '}
-        {passage.citation.speaker} {passage.citation.speakerRole}
-      </p>
-      <p className="mt-2 text-xs text-muted-foreground">
-        {passage.citation.interviewDate
-          ? `Interview: ${passage.citation.interviewDate} · `
-          : null}
-        Published: {formatPublishedDate(passage.citation.publishedAt)}
-      </p>
+      <PassageHeading passage={passage} />
       <p className="mt-5 text-xs font-medium text-primary">
-        {passage.section} ·{' '}
+        Episode time {passage.section} ·{' '}
         {passage.isCurrentRevision
           ? 'Current revision'
           : 'Retained historical revision'}
@@ -36,7 +18,20 @@ export function PassageText({ passage }: PassageViewProps) {
       <blockquote className="my-8 whitespace-pre-wrap break-words border-l-2 border-primary pl-5 font-serif text-xl leading-[1.78]">
         {passage.citation.quote}
       </blockquote>
-      <EvidenceId identifier={passage.citation.citationId} label="passage" />
+      <p className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+        Reference
+        <EvidenceId identifier={passage.citation.citationId} label="excerpt" />
+      </p>
+      {passage.citation.sourceUrl ? (
+        <a
+          href={passage.citation.sourceUrl}
+          className="mt-3 inline-block text-sm text-primary underline"
+          rel="noreferrer"
+          target="_blank"
+        >
+          Listen to the episode
+        </a>
+      ) : null}
       <button
         type="button"
         className="quiet-action mt-5"

@@ -1,8 +1,6 @@
 import { accessRoute } from './accessRoute'
 import { askRoute } from './askRoute'
 import { authAliasRoute } from './authAliasRoute'
-import { builtRoute } from './builtRoute'
-import { companiesRoute } from './companiesRoute'
 import { connectRoute } from './connectRoute'
 import { costRoute } from './costRoute'
 import { debugAliasRoute } from './debugAliasRoute'
@@ -26,7 +24,6 @@ import { workspaceRoute } from './workspaceRoute'
 export const routeTree = rootRoute.addChildren([
   landingRoute,
   methodRoute,
-  builtRoute,
   connectRoute,
   authAliasRoute,
   resetAliasRoute,
@@ -36,7 +33,6 @@ export const routeTree = rootRoute.addChildren([
     accessRoute.addChildren([
       workspaceRoute,
       askRoute,
-      companiesRoute,
       costRoute,
       notesRoute,
       standardsRoute,

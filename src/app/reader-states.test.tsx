@@ -72,7 +72,7 @@ describe('source availability and provenance', () => {
       new URL(citation.readerPath, window.location.origin).href,
     )
   })
-  it('renders an empty authorized library without selecting a company', async () => {
+  it('renders an empty authorized library', async () => {
     const { runtime, fetcher } = uiRuntimeFixture()
     fetcher.mockResolvedValueOnce(
       responseFixture('me', { orgId: 'org', role: 'member', premium: false }),
@@ -82,8 +82,5 @@ describe('source availability and provenance', () => {
     expect(
       await screen.findByText('No interview is available to this account.'),
     ).toBeTruthy()
-    expect(
-      screen.getByLabelText<HTMLSelectElement>('Company scope').value,
-    ).toBe('')
   })
 })

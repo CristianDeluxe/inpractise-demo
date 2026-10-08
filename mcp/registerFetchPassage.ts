@@ -17,9 +17,9 @@ export function registerFetchPassage(
   server.registerTool(
     'fetch_passage',
     {
-      title: 'Fetch one research passage',
+      title: 'Fetch one transcript passage',
       description:
-        'Returns one whole passage with its citation and the IDs of its neighbours. A passage this member may not read is reported as not found, with no title hint.',
+        'Returns one whole passage of a public podcast interview transcript with its citation, speaker and the IDs of its neighbours. A passage this member may not read is reported as not found, with no title hint.',
       inputSchema: fetchPassageInput,
     },
     async (args) => {

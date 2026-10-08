@@ -16,7 +16,7 @@ describe('InvestigationTrail', () => {
         pending={false}
       />,
     )
-    expect(screen.getByText('Allowance debited')).toBeDefined()
+    expect(screen.getByText('Question received')).toBeDefined()
     expect(screen.getByText('Planned 2 sub-questions')).toBeDefined()
     expect(
       screen.getByText('What did northstar say about pricing?'),
@@ -26,10 +26,10 @@ describe('InvestigationTrail', () => {
         'What did harbor-logistics say about pricing? (harbor-logistics)',
       ),
     ).toBeDefined()
-    expect(screen.getByText(/Step 1: 4 of 12 candidates kept/u)).toBeDefined()
+    expect(screen.getByText(/Step 1: 4 of 12 excerpts kept/u)).toBeDefined()
     expect(screen.getByText(/Step 2 reformulated/u)).toBeDefined()
     expect(
-      screen.getByText(/Synthesising from 5 passages across 2 sub-questions/u),
+      screen.getByText(/Synthesising from 5 excerpts across 2 sub-questions/u),
     ).toBeDefined()
   })
   it('renders nothing before the first stage arrives', () => {

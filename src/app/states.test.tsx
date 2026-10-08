@@ -33,7 +33,7 @@ describe('research request states', () => {
     fireEvent.change(screen.getByLabelText(uiLabelsFixture.question), {
       target: { value: 'question' },
     })
-    fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
+    fireEvent.click(screen.getByRole('button', { name: /Ask the interviews/ }))
     fireEvent.click(await screen.findByRole('button', { name: 'Cancel' }))
     expect(screen.getByText(/Cancelled./)).toBeTruthy()
     await act(async () => {
@@ -83,7 +83,7 @@ describe('research request states', () => {
     fireEvent.change(screen.getByLabelText(uiLabelsFixture.question), {
       target: { value: 'question' },
     })
-    fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
+    fireEvent.click(screen.getByRole('button', { name: /Ask the interviews/ }))
     await waitFor(() => {
       expect(screen.queryByLabelText(uiLabelsFixture.scope)).toBeNull()
     })
@@ -106,9 +106,9 @@ describe('research request states', () => {
     fireEvent.change(screen.getByLabelText(uiLabelsFixture.question), {
       target: { value: 'missing' },
     })
-    fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
+    fireEvent.click(screen.getByRole('button', { name: /Ask the interviews/ }))
     expect(
-      await screen.findByText(/no passages you are authorised to read/),
+      await screen.findByText(/no excerpt you are authorised to read/),
     ).toBeTruthy()
     const citation = citationFixture()
     fetcher.mockResolvedValueOnce(
@@ -126,10 +126,10 @@ describe('research request states', () => {
         candidateCount: 2,
       }),
     )
-    fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
+    fireEvent.click(screen.getByRole('button', { name: /Ask the interviews/ }))
     expect(await screen.findByText('<img src=x onerror=alert(1)>')).toBeTruthy()
     expect(
-      screen.getByRole('heading', { name: 'Sources disagree' }),
+      screen.getByRole('heading', { name: 'The interviews disagree' }),
     ).toBeTruthy()
     expect(screen.queryByRole('img')).toBeNull()
   })

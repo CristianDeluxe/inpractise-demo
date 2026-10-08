@@ -11,7 +11,7 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 
-it('charts the reviewer library from server counts beside the corpus diagnostics', async () => {
+it('summarises the reviewer interviews from server counts beside the diagnostics', async () => {
   vi.stubGlobal('scrollTo', vi.fn())
   const { runtime, fetcher, requests } = uiRuntimeFixture()
   viewAsFetcherFixture(fetcher, requests)
@@ -19,17 +19,10 @@ it('charts the reviewer library from server counts beside the corpus diagnostics
   const library = await screen.findByRole('region', {
     name: 'Authorized library',
   })
-  expect(within(library).getByText('Corpus at a glance')).toBeTruthy()
-  const coverage = within(library).getByRole('region', {
-    name: 'Research coverage',
-  })
-  expect(within(coverage).getByText('7 paragraphs')).toBeTruthy()
-  expect(within(coverage).getByText('3 paragraphs')).toBeTruthy()
-  expect(
-    within(
-      within(library).getByRole('region', { name: 'Depth by company' }),
-    ).getAllByRole('meter'),
-  ).toHaveLength(2)
+  expect(within(library).getByText('Interviews at a glance')).toBeTruthy()
+  expect(within(library).getByText('Transcript excerpts')).toBeTruthy()
+  expect(within(library).getByText('10')).toBeTruthy()
+  expect(within(library).queryByText('Filings')).toBeNull()
   expect(requests.map((request) => request['action'])).toEqual([
     'me',
     'debug',

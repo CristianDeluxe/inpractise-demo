@@ -11,16 +11,10 @@ export function HeroActions() {
         Log in
       </Link>
       <a
-        href="#evidence"
+        href="#workflow"
         className="hover-underline text-xs font-bold uppercase tracking-widest"
       >
-        Explore the evidence
-      </a>
-      <a
-        href="#built"
-        className="hover-underline text-xs font-bold uppercase tracking-widest"
-      >
-        How it is built
+        How the workflow runs
       </a>
     </div>
   )

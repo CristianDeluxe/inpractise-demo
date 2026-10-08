@@ -6,7 +6,5 @@ export async function signInOffline(page: Page) {
   await page.getByLabel('Email').fill('me@cristiandeluxe.dev')
   await page.getByLabel('Password').fill('offline-password')
   await page.getByRole('button', { name: /Sign in/ }).click()
-  await expect(
-    page.getByRole('heading', { name: 'Expert interviews' }),
-  ).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Interviews' })).toBeVisible()
 }

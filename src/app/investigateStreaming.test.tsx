@@ -27,13 +27,15 @@ describe('the investigate mode', () => {
     const trace = await screen.findByRole('list', {
       name: 'Investigation progress',
     })
-    expect(trace.textContent).toContain('Allowance debited')
+    expect(trace.textContent).toContain('Question received')
     expect(trace.textContent).toContain('Planned 2 sub-questions')
-    expect(trace.textContent).toContain('Step 1: 4 of 12 candidates kept')
+    expect(trace.textContent).toContain('Step 1: 4 of 12 excerpts kept')
     expect(trace.textContent).toContain('Step 2 reformulated')
-    expect(trace.textContent).toContain('Synthesising from 5 passages')
+    expect(trace.textContent).toContain('Synthesising from 5 excerpts')
     expect(
-      await screen.findByRole('heading', { name: 'Answered from the corpus' }),
+      await screen.findByRole('heading', {
+        name: 'Answered from the interviews',
+      }),
     ).toBeTruthy()
     const breakdown = screen.getByRole('list', { name: 'Sub-questions' })
     expect(breakdown.textContent).toContain(

@@ -22,10 +22,18 @@ export function LandingHero() {
             className="intro-fade mt-8 max-w-[48ch] text-ink-muted"
             style={animationDelay(760)}
           >
-            Search an authorised corpus of public podcast interviews with
-            company CEOs, ask a standalone question, and open the exact passage
-            behind each claim. Where the corpus cannot establish something, the
-            answer says so.
+            A working model of an expert-interview workflow: a call becomes a
+            transcript, a person cleans the transcript up, and Ask answers only
+            with literal quotes from it. If no quote supports an answer, there
+            is no answer.
+          </p>
+          <p
+            className="intro-fade mt-4 max-w-[48ch] text-sm text-ink-muted"
+            style={animationDelay(820)}
+          >
+            The material here is two public podcast interviews with the CEOs of
+            Roche and Novartis. It is not In Practise content, and the
+            transcripts are automatic and not human-reviewed.
           </p>
           <HeroActions />
         </div>

@@ -3,9 +3,9 @@ import type { Library } from '@/contracts/Library'
 import type { LibraryStats } from './LibraryStats'
 
 /**
- * One missing passage count makes the corpus total unknown rather than smaller.
+ * One missing passage count makes the excerpt total unknown rather than smaller.
  * Reporting the sum of the counts that happen to be present would state an
- * incomplete corpus as an exact size, which is the one thing this demo may not
+ * partial count as an exact size, which is the one thing this demo may not
  * do with a number it puts on screen.
  */
 export function summariseLibrary(
@@ -24,10 +24,6 @@ export function summariseLibrary(
   )
   const published = items.map((item) => item.published_at).toSorted()
   return {
-    documents: items.length,
-    filings: items.filter(
-      (item) => item.kind === 'sec_filing' || item.kind === 'annual_report_pdf',
-    ).length,
     interviews: items.filter((item) => isInterviewKind(item.kind)).length,
     companies: new Set(items.map((item) => item.company)).size,
     passages,

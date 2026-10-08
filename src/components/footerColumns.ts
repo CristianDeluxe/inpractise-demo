@@ -14,29 +14,23 @@ export const footerColumns = [
   {
     heading: 'Research',
     links: [
-      { label: 'Interview library', to: '/app' },
-      { label: 'Ask the corpus', to: '/app' },
-      { label: 'Research standards', to: '/method' },
+      { label: 'Interviews', to: '/app' },
+      { label: 'Ask the interviews', to: '/app/ask' },
+      { label: 'How quotes are checked', to: '/method' },
     ],
   },
   {
     heading: 'Services',
     links: [
       { label: 'Connect your tools', to: '/connect' },
-      { label: 'Coverage and sourcing', to: '/method' },
-      { label: 'Retrieval diagnostics', to: '/inspect' },
+      { label: 'Sources and limits', to: '/method' },
+      { label: 'Search diagnostics', to: '/inspect' },
     ],
   },
   {
     heading: 'About',
     links: [
-      { label: 'How we work', to: '/method' },
-      { label: 'Built with agents', to: '/built' },
-      {
-        label: 'For executives',
-        to: '/login',
-        description: 'Demo sign-in; no source recruitment form',
-      },
+      { label: 'How quotes are checked', to: '/method' },
       {
         label: 'Contact',
         to: '/login',

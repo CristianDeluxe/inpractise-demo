@@ -9,7 +9,7 @@ export function ReaderPage() {
       <Link to="/app" className="text-sm text-primary">
         ← Research workspace
       </Link>
-      <h1 className="mt-6 text-3xl">Read the source.</h1>
+      <h1 className="mt-6 text-3xl">Read the transcript.</h1>
       <PassageLoader
         key={`${reference.documentId}:${reference.revisionId}:${reference.passageId}`}
         {...reference}

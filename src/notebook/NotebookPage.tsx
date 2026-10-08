@@ -18,8 +18,8 @@ export function NotebookPage() {
       <p className="eyebrow text-muted-foreground">Research notebook</p>
       <h1 className="mt-3 font-sans text-3xl">Your saved citations</h1>
       <p className="mt-4 max-w-2xl text-sm text-muted-foreground">
-        A note keeps the passage identity, the question it answered and your own
-        line. The quotation itself is re-read from the corpus each time this
+        A note keeps the excerpt identity, the question it answered and your own
+        line. The quotation itself is re-read from the transcript each time this
         page opens, under your current access, so nothing here outlives what you
         may read.
       </p>

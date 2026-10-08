@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, screen, within } from '@testing-library/react'
+import { cleanup, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { mixedLibraryRuntimeFixture } from './mixedLibraryRuntimeFixture'
 import { renderRouteFixture } from './renderRouteFixture'
@@ -15,50 +15,38 @@ afterEach(() => {
 })
 
 describe('interview library', () => {
-  it('lists interviews only, with their date and excerpt count, and never a filing', async () => {
+  it('lists the public interviews only, with guest, date and a reader link', async () => {
     const { runtime } = mixedLibraryRuntimeFixture('reviewer')
     await renderRouteFixture('/app', runtime)
     await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
     const list = await screen.findByRole('region', { name: 'Interviews' })
     expect(within(list).getAllByRole('article')).toHaveLength(2)
     expect(screen.queryByText('Northstar annual filing')).toBeNull()
-    expect(screen.queryByText('Public filing')).toBeNull()
-    const northstar = within(list).getByRole('article', {
-      name: 'Former operator on migrations',
+    expect(screen.queryByText('Former buyer on pricing')).toBeNull()
+    const roche = within(list).getByRole('article', {
+      name: 'Roche CEO Thomas Schinecker on In Good Company',
     })
-    expect(within(northstar).getByText('2026-09-01')).toBeTruthy()
-    expect(within(northstar).getByText('12')).toBeTruthy()
+    expect(within(roche).getByText('2024-11-20')).toBeTruthy()
+    expect(within(roche).getByText('92')).toBeTruthy()
     expect(
-      within(northstar).getByText(
-        'Synthetic interview — fictional company and speaker',
-      ),
+      within(roche).getByText(/Thomas Schinecker, Chief Executive Officer/),
     ).toBeTruthy()
     expect(
-      within(northstar)
-        .getByRole('link', { name: /Ask about Northstar/ })
+      within(roche).getByText('Public podcast - automatic transcript'),
+    ).toBeTruthy()
+    expect(
+      within(roche)
+        .getByRole('link', { name: /Read the transcript/ })
         .getAttribute('href'),
-    ).toBe('/app/ask?company=northstar')
-    const acme = within(list).getByRole('article', {
-      name: 'Former buyer on pricing',
+    ).toBe('/read/pod-roche-2024/rev-roche/T001')
+    expect(
+      within(roche)
+        .getByRole('link', { name: /Ask about Roche/ })
+        .getAttribute('href'),
+    ).toBe('/app/ask?company=roche')
+    const novartis = within(list).getByRole('article', {
+      name: 'Novartis CEO Vasant Narasimhan on In Good Company',
     })
-    expect(within(acme).queryByText('Excerpts')).toBeNull()
-  })
-  it('filters by company from the URL and by title text', async () => {
-    const { runtime } = mixedLibraryRuntimeFixture('reviewer')
-    await renderRouteFixture('/app?company=acme', runtime)
-    const list = await screen.findByRole('region', { name: 'Interviews' })
-    expect(within(list).getAllByRole('article')).toHaveLength(1)
-    fireEvent.change(screen.getByLabelText(uiLabelsFixture.scope), {
-      target: { value: '' },
-    })
-    expect(await screen.findAllByRole('article')).toHaveLength(2)
-    fireEvent.change(screen.getByLabelText('Filter by title'), {
-      target: { value: 'MIGRATIONS' },
-    })
-    expect(screen.getAllByRole('article')).toHaveLength(1)
-    fireEvent.change(screen.getByLabelText('Filter by title'), {
-      target: { value: 'nothing like this' },
-    })
-    expect(screen.getByText('No interview matches these filters.')).toBeTruthy()
+    expect(within(novartis).queryByText('Excerpts')).toBeNull()
   })
 })

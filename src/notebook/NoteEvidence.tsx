@@ -3,7 +3,7 @@ import { SourceLabel } from '@/components/SourceLabel'
 import { citationAttribution } from '@/research/citationAttribution'
 import type { CitationCardProps } from '@/research/CitationCardProps'
 
-/** The passage as the server re-read it for this listing, origin first. */
+/** The excerpt as the server re-read it for this listing, origin first. */
 export function NoteEvidence({ citation }: CitationCardProps) {
   return (
     <>

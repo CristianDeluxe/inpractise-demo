@@ -2,10 +2,10 @@
 
 The local server ID is `inpractise-demo`. It provides **two read-only tools**,
 `search_research` and `fetch_passage`, over stdio. It is an independent
-engineering demo over public filings and synthetic interviews, not an In
-Practise product or connection to its private library. Authorization belongs to
-the database, not the agent client; neither tool accepts a user, organization or
-role override.
+engineering demo over two public CEO podcast interview transcripts (Roche 2024,
+Novartis 2025; automatic transcripts), not an In Practise product or connection
+to its private library. Authorization belongs to the database, not the agent
+client; neither tool accepts a user, organization or role override.
 
 ## Prerequisites and member access
 
@@ -204,22 +204,26 @@ A handshake emits a `handshake` diagnostic with the negotiated protocol version
 on stderr. The retained 2026-09-13 client negotiated `2025-11-25`; negotiation
 is a session result, not a version to force into your configuration. To verify
 ordinary basic-member access without generation, call `fetch_passage` with this
-accepted synthetic source reference:
+accepted public podcast passage (the Roche CEO on research and development
+spending):
 
 ```json
 {
-  "documentId": "s1",
-  "revisionId": "ab42aaa01bc9ae30065733e728e678b004f91fc097ff33186169ac69dc2fde94",
-  "passageId": "P2"
+  "documentId": "pod-roche-2024",
+  "revisionId": "de2592af8b23cd5cc39ea9aaa59cdc2ace7f77c54df9e71428ef14b83c1b56bc",
+  "passageId": "T018.1"
 }
 ```
 
-Expect a citation for those exact IDs, synthetic provenance, the complete quote
-and neighboring IDs. A different organization's member may legitimately have
-different visibility. A missing/withdrawn revision must fail rather than
-redirect to a newer quote. Search is read-only for evidence but requests a query
-embedding; it is not a zero-provider-work check. MCP has no answer-generation
-tool.
+Expect a citation for those exact IDs, public-podcast provenance with the
+automatic-transcript disclosure, the speaker (Thomas Schinecker), the complete
+quote ("we invest about 13 billion Swiss francs every year in our research and
+development ...") and neighboring IDs. Fetching a retired synthetic or filing
+passage, for example `s1` / `P2`, must return `not_found`. A different
+organization's member may legitimately have different visibility. A
+missing/withdrawn revision must fail rather than redirect to a newer quote.
+Search is read-only for evidence but requests a query embedding; it is not a
+zero-provider-work check. MCP has no answer-generation tool.
 
 The JSON configurations were parsed and their substituted launch commands
 exercised through an SDK stdio client on 2026-09-14. This does not establish

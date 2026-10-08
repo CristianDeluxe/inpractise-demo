@@ -1,9 +1,9 @@
-import { citationFixture } from '@/api/citationFixture.ts'
 import { createHttpClient } from '@/http-api/createHttpClient.ts'
 import { HttpProblemError } from '@/http-api/HttpProblemError.ts'
 import { describe, expect, it } from 'vitest'
 import { clientOptionsFixture } from './clientOptionsFixture.ts'
 import { facadeFixture } from './facadeFixture.ts'
+import { podcastCitationFixture } from './podcastCitationFixture.ts'
 
 describe('typed HTTP client', () => {
   it.each(['documents', 'me', 'health'] as const)(
@@ -17,9 +17,9 @@ describe('typed HTTP client', () => {
   it('validates passages and conditional results', async () => {
     const client = createHttpClient(clientOptionsFixture())
     const input = {
-      documentId: 'northstar',
+      documentId: 'pod-roche-2024',
       revisionId: 'rev-1',
-      passageId: 'p-1',
+      passageId: 'T018.1',
     }
     const first = await client('passage', input)
     expect(first.status).toBe(200)
@@ -48,7 +48,7 @@ describe('typed HTTP client', () => {
         Promise.resolve(
           Response.json(
             {
-              items: [citationFixture({ citationId: 'wrong' })],
+              items: [podcastCitationFixture({ citationId: 'wrong' })],
               mode: 'lexical_only',
               truncated: false,
             },

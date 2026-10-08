@@ -10,7 +10,7 @@ export const openApiDocument = {
     title: 'In Practise Demo HTTP API',
     version: '1.0.0',
     description:
-      'Independent demo: public filings and synthetic interviews only. No In Practise private research. Caller-token facade; reviewer diagnostics excluded. Single-process quotas.',
+      'Independent demo: public podcast interview transcripts (two CEO interviews) only. Automatic transcripts, not In Practise research. Caller-token facade; reviewer diagnostics excluded. Single-process quotas.',
   },
   servers: [{ url: '/' }],
   components: {

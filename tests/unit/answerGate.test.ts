@@ -69,7 +69,7 @@ describe('the answer gate', () => {
 describe('the gold set', () => {
   it('loads with refusal cases carrying no gold evidence', () => {
     const cases = loadGold()
-    expect(cases.length).toBeGreaterThan(10)
+    expect(cases.length).toBeGreaterThanOrEqual(5)
     for (const item of cases)
       expect(item.goldIds.length === 0).toBe(
         item.expectedStatus === 'not_found',

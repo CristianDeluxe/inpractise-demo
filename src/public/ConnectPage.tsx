@@ -34,8 +34,8 @@ export function ConnectPage() {
           <h2>Keep the source in view</h2>
           <p className="prose-measure mt-5 text-muted-foreground">
             The searchable sources are public podcast interviews with automatic
-            transcripts. Citations retain the exact document, revision and
-            passage across both clients.
+            transcripts. Citations keep the same interview, transcript version
+            and excerpt across both clients.
           </p>
           <Link to="/app" className="action mt-8">
             Open the workspace

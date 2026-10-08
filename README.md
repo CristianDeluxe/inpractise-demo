@@ -1,25 +1,19 @@
 # In Practise Demo
 
-A signed-in research workspace for one workflow: search a caller-authorized
-corpus, ask a standalone question, open the exact passage the answer cites, ask
-for something the corpus cannot establish, and inspect why a labeled retrieval
-or selection check failed. A local MCP server exposes the same search and
-passage reader through two read-only tools.
+A signed-in research workspace for one workflow: open a public CEO podcast
+interview, ask a standalone question, open the exact passage the answer cites,
+ask for something the interviews cannot establish, and review the transcript
+pipeline behind them. A local MCP server exposes the same search and passage
+reader through two read-only tools.
 
 This is an **independent engineering demo** built for a hiring conversation, not
-an In Practise product. The corpus is four public SEC filings and six synthetic
-interviews about invented companies and fictional speakers; every source-bearing
-screen labels its provenance, and nothing here touches In Practise data or
-systems. See [corpus provenance](docs/corpus.md).
-
-## Built with agents
-
-The repository was built over four calendar days (13-16 September 2026, 54
-elapsed hours from first to last commit) under a written execution plan, with
-coding agents doing most of the typing and a person deciding what shipped, what
-was retained as a measured failure and what was cut. The story of those days,
-and how the work was split, is at
-[/built](https://inpractise.cristiandeluxe.dev/built).
+an In Practise product. The readable material is two public podcast interviews
+from _In Good Company_ (Norges Bank Investment Management): Roche CEO Thomas
+Schinecker (2024-11-20) and Novartis CEO Vasant Narasimhan (2025-06-25). The
+transcripts are automatic and the speaker labels are inferred, so they are not
+In Practise expert interviews and not human-cleaned research. Every
+source-bearing screen labels its provenance, and nothing here touches In
+Practise data or systems. See [corpus provenance](docs/corpus.md).
 
 Live demo: <https://inpractise.cristiandeluxe.dev>. Sign in as
 `me@cristiandeluxe.dev` with the owner-supplied `DEMO_PASSWORD`; the identity is
@@ -44,40 +38,43 @@ route checks are in [deployment](docs/deploy.md).
 
 [Architecture](docs/architecture.md) follows these properties through the real
 files; [the glossary](CONTEXT.md) defines their vocabulary. The `/inspect`
-screen shows caller-scoped corpus counts; the evaluation report and the induced
-miss live in [evals.md](docs/evals.md) and the retained run files.
+screen shows caller-scoped corpus counts; the evaluation method, the podcast
+gold set and the induced miss live in [evals.md](docs/evals.md).
 
 ## A reviewer's five-minute path
 
 Obtain the `me@cristiandeluxe.dev` reviewer password privately before starting.
 Each live Ask invokes the provider and debits the daily allowance, so submit
-each question once and describe the outcome you see.
+each question once and describe the outcome you see. The full spoken script is
+[docs/demo-script.md](docs/demo-script.md).
 
-| Time      | Action and evidence to inspect                                                                                                                                                                                                                                      |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0:00–0:40 | Open the [demo](https://inpractise.cristiandeluxe.dev), read the scope disclosure and [sign in](https://inpractise.cristiandeluxe.dev/login).                                                                                                                       |
-| 0:40–1:20 | Open the [workspace](https://inpractise.cristiandeluxe.dev/app), search for Northstar and inspect the synthetic source label, dates and quotation.                                                                                                                  |
-| 1:20–2:20 | Select Ask and submit “What makes a complex Northstar installation difficult to migrate?” Open a returned citation and follow its exact reader link; refresh the reader to check that the IDs remain stable.                                                        |
-| 2:20–3:10 | Ask “What will Northstar Workflow net retention be in 2027?” The retained result is `not_found`, with no claims or citations: related search hits are surfaced as evidence, never turned into a forecast.                                                           |
-| 3:10–4:15 | Read [method](https://inpractise.cristiandeluxe.dev/method) and [F03's recorded failure](docs/evals.md). The answer was retrieved but dropped during selection. The induced missing-gold test in `tests/unit/ranking.test.ts` is the other failure kind: retrieval. |
-| 4:15–5:00 | Open [Connect](https://inpractise.cristiandeluxe.dev/connect) and the [MCP install guide](docs/mcp-install.md). Check how database authorization and exact passage IDs reach both clients.                                                                          |
+| Time      | Action and evidence to inspect                                                                                                                                                                                                          |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0:00-0:40 | Open the [demo](https://inpractise.cristiandeluxe.dev), read the scope disclosure, [sign in](https://inpractise.cristiandeluxe.dev/login) and open the Roche interview from the [workspace](https://inpractise.cristiandeluxe.dev/app). |
+| 0:40-1:40 | Select Ask and submit "How is Roche using AI in R&D?" The answer must quote the CEO literally.                                                                                                                                          |
+| 1:40-2:40 | Open the cited quote and follow its exact reader link; the passage shown is the one the answer used, with speaker, date and the automatic-transcript disclosure. Refresh to check that the IDs stay stable.                             |
+| 2:40-3:20 | Ask "What will Roche's revenue be in 2030?" The expected result is `not_found`, with no claims or citations: nearby passages are never turned into a forecast.                                                                          |
+| 3:20-4:10 | Open the transcript review lab (`/app/transcripts`, then `/app/memory`): correct an automatic transcript and reuse learned corrections.                                                                                                 |
+| 4:10-5:00 | Open the cost view (`/app/cost`: AI API cost and reviewer minutes per audio hour), then [Connect](https://inpractise.cristiandeluxe.dev/connect) and the [MCP install guide](docs/mcp-install.md).                     |
 
-Three more surfaces sit past the five-minute path: switching Ask to Investigate
-mode at `/app/ask` runs a bounded multi-step research loop instead of one
-retrieval pass; [Compare](https://inpractise.cristiandeluxe.dev/app/compare)
-cross-references interview and filing evidence for one company and topic side by
-side; and the [notebook](https://inpractise.cristiandeluxe.dev/app/notes) holds
-passages the reviewer has saved from any citation. All three read from the same
-reviewer allowance and database authorization as Ask.
+**Honest limit of the lab.** The production lab screens (`/app/transcripts`,
+`/app/memory`, `/app/cost`) still depend on the development server's
+`/local-api` middleware (`server/lab/`). The deployed Node origin has no
+`/local-api`, so on `https://inpractise.cristiandeluxe.dev` they have no data;
+show them from a local `pnpm dev` session. They are not yet an operating
+production tool: that needs authenticated storage and saves on the deployed
+host.
 
-The [two-minute presentation script](docs/demo-script.md) opens a premium
-passage with the reviewer account and points at the tests that cover the
-denied-fixture boundary. The workspace also carries a view switcher: the
-reviewer can re-run the same search as a plain member and watch the premium
-document leave the results. That switch is a downgrade only - the request shape
+The [notebook](https://inpractise.cristiandeluxe.dev/app/notes) holds passages
+the reviewer has saved from any citation and reads from the same database
+authorization as Ask.
+
+The workspace also carries a view switcher: the reviewer can re-run the same
+search as a plain member. That switch is a downgrade only - the request shape
 cannot express an upgrade, and the effective principal is the intersection with
-the real one, so RLS stays the ceiling. See
-[the architecture note](docs/architecture.md#viewing-the-corpus-as-a-lesser-principal).
+the real one, so RLS stays the ceiling. Both podcasts are basic-tier, so the
+switch changes nothing visible today. See
+[the architecture note](docs/architecture.md#viewing-the-interviews-as-a-lesser-principal).
 
 ## Run locally
 
@@ -108,11 +105,12 @@ pnpm dev --host 127.0.0.1 --port 5173 --strictPort
 ```
 
 Open `http://127.0.0.1:5173/`, then `/login` as `me@cristiandeluxe.dev` with
-`DEMO_PASSWORD`. `/app` contains the library, passage search, Ask (with an
-Investigate mode toggle) and the notebook; `/app/compare` cross-references
-interviews against filings; `/method` explains measurements and `/connect`
-describes MCP. Stop with Ctrl-C. [Frontend setup](docs/frontend-port.md) records
-the browser contract and dated live checks.
+`DEMO_PASSWORD`. `/app` contains the interview library, passage search, Ask and
+the notebook; `/app/transcripts`, `/app/memory` and `/app/cost` are the lab
+screens (development server only); `/method` explains measurements and
+`/connect` describes MCP. Stop with Ctrl-C.
+[Frontend setup](docs/frontend-port.md) records the browser contract and dated
+live checks.
 
 To build and inspect the production artifact locally:
 
@@ -129,10 +127,10 @@ its routing.
 
 The `inpractise-demo` stdio server exposes:
 
-- `search_research(query, company?, limit?)`: ranked passages with immutable
-  citations.
-- `fetch_passage(documentId, revisionId, passageId)`: an exact passage with
-  adjacent passage IDs.
+- `search_research(query, company?, limit?)`: ranked passages from the two
+  public podcast interview transcripts, with immutable citations.
+- `fetch_passage(documentId, revisionId, passageId)`: an exact transcript
+  passage with adjacent passage IDs.
 
 Follow [MCP installation](docs/mcp-install.md) for Claude Code, Claude Desktop,
 Cursor or a generic stdio client. It explains the three direct environment
@@ -181,39 +179,33 @@ separate `pnpm check:security` gate.
 
 ## Measured results and limits
 
-The [answer evaluation](docs/evals.md) records two retained live repetitions on
-**2026-09-13** against the deployed Edge function, with identical summaries:
+**No live run exists yet for the podcasts.** The podcast gold set
+([evals/gold-podcasts.json](evals/gold-podcasts.json): six literal-answer
+questions across both CEOs and two unanswerable ones) is the default for
+`pnpm eval:answers`, but `pnpm eval:answers` has not been run against it. The
+induced missing-gold control that proves the retrieval gate fails runs offline
+and against the live database in `tests/unit/ranking.test.ts` and
+`tests/integration/search.test.ts`.
 
-| Measure                                   | Recorded result per repetition |
-| ----------------------------------------- | ------------------------------ |
-| Cases                                     | 14                             |
-| Expected status matched                   | 13/14                          |
-| Candidate recall at ten, before selection | 10/10 evidence cases           |
-| Correct refusals                          | 4/4 negative controls          |
-| Independently judged grounded             | 14/14                          |
-| Unauthorized citations                    | 0                              |
-| Restricted-string leaks                   | 0                              |
-| Retrieval misses                          | 0                              |
-| Selection misses                          | 1: F03                         |
-
-F03 asks “How is Costco's fiscal year structured?” The answering passages were
-retrieved at ranks 5 and 6. The two-passages-per-document cap selected ranks 1–4
-from the two Costco documents, excluding the answer from context even though the
-overall selector allows eight passages. The result was `not_found`: grounded in
-the supplied context, but the wrong status for the corpus. The failure is
-retained to expose the cap's limitation; tuning only for this case would conceal
-the measured tradeoff. Fourteen labeled cases are a regression gate, not an
-accuracy benchmark. See [ADR 0005](docs/adr/0005-retain-f03-selection-miss.md).
+The retained [answer evaluation](docs/evals.md) records live repetitions of
+**2026-09-13** against the deployed Edge function over the **retired** filings
+and synthetic-interview corpus, which readers can no longer open. They are
+history, not podcast results: 14 cases, 13/14 statuses matched, candidate recall
+at ten 10/10 before selection, 4/4 correct refusals, 14/14 judged grounded, no
+unauthorized citation and no leak, with one selection miss (F03, retained under
+[ADR 0005](docs/adr/0005-retain-f03-selection-miss.md)). Fourteen labeled cases
+are a regression gate, not an accuracy benchmark.
 
 The [browser verification record](docs/frontend-port.md) holds two live Ask
 requests, an exact-reader refresh, basic-member premium denial, reviewer counts
 and responsive checks, each dated.
 
 The full integration suite uses ordinary password sessions and rolled-back
-database fixtures to exercise anonymous denial, tenant isolation, basic/premium
-access, immutable published evidence, service-only publication and browser/MCP
-parity. The live evaluation also reread every returned citation as its caller.
-Offline `test:ci` excludes these authenticated integration checks.
+database fixtures to exercise anonymous denial, tenant isolation, the
+podcast-only access boundary (hidden kinds stay hidden even for premium and
+reviewer members), immutable published evidence, service-only publication and
+browser/MCP parity. The live evaluation also reread every returned citation as
+its caller. Offline `test:ci` excludes these authenticated integration checks.
 
 Authorization is rechecked once, after generation. A claim is indivisible: when
 any of its cited sources has become unreadable by then, the whole claim is
@@ -283,11 +275,11 @@ keep their original scope, so they can predate later components.
 | [mcp-handshake.jsonl](docs/mcp-handshake.jsonl)              | Untouched timestamps and protocol versions from the 2026-09-13 session.                    |
 | [baseline.md](docs/baseline.md)                              | Runtime boundaries, quality gates and dated baseline evidence.                             |
 | [backend.md](docs/backend.md)                                | Database/import foundations, frozen revisions and historical verification.                 |
-| [corpus.md](docs/corpus.md)                                  | Public/synthetic provenance, acceptance and corpus validation.                             |
+| [corpus.md](docs/corpus.md)                                  | The two podcast interviews, their provenance and the retired corpus record.                |
 | [evals.md](docs/evals.md)                                    | Labeled evaluation method, retained runs, failures and limits.                             |
 | [frontend-contract.md](docs/frontend-contract.md)            | Browser/API contract and intended UI states.                                               |
 | [frontend-port.md](docs/frontend-port.md)                    | Frontend implementation and dated browser checks.                                          |
-| [demo-script.md](docs/demo-script.md)                        | Two-minute review script and failure fallback.                                             |
+| [demo-script.md](docs/demo-script.md)                        | Five-minute review script, lab caveat and failure fallback.                                |
 | [deploy.md](docs/deploy.md)                                  | Hosting, route checks and historical Pages preparation.                                    |
 | [ADR 0001](docs/adr/0001-project-name.md)                    | One package/server name and independent-demo framing.                                      |
 | [ADR 0002](docs/adr/0002-handler-authentication.md)          | Handler token validation, SDK deviation and forwarded RLS identity.                        |

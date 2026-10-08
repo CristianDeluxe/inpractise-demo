@@ -18,8 +18,7 @@ export function AskAnswerBubble({ answer }: AskAnswerBubbleProps) {
           ) : null}
         </div>
         <p className="mt-1 text-[11px] text-muted-foreground">
-          {answerStatusLabel(answer.status)} · {answer.candidateCount} passages
-          retrieved
+          {answerStatusLabel(answer.status)}
         </p>
         <AskCitationChips citations={answer.citations} />
       </div>

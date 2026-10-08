@@ -15,10 +15,10 @@ afterEach(() => {
 it('reports each phase of the answer as it arrives', async () => {
   const { requests } = await askOnceFixture()
   const progress = await screen.findByRole('list', { name: 'Answer progress' })
-  expect(progress.textContent).toContain('Allowance debited')
-  expect(progress.textContent).toContain('10 candidates ranked (hybrid)')
-  expect(progress.textContent).toContain('6 passages selected')
-  expect(progress.textContent).toContain('Rereading 6 citations')
+  expect(progress.textContent).toContain('Question received')
+  expect(progress.textContent).toContain('10 excerpts found (hybrid)')
+  expect(progress.textContent).toContain('6 excerpts selected')
+  expect(progress.textContent).toContain('Checking 6 quotes')
   expect(progress.textContent).toContain('380ms')
   expect(requests.at(-1)).toHaveProperty('stream', true)
 })
@@ -33,8 +33,8 @@ it('treats a stream that ends without a result as a protocol failure', async () 
       headers: { 'content-type': 'text/event-stream' },
     }),
   )
-  fireEvent.click(screen.getByRole('button', { name: /What makes complex/ }))
-  fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
+  fireEvent.click(screen.getByRole('button', { name: /How is Roche using AI/ }))
+  fireEvent.click(screen.getByRole('button', { name: /Ask the interviews/ }))
   expect(
     await screen.findByText(
       'The response failed validation. No unvalidated evidence is displayed.',

@@ -1,6 +1,5 @@
 import { DiagnosticsPanel } from './DiagnosticsPanel'
 import type { EvidenceInspectorProps } from './EvidenceInspectorProps'
-import { RecordedSelectionMissCard } from './RecordedSelectionMissCard'
 import { StageTrail } from './StageTrail'
 
 /**
@@ -14,20 +13,20 @@ export function EvidenceInspector({
   pending,
 }: EvidenceInspectorProps) {
   return (
-    <section aria-label="Retrieval details" className="space-y-6">
+    <section aria-label="Search details" className="space-y-6">
       <div className="border border-border bg-card p-4">
-        <h2 className="font-sans text-base">Retrieval details</h2>
+        <h2 className="font-sans text-base">How the search went</h2>
         {answer === undefined ? (
           <p className="mt-2 text-sm text-muted-foreground">
-            Ask something and this panel reports what retrieval found, what
-            context selection kept, and which revisions were read.
+            Ask something and this panel reports which excerpts the search
+            found, which were used, and which transcript versions were read.
           </p>
         ) : (
           <p className="mt-2 text-sm text-muted-foreground">
-            {answer.mode === 'hybrid' ? 'Hybrid' : 'Lexical only'} retrieval
-            over {answer.candidateCount} candidates. Recall is measured before
-            context selection, so an excerpt that ranked and was then dropped is
-            a selection loss rather than a retrieval miss.
+            {answer.mode === 'hybrid' ? 'Hybrid' : 'Lexical only'} search:{' '}
+            {answer.candidateCount} excerpts found. Recall is measured before
+            excerpts are chosen for the answer, so an excerpt that ranked and
+            was then left out is a selection loss rather than a search miss.
           </p>
         )}
         <div className="mt-4">
@@ -38,11 +37,13 @@ export function EvidenceInspector({
         <DiagnosticsPanel diagnostics={answer.diagnostics} />
       ) : answer === undefined ? null : (
         <p className="border border-border p-4 text-xs text-muted-foreground">
-          Ranked candidate identifiers are withheld for this principal. The
+          Ranked excerpt identifiers are withheld for this principal. The
           endpoint returns them only to an unrestricted reviewer.
         </p>
       )}
-      <RecordedSelectionMissCard />
+      <p className="border border-border p-4 text-xs text-muted-foreground">
+        No podcast failure case measured yet.
+      </p>
     </section>
   )
 }

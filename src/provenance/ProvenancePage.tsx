@@ -24,7 +24,7 @@ export function ProvenancePage() {
       </h1>
       <p className="mt-4 text-sm text-muted-foreground">
         This reopens one of your own answers by request id and checks each
-        quoted revision against the corpus as it stands today.
+        quoted revision against the transcripts as they stand today.
       </p>
       {notFound ? (
         <ProvenanceNotFound />

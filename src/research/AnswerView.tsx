@@ -13,10 +13,6 @@ export function AnswerView({ answer }: AnswerViewProps) {
         <h3 className="font-sans text-xl">
           {answerStatusLabel(answer.status)}
         </h3>
-        <p className="text-xs text-muted-foreground">
-          {answer.mode === 'hybrid' ? 'Hybrid' : 'Lexical only'} ·{' '}
-          {answer.candidateCount} candidates
-        </p>
       </div>
       {answer.vintage ? <EvidenceVintageView vintage={answer.vintage} /> : null}
       {answer.status === 'not_found' ? (
@@ -37,7 +33,9 @@ export function AnswerView({ answer }: AnswerViewProps) {
       )}
       {answer.missingEvidence.length > 0 ? (
         <div className="bg-warning p-4 text-sm text-warning-foreground">
-          <h4 className="font-semibold">Missing evidence and limitations</h4>
+          <h4 className="font-semibold">
+            What the interviews do not establish
+          </h4>
           <ul className="mt-2 list-disc pl-5">
             {answer.missingEvidence.map((text) => (
               <li key={text}>{text}</li>

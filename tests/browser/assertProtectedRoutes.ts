@@ -1,7 +1,11 @@
 import { expect, type Page } from '@playwright/test'
 
 export async function assertProtectedRoutes(page: Page) {
-  for (const path of ['/app', '/inspect', '/read/northstar/rev-1/p-1']) {
+  for (const path of [
+    '/app',
+    '/inspect',
+    '/read/pod-roche-2024/rev-1/T030.1',
+  ]) {
     await page.goto(path)
     await expect(
       page.getByRole('heading', { name: 'Sign in to continue' }),

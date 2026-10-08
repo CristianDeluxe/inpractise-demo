@@ -1,2 +1,2 @@
 export const passagePathFixture =
-  'documents/northstar/revisions/rev-1/passages/p-1'
+  'documents/pod-roche-2024/revisions/rev-1/passages/T018.1'

@@ -18,8 +18,8 @@ export function EngineeringNavSection() {
           </Link>
         ) : null}
         <Link to="/app/standards" className="workspace-link">
-          <Scale size={16} strokeWidth={1.5} aria-hidden="true" /> Research
-          standards
+          <Scale size={16} strokeWidth={1.5} aria-hidden="true" /> How quotes
+          are checked
         </Link>
       </div>
     </details>

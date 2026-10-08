@@ -4,7 +4,7 @@ import urllib.request
 
 
 def verify_origin():
-    for path in ('/', '/app', '/read/northstar/rev-1/p-1'):
+    for path in ('/', '/app', '/read/pod-roche-2024/rev-1/T018.1'):
         with urllib.request.urlopen('http://127.0.0.1:4397' + path) as response:
             assert response.status == 200 and response.headers['cache-control'] == 'no-cache'
             assert response.read() == Path('dist/index.html').read_bytes()

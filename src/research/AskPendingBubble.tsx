@@ -17,7 +17,9 @@ export function AskPendingBubble({ stages }: AskPendingBubbleProps) {
           <span className="size-1.5 animate-pulse rounded-full bg-muted-foreground [animation-delay:300ms]" />
         </span>
         <p className="mt-2 text-xs text-muted-foreground">
-          {current === undefined ? 'Asking the corpus' : stageLabel(current)}
+          {current === undefined
+            ? 'Searching the interviews'
+            : stageLabel(current)}
         </p>
       </div>
     </li>

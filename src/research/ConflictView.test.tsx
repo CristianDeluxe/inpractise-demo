@@ -42,7 +42,7 @@ describe('ConflictView', () => {
     })
     await router.load()
     render(<RouterProvider router={router} />)
-    expect(screen.getByText(/Dana Ferro/u)).toBeDefined()
+    expect(screen.getAllByText(/Dana Ferro/u)).toBeDefined()
     expect(screen.getByText(/2026-03-04/u)).toBeDefined()
     expect(screen.getByText('Deliveries met the window.')).toBeDefined()
   })

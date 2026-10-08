@@ -24,7 +24,7 @@ export const operations = {
     input: documentsInput,
     output: documentsOutput,
     description:
-      'Authorized current revisions; cursor pagination over at most 50 documents. Public filings and synthetic interviews only.',
+      'Authorized current revisions; cursor pagination over at most 50 documents. Public podcast interview transcripts (two CEO interviews) only.',
   },
   passage: {
     method: 'GET',
@@ -33,7 +33,7 @@ export const operations = {
     input: passageInput,
     output: passageOutput,
     description:
-      'Exact server-identified public or synthetic passage and neighbour IDs; access is checked on every request.',
+      'Exact server-identified passage and neighbour IDs from the public podcast interview transcripts; access is checked on every request.',
   },
   search: {
     method: 'POST',
@@ -41,7 +41,8 @@ export const operations = {
     action: 'search',
     input: searchInput,
     output: searchOutput,
-    description: 'Ranked authorized public or synthetic passages.',
+    description:
+      'Ranked authorized passages from the public podcast interview transcripts.',
   },
   answers: {
     method: 'POST',
@@ -50,7 +51,7 @@ export const operations = {
     input: answerInput,
     output: answerOutput,
     description:
-      'Standalone question over public or synthetic evidence; consumes the caller request allowance. Provider failures are errors.',
+      'Standalone question over the public podcast interview transcripts; consumes the caller request allowance. Provider failures are errors.',
   },
   me: {
     method: 'GET',

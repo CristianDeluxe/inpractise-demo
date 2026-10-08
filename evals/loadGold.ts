@@ -1,10 +1,11 @@
 import { readFileSync } from 'node:fs'
 import { z } from 'zod'
+import { defaultGoldPath } from './defaultGoldPath.ts'
 import type { GoldCase } from './GoldCase.ts'
 import { GoldCaseSchema } from './GoldCaseSchema.ts'
 
 /** A malformed gold file fails here rather than silently scoring nothing. */
-export function loadGold(path = 'evals/gold.json'): GoldCase[] {
+export function loadGold(path = defaultGoldPath): GoldCase[] {
   const parsed: unknown = JSON.parse(readFileSync(path, 'utf8'))
   const file = z.object({ cases: z.array(GoldCaseSchema).min(1) }).parse(parsed)
   const ids = new Set(file.cases.map((item) => item.caseId))

@@ -11,7 +11,7 @@ describe('private passage validators', () => {
     const { handle } = facadeFixture()
     const response = await handle(apiRequestFixture(passagePathFixture))
     expect(response.headers.get('etag')).toBe(
-      '"passage-v2-WyJkZW1vLW9yZyIsIm5vcnRoc3RhciIsInJldi0xIiwicC0xIl0"',
+      '"passage-v2-WyJkZW1vLW9yZyIsInBvZC1yb2NoZS0yMDI0IiwicmV2LTEiLCJUMDE4LjEiXQ"',
     )
     expect(response.headers.get('vary')).toBe('Authorization')
     const body: unknown = await response.json()

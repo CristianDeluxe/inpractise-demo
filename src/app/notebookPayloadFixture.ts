@@ -10,7 +10,7 @@ export function notebookPayloadFixture() {
         documentId: citation.documentId,
         revisionId: citation.revisionId,
         passageId: citation.passageId,
-        question: 'What makes complex Northstar installations hard to replace?',
+        question: 'How is Roche using AI in research and development?',
         note: 'Switching cost argument.',
         createdAt: '2026-09-15T10:00:00Z',
         citation,

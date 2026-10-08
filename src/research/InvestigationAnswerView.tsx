@@ -10,7 +10,7 @@ import { SubQuestionBreakdown } from './SubQuestionBreakdown'
 /**
  * The synthesised answer under the same grounded-claim contract as a
  * standalone ask, with the per-sub-question breakdown shown first so a reader
- * sees which parts of the question the corpus could establish before reading
+ * sees which parts of the question the interviews could establish before reading
  * the merged claims.
  */
 export function InvestigationAnswerView({
@@ -23,8 +23,6 @@ export function InvestigationAnswerView({
           {answerStatusLabel(answer.status)}
         </h3>
         <p className="text-xs text-muted-foreground">
-          {answer.mode === 'hybrid' ? 'Hybrid' : 'Lexical only'} ·{' '}
-          {answer.candidateCount} candidates ·{' '}
           {(answer.elapsedMs / 1000).toFixed(1)}s
         </p>
       </div>

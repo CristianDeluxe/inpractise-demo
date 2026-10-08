@@ -1,7 +1,57 @@
 # Demo corpus
 
-The accepted corpus contains **four real public SEC filings, one public UK
-annual report and six unchanged short synthetic interviews: 1094 passages
+## What readers can see now
+
+Two public podcast interviews from _In Good Company_, hosted by Nicolai Tangen
+for Norges Bank Investment Management (channel: Norges Bank Investment
+Management). Nothing else is readable.
+
+| Document            | Guest and company                | Episode date | Passages | Source                                        |
+| ------------------- | -------------------------------- | ------------ | -------: | --------------------------------------------- |
+| `pod-roche-2024`    | Thomas Schinecker, CEO, Roche    | 2024-11-20   |       92 | `https://www.youtube.com/watch?v=LQ6lAvNMjPE` |
+| `pod-novartis-2025` | Vasant Narasimhan, CEO, Novartis | 2025-06-25   |       94 | `https://www.youtube.com/watch?v=A_z4Jow0c7A` |
+
+- **Provenance and disclosure.** Both are publicly available podcast episodes,
+  used with explicit owner approval (2026-10-08) inside a private, signed-in
+  demo. Each carries the disclosure "Public podcast episode (In Good Company,
+  Norges Bank Investment Management). Automatic transcript; speaker labels
+  inferred from the audio and not human-reviewed." They are **not** In Practise
+  expert interviews, not human-cleaned and not In Practise research.
+- **How the text was made.** Local automatic speech recognition
+  (`mlx-community/parakeet-tdt-0.6b-v3`) and local speaker diarization
+  (sherpa-onnx, two clusters, turn boundaries snapped to sentence ends). Raw
+  records are in `corpus/podcasts/`; normalised revisions are in
+  `corpus/normalised/pod-*.json`, built by `pnpm corpus:podcast` and the
+  existing corpus pipeline. Expect transcription errors (for example the host's
+  name and fund are transcribed phonetically) and mislabelled turns.
+- **Identity.** Manifest `kind: "public_interview"`, `origin: "public"`,
+  `synthetic: false`, `fictional: false`, `requiredTier: "basic"`. Revision ids
+  are `de2592af8b23cd5cc39ea9aaa59cdc2ace7f77c54df9e71428ef14b83c1b56bc` (Roche)
+  and `eeb520fa72efc9ac22a9bc459bb10bab1bc5613fd88890df024d7b8cef8cab7e`
+  (Novartis). Passage ids are the transcript turn ids (`T001`, `T006.1`, ...); a
+  long turn is split into `.1`, `.2` passages.
+- **Index.** Hybrid: full-text search plus `text-embedding-3-small` vectors
+  (1536 dimensions), embedded with `pnpm db:embed` and imported on 2026-10-08.
+- **Access boundary.** Migration `20261008000017_public_interview_kind.sql`
+  makes every reader see only revisions of kind `public_interview`. All other
+  kinds stay stored and immutable but are unreadable through the browser, the
+  HTTP API and MCP, including for premium and reviewer members.
+
+A worked example every client can reproduce: the Roche passage `T018.1` states
+"we invest about 13 billion Swiss francs every year in our research and
+development". Its reader path is
+`/read/pod-roche-2024/de2592af8b23cd5cc39ea9aaa59cdc2ace7f77c54df9e71428ef14b83c1b56bc/T018.1`.
+
+## Retired corpus (historical, not readable)
+
+Everything below describes the earlier corpus of SEC filings, one UK annual
+report and synthetic interviews. It is retained as a dated record of how that
+corpus was built and verified. Readers have not been able to open any of it
+since migration `20261008000017`; it stays in the repository and database only
+as immutable history, and its evaluation results do not describe the podcasts.
+
+The accepted retired corpus contains **four real public SEC filings, one public
+UK annual report and six unchanged short synthetic interviews: 1094 passages
 total**. The filings and the annual report contribute 1070 passages. The
 interviews contribute 24 passages, all immutable gold: **S1–S6, P1–P4 in each
 source**; the gold paragraphs live only in the interviews. Every source carries

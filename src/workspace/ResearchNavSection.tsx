@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import { BookOpen, Bookmark, Building2, MessagesSquare } from 'lucide-react'
+import { BookOpen, Bookmark, MessagesSquare } from 'lucide-react'
 import { NotebookBadge } from './NotebookBadge'
 import { WorkspaceNavSection } from './WorkspaceNavSection'
 
@@ -15,9 +15,6 @@ export function ResearchNavSection() {
       </Link>
       <Link to="/app/ask" className="workspace-link">
         <MessagesSquare size={16} strokeWidth={1.5} aria-hidden="true" /> Ask
-      </Link>
-      <Link to="/app/companies" className="workspace-link">
-        <Building2 size={16} strokeWidth={1.5} aria-hidden="true" /> Companies
       </Link>
       <Link to="/app/notes" className="workspace-link">
         <Bookmark size={16} strokeWidth={1.5} aria-hidden="true" /> Notebook

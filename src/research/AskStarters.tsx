@@ -5,11 +5,11 @@ export function AskStarters({ onSelect }: AskStartersProps) {
   return (
     <div className="px-1 py-6">
       <p className="text-sm">
-        Ask one question about the corpus you are authorized to read.
+        Ask one question about the Roche or Novartis CEO interview.
       </p>
       <p className="mt-1 text-xs text-muted-foreground">
-        Every answer cites the passage it used, and says so when the corpus
-        establishes nothing.
+        Every supported answer links to the exact transcript excerpt, and Ask
+        says so when the interviews do not establish it.
       </p>
       <div className="mt-4 flex flex-col gap-2">
         {suggestedQuestions.map((question) => (

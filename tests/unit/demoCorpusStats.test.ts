@@ -30,7 +30,7 @@ describe('landing page corpus figures', () => {
       (total, document) => total + document.passageCount,
       0,
     )
-    expect(shown.get('Indexed passages')).toBe(String(passages))
+    expect(shown.get('Transcript excerpts')).toBe(String(passages))
   })
 
   it('counts the distinct companies the interviews cover', () => {

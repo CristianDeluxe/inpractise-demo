@@ -10,7 +10,7 @@ export async function askOnceFixture() {
   const fixture = uiRuntimeFixture()
   await renderRouteFixture('/app/ask', fixture.runtime)
   await screen.findByLabelText(uiLabelsFixture.scope)
-  fireEvent.click(screen.getByRole('button', { name: /What makes complex/ }))
-  fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
+  fireEvent.click(screen.getByRole('button', { name: /How is Roche using AI/ }))
+  fireEvent.click(screen.getByRole('button', { name: /Ask the interviews/ }))
   return fixture
 }

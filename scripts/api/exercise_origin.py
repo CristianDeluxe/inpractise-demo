@@ -31,10 +31,10 @@ def main():
             ('health', '/api/v1/health', {'authorized': False}, 200),
             ('openapi', '/api/v1/openapi.json', {'authorized': False}, 200),
             ('me', '/api/v1/me', {}, 200),
-            ('documents', '/api/v1/documents?pageSize=1&company=northstar&kind=synthetic_interview', {}, 200),
-            ('passage', '/api/v1/documents/northstar/revisions/rev-1/passages/p-1', {}, 200),
-            ('search', '/api/v1/search', {'method': 'POST', 'data': {'query': 'evidence'}}, 200),
-            ('answers', '/api/v1/answers', {'method': 'POST', 'data': {'query': 'evidence'}}, 200),
+            ('documents', '/api/v1/documents?pageSize=1&company=roche&kind=public_interview', {}, 200),
+            ('passage', '/api/v1/documents/pod-roche-2024/revisions/rev-1/passages/T018.1', {}, 200),
+            ('search', '/api/v1/search', {'method': 'POST', 'data': {'query': 'How is Roche using AI in R&D?'}}, 200),
+            ('answers', '/api/v1/answers', {'method': 'POST', 'data': {'query': 'How is Roche using AI in R&D?'}}, 200),
             ('unauthenticated', '/api/v1/me', {'authorized': False}, 401),
             ('provider', '/api/v1/answers', {'method': 'POST', 'data': {'query': 'provider-failure'}}, 503),
         ]:
@@ -45,7 +45,7 @@ def main():
                 result['body'] = {'openapi': result['body']['openapi'], 'pathCount': len(result['body']['paths']), 'note': 'Full returned document equals docs/openapi.json; condensed here.'}
             results.append(result)
         first_page = next(result for result in results if result['name'] == 'documents')
-        results.append(capture('next-page', '/api/v1/documents?pageSize=1&company=northstar&kind=synthetic_interview&cursor=' + first_page['body']['nextCursor']))
+        results.append(capture('next-page', '/api/v1/documents?pageSize=1&company=roche&kind=public_interview&cursor=' + first_page['body']['nextCursor']))
         passage = next(result for result in results if result['name'] == 'passage')
         results.append(capture('not-modified', passage['path'], headers={'If-None-Match': passage['headers']['etag']}))
         assert results[-1]['status'] == 304

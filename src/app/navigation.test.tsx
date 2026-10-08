@@ -23,7 +23,7 @@ describe('workspace navigation', () => {
       within(research)
         .getAllByRole('link')
         .map((link) => link.getAttribute('href')),
-    ).toEqual(['/app', '/app/ask', '/app/companies', '/app/notes'])
+    ).toEqual(['/app', '/app/ask', '/app/notes'])
     const production = await sidebarGroupFixture('Production')
     expect(
       within(production)
@@ -46,13 +46,13 @@ describe('workspace navigation', () => {
       within(engineering).queryByRole('link', { name: 'Diagnostics' }),
     ).toBeNull()
     expect(
-      within(engineering).getByRole('link', { name: 'Research standards' }),
+      within(engineering).getByRole('link', { name: 'How quotes are checked' }),
     ).toBeTruthy()
   })
   it('links to no removed route and no longer serves one', async () => {
     const { runtime } = mixedLibraryRuntimeFixture('reviewer')
-    await renderRouteFixture('/app/companies', runtime)
-    await screen.findByRole('region', { name: 'Companies' })
+    await renderRouteFixture('/app', runtime)
+    await screen.findByRole('region', { name: 'Interviews' })
     const targets = screen
       .getAllByRole('link')
       .map((link) => link.getAttribute('href') ?? '')
@@ -60,6 +60,9 @@ describe('workspace navigation', () => {
       [],
     )
     expect(targets.filter((href) => href.startsWith('/app/compare'))).toEqual(
+      [],
+    )
+    expect(targets.filter((href) => href.startsWith('/app/companies'))).toEqual(
       [],
     )
     cleanup()

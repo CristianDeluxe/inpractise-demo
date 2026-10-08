@@ -14,27 +14,16 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 describe('public demo routes', () => {
-  it('opens a labelled curated source without calling research', async () => {
+  it('renders the landing page without calling research', async () => {
     const { runtime, requests } = uiRuntimeFixture()
     await renderRouteFixture('/', runtime)
     expect(
-      await screen.findByRole('heading', { name: /Answers that/ }),
+      await screen.findByRole('heading', { name: /From the call/ }),
     ).toBeTruthy()
-    fireEvent.click(
-      screen.getAllByRole('button', { name: /Open source passage/ })[0] ??
-        document.body,
-    )
-    expect(await screen.findByRole('dialog')).toBeTruthy()
-    expect(
-      screen.getByText(/I did not measure customer retention/),
-    ).toBeTruthy()
-    fireEvent.click(screen.getByRole('button', { name: 'Close source' }))
     expect(requests).toHaveLength(0)
-    expect(screen.queryByText('Since 2019')).toBeNull()
   })
   it.each([
-    ['/method', 'How we handle evidence'],
-    ['/built', 'Built with agents'],
+    ['/method', 'How quotes and sources are checked'],
     ['/connect', 'Tools'],
     ['/missing', 'Page unavailable'],
   ])('renders %s', async (path, title) => {

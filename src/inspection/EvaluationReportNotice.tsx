@@ -11,8 +11,8 @@ export function EvaluationReportNotice({
         counts do not measure answer quality.
       </p>
       <p className="mt-4 text-sm text-muted-foreground">
-        Candidate recall and context selection are separate measurements. An
-        induced retrieval miss must remain a failed diagnostic; an unreviewed
+        Excerpt recall and excerpt selection are separate measurements. An
+        induced search miss must remain a failed diagnostic; an unreviewed
         question is not a measured correct refusal.
       </p>
     </section>

@@ -8,7 +8,7 @@ export function AskBubble() {
   return (
     <Dialog.Root modal={false}>
       <Dialog.Trigger
-        aria-label="Ask IP"
+        aria-label="Ask the interviews"
         className="fixed bottom-6 right-6 z-30 inline-flex size-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-[box-shadow,scale] duration-150 motion-safe:active:scale-[0.96] hover:shadow-xl"
       >
         <MessageCircle size={22} strokeWidth={1.5} aria-hidden="true" />

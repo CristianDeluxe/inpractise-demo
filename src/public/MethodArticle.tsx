@@ -4,10 +4,10 @@ export function MethodArticle() {
   return (
     <main id="main-content" className="page-shell py-16">
       <p className="eyebrow text-muted-foreground">Standards</p>
-      <h1 className="mt-3 text-4xl">How we handle evidence</h1>
+      <h1 className="mt-3 text-4xl">How quotes and sources are checked</h1>
       <p className="prose-measure mt-5 text-lg text-muted-foreground">
-        What an answer can establish, who can read its sources, and what remains
-        unavailable.
+        Where the material comes from, what an answer can establish, and what
+        the interviews do not cover.
       </p>
       <div className="mt-12 space-y-12">
         {methodSections.map((section) => (

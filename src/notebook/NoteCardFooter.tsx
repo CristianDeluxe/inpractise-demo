@@ -2,7 +2,7 @@ import { formatPublishedDate } from '@/components/formatters/formatPublishedDate
 import { Link } from '@tanstack/react-router'
 import type { NoteCardFooterProps } from './NoteCardFooterProps'
 
-/** The open-passage link, save date, delete action, and its failure notice. */
+/** The open-transcript link, save date, delete action, and its failure notice. */
 export function NoteCardFooter({
   citation,
   createdAt,
@@ -15,9 +15,9 @@ export function NoteCardFooter({
           <Link
             to={citation.readerPath}
             className="text-primary underline"
-            aria-label={`Open exact passage ${citation.citationId}`}
+            aria-label={`Open exact excerpt ${citation.citationId}`}
           >
-            Open exact passage
+            Open in the transcript
           </Link>
         ) : null}
         <span className="text-xs text-muted-foreground">

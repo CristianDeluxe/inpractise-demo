@@ -5,7 +5,7 @@ import type { InvestigateStage } from '@/api/InvestigateStage'
 export function investigationStageLabel(stage: InvestigateStage): string {
   switch (stage.phase) {
     case 'debited':
-      return 'Allowance debited'
+      return 'Question received'
     case 'plan':
       return `Planned ${String(stage.subQuestions.length)} sub-question${
         stage.subQuestions.length === 1 ? '' : 's'
@@ -13,13 +13,13 @@ export function investigationStageLabel(stage: InvestigateStage): string {
     case 'retrieve':
       return `Step ${String(stage.step)}: ${String(stage.selectedCount)} of ${String(
         stage.candidateCount,
-      )} candidates kept (${stage.mode === 'hybrid' ? 'hybrid' : 'lexical only'})`
+      )} excerpts kept (${stage.mode === 'hybrid' ? 'hybrid' : 'lexical only'})`
     case 'refine':
       return `Step ${String(stage.step)} reformulated: "${stage.question}" (${String(
         stage.selectedCount,
       )} kept)`
     case 'synthesise':
-      return `Synthesising from ${String(stage.suppliedCount)} passages across ${String(
+      return `Synthesising from ${String(stage.suppliedCount)} excerpts across ${String(
         stage.subQuestionCount,
       )} sub-questions`
   }

@@ -3,8 +3,9 @@ import type { BrowserRuntime } from '@/runtime/BrowserRuntime'
 import { loadLibrary } from './loadLibrary'
 
 /**
- * The authorized list with filings removed. The list action filters on the
- * server by caller, not by kind, so the kind filter happens here.
+ * The authorized list with everything but the public interviews removed. The
+ * database already hides the rest from readers; this filter is a second,
+ * client-side guard, not the boundary.
  */
 export async function loadInterviewLibrary(
   runtime: BrowserRuntime,

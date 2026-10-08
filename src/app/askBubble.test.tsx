@@ -18,12 +18,12 @@ it('opens Ask from the workspace without leaving the page', async () => {
   const { runtime } = uiRuntimeFixture()
   await renderRouteFixture('/app', runtime)
   await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
-  fireEvent.click(screen.getByRole('button', { name: 'Ask IP' }))
+  fireEvent.click(screen.getByRole('button', { name: 'Ask the interviews' }))
   const panel = await screen.findByRole('dialog')
   expect(
     screen.getByRole('heading', { name: uiLabelsFixture.workspace }),
   ).toBeTruthy()
-  expect(panel.textContent).toContain('Ask IP')
+  expect(panel.textContent).toContain('Ask the interviews')
   expect(screen.getByLabelText(uiLabelsFixture.question)).toBeTruthy()
 })
 
@@ -31,5 +31,7 @@ it('leaves the bubble off the Ask page itself', async () => {
   const { runtime } = uiRuntimeFixture()
   await renderRouteFixture('/app/ask', runtime)
   await screen.findByLabelText(uiLabelsFixture.scope)
-  expect(screen.queryByRole('button', { name: 'Ask IP' })).toBeNull()
+  expect(
+    screen.queryByRole('button', { name: 'Ask the interviews' }),
+  ).toBeNull()
 })

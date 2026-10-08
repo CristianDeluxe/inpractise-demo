@@ -3,7 +3,7 @@ import { EvidenceInspector } from './EvidenceInspector'
 import { InvestigationInspector } from './InvestigationInspector'
 
 /**
- * Retrieval stages, the diagnostics and the retained failure, kept whole but
+ * Search stages and diagnostics, kept whole but
  * collapsed and below the answer: they are for checking a result, not for
  * reading it.
  */

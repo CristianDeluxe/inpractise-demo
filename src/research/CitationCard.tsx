@@ -12,8 +12,9 @@ export function CitationCard({ citation, question }: CitationCardProps) {
       <SourceLabel origin={citation.origin} kind={citation.kind} />
       <h3 className="mt-3 font-sans text-base">{citation.title}</h3>
       <p className="mt-1 text-xs text-muted-foreground">
-        {formatCompanyName(citation.company)} · {citation.speaker}{' '}
-        {citation.speakerRole}
+        {formatCompanyName(citation.company)}
+        {citation.speaker ? ` · ${citation.speaker}` : ''}
+        {citation.speakerRole ? `, ${citation.speakerRole}` : ''}
       </p>
       <blockquote className="source-text my-4 whitespace-pre-wrap break-words border-l-2 border-primary pl-4">
         {citation.quote}
@@ -31,7 +32,7 @@ export function CitationCard({ citation, question }: CitationCardProps) {
           className="text-primary underline"
           aria-label={`Open exact quote ${citation.citationId}`}
         >
-          Open the quote in context
+          Open in the transcript
         </Link>
       </div>
       <SaveNoteButton citation={citation} question={question} />

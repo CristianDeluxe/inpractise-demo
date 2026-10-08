@@ -22,7 +22,11 @@ describe('downgrade-only facade scope', () => {
           ? { query: 'evidence' }
           : {}),
         ...(name === 'passage'
-          ? { documentId: 'northstar', revisionId: 'rev-1', passageId: 'p-1' }
+          ? {
+              documentId: 'pod-roche-2024',
+              revisionId: 'rev-1',
+              passageId: 'T018.1',
+            }
           : {}),
       })
       expect(result.status).toBe(200)
