@@ -34,7 +34,7 @@ it('treats a stream that ends without a result as a protocol failure', async () 
     }),
   )
   fireEvent.click(screen.getByRole('button', { name: /What makes complex/ }))
-  fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
+  fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
   expect(
     await screen.findByText(
       'The response failed validation. No unvalidated evidence is displayed.',

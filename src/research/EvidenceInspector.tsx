@@ -14,9 +14,9 @@ export function EvidenceInspector({
   pending,
 }: EvidenceInspectorProps) {
   return (
-    <section aria-label="Why this answer" className="space-y-6">
+    <section aria-label="Retrieval details" className="space-y-6">
       <div className="border border-border bg-card p-4">
-        <h2 className="font-sans text-base">Why this answer</h2>
+        <h2 className="font-sans text-base">Retrieval details</h2>
         {answer === undefined ? (
           <p className="mt-2 text-sm text-muted-foreground">
             Ask something and this panel reports what retrieval found, what
@@ -26,7 +26,7 @@ export function EvidenceInspector({
           <p className="mt-2 text-sm text-muted-foreground">
             {answer.mode === 'hybrid' ? 'Hybrid' : 'Lexical only'} retrieval
             over {answer.candidateCount} candidates. Recall is measured before
-            context selection, so a passage that ranked and was then dropped is
+            context selection, so an excerpt that ranked and was then dropped is
             a selection loss rather than a retrieval miss.
           </p>
         )}

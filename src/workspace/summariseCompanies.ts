@@ -2,7 +2,7 @@ import type { Library } from '@/contracts/Library'
 import type { CompanySummary } from './CompanySummary'
 
 /**
- * One summary per company in the authorized list, in name order. Counts and
+ * One summary per company in the authorized interview list, in name order. Counts and
  * dates come from the rows the database returned; a company absent from the
  * list is absent here, not shown as empty.
  */
@@ -12,13 +12,11 @@ export function summariseCompanies(library: Library): CompanySummary[] {
     const group = groups.get(document.company) ?? {
       company: document.company,
       interviews: 0,
-      filings: 0,
       firstInterviewDate: undefined,
       lastInterviewDate: undefined,
       latestPublished: document.published_at,
     }
-    if (document.kind === 'synthetic_interview') group.interviews += 1
-    else group.filings += 1
+    group.interviews += 1
     const date = document.interview_date
     if (date !== null) {
       if (

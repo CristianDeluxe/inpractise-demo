@@ -32,7 +32,7 @@ describe('authorized research workflow', () => {
     ).toBe('')
     fireEvent.click(screen.getByRole('button', { name: /What makes complex/ }))
     expect(requests).toHaveLength(2)
-    fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
+    fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
     expect(
       await screen.findByText('A supported claim with limits.'),
     ).toBeTruthy()
@@ -51,19 +51,19 @@ describe('authorized research workflow', () => {
     await waitFor(() => {
       expect(screen.queryByText('A supported claim with limits.')).toBeNull()
     })
-    fireEvent.click(screen.getByLabelText('Passage search'))
+    fireEvent.click(screen.getByLabelText('Search quotes'))
     fireEvent.change(screen.getByLabelText('Search query'), {
       target: { value: 'migration' },
     })
-    fireEvent.click(screen.getByRole('button', { name: /Search passages/ }))
+    fireEvent.click(screen.getByRole('button', { name: /Search quotes/ }))
     expect(
-      await screen.findByRole('heading', { name: 'Ranked passages' }),
+      await screen.findByRole('heading', { name: 'Matching quotes' }),
     ).toBeTruthy()
     expect(requests.at(-1)?.['company']).toBe(citationFixture().company)
     expect(
       screen
         .getByRole('link', {
-          name: `Open exact passage ${citationFixture().citationId}`,
+          name: `Open exact quote ${citationFixture().citationId}`,
         })
         .getAttribute('href'),
     ).toBe(citationFixture().readerPath)
@@ -73,7 +73,7 @@ describe('authorized research workflow', () => {
       }),
     )
     await waitFor(() => {
-      expect(screen.queryByText('Ranked passages')).toBeNull()
+      expect(screen.queryByText('Matching quotes')).toBeNull()
     })
     expect(signOut).toHaveBeenCalled()
   })
@@ -127,7 +127,7 @@ describe('authorized research workflow', () => {
     await renderRouteFixture('/app/ask', runtime)
     await screen.findByLabelText(uiLabelsFixture.scope)
     fireEvent.click(screen.getByRole('button', { name: /What makes complex/ }))
-    fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
+    fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
     expect(
       await screen.findByText('A supported claim with limits.'),
     ).toBeTruthy()

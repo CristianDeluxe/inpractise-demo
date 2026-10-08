@@ -78,9 +78,9 @@ describe('source availability and provenance', () => {
       responseFixture('me', { orgId: 'org', role: 'member', premium: false }),
     )
     fetcher.mockResolvedValueOnce(responseFixture('list', { items: [] }))
-    await renderRouteFixture('/app/library', runtime)
+    await renderRouteFixture('/app', runtime)
     expect(
-      await screen.findByText('No authorized documents are available.'),
+      await screen.findByText('No interview is available to this account.'),
     ).toBeTruthy()
     expect(
       screen.getByLabelText<HTMLSelectElement>('Company scope').value,

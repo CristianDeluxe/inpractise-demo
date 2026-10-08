@@ -12,7 +12,7 @@ export function QuestionMode({ research }: QuestionFormProps) {
             research.setMode('ask')
           }}
         />
-        Standalone Ask
+        Ask
       </label>
       <label className="flex items-center gap-2 text-sm">
         <input
@@ -34,7 +34,7 @@ export function QuestionMode({ research }: QuestionFormProps) {
             research.setMode('search')
           }}
         />
-        Passage search
+        Search quotes
       </label>
     </div>
   )

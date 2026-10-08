@@ -16,7 +16,7 @@ export function CompanyCard({ summary }: CompanyCardProps) {
       <dl className="mb-5 mt-4 grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1.5 text-sm">
         {summary.interviews > 0 ? (
           <>
-            <dt className="text-muted-foreground">Synthetic interviews</dt>
+            <dt className="text-muted-foreground">Interviews</dt>
             <dd>{summary.interviews}</dd>
           </>
         ) : null}
@@ -33,12 +33,6 @@ export function CompanyCard({ summary }: CompanyCardProps) {
             </dd>
           </>
         )}
-        {summary.filings > 0 ? (
-          <>
-            <dt className="text-muted-foreground">Public filings</dt>
-            <dd>{summary.filings}</dd>
-          </>
-        ) : null}
         <dt className="text-muted-foreground">Latest publication</dt>
         <dd>{formatPublishedDate(summary.latestPublished)}</dd>
       </dl>

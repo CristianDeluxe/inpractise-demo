@@ -2,8 +2,9 @@ import { accessRoute } from './accessRoute'
 import { askRoute } from './askRoute'
 import { authAliasRoute } from './authAliasRoute'
 import { builtRoute } from './builtRoute'
-import { compareRoute } from './compareRoute'
+import { companiesRoute } from './companiesRoute'
 import { connectRoute } from './connectRoute'
+import { costRoute } from './costRoute'
 import { debugAliasRoute } from './debugAliasRoute'
 import { inspectionRoute } from './inspectionRoute'
 import { labMemoryRoute } from './labMemoryRoute'
@@ -11,7 +12,6 @@ import { labReportRoute } from './labReportRoute'
 import { labTranscriptRoute } from './labTranscriptRoute'
 import { labTranscriptsRoute } from './labTranscriptsRoute'
 import { landingRoute } from './landingRoute'
-import { libraryRoute } from './libraryRoute'
 import { loginRoute } from './loginRoute'
 import { methodRoute } from './methodRoute'
 import { notesRoute } from './notesRoute'
@@ -36,8 +36,8 @@ export const routeTree = rootRoute.addChildren([
     accessRoute.addChildren([
       workspaceRoute,
       askRoute,
-      compareRoute,
-      libraryRoute,
+      companiesRoute,
+      costRoute,
       notesRoute,
       standardsRoute,
       readerRoute,

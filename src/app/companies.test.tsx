@@ -2,10 +2,10 @@
 import { citationFixture } from '@/api/citationFixture'
 import { cleanup, fireEvent, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { mixedLibraryRuntimeFixture } from './mixedLibraryRuntimeFixture'
 import { renderRouteFixture } from './renderRouteFixture'
 import { uiLabelsFixture } from './uiLabelsFixture'
 import { uiRuntimeFixture } from './uiRuntimeFixture'
-import { viewAsFetcherFixture } from './viewAsFetcherFixture'
 
 beforeEach(() => {
   vi.stubGlobal('scrollTo', vi.fn())
@@ -16,32 +16,35 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 describe('company entry to the workspace', () => {
-  it('lists one card per authorized company with scoped Ask and source links', async () => {
-    const { runtime, fetcher, requests } = uiRuntimeFixture()
-    viewAsFetcherFixture(fetcher, requests)
-    await renderRouteFixture('/app', runtime)
-    await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
+  it('lists one card per company with interview counts only and scoped links', async () => {
+    const { runtime } = mixedLibraryRuntimeFixture('reviewer')
+    await renderRouteFixture('/app/companies', runtime)
+    await screen.findByRole('heading', { name: uiLabelsFixture.companies })
     const companies = await screen.findByRole('region', { name: 'Companies' })
     expect(within(companies).getAllByRole('article')).toHaveLength(2)
-    const premium = within(companies).getByRole('article', {
-      name: 'Premium Company',
+    const northstar = within(companies).getByRole('article', {
+      name: 'Northstar',
     })
-    expect(within(premium).getByText('Synthetic interviews')).toBeTruthy()
-    expect(within(premium).getByText('2026-09-01')).toBeTruthy()
-    expect(within(premium).getByText('Latest publication')).toBeTruthy()
-    expect(within(premium).getByText('2026-09-02')).toBeTruthy()
     expect(
-      within(premium)
-        .getByRole('link', { name: 'Ask about Premium Company' })
-        .getAttribute('href'),
-    ).toBe('/app/ask?company=Premium+Company')
+      within(northstar).getByText('Interviews', { selector: 'dt' }),
+    ).toBeTruthy()
+    expect(within(northstar).getByText('1', { selector: 'dd' })).toBeTruthy()
+    expect(within(northstar).getByText('2026-09-01')).toBeTruthy()
+    expect(within(northstar).getByText('2026-09-02')).toBeTruthy()
     expect(
-      within(companies)
-        .getByRole('link', { name: 'Sources for Northstar' })
+      within(northstar)
+        .getByRole('link', { name: 'Ask about Northstar' })
         .getAttribute('href'),
-    ).toBe(`/app/library?company=${citationFixture().company}`)
-    expect(screen.queryByText(/paragraphs/)).toBeNull()
-    expect(screen.queryByLabelText('Company scope')).toBeNull()
+    ).toBe('/app/ask?company=northstar')
+    expect(
+      within(northstar)
+        .getByRole('link', { name: 'Interviews with Northstar' })
+        .getAttribute('href'),
+    ).toBe('/app?company=northstar')
+    expect(within(companies).queryByText(/filing/i)).toBeNull()
+    expect(
+      within(companies).queryByRole('link', { name: /Compare/ }),
+    ).toBeNull()
   })
   it('opens Ask with the company from the URL and writes scope changes back', async () => {
     const { runtime } = uiRuntimeFixture()
@@ -62,7 +65,7 @@ describe('company entry to the workspace', () => {
   })
   it('ignores a company value the schema rejects', async () => {
     const { runtime } = uiRuntimeFixture()
-    await renderRouteFixture(`/app/library?company=${'x'.repeat(81)}`, runtime)
+    await renderRouteFixture(`/app?company=${'x'.repeat(81)}`, runtime)
     const scope = await screen.findByLabelText<HTMLSelectElement>(
       uiLabelsFixture.scope,
     )

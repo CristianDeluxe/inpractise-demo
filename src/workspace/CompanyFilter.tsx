@@ -28,7 +28,7 @@ export function CompanyFilter({
         ))}
       </select>
       <p className="mt-2 text-xs text-muted-foreground">
-        Applies to the library, passage search and standalone question.
+        Limits the interviews shown and the answers you ask for to this company.
       </p>
     </div>
   )

@@ -1,6 +1,6 @@
 import { companySearchSchema } from '@/routes/companySearchSchema'
 import type { CompanyNavigationOptions } from '@/workspace/hooks/CompanyNavigationOptions'
-import { useLibrary } from '@/workspace/hooks/useLibrary'
+import { useInterviewLibrary } from '@/workspace/hooks/useInterviewLibrary'
 import { useLocation, useNavigate } from '@tanstack/react-router'
 
 /**
@@ -10,7 +10,7 @@ import { useLocation, useNavigate } from '@tanstack/react-router'
  * through the route schema rather than trusted as typed.
  */
 export function useResearchWorkspace() {
-  const library = useLibrary()
+  const library = useInterviewLibrary()
   const search: unknown = useLocation().search
   const navigate = useNavigate()
   const company = companySearchSchema.parse(search).company ?? ''

@@ -1,3 +1,4 @@
+import { isInterviewKind } from '@/contracts/isInterviewKind'
 import type { Library } from '@/contracts/Library'
 import type { CompanyCoverage } from './CompanyCoverage'
 
@@ -18,7 +19,7 @@ export function aggregateCompanyCoverage(
       interviews: 0,
       passages: 0,
     }
-    if (document.kind === 'synthetic_interview') group.interviews += 1
+    if (isInterviewKind(document.kind)) group.interviews += 1
     group.passages =
       group.passages === undefined || document.passage_count === undefined
         ? undefined

@@ -33,7 +33,7 @@ describe('research request states', () => {
     fireEvent.change(screen.getByLabelText(uiLabelsFixture.question), {
       target: { value: 'question' },
     })
-    fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
+    fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
     fireEvent.click(await screen.findByRole('button', { name: 'Cancel' }))
     expect(screen.getByText(/Cancelled./)).toBeTruthy()
     await act(async () => {
@@ -83,7 +83,7 @@ describe('research request states', () => {
     fireEvent.change(screen.getByLabelText(uiLabelsFixture.question), {
       target: { value: 'question' },
     })
-    fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
+    fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
     await waitFor(() => {
       expect(screen.queryByLabelText(uiLabelsFixture.scope)).toBeNull()
     })
@@ -106,7 +106,7 @@ describe('research request states', () => {
     fireEvent.change(screen.getByLabelText(uiLabelsFixture.question), {
       target: { value: 'missing' },
     })
-    fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
+    fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
     expect(
       await screen.findByText(/no passages you are authorised to read/),
     ).toBeTruthy()
@@ -126,7 +126,7 @@ describe('research request states', () => {
         candidateCount: 2,
       }),
     )
-    fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
+    fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
     expect(await screen.findByText('<img src=x onerror=alert(1)>')).toBeTruthy()
     expect(
       screen.getByRole('heading', { name: 'Sources disagree' }),
@@ -144,12 +144,12 @@ describe('research request states', () => {
         truncated: false,
       }),
     )
-    fireEvent.click(screen.getByLabelText('Passage search'))
+    fireEvent.click(screen.getByLabelText('Search quotes'))
     fireEvent.change(screen.getByLabelText('Search query'), {
       target: { value: 'missing' },
     })
-    fireEvent.click(screen.getByRole('button', { name: /Search passages/ }))
-    expect(await screen.findByText('No matching passages.')).toBeTruthy()
+    fireEvent.click(screen.getByRole('button', { name: /Search quotes/ }))
+    expect(await screen.findByText('No matching quotes.')).toBeTruthy()
   })
   it('keeps reviewer denial enforced on the diagnostic route', async () => {
     const { runtime, fetcher } = uiRuntimeFixture()

@@ -29,9 +29,9 @@ export function CitationCard({ citation, question }: CitationCardProps) {
         <Link
           to={citation.readerPath}
           className="text-primary underline"
-          aria-label={`Open exact passage ${citation.citationId}`}
+          aria-label={`Open exact quote ${citation.citationId}`}
         >
-          Open exact passage
+          Open the quote in context
         </Link>
       </div>
       <SaveNoteButton citation={citation} question={question} />

@@ -25,7 +25,7 @@ export function QuestionForm({ research }: QuestionFormProps) {
       />
       <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
         <p className="text-xs text-muted-foreground">
-          Every question starts a new retrieval. Up to 500 tokens.
+          Each question is answered on its own. Up to 500 tokens.
         </p>
         <button
           type="submit"
@@ -33,10 +33,10 @@ export function QuestionForm({ research }: QuestionFormProps) {
           disabled={!research.query.trim()}
         >
           {research.mode === 'search'
-            ? 'Search passages'
+            ? 'Search quotes'
             : research.mode === 'investigate'
               ? 'Investigate'
-              : 'Ask the corpus'}{' '}
+              : 'Ask the library'}{' '}
           →
         </button>
       </div>

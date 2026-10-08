@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { labNavLinkClass } from './labNavLinkClass'
 
-/** The lab's two places; the current one is marked by the router. */
+/** The lab's places; the current one is marked by the router. */
 export function LabNav() {
   return (
     <nav aria-label="Lab" className="flex gap-1 text-sm">
@@ -14,6 +14,9 @@ export function LabNav() {
       </Link>
       <Link to="/app/memory" className={labNavLinkClass}>
         Learned memory
+      </Link>
+      <Link to="/app/cost" className={labNavLinkClass}>
+        Cost
       </Link>
     </nav>
   )

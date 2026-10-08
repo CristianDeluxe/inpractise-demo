@@ -11,6 +11,6 @@ export async function askOnceFixture() {
   await renderRouteFixture('/app/ask', fixture.runtime)
   await screen.findByLabelText(uiLabelsFixture.scope)
   fireEvent.click(screen.getByRole('button', { name: /What makes complex/ }))
-  fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
+  fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
   return fixture
 }

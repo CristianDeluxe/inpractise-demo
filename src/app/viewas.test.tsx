@@ -28,7 +28,7 @@ describe('server-backed viewing mode', () => {
     vi.stubGlobal('scrollTo', vi.fn())
     const { runtime, fetcher, requests } = uiRuntimeFixture()
     viewAsFetcherFixture(fetcher, requests)
-    await renderRouteFixture('/app', runtime)
+    await renderRouteFixture('/app/companies', runtime)
     const companies = await screen.findByRole('region', { name: 'Companies' })
     expect(
       within(companies).getByRole('article', { name: 'Premium Company' }),
@@ -41,7 +41,7 @@ describe('server-backed viewing mode', () => {
     expect(
       await screen.findByText(/This view is restricted on purpose/),
     ).toBeTruthy()
-    await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
+    await screen.findByRole('heading', { name: uiLabelsFixture.companies })
     expect(screen.queryByRole('link', { name: 'Diagnostics' })).toBeNull()
     expect(screen.queryByText('Premium Company')).toBeNull()
     expect(
@@ -57,7 +57,7 @@ describe('server-backed viewing mode', () => {
       within(screen.getByRole('complementary')).getByLabelText('View as'),
       { target: { value: 'member' } },
     )
-    await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
+    await screen.findByRole('heading', { name: uiLabelsFixture.companies })
     expect(requests.at(-1)).toHaveProperty('viewAs', { role: 'member' })
     expect(screen.queryByRole('link', { name: 'Diagnostics' })).toBeNull()
     fireEvent.change(
@@ -69,7 +69,7 @@ describe('server-backed viewing mode', () => {
         screen.queryByText(/This view is restricted on purpose/),
       ).toBeNull()
     })
-    await screen.findByRole('heading', { name: uiLabelsFixture.workspace })
+    await screen.findByRole('heading', { name: uiLabelsFixture.companies })
     expect(requests.at(-1)).not.toHaveProperty('viewAs')
     expect(screen.getAllByRole('link', { name: 'Diagnostics' })).toHaveLength(2)
   })
@@ -80,7 +80,7 @@ describe('server-backed viewing mode', () => {
     await renderRouteFixture('/app/ask', runtime)
     await screen.findByLabelText(uiLabelsFixture.scope)
     fireEvent.click(screen.getByRole('button', { name: /What makes complex/ }))
-    fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
+    fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
     await screen.findByText('A supported claim with limits.')
     expect(requests.at(-1)).not.toHaveProperty('viewAs')
     fireEvent.change(
@@ -114,7 +114,7 @@ describe('server-backed viewing mode', () => {
     const pending = Promise.withResolvers<Response>()
     fetcher.mockReturnValueOnce(pending.promise)
     fireEvent.click(screen.getByRole('button', { name: /What makes complex/ }))
-    fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
+    fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
     await waitFor(() => {
       expect(fetcher).toHaveBeenCalledTimes(3)
     })

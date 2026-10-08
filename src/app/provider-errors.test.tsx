@@ -39,7 +39,7 @@ describe('provider errors in the research workspace', () => {
       fireEvent.change(screen.getByLabelText(uiLabelsFixture.question), {
         target: { value: 'question' },
       })
-      fireEvent.click(screen.getByRole('button', { name: /Ask the corpus/ }))
+      fireEvent.click(screen.getByRole('button', { name: /Ask the library/ }))
       expect(await screen.findByRole('alert')).toBeTruthy()
       expect(screen.queryByText(/Not established by the corpus/)).toBeNull()
       expect(screen.queryByRole('button', { name: 'Retry' }) !== null).toBe(

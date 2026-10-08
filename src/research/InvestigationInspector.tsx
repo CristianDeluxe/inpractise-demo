@@ -12,9 +12,9 @@ export function InvestigationInspector({
   pending,
 }: InvestigationInspectorProps) {
   return (
-    <section aria-label="Investigation trace" className="space-y-6">
+    <section aria-label="Investigation steps" className="space-y-6">
       <div className="border border-border bg-card p-4">
-        <h2 className="font-sans text-base">Investigation trace</h2>
+        <h2 className="font-sans text-base">Investigation steps</h2>
         {answer === undefined ? (
           <p className="mt-2 text-sm text-muted-foreground">
             Ask a question and this panel reports the plan, each
