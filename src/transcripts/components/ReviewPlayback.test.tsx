@@ -4,10 +4,14 @@ import { uiRuntimeFixture } from '@/app/uiRuntimeFixture'
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { bundleFixture } from '../fixtures/bundleFixture'
+import { episodeAudio } from '../fixtures/episodeAudio'
+import { jsonResponse } from '../fixtures/jsonResponse'
+import { labFetchFixture } from '../fixtures/labFetchFixture'
+import { labTranscriptRowFixture } from '../fixtures/labTranscriptRowFixture'
 import { paragraphTextMatcher } from '../fixtures/paragraphTextMatcher'
+import { renderReviewWorkspace } from '../fixtures/renderReviewWorkspace'
+import { reviewSaverFixture } from '../fixtures/reviewSaverFixture'
 import { stubBrowserMedia } from '../fixtures/stubBrowserMedia'
-import { stubFetchWith } from '../fixtures/stubFetchWith'
-import { stubLabFetch } from '../fixtures/stubLabFetch'
 import { ReviewWorkspace } from './ReviewWorkspace'
 
 beforeEach(stubBrowserMedia)
@@ -20,9 +24,8 @@ afterEach(() => {
 
 describe('review playback and pages', () => {
   it('seeks and plays when a word is clicked, and follows playback', () => {
-    stubLabFetch([])
     const play = vi.spyOn(HTMLMediaElement.prototype, 'play')
-    render(<ReviewWorkspace bundle={bundleFixture()} />)
+    renderReviewWorkspace()
     fireEvent.click(screen.getByRole('button', { name: 'Confidence' }))
     fireEvent.click(screen.getByRole('button', { name: 'Northwynd' }))
     const audio = screen.getByLabelText<HTMLAudioElement>('Episode audio')
@@ -38,9 +41,8 @@ describe('review playback and pages', () => {
   })
 
   it('plays from the button and seeks from the waveform keyboard', () => {
-    stubLabFetch([])
     const play = vi.spyOn(HTMLMediaElement.prototype, 'play')
-    render(<ReviewWorkspace bundle={bundleFixture()} />)
+    renderReviewWorkspace()
     fireEvent.click(screen.getByRole('button', { name: 'Play' }))
     expect(play).toHaveBeenCalled()
     const slider = screen.getByRole('slider', { name: 'Playback position' })
@@ -52,8 +54,7 @@ describe('review playback and pages', () => {
   })
 
   it('loops the selected edit until the loop is stopped', async () => {
-    stubLabFetch([])
-    render(<ReviewWorkspace bundle={bundleFixture()} />)
+    renderReviewWorkspace()
     fireEvent.click(
       screen.getByRole('button', { name: /Northwynd to Northwind/ }),
     )
@@ -74,11 +75,13 @@ describe('review playback and pages', () => {
   })
 
   it('does not steal shortcut keys from text fields', () => {
-    stubLabFetch([])
     render(
       <>
         <input aria-label="note" />
-        <ReviewWorkspace bundle={bundleFixture()} />
+        <ReviewWorkspace
+          bundle={bundleFixture()}
+          onSave={reviewSaverFixture()}
+        />
       </>,
     )
     fireEvent.keyDown(screen.getByLabelText('note'), { key: 'a' })
@@ -87,29 +90,27 @@ describe('review playback and pages', () => {
     expect(screen.getByText('3 edits pending')).toBeTruthy()
   })
 
-  it('loads the review page from the API', async () => {
-    stubLabFetch(bundleFixture())
+  it('loads the review page and signs the audio under the caller session', async () => {
+    const { fetcher } = labFetchFixture({
+      lab_transcripts: [labTranscriptRowFixture()],
+    })
     await renderRouteFixture(
       '/app/transcripts/synthetic-1',
-      uiRuntimeFixture().runtime,
+      uiRuntimeFixture(fetcher).runtime,
     )
     expect(
       await screen.findByRole('heading', {
         name: 'Synthetic briefing about Northwind Ledger',
       }),
     ).toBeTruthy()
+    expect(episodeAudio().src).toContain(
+      '/storage/v1/object/sign/lab-audio/demo-org/synthetic-1.m4a',
+    )
   })
 
-  it('reports a server error instead of crashing', async () => {
-    stubFetchWith(
-      () =>
-        new Response('{"error":"x"}', {
-          status: 500,
-          headers: { 'content-type': 'application/json' },
-        }),
-    )
+  it('reports a missing transcript instead of crashing', async () => {
     await renderRouteFixture(
-      '/app/transcripts/synthetic-1',
+      '/app/transcripts/unknown',
       uiRuntimeFixture().runtime,
     )
     expect(
@@ -117,32 +118,24 @@ describe('review playback and pages', () => {
     ).toBeTruthy()
   })
 
-  it('treats a failed request as an unavailable lab', async () => {
-    vi.stubGlobal(
-      'fetch',
-      vi.fn(async () => {
-        await Promise.resolve()
-        throw new Error('offline')
-      }),
+  it('reports a database error instead of crashing', async () => {
+    const failing = vi.fn<typeof fetch>(async () =>
+      Promise.resolve(jsonResponse({ message: 'boom' }, 500)),
     )
-    await renderRouteFixture('/app/memory', uiRuntimeFixture().runtime)
-    expect(
-      await screen.findByText('This page needs the development server'),
-    ).toBeTruthy()
+    await renderRouteFixture('/app/memory', uiRuntimeFixture(failing).runtime)
+    expect(await screen.findByText(/Could not load the memory/)).toBeTruthy()
   })
 
   it('refreshes the report when decisions change in the review window', async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true })
-    let review: unknown[] = []
-    stubFetchWith(
-      () =>
-        new Response(JSON.stringify({ ...bundleFixture(), review }), {
-          headers: { 'content-type': 'application/json' },
-        }),
-    )
+    const tables = {
+      lab_transcripts: [labTranscriptRowFixture()],
+      lab_reviews: [] as unknown[],
+    }
+    const { fetcher } = labFetchFixture(tables)
     await renderRouteFixture(
       '/app/transcripts/synthetic-1/report',
-      uiRuntimeFixture().runtime,
+      uiRuntimeFixture(fetcher).runtime,
     )
     expect(
       await screen.findByText(
@@ -151,7 +144,12 @@ describe('review playback and pages', () => {
         ),
       ),
     ).toBeTruthy()
-    review = [{ editId: 'e1', verdict: 'rejected', decidedAt: 'now' }]
+    tables.lab_reviews = [
+      {
+        transcript_id: 'synthetic-1',
+        decisions: [{ editId: 'e1', verdict: 'rejected', decidedAt: 'now' }],
+      },
+    ]
     await act(async () => {
       await vi.advanceTimersByTimeAsync(4100)
     })

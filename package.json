@@ -19,6 +19,7 @@
     "seed": "node --import tsx scripts/db/seed.ts",
     "eval:retrieval": "node --import tsx scripts/db/evaluate.ts",
     "eval:gate": "node --import tsx scripts/db/gate.ts",
+    "lab:publish": "node --import tsx scripts/lab/publishLab.ts",
     "transcripts:ingest": "tsx --tsconfig tsconfig.node.json scripts/transcripts/ingest.ts",
     "transcripts:build": "tsx --tsconfig tsconfig.node.json scripts/transcripts/build.ts",
     "transcripts:correct": "tsx --tsconfig tsconfig.node.json scripts/transcripts/correct.ts",

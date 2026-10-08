@@ -10,4 +10,6 @@ export type TranscriptBundle = {
   readonly review: readonly ReviewDecision[]
   /** Absent until `pnpm transcripts:peaks <id>` has run for the episode. */
   readonly peaks?: WaveformPeaks | null
+  /** Signed, short-lived URL of the episode audio; null when none was published. */
+  readonly audioUrl?: string | null
 }

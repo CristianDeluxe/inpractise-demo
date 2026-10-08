@@ -1,13 +1,11 @@
 import { Spinner } from '@/components/Spinner'
 import type { LabResourceViewProps } from './LabResourceViewProps'
-import { LabUnavailable } from './LabUnavailable'
 
 export function LabResourceView<T>({
   resource,
   noun,
   children,
 }: LabResourceViewProps<T>) {
-  if (resource.status === 'unavailable') return <LabUnavailable />
   if (resource.status === 'ready') return <>{children(resource.data)}</>
   return (
     <main id="main-content" className="page-shell py-20">

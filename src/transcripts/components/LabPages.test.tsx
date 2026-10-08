@@ -4,10 +4,10 @@ import { uiRuntimeFixture } from '@/app/uiRuntimeFixture'
 import { cleanup, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { bundleFixture } from '../fixtures/bundleFixture'
+import { labFetchFixture } from '../fixtures/labFetchFixture'
+import { labTranscriptRowFixture } from '../fixtures/labTranscriptRowFixture'
 import { paragraphTextMatcher } from '../fixtures/paragraphTextMatcher'
 import { stubBrowserMedia } from '../fixtures/stubBrowserMedia'
-import { stubFetchWith } from '../fixtures/stubFetchWith'
-import { stubLabFetch } from '../fixtures/stubLabFetch'
 
 beforeEach(stubBrowserMedia)
 afterEach(() => {
@@ -17,42 +17,33 @@ afterEach(() => {
 })
 
 describe('lab pages', () => {
-  it('keep the lab behind sign-in and never call its API signed out', async () => {
-    const lab = stubLabFetch([])
-    const { runtime, getSession } = uiRuntimeFixture()
+  it('keep the lab behind sign-in and never query the database signed out', async () => {
+    const { fetcher } = labFetchFixture()
+    const { runtime, getSession } = uiRuntimeFixture(fetcher)
     getSession.mockResolvedValue({ data: { session: null }, error: null })
     await renderRouteFixture('/app/transcripts', runtime)
     expect(
       await screen.findByRole('heading', { name: 'Sign in to continue' }),
     ).toBeTruthy()
-    expect(lab).not.toHaveBeenCalled()
-  })
-
-  it('say the lab is local-only when the dev API is absent', async () => {
-    stubFetchWith(
-      () =>
-        new Response('<html></html>', {
-          headers: { 'content-type': 'text/html' },
-        }),
-    )
-    await renderRouteFixture('/app/transcripts', uiRuntimeFixture().runtime)
-    expect(
-      await screen.findByText('This page needs the development server'),
-    ).toBeTruthy()
+    expect(fetcher).not.toHaveBeenCalled()
   })
 
   it('rebuild the report with rejected edits reverted and list corrected terms', async () => {
-    const bundle = {
-      ...bundleFixture(),
-      review: [
-        { editId: 'e1', verdict: 'rejected', decidedAt: 'now' },
-        { editId: 'e2', verdict: 'accepted', decidedAt: 'now' },
+    const { fetcher } = labFetchFixture({
+      lab_transcripts: [labTranscriptRowFixture()],
+      lab_reviews: [
+        {
+          transcript_id: bundleFixture().transcript.id,
+          decisions: [
+            { editId: 'e1', verdict: 'rejected', decidedAt: 'now' },
+            { editId: 'e2', verdict: 'accepted', decidedAt: 'now' },
+          ],
+        },
       ],
-    }
-    stubLabFetch(bundle)
+    })
     await renderRouteFixture(
       '/app/transcripts/synthetic-1/report',
-      uiRuntimeFixture().runtime,
+      uiRuntimeFixture(fetcher).runtime,
     )
     expect(
       await screen.findByText(
@@ -71,40 +62,54 @@ describe('lab pages', () => {
     expect(screen.queryByText('Northwind', { selector: 'strong' })).toBeNull()
   })
 
-  it('lists transcripts with their statistics', async () => {
-    const { transcript } = bundleFixture()
-    stubLabFetch([
-      {
-        id: transcript.id,
-        source: transcript.source,
-        stats: transcript.stats,
-        hasCorrection: true,
-        edits: 3,
-        reviewed: 2,
-      },
-    ])
-    await renderRouteFixture('/app/transcripts', uiRuntimeFixture().runtime)
-    expect(await screen.findByText(transcript.source.title)).toBeTruthy()
+  it('lists transcripts with their statistics and saved decision counts', async () => {
+    const row = labTranscriptRowFixture()
+    const { fetcher } = labFetchFixture({
+      lab_transcripts: [row],
+      lab_reviews: [
+        {
+          transcript_id: row.transcript_id,
+          decisions: [
+            { editId: 'e1', verdict: 'accepted', decidedAt: 'now' },
+            { editId: 'e2', verdict: 'rejected', decidedAt: 'now' },
+          ],
+        },
+      ],
+    })
+    await renderRouteFixture(
+      '/app/transcripts',
+      uiRuntimeFixture(fetcher).runtime,
+    )
+    expect(await screen.findByText(row.source.title)).toBeTruthy()
     expect(screen.getByText('corrected')).toBeTruthy()
     expect(screen.getByText('2 / 3 reviewed')).toBeTruthy()
   })
 
   it('shows the learned glossary', async () => {
-    stubLabFetch({
-      glossary: [
+    const { fetcher } = labFetchFixture({
+      lab_memory: [
         {
-          from: 'Ledgar',
-          to: 'Ledger',
-          category: 'entity',
-          occurrences: 3,
-          sources: ['synthetic-1'],
-          lastSeenAt: 'now',
+          glossary: [
+            {
+              from: 'Ledgar',
+              to: 'Ledger',
+              category: 'entity',
+              occurrences: 3,
+              sources: ['synthetic-1'],
+              lastSeenAt: 'now',
+            },
+          ],
+          example_count: 4,
         },
       ],
-      examples: 4,
     })
-    await renderRouteFixture('/app/memory', uiRuntimeFixture().runtime)
+    await renderRouteFixture('/app/memory', uiRuntimeFixture(fetcher).runtime)
     expect(await screen.findByText('Ledgar')).toBeTruthy()
     expect(screen.getByText(/Stored examples: 4/)).toBeTruthy()
+  })
+
+  it('shows an empty memory for an organisation with no row', async () => {
+    await renderRouteFixture('/app/memory', uiRuntimeFixture().runtime)
+    expect(await screen.findByText(/Stored examples: 0/)).toBeTruthy()
   })
 })

@@ -1,7 +1,10 @@
 import { formatDuration } from '@/transcripts/formatters/formatDuration'
+import { costLabel } from './costLabel'
 import type { CostTableRowProps } from './CostTableRowProps'
 import { formatReviewerMinutes } from './formatters/formatReviewerMinutes'
+import { noAiPassLabel } from './noAiPassLabel'
 import { notMeasuredLabel } from './notMeasuredLabel'
+import { tokensLabel } from './tokensLabel'
 
 export function CostTableRow({ row }: CostTableRowProps) {
   return (
@@ -12,8 +15,18 @@ export function CostTableRow({ row }: CostTableRowProps) {
       <td className="py-4 pr-4 font-mono text-sm">
         {formatDuration(row.audioSeconds)}
       </td>
-      <td className="py-4 pr-4 font-mono text-sm">{row.proposedEdits}</td>
-      <td className="py-4 pr-4 font-mono text-sm">{row.decidedEdits}</td>
+      <td className="py-4 pr-4 font-mono text-sm">
+        {row.asrModel}, {row.asrSeconds} s, USD 0
+      </td>
+      <td className="py-4 pr-4 font-mono text-sm">{tokensLabel(row)}</td>
+      <td className="py-4 pr-4 font-mono text-sm">
+        {row.correctionModel === null
+          ? noAiPassLabel
+          : costLabel(row.aiCostUsd)}
+      </td>
+      <td className="py-4 pr-4 font-mono text-sm">
+        {row.decidedEdits} of {row.proposedEdits}
+      </td>
       <td className="py-4 pr-4 font-mono text-sm">
         {row.reviewerSeconds === undefined
           ? notMeasuredLabel

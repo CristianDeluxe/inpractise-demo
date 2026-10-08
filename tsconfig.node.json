@@ -14,9 +14,9 @@
     "mcp/**/*.ts",
     "vite.config.ts",
     "server/api/**/*.ts",
-    "server/lab/**/*.ts",
     "scripts/api/**/*.ts",
     "scripts/transcripts/**/*.ts",
+    "scripts/lab/**/*.ts",
     "src/transcripts/contracts/*.ts",
     "vite.api.config.ts"
   ],

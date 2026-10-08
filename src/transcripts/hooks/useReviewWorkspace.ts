@@ -1,3 +1,4 @@
+import type { ReviewSaver } from '../api/ReviewSaver'
 import type { TranscriptBundle } from '../api/TranscriptBundle'
 import { useActiveParagraph } from './useActiveParagraph'
 import { useAudioPlayer } from './useAudioPlayer'
@@ -11,25 +12,24 @@ import { useScrollToFocus } from './useScrollToFocus'
 import { useWorkspaceView } from './useWorkspaceView'
 
 /** All state of the review workspace; the component only lays it out. */
-export function useReviewWorkspace(bundle: TranscriptBundle) {
+export function useReviewWorkspace(
+  bundle: TranscriptBundle,
+  onSave: ReviewSaver | null,
+) {
   const { transcript, correction } = bundle
   const view = useWorkspaceView(correction !== null)
   const derived = useReviewDerived(transcript, correction)
-  const { decisions, decide, undo, canUndo, saveState } = useReviewDecisions(
-    transcript.id,
-    bundle.review,
-  )
+  const saved = useReviewDecisions(transcript.id, bundle.review, onSave)
   const focusApi = useReviewFocus({
     flaggedIds: derived.flaggedIds,
     edits: derived.edits,
-    decisions,
+    decisions: saved.decisions,
   })
   const audio = useAudioPlayer()
   const preview = useEditPreview()
-  const activeId = useActiveParagraph(audio.audioRef, transcript.paragraphs)
   const { controls, handlers } = useReviewActions({
-    decisions,
-    decide,
+    decisions: saved.decisions,
+    decide: saved.decide,
     focus: focusApi.focus,
     focusEdit: focusApi.focusEdit,
     moveParagraph: focusApi.moveParagraph,
@@ -40,8 +40,8 @@ export function useReviewWorkspace(bundle: TranscriptBundle) {
     loopSpan: audio.loopSpan,
     stopLoop: audio.stopLoop,
     looping: audio.looping,
-    undo,
-    canUndo,
+    undo: saved.undo,
+    canUndo: saved.canUndo,
     spanById: derived.spanById,
     audioRef: audio.audioRef,
     previewEdit: preview.open,
@@ -54,9 +54,9 @@ export function useReviewWorkspace(bundle: TranscriptBundle) {
     derived,
     controls,
     handlers,
-    saveState,
+    saveState: saved.saveState,
     audioRef: audio.audioRef,
-    activeId,
+    activeId: useActiveParagraph(audio.audioRef, transcript.paragraphs),
     focusedParagraphId: focusApi.focus.paragraphId,
     preview,
   }

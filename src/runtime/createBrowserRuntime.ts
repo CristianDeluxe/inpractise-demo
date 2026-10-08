@@ -1,6 +1,7 @@
 import { createResearchClient } from '@/api/createResearchClient'
 import { createClient } from '@supabase/supabase-js'
 import type { BrowserRuntime } from './BrowserRuntime'
+import { createDataClient } from './createDataClient'
 import { getSessionToken } from './getSessionToken'
 import { publicConfig } from './publicConfig'
 import { readPublicEnvironment } from './readPublicEnvironment'
@@ -17,6 +18,7 @@ export function createBrowserRuntime(): BrowserRuntime | null {
       publishableKey: key,
       getAccessToken: async () => getSessionToken(auth),
     }),
+    data: createDataClient(url, key, async () => getSessionToken(auth)),
     events: new EventTarget(),
     controllers: new Set(),
   }

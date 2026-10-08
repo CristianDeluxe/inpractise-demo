@@ -3,8 +3,8 @@ import { createKnipConfig } from '@syntopica/quality-config/knip'
 export default {
   ...createKnipConfig({
     framework: 'vite-react',
-    // Installed outside npm; invoked by security gates and Git hooks.
-    ignoreBinaries: ['gitleaks'],
+    // Installed outside npm; invoked by security gates, Git hooks and lab:publish.
+    ignoreBinaries: ['gitleaks', 'ffmpeg'],
     // tsc consumes the Deno namespace through the separate Edge tsconfig.
     ignoreDependencies: ['@types/deno'],
   }),
@@ -33,6 +33,7 @@ export default {
         'mcp/start.ts',
         'server.js',
         'server/api/createApiListener.ts',
+        'scripts/lab/publishLab.ts',
         'scripts/transcripts/{ingest,build,correct,learn,pairs,exportPair,peaks}.ts',
         'scripts/api/generateOpenApi.ts',
         'scripts/api/measureLatency.ts',
@@ -44,6 +45,7 @@ export default {
         'src/**/*.{ts,tsx,css}',
         'scripts/db/**/*.ts',
         'scripts/transcripts/**/*.ts',
+        'scripts/lab/**/*.ts',
         'tests/**/*.ts',
         'evals/**/*.ts',
         'mcp/**/*.ts',

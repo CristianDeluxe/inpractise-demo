@@ -1,5 +1,4 @@
 import { useMemo, type RefObject } from 'react'
-import { audioUrl } from '../api/audioUrl'
 import type { TranscriptBundle } from '../api/TranscriptBundle'
 import type { AudioPlayerProps } from '../components/AudioPlayerProps'
 import { relistenIntervals } from '../review/relistenIntervals'
@@ -12,7 +11,7 @@ export function useAudioProps(
   const { transcript } = bundle
   const relisten = useMemo(() => relistenIntervals(transcript), [transcript])
   return {
-    src: audioUrl(transcript.id),
+    src: bundle.audioUrl ?? null,
     audioRef,
     waveform: bundle.peaks ?? null,
     relisten,

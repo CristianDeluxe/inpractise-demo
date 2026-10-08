@@ -1,11 +1,16 @@
 import { createResearchClient } from '@/api/createResearchClient'
 import type { BrowserRuntime } from '@/runtime/BrowserRuntime'
+import { createDataClient } from '@/runtime/createDataClient'
+import { labFetchFixture } from '@/transcripts/fixtures/labFetchFixture'
 import { vi } from 'vitest'
 import { authClientFixture } from './authClientFixture'
 import { sessionFixture } from './sessionFixture'
 import { uiFetcherFixture } from './uiFetcherFixture'
 
-export function uiRuntimeFixture() {
+/** `lab` answers the database and Storage requests of the transcript lab. */
+export function uiRuntimeFixture(
+  lab: typeof fetch = labFetchFixture().fetcher,
+) {
   const auth = authClientFixture()
   const getSession = vi.spyOn(auth, 'getSession').mockResolvedValue({
     data: { session: sessionFixture },
@@ -31,6 +36,12 @@ export function uiRuntimeFixture() {
       getAccessToken: async () => Promise.resolve('test-token'),
       fetch: fetcher,
     }),
+    data: createDataClient(
+      'https://example.supabase.co',
+      'sb_publishable_test',
+      async () => Promise.resolve('test-token'),
+      lab,
+    ),
     events: new EventTarget(),
     controllers: new Set(),
   }

@@ -20,6 +20,9 @@ export async function prepareDatabase() {
           'request_usage',
           'research_notes',
           'query_embeddings',
+          'lab_transcripts',
+          'lab_reviews',
+          'lab_memory',
         ].includes(String(row['tablename'])),
     )
   )

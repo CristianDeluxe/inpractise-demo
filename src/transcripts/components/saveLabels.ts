@@ -5,4 +5,5 @@ export const saveLabels: Record<SaveState, string> = {
   saving: 'Saving...',
   saved: 'Saved',
   error: 'Save failed, will retry',
+  readonly: 'Read-only',
 }

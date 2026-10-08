@@ -18,6 +18,7 @@ module.exports = createDepCruiserConfig({
     '\\.test\\.(ts|tsx|mjs)$',
     // Hand-run maintenance scripts, invoked by path from the shell.
     '^scripts/transcripts/(ingest|build|correct|learn)\\.ts$',
+    '^scripts/lab/publishLab\\.ts$',
     '^scripts/db/(embed|evaluate|gate|import|preflight|prepare|seed|verify)\\.ts$',
     '^scripts/corpus/(acquire|acquireAnnualReport|auditGeneration|build|generate|prepareReview|reviewAnnualReport|verify)\\.mjs$',
   ],

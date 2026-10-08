@@ -31,14 +31,14 @@ before quoting a number.
 
 ## Timed sequence - about five minutes
 
-| Time      | Exact URL and action                                                                                                                                                               | Spoken words                                                                                                                                                                                                     |
-| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0:00-0:40 | `https://inpractise.cristiandeluxe.dev/`, then sign in and open `/app`. Open the Roche interview.                                                                                  | "This is an independent engineering demo over two public CEO podcasts. The transcripts are automatic and the speaker labels are inferred, so they are not In Practise research. Every source on screen says so." |
-| 0:40-1:40 | Go to `/app/ask`. Paste the first question below and submit once. The evidence inspector reports each phase as it arrives.                                                         | "One standalone question about the Roche interview. The panel names each phase: allowance debited, candidates ranked, passages selected, citations rechecked."                                                   |
-| 1:40-2:40 | Open the returned citation and follow its exact reader link. The expected passage is `pod-roche-2024` `T030.1` (the AI-in-R&D answer); use the actual returned link if it differs. | "The claim points to an exact quotation with document, revision, passage, date and speaker. Opening it rechecks my access, and the passage shown is the one the answer used."                                    |
-| 2:40-3:20 | Stay at `/app/ask`. Paste the refusal question below and submit once.                                                                                                              | "Now something the interview does not contain: a revenue forecast. The answer is `not_found`: no claims, no citations, and nothing extrapolated from the passages that were found."                              |
-| 3:20-4:10 | `https://inpractise.cristiandeluxe.dev/app/transcripts` (see the caveat below), then the memory view at `/app/memory`.                                                             | "Automatic transcripts contain errors. This is the review lab: a person corrects a transcript, and the corrections are learned and reused so the same mistake is cheaper to fix next time."                      |
-| 4:10-5:00 | `https://inpractise.cristiandeluxe.dev/app/cost`, then `https://inpractise.cristiandeluxe.dev/connect`.                                                                            | "The cost view shows what this pipeline spends: AI API tokens and their price, and reviewer minutes per audio hour. The same two transcripts are reachable through two read-only MCP tools with identical database authorization."         |
+| Time      | Exact URL and action                                                                                                                                                               | Spoken words                                                                                                                                                                                                                       |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0:00-0:40 | `https://inpractise.cristiandeluxe.dev/`, then sign in and open `/app`. Open the Roche interview.                                                                                  | "This is an independent engineering demo over two public CEO podcasts. The transcripts are automatic and the speaker labels are inferred, so they are not In Practise research. Every source on screen says so."                   |
+| 0:40-1:40 | Go to `/app/ask`. Paste the first question below and submit once. The evidence inspector reports each phase as it arrives.                                                         | "One standalone question about the Roche interview. The panel names each phase: allowance debited, candidates ranked, passages selected, citations rechecked."                                                                     |
+| 1:40-2:40 | Open the returned citation and follow its exact reader link. The expected passage is `pod-roche-2024` `T030.1` (the AI-in-R&D answer); use the actual returned link if it differs. | "The claim points to an exact quotation with document, revision, passage, date and speaker. Opening it rechecks my access, and the passage shown is the one the answer used."                                                      |
+| 2:40-3:20 | Stay at `/app/ask`. Paste the refusal question below and submit once.                                                                                                              | "Now something the interview does not contain: a revenue forecast. The answer is `not_found`: no claims, no citations, and nothing extrapolated from the passages that were found."                                                |
+| 3:20-4:10 | `https://inpractise.cristiandeluxe.dev/app/transcripts`, then the memory view at `/app/memory`.                                                                                    | "Automatic transcripts contain errors. This is the review lab: a person corrects a transcript, and the corrections are learned and reused so the same mistake is cheaper to fix next time."                                        |
+| 4:10-5:00 | `https://inpractise.cristiandeluxe.dev/app/cost`, then `https://inpractise.cristiandeluxe.dev/connect`.                                                                            | "The cost view shows what this pipeline spends: AI API tokens and their price, and reviewer minutes per audio hour. The same two transcripts are reachable through two read-only MCP tools with identical database authorization." |
 
 Live answer question:
 
@@ -56,15 +56,16 @@ The refusal reads "The corpus could not establish an answer to this question."
 If the live status differs, describe the actual result and use the fallback;
 narrate what is on screen, never the expected result.
 
-## Honest limits of the production lab
+## The production lab
 
-The transcript review lab (`/app/transcripts`, `/app/memory`, `/app/cost`) is
-served by the Vite development server's `/local-api` middleware (`server/lab/`).
-The deployed Node origin has no `/local-api` and no lab data, so on
-`https://inpractise.cristiandeluxe.dev` those three screens have nothing to
-load. Present them from a local `pnpm dev` session with the local transcript
-files, and say that they are not yet an operating production tool: they need
-authenticated storage and saves on the deployed host first.
+The transcript review lab (`/app/transcripts`, `/app/memory`, `/app/cost`) reads
+Supabase under the signed-in member's session. Transcripts, learned memory and
+audio exist there only after `pnpm lab:publish` has run; decisions are recorded
+by reviewers only, and a member sees the same screens read-only. The cost page
+shows this pipeline's own tokens, list-price USD, local recognition at no API
+cost and reviewer minutes per audio hour, each labelled measured or estimated.
+Reviews start empty on the deployed project, so the first reviewer decisions are
+the ones the cost page measures.
 
 ## Access boundary to mention
 

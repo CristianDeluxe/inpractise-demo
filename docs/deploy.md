@@ -276,6 +276,24 @@ filing claim) with three `extends` relations. A scoped regression check,
 `company: "microsoft"` with `uncovered: ["interviews"]`, matching prior
 behaviour.
 
+## Transcript lab data
+
+The lab screens read Supabase, not the host. Migration
+`20261008000018_transcript_lab.sql` adds `lab_transcripts`, `lab_reviews`,
+`lab_memory`, the private `lab-audio` bucket and the reviewer-only
+`usage_summary()` function. Order of operations:
+
+1. `pnpm db:prepare` applies the migration (check with `--dry-run` first).
+2. `pnpm lab:publish` transcodes each `work/transcripts/<id>/audio.m4a` to a
+   mono 48 kbps AAC copy (`audio.web.m4a`, under 25 MB), uploads it to
+   `lab-audio/<org>/<id>.m4a` and upserts the transcript, correction, peaks and
+   learned-memory rows for `org-a` and `org-b`. It uses the operator secret key
+   from `.env.remote` because this is an import path; the browser never holds
+   it. `--dry-run` transcodes locally and prints what would be written without
+   any network call. Review decisions are never uploaded.
+3. Sign in as a reviewer to record decisions; a member reads the same screens
+   read-only. Audio is played through signed URLs valid for one hour.
+
 ## HTTP API on the origin
 
 `server.js` routes `/api/v1` to the facade built from `server/api/` and every

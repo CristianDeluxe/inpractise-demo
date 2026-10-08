@@ -1,14 +1,29 @@
-import { listTranscripts } from '@/transcripts/api/listTranscripts'
-import { loadTranscriptBundle } from '@/transcripts/api/loadTranscriptBundle'
+import type { BrowserRuntime } from '@/runtime/BrowserRuntime'
+import type { DecisionsRow } from '@/transcripts/api/DecisionsRow'
+import { unwrapRows } from '@/transcripts/api/unwrapRows'
 import { buildCostRow } from './buildCostRow'
+import { costColumns } from './costColumns'
+import type { CostRecord } from './CostRecord'
 import type { CostRow } from './CostRow'
 
-/** The list says what exists; each bundle holds the decision timestamps. */
-export async function loadCostRows(): Promise<CostRow[]> {
-  const summaries = await listTranscripts()
-  return Promise.all(
-    summaries.map(async (summary) =>
-      buildCostRow(summary, await loadTranscriptBundle(summary.id)),
+/** The cost columns say what each episode used; the reviews hold the decision timestamps. */
+export async function loadCostRows(
+  runtime: BrowserRuntime,
+): Promise<CostRow[]> {
+  const records = unwrapRows<CostRecord[]>(
+    await runtime.data
+      .from('lab_transcripts')
+      .select(costColumns)
+      .order('transcript_id'),
+  )
+  const reviews = unwrapRows<DecisionsRow[]>(
+    await runtime.data.from('lab_reviews').select('transcript_id,decisions'),
+  )
+  return records.map((record) =>
+    buildCostRow(
+      record,
+      reviews.find((review) => review.transcript_id === record.transcript_id)
+        ?.decisions ?? [],
     ),
   )
 }

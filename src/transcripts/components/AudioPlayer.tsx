@@ -24,7 +24,7 @@ export function AudioPlayer({
     <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
       <audio
         ref={audioRef}
-        src={src}
+        src={src ?? undefined}
         preload="metadata"
         aria-label="Episode audio"
         className="hidden"

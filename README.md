@@ -55,15 +55,15 @@ each question once and describe the outcome you see. The full spoken script is
 | 1:40-2:40 | Open the cited quote and follow its exact reader link; the passage shown is the one the answer used, with speaker, date and the automatic-transcript disclosure. Refresh to check that the IDs stay stable.                             |
 | 2:40-3:20 | Ask "What will Roche's revenue be in 2030?" The expected result is `not_found`, with no claims or citations: nearby passages are never turned into a forecast.                                                                          |
 | 3:20-4:10 | Open the transcript review lab (`/app/transcripts`, then `/app/memory`): correct an automatic transcript and reuse learned corrections.                                                                                                 |
-| 4:10-5:00 | Open the cost view (`/app/cost`: AI API cost and reviewer minutes per audio hour), then [Connect](https://inpractise.cristiandeluxe.dev/connect) and the [MCP install guide](docs/mcp-install.md).                     |
+| 4:10-5:00 | Open the cost view (`/app/cost`: AI API cost and reviewer minutes per audio hour), then [Connect](https://inpractise.cristiandeluxe.dev/connect) and the [MCP install guide](docs/mcp-install.md).                                      |
 
-**Honest limit of the lab.** The production lab screens (`/app/transcripts`,
-`/app/memory`, `/app/cost`) still depend on the development server's
-`/local-api` middleware (`server/lab/`). The deployed Node origin has no
-`/local-api`, so on `https://inpractise.cristiandeluxe.dev` they have no data;
-show them from a local `pnpm dev` session. They are not yet an operating
-production tool: that needs authenticated storage and saves on the deployed
-host.
+**The lab runs on Supabase.** `/app/transcripts`, `/app/memory` and `/app/cost`
+read episodes, saved decisions and learned memory through row-level security
+under the signed-in member's session, and play audio from a private bucket via
+short-lived signed URLs. Only a reviewer can record decisions; a member reads
+the transcript and the report. Publish the gitignored episodes with
+`pnpm lab:publish` (add `--dry-run` to transcode and list what would be
+written); see [docs/deploy.md](docs/deploy.md).
 
 The [notebook](https://inpractise.cristiandeluxe.dev/app/notes) holds passages
 the reviewer has saved from any citation and reads from the same database
@@ -107,8 +107,8 @@ pnpm dev --host 127.0.0.1 --port 5173 --strictPort
 Open `http://127.0.0.1:5173/`, then `/login` as `me@cristiandeluxe.dev` with
 `DEMO_PASSWORD`. `/app` contains the interview library, passage search, Ask and
 the notebook; `/app/transcripts`, `/app/memory` and `/app/cost` are the lab
-screens (development server only); `/method` explains measurements and
-`/connect` describes MCP. Stop with Ctrl-C.
+screens (Supabase-backed; `pnpm lab:publish` loads the episodes); `/method`
+explains measurements and `/connect` describes MCP. Stop with Ctrl-C.
 [Frontend setup](docs/frontend-port.md) records the browser contract and dated
 live checks.
 

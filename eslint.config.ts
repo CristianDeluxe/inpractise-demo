@@ -38,8 +38,8 @@ export default defineConfig([
       'scripts/db/**/*.ts',
       'scripts/api/**/*.ts',
       'scripts/transcripts/**/*.ts',
+      'scripts/lab/**/*.ts',
       'server/api/**/*.ts',
-      'server/lab/**/*.ts',
       'tests/**/*.ts',
       'evals/*.ts',
       'mcp/**/*.ts',
@@ -113,14 +113,9 @@ export default defineConfig([
       'scripts/corpus/**/*.mjs',
       'scripts/db/**/*.ts',
       'scripts/transcripts/**/*.ts',
+      'scripts/lab/**/*.ts',
       'evals/**/*.ts',
     ],
-    rules: { 'security/detect-non-literal-fs-filename': 'off' },
-  },
-  // The lab API joins fixed folders with ids validated by isTranscriptId and
-  // is registered only in `vite serve`.
-  {
-    files: ['server/lab/**/*.ts'],
     rules: { 'security/detect-non-literal-fs-filename': 'off' },
   },
   // The handshake log is an operator-chosen path from the environment, written
