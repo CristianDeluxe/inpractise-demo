@@ -2,9 +2,9 @@
 import { describe, expect, it } from 'vitest'
 import { correctionFixture } from '../fixtures/correctionFixture'
 import { transcriptFixture } from '../fixtures/transcriptFixture'
+import { scoreTranscript } from '../reliability/scoreTranscript'
 import { adjacentId } from './adjacentId'
 import { applyVerdict } from './applyVerdict'
-import { buildReport } from './buildReport'
 import { firstEditIdIn } from './firstEditIdIn'
 import { isTypingTarget } from './isTypingTarget'
 import { listEdits } from './listEdits'
@@ -71,9 +71,12 @@ describe('review navigation', () => {
     expect(applyVerdict(next, ['e1'], null, 'now').has('e1')).toBe(false)
   })
 
-  it('writes raw text where there is no correction', () => {
-    const report = buildReport(transcriptFixture(), null, toDecisionMap([]))
-    expect(report[2]?.text).toBe('Thanks everyone.')
+  it('scores the raw words where there is no correction', () => {
+    const report = scoreTranscript(transcriptFixture(), null, toDecisionMap([]))
+    expect(report[2]?.words.map((word) => word.text)).toEqual([
+      'Thanks',
+      'everyone.',
+    ])
     expect(report[1]?.start).toBe(65)
   })
 

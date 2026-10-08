@@ -48,14 +48,14 @@ Each live Ask invokes the provider and debits the daily allowance, so submit
 each question once and describe the outcome you see. The full spoken script is
 [docs/demo-script.md](docs/demo-script.md).
 
-| Time      | Action and evidence to inspect                                                                                                                                                                                                          |
-| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0:00-0:40 | Open the [demo](https://inpractise.cristiandeluxe.dev), read the scope disclosure, [sign in](https://inpractise.cristiandeluxe.dev/login) and open the Roche interview from the [workspace](https://inpractise.cristiandeluxe.dev/app). |
-| 0:40-1:40 | Select Ask and submit "How is Roche using AI in R&D?" The answer must quote the CEO literally.                                                                                                                                          |
-| 1:40-2:40 | Open the cited quote and follow its exact reader link; the passage shown is the one the answer used, with speaker, date and the automatic-transcript disclosure. Refresh to check that the IDs stay stable.                             |
-| 2:40-3:20 | Ask "What will Roche's revenue be in 2030?" The expected result is `not_found`, with no claims or citations: nearby passages are never turned into a forecast.                                                                          |
-| 3:20-4:10 | Open the transcript review lab (`/app/transcripts`, then `/app/memory`): correct an automatic transcript and reuse learned corrections.                                                                                                 |
-| 4:10-5:00 | Open the cost view (`/app/cost`: AI API cost and reviewer minutes per audio hour), then [Connect](https://inpractise.cristiandeluxe.dev/connect) and the [MCP install guide](docs/mcp-install.md).                                      |
+| Time      | Action and evidence to inspect                                                                                                                                                                                                                    |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0:00-0:40 | Open the [demo](https://inpractise.cristiandeluxe.dev), read the scope disclosure, [sign in](https://inpractise.cristiandeluxe.dev/login) and open the Roche interview from the [workspace](https://inpractise.cristiandeluxe.dev/app).           |
+| 0:40-1:40 | Select Ask and submit "How is Roche using AI in R&D?" The answer must quote the CEO literally.                                                                                                                                                    |
+| 1:40-2:40 | Open the cited quote and follow its exact reader link; the passage shown is the one the answer used, with speaker, date and the automatic-transcript disclosure. Refresh to check that the IDs stay stable.                                       |
+| 2:40-3:20 | Ask "What will Roche's revenue be in 2030?" The expected result is `not_found`, with no claims or citations: nearby passages are never turned into a forecast.                                                                                    |
+| 3:20-4:10 | Open the transcript review lab (`/app/transcripts`, then `/app/memory`): read the AI-corrected transcript with its reliability score, and optionally spot-check the uncertain words.                                                              |
+| 4:10-5:00 | Open the cost view (`/app/cost`: AI cleanup tokens at no per-token charge on the subscription lane, and reliability per episode), then [Connect](https://inpractise.cristiandeluxe.dev/connect) and the [MCP install guide](docs/mcp-install.md). |
 
 **The lab runs on Supabase.** `/app/transcripts`, `/app/memory` and `/app/cost`
 read episodes, saved decisions and learned memory through row-level security

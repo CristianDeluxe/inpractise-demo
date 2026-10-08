@@ -1,1 +1,4 @@
-export type ReportPendingNoteProps = { readonly count: number }
+export type ReportPendingNoteProps = {
+  /** Words of the final text below the reliable threshold. */
+  readonly count: number
+}

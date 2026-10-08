@@ -1,5 +1,5 @@
-import type { ReportParagraph } from '../review/ReportParagraph'
+import type { ScoredParagraph } from '../reliability/ScoredParagraph'
 
 export type ReportBodyProps = {
-  readonly paragraphs: readonly ReportParagraph[]
+  readonly paragraphs: readonly ScoredParagraph[]
 }

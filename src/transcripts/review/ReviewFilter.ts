@@ -1,1 +1,1 @@
-export type ReviewFilter = 'attention' | 'deferred' | 'all'
+export type ReviewFilter = 'attention' | 'deferred' | 'all' | 'spotcheck'

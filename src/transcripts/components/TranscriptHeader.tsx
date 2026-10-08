@@ -1,12 +1,14 @@
 import { formatDuration } from '../formatters/formatDuration'
 import { transcriptDisclosure } from '../review/transcriptDisclosure'
 import { DisclosureNotice } from './DisclosureNotice'
+import { ReliabilityHeadline } from './ReliabilityHeadline'
 import { ReviewFigures } from './ReviewFigures'
 import type { TranscriptHeaderProps } from './TranscriptHeaderProps'
 
 export function TranscriptHeader({
   transcript,
   correction,
+  reliability = null,
   nav,
 }: TranscriptHeaderProps) {
   const { source } = transcript
@@ -34,6 +36,7 @@ export function TranscriptHeader({
       <DisclosureNotice
         text={transcriptDisclosure(correction?.model ?? null)}
       />
+      {reliability ? <ReliabilityHeadline summary={reliability} /> : null}
       <ReviewFigures transcript={transcript} correction={correction} />
     </header>
   )

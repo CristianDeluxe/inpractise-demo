@@ -3,10 +3,10 @@ import type { TranscriptBundle } from '../api/TranscriptBundle'
 import { useActiveParagraph } from './useActiveParagraph'
 import { useAudioPlayer } from './useAudioPlayer'
 import { useEditPreview } from './useEditPreview'
+import { useModeFocus } from './useModeFocus'
 import { useReviewActions } from './useReviewActions'
 import { useReviewDecisions } from './useReviewDecisions'
 import { useReviewDerived } from './useReviewDerived'
-import { useReviewFocus } from './useReviewFocus'
 import { useReviewKeys } from './useReviewKeys'
 import { useScrollToFocus } from './useScrollToFocus'
 import { useWorkspaceView } from './useWorkspaceView'
@@ -20,11 +20,11 @@ export function useReviewWorkspace(
   const view = useWorkspaceView(correction !== null)
   const derived = useReviewDerived(transcript, correction)
   const saved = useReviewDecisions(transcript.id, bundle.review, onSave)
-  const focusApi = useReviewFocus({
-    flaggedIds: derived.flaggedIds,
-    edits: derived.edits,
-    decisions: saved.decisions,
-  })
+  const { activeEdits, focusApi } = useModeFocus(
+    view.mode,
+    derived,
+    saved.decisions,
+  )
   const audio = useAudioPlayer()
   const preview = useEditPreview()
   const { controls, handlers } = useReviewActions({
@@ -52,6 +52,7 @@ export function useReviewWorkspace(
   return {
     view,
     derived,
+    activeEdits,
     controls,
     handlers,
     saveState: saved.saveState,

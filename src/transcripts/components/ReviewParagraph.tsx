@@ -17,7 +17,7 @@ export function ReviewParagraph({
       start={paragraph.start}
       active={active}
       focused={focused}
-      note={paragraphNote(paragraph, corrected)}
+      note={mode === 'final' ? null : paragraphNote(paragraph, corrected)}
       onSeek={controls.seek}
     >
       <ReviewParagraphBody

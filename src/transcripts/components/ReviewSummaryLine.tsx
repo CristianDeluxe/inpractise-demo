@@ -8,7 +8,7 @@ export function ReviewSummaryLine({
 }: ReviewSummaryLineProps) {
   const parts = [
     duration,
-    `~${String(relistenMinutes)} min to re-listen`,
+    `~${String(relistenMinutes)} min of optional spot-check audio`,
     edits === null ? 'no edits yet' : `${edits} edits`,
   ]
   return (

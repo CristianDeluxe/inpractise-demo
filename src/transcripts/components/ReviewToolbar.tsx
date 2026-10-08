@@ -1,7 +1,9 @@
 import { filterOptions } from './filterOptions'
+import { ReportLinkButton } from './ReportLinkButton'
 import { ReviewNavigation } from './ReviewNavigation'
 import type { ReviewToolbarProps } from './ReviewToolbarProps'
 import { SegmentedControl } from './SegmentedControl'
+import { showsParagraphFilter } from './showsParagraphFilter'
 
 export function ReviewToolbar(props: ReviewToolbarProps) {
   return (
@@ -11,6 +13,16 @@ export function ReviewToolbar(props: ReviewToolbarProps) {
         value={props.mode}
         onChange={props.onModeChange}
         options={[
+          {
+            value: 'final',
+            label: 'AI final',
+            disabled: !props.hasCorrection,
+          },
+          {
+            value: 'spotcheck',
+            label: 'Spot-check',
+            disabled: !props.hasCorrection,
+          },
           {
             value: 'inline',
             label: 'Track changes',
@@ -24,13 +36,21 @@ export function ReviewToolbar(props: ReviewToolbarProps) {
           { value: 'confidence', label: 'Confidence' },
         ]}
       />
-      <SegmentedControl
-        label="Paragraphs"
-        value={props.filter}
-        onChange={props.onFilterChange}
-        options={filterOptions(props)}
-      />
-      <ReviewNavigation {...props} />
+      {showsParagraphFilter(props.mode) ? (
+        <SegmentedControl
+          label="Paragraphs"
+          value={props.filter}
+          onChange={props.onFilterChange}
+          options={filterOptions(props)}
+        />
+      ) : null}
+      {props.mode === 'final' ? (
+        <div className="ml-auto">
+          <ReportLinkButton onOpenReport={props.onOpenReport} />
+        </div>
+      ) : (
+        <ReviewNavigation {...props} />
+      )}
     </div>
   )
 }

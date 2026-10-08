@@ -1,5 +1,6 @@
 import { ConfidenceWords } from './ConfidenceWords'
 import { DiffBody } from './DiffBody'
+import { FinalBody } from './FinalBody'
 import { InlineBody } from './InlineBody'
 import type { ReviewParagraphBodyProps } from './ReviewParagraphBodyProps'
 
@@ -9,7 +10,16 @@ export function ReviewParagraphBody({
   mode,
   controls,
 }: ReviewParagraphBodyProps) {
-  if (corrected && mode === 'inline') {
+  if (mode === 'final') {
+    return (
+      <FinalBody
+        paragraph={paragraph}
+        corrected={corrected}
+        controls={controls}
+      />
+    )
+  }
+  if (corrected && (mode === 'inline' || mode === 'spotcheck')) {
     return (
       <InlineBody
         paragraph={paragraph}

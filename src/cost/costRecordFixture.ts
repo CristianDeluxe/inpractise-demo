@@ -1,10 +1,11 @@
-import { transcriptFixture } from '@/transcripts/fixtures/transcriptFixture'
+import { bundleFixture } from '@/transcripts/fixtures/bundleFixture'
 import type { CostRecord } from './CostRecord'
 
 export function costRecordFixture(
   overrides: Partial<CostRecord> = {},
 ): CostRecord {
-  const { source } = transcriptFixture()
+  const { transcript, correction } = bundleFixture()
+  const { source } = transcript
   return {
     transcript_id: 'synthetic-1',
     source,
@@ -14,6 +15,8 @@ export function costRecordFixture(
     correction_input_tokens: 30_000,
     correction_output_tokens: 40_000,
     edit_count: 3,
+    transcript,
+    correction,
     ...overrides,
   }
 }

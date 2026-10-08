@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { renderRouteFixture } from '@/app/renderRouteFixture'
 import { uiRuntimeFixture } from '@/app/uiRuntimeFixture'
-import { cleanup, screen } from '@testing-library/react'
+import { cleanup, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { bundleFixture } from '../fixtures/bundleFixture'
 import { labFetchFixture } from '../fixtures/labFetchFixture'
@@ -28,7 +28,7 @@ describe('lab pages', () => {
     expect(fetcher).not.toHaveBeenCalled()
   })
 
-  it('rebuild the report with rejected edits reverted and list corrected terms', async () => {
+  it('rebuild the AI-final report with human decisions applied and list corrected terms', async () => {
     const { fetcher } = labFetchFixture({
       lab_transcripts: [labTranscriptRowFixture()],
       lab_reviews: [
@@ -56,8 +56,14 @@ describe('lab pages', () => {
       screen.getByText(paragraphTextMatcher('We hired forty people in Q3.')),
     ).toBeTruthy()
     expect(screen.getByText('01:05')).toBeTruthy()
-    expect(screen.getByText('1 of 3')).toBeTruthy()
-    expect(screen.getByText('1 pending, 0 flagged, 1 rejected')).toBeTruthy()
+    expect(screen.getByText('94.1%')).toBeTruthy()
+    expect(
+      screen.getByText('1 automatic, 1 confirmed by a person'),
+    ).toBeTruthy()
+    expect(screen.getByText('Not applied; 1 reverted by a person')).toBeTruthy()
+    expect(screen.getByText('twelve').getAttribute('title')).toBe(
+      'Reliability 70.0%: optional spot-check',
+    )
     expect(screen.getByText('Ledger', { selector: 'strong' })).toBeTruthy()
     expect(screen.queryByText('Northwind', { selector: 'strong' })).toBeNull()
   })
@@ -81,8 +87,34 @@ describe('lab pages', () => {
       uiRuntimeFixture(fetcher).runtime,
     )
     expect(await screen.findByText(row.source.title)).toBeTruthy()
-    expect(screen.getByText('corrected')).toBeTruthy()
+    expect(screen.getByText('AI final ready')).toBeTruthy()
+    const episode = screen.getByRole('row', { name: /Synthetic briefing/ })
+    expect(within(episode).getByText('94.1%')).toBeTruthy()
+    expect(within(episode).getByText('1')).toBeTruthy()
     expect(screen.getByText('2 / 3 reviewed')).toBeTruthy()
+  })
+
+  it('says when the AI pass has not run for an episode', async () => {
+    const row = labTranscriptRowFixture()
+    const { fetcher } = labFetchFixture({
+      lab_transcripts: [
+        {
+          ...row,
+          correction: null,
+          correction_model: null,
+          correction_input_tokens: null,
+          correction_output_tokens: null,
+          edit_count: 0,
+        },
+      ],
+    })
+    await renderRouteFixture(
+      '/app/transcripts',
+      uiRuntimeFixture(fetcher).runtime,
+    )
+    expect(await screen.findByText('AI pass not run')).toBeTruthy()
+    expect(screen.getByText('Nothing to check yet')).toBeTruthy()
+    expect(screen.queryByText('AI final ready')).toBeNull()
   })
 
   it('shows the learned glossary', async () => {

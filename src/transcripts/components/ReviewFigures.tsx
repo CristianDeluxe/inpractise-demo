@@ -29,10 +29,10 @@ export function ReviewFigures({ transcript, correction }: ReviewFiguresProps) {
           detail="Full episode length"
         />
         <HeaderFigure
-          label="Audio to re-listen"
+          label="Optional spot-check audio"
           value={`~${String(relisten)} min`}
           duration={`PT${String(relisten)}M`}
-          detail={`${formatPercent(relisten * 60, source.durationSeconds)} of the episode: uncertain words, ${String(relistenPaddingSeconds)} s either side`}
+          detail={`${formatPercent(relisten * 60, source.durationSeconds)} of the episode if you choose to spot-check: uncertain words, ${String(relistenPaddingSeconds)} s either side`}
           emphasis
         />
         <HeaderFigure

@@ -5,7 +5,7 @@ export const methodSections = [
   },
   {
     title: 'Automatic transcripts',
-    body: 'Both transcripts were produced automatically from the audio and nobody has reviewed them. They keep filler words and may mishear names and figures. The speaker labels, host or guest, are inferred from the audio and can be wrong. This is the raw first pass that a human cleanup step is meant to correct: sign in to try the review tool.',
+    body: 'Both transcripts were produced automatically from the audio and nobody has reviewed them. They keep filler words and may mishear names and figures. The speaker labels, host or guest, are inferred from the audio and can be wrong. This is the raw first pass. A second AI pass corrects it and scores its reliability, and a person can spot-check only the uncertain words: sign in to see them.',
   },
   {
     title: 'Quotes only',

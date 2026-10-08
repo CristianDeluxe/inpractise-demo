@@ -24,7 +24,7 @@ export function ReviewConsole({
             aria-hidden="true"
             className="h-1.5 w-4 rounded-full bg-primary"
           />
-          Audio to re-listen
+          Optional spot-check audio
         </p>
       </div>
       <ShortcutReference />

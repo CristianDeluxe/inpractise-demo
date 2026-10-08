@@ -10,9 +10,9 @@ export const workflowSteps = [
     body: 'The first pass is a machine transcript. Speaker labels are inferred from the audio and nobody has reviewed them.',
   },
   {
-    kicker: '03 · Human cleanup',
-    title: 'A person corrects the text.',
-    body: 'Sign in to review a transcript, keep the corrections for reuse, and see what the cleanup costs per audio hour.',
+    kicker: '03 · AI cleanup',
+    title: 'The AI corrects it and scores its own reliability.',
+    body: 'A second AI pass fixes names and terms, and each transcript gets a reliability score. A person spot-checks only the uncertain words, and can sign in to see them.',
   },
   {
     kicker: '04 · Ask',

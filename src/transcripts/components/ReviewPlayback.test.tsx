@@ -84,6 +84,7 @@ describe('review playback and pages', () => {
         />
       </>,
     )
+    fireEvent.click(screen.getByRole('button', { name: 'Track changes' }))
     fireEvent.keyDown(screen.getByLabelText('note'), { key: 'a' })
     fireEvent.keyDown(window, { key: 'a', ctrlKey: true })
     fireEvent.keyDown(window, { key: 'x' })

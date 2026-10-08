@@ -13,12 +13,12 @@ export function TranscriptListPage() {
       {(items) => (
         <main id="main-content" className="page-shell py-16">
           <LabNav />
-          <h1 className="mt-6 text-4xl">Transcript review</h1>
+          <h1 className="mt-6 text-4xl">Transcripts</h1>
           <p className="prose-measure mt-5 text-lg text-muted-foreground">
-            Speech recognition is unsure of about one word in twenty. Review
-            only those spans instead of re-listening to the whole interview,
-            accept or reject each proposed correction, and every decision
-            becomes memory for the next transcript.
+            The AI-corrected transcript is the final version. Each one carries a
+            reliability score, and a person can optionally spot-check the few
+            words it is least sure of. Anything a person confirms is kept as
+            memory for the next transcript.
           </p>
           <DisclosureNotice text={generalDisclosure} />
           <TranscriptTable items={items} />

@@ -1,4 +1,5 @@
-import { ChevronDown, ChevronUp, FileText } from 'lucide-react'
+import { ChevronDown, ChevronUp } from 'lucide-react'
+import { ReportLinkButton } from './ReportLinkButton'
 import type { ReviewNavigationProps } from './ReviewNavigationProps'
 import { SaveIndicator } from './SaveIndicator'
 import { UndoButton } from './UndoButton'
@@ -33,14 +34,7 @@ export function ReviewNavigation(props: ReviewNavigationProps) {
           <ChevronDown aria-hidden="true" className="size-4" />
         </button>
       </div>
-      <button
-        type="button"
-        className="quiet-action min-h-11 gap-2 whitespace-nowrap rounded-full md:min-h-0"
-        onClick={props.onOpenReport}
-      >
-        <FileText aria-hidden="true" className="size-4" />
-        Open report
-      </button>
+      <ReportLinkButton onOpenReport={props.onOpenReport} />
     </div>
   )
 }

@@ -2,4 +2,5 @@
 export type ParagraphFilterSets = {
   readonly attention: ReadonlySet<string>
   readonly deferred: ReadonlySet<string>
+  readonly spotcheck: ReadonlySet<string>
 }

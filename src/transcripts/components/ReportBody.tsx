@@ -1,11 +1,12 @@
+import { Fragment } from 'react'
 import { formatTimestamp } from '../formatters/formatTimestamp'
 import type { ReportBodyProps } from './ReportBodyProps'
-import { reportSegmentClass } from './reportSegmentClass'
-import { reportSegmentTitle } from './reportSegmentTitle'
+import { reportWordClass } from './reportWordClass'
+import { scoredWordTitle } from './scoredWordTitle'
 
 export function ReportBody({ paragraphs }: ReportBodyProps) {
   return (
-    <section aria-label="Corrected transcript" className="mt-8 space-y-6">
+    <section aria-label="AI-final transcript" className="mt-8 space-y-6">
       {paragraphs.map((paragraph) => (
         <div
           key={paragraph.id}
@@ -15,14 +16,16 @@ export function ReportBody({ paragraphs }: ReportBodyProps) {
             {formatTimestamp(paragraph.start)}
           </time>
           <p className="source-text">
-            {paragraph.segments.map((segment, index) => (
-              <span
-                key={`${String(index)}-${segment.text}`}
-                title={reportSegmentTitle(segment)}
-                className={reportSegmentClass(segment)}
-              >
-                {segment.text}
-              </span>
+            {paragraph.words.map((word, index) => (
+              <Fragment key={`${String(index)}-${word.text}`}>
+                {index === 0 ? '' : ' '}
+                <span
+                  title={scoredWordTitle(word.score)}
+                  className={reportWordClass(word.score)}
+                >
+                  {word.text}
+                </span>
+              </Fragment>
             ))}
           </p>
         </div>

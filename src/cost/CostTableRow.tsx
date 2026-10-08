@@ -1,9 +1,10 @@
 import { formatDuration } from '@/transcripts/formatters/formatDuration'
-import { costLabel } from './costLabel'
+import { cleanupApiCostLabel } from './cleanupApiCostLabel'
 import type { CostTableRowProps } from './CostTableRowProps'
 import { formatReviewerMinutes } from './formatters/formatReviewerMinutes'
 import { noAiPassLabel } from './noAiPassLabel'
 import { notMeasuredLabel } from './notMeasuredLabel'
+import { reliabilityLabel } from './reliabilityLabel'
 import { tokensLabel } from './tokensLabel'
 
 export function CostTableRow({ row }: CostTableRowProps) {
@@ -20,10 +21,9 @@ export function CostTableRow({ row }: CostTableRowProps) {
       </td>
       <td className="py-4 pr-4 font-mono text-sm">{tokensLabel(row)}</td>
       <td className="py-4 pr-4 font-mono text-sm">
-        {row.correctionModel === null
-          ? noAiPassLabel
-          : costLabel(row.aiCostUsd)}
+        {row.correctionModel === null ? noAiPassLabel : cleanupApiCostLabel}
       </td>
+      <td className="py-4 pr-4 font-mono text-sm">{reliabilityLabel(row)}</td>
       <td className="py-4 pr-4 font-mono text-sm">
         {row.decidedEdits} of {row.proposedEdits}
       </td>

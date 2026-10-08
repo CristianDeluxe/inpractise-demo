@@ -1,4 +1,5 @@
 import { Info } from 'lucide-react'
+import { formatCount } from '../formatters/formatCount'
 import type { ReportPendingNoteProps } from './ReportPendingNoteProps'
 
 export function ReportPendingNote({ count }: ReportPendingNoteProps) {
@@ -10,9 +11,7 @@ export function ReportPendingNote({ count }: ReportPendingNoteProps) {
     >
       <Info aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
       <span>
-        Preview: {String(count)} {count === 1 ? 'edit is' : 'edits are'} not
-        accepted yet. Underlined wording is unreviewed; struck words would be
-        removed.
+        {`This is the AI-final text. ${formatCount(count)} underlined ${count === 1 ? 'word is' : 'words are'} below the reliable threshold; checking them is optional.`}
       </span>
     </p>
   )

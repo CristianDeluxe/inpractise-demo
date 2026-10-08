@@ -7,10 +7,10 @@ describe('findPrice', () => {
     expect(findPrice('gpt-4.1-mini-2025-04-14')?.outputUsdPerMillion).toBe(1.6)
     expect(findPrice('gpt-4.1-nano-2025-04-14')?.inputUsdPerMillion).toBe(0.1)
     expect(findPrice('text-embedding-3-small')?.inputUsdPerMillion).toBe(0.02)
-    expect(findPrice('claude-sonnet-5')?.outputUsdPerMillion).toBe(10)
+    expect(findPrice('claude-sonnet-5')).toBeUndefined()
   })
   it('does not guess a price for a different model that shares a prefix', () => {
-    expect(findPrice('claude-sonnet-5-5')).toBeUndefined()
+    expect(findPrice('gpt-4.1-mini-experimental')).toBeUndefined()
     expect(findPrice('gpt-4.1')).toBeUndefined()
     expect(findPrice(null)).toBeUndefined()
   })

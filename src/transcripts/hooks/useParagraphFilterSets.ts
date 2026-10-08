@@ -8,12 +8,14 @@ export function useParagraphFilterSets(
   flaggedIds: readonly string[],
   edits: readonly CorrectionEdit[],
   decisions: DecisionMap,
+  spotCheckIds: readonly string[],
 ): ParagraphFilterSets {
   return useMemo(
     () => ({
       attention: new Set(flaggedIds),
       deferred: deferredParagraphIds(edits, decisions),
+      spotcheck: new Set(spotCheckIds),
     }),
-    [decisions, edits, flaggedIds],
+    [decisions, edits, flaggedIds, spotCheckIds],
   )
 }

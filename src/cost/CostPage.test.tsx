@@ -14,17 +14,25 @@ afterEach(() => {
 })
 
 describe('cost page', () => {
-  it('shows this pipeline only: tokens, list-price USD, local ASR at zero, reviewer minutes', async () => {
+  it('shows this pipeline only: tokens, USD 0 cleanup on the subscription lane, reliability, spot-check minutes', async () => {
     const { fetcher } = labFetchFixture(costTablesFixture())
     await renderRouteFixture('/app/cost', uiRuntimeFixture(fetcher).runtime)
     expect(
       await screen.findByRole('heading', { name: 'Pipeline cost' }),
     ).toBeTruthy()
-    expect(screen.getByText('USD 13.25 per audio hour')).toBeTruthy()
+    expect(
+      screen.getByText('94.1%, 1 word to spot-check', {
+        selector: 'span',
+      }),
+    ).toBeTruthy()
     expect(screen.getByText('288.0 min per audio hour')).toBeTruthy()
+    expect(screen.queryByText('USD 13.25 per audio hour')).toBeNull()
     const row = screen.getByRole('row', { name: /Synthetic briefing/ })
     expect(within(row).getByText('30,000 in, 40,000 out')).toBeTruthy()
-    expect(within(row).getByText('USD 0.4600')).toBeTruthy()
+    expect(
+      within(row).getByText('USD 0 (subscription lane, no per-token charge)'),
+    ).toBeTruthy()
+    expect(within(row).getByText('94.1%, 1 word to spot-check')).toBeTruthy()
     expect(within(row).getByText(/USD 0$/)).toBeTruthy()
     expect(within(row).getByText('10.0 min')).toBeTruthy()
     expect(

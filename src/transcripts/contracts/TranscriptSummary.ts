@@ -1,3 +1,4 @@
+import type { ReliabilitySummary } from '../reliability/ReliabilitySummary'
 import type { TranscriptSource } from './TranscriptSource'
 import type { TranscriptStats } from './TranscriptStats'
 
@@ -11,4 +12,6 @@ export type TranscriptSummary = {
   readonly edits: number
   /** Saved accept or reject decisions. */
   readonly reviewed: number
+  /** Reliability of the AI-final text; null until the AI pass has run. */
+  readonly reliability: ReliabilitySummary | null
 }

@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest'
+import { applyEdits } from '../edits/applyEdits'
 import { correctionFixture } from '../fixtures/correctionFixture'
 import { editFixture } from '../fixtures/editFixture'
 import { transcriptFixture } from '../fixtures/transcriptFixture'
-import { reviewedParagraphText } from './reviewedParagraphText'
+import { isNotRejected } from './isNotRejected'
 import { struckWords } from './struckWords'
 import { toDecisionMap } from './toDecisionMap'
 
@@ -16,7 +17,7 @@ describe('reviewed paragraph text', () => {
       editFixture('e2', 'Ledgar', 'Ledger'),
     ]
     expect(
-      reviewedParagraphText('at Northwynd Ledgar today', edits, decisions),
+      applyEdits('at Northwynd Ledgar today', edits, isNotRejected(decisions)),
     ).toBe('at Northwynd Ledger today')
   })
 
@@ -25,12 +26,12 @@ describe('reviewed paragraph text', () => {
       { editId: 'x', verdict: 'rejected', decidedAt: 'now' },
     ])
     const edit = editFixture('x', 'fourty', 'forty', { at: [10] })
-    expect(reviewedParagraphText('forty and fourty', [edit], decisions)).toBe(
-      'forty and fourty',
-    )
-    expect(reviewedParagraphText('forty and fourty', [edit], new Map())).toBe(
-      'forty and forty',
-    )
+    expect(
+      applyEdits('forty and fourty', [edit], isNotRejected(decisions)),
+    ).toBe('forty and fourty')
+    expect(
+      applyEdits('forty and fourty', [edit], isNotRejected(new Map())),
+    ).toBe('forty and forty')
   })
 
   it('strikes the raw words an edit still rewrites', () => {

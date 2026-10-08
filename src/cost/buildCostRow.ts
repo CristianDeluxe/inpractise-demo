@@ -1,10 +1,9 @@
 import type { ReviewDecision } from '@/transcripts/contracts/ReviewDecision'
+import { reliabilityForDecisions } from '@/transcripts/reliability/reliabilityForDecisions'
 import type { CostRecord } from './CostRecord'
 import type { CostRow } from './CostRow'
 import { estimateReviewerSeconds } from './estimateReviewerSeconds'
 import { minutesPerAudioHour } from './minutesPerAudioHour'
-import { findPrice } from './prices/findPrice'
-import { tokenCostUsd } from './prices/tokenCostUsd'
 
 export function buildCostRow(
   record: CostRecord,
@@ -14,9 +13,6 @@ export function buildCostRow(
   const reviewerSeconds = estimateReviewerSeconds(
     decisions.map((decision) => decision.decidedAt),
   )
-  const hasTokens =
-    record.correction_input_tokens !== null &&
-    record.correction_output_tokens !== null
   return {
     id: record.transcript_id,
     title: record.source.title,
@@ -26,13 +22,11 @@ export function buildCostRow(
     correctionModel: record.correction_model,
     inputTokens: record.correction_input_tokens,
     outputTokens: record.correction_output_tokens,
-    aiCostUsd: hasTokens
-      ? tokenCostUsd(
-          findPrice(record.correction_model),
-          record.correction_input_tokens,
-          record.correction_output_tokens,
-        )
-      : undefined,
+    reliability: reliabilityForDecisions(
+      record.transcript,
+      record.correction,
+      decisions,
+    ),
     proposedEdits: record.edit_count,
     decidedEdits: decisions.filter(
       (decision) => decision.verdict !== 'deferred',
