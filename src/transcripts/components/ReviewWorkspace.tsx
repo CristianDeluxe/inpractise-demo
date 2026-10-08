@@ -1,4 +1,4 @@
-import { audioUrl } from '../api/audioUrl'
+import { useAudioProps } from '../hooks/useAudioProps'
 import { useReviewWorkspace } from '../hooks/useReviewWorkspace'
 import { useVisibleParagraphs } from '../hooks/useVisibleParagraphs'
 import { useWorkspaceLayout } from '../hooks/useWorkspaceLayout'
@@ -17,6 +17,7 @@ export function ReviewWorkspace({ bundle, nav }: ReviewWorkspaceProps) {
     ws.derived.edits,
     ws.controls.focusedEditId,
   )
+  const audio = useAudioProps(bundle, ws.audioRef)
   const visible = useVisibleParagraphs(
     transcript.paragraphs,
     ws.derived.flaggedIds,
@@ -35,7 +36,7 @@ export function ReviewWorkspace({ bundle, nav }: ReviewWorkspaceProps) {
       />
       <ReviewConsole
         consoleRef={layout.consoleRef}
-        audio={{ src: audioUrl(transcript.id), audioRef: ws.audioRef }}
+        audio={audio}
         toolbar={buildToolbarProps(bundle, ws)}
       />
       <ConfidenceLegend />

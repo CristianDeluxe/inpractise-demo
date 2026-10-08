@@ -18,8 +18,12 @@ export function ReviewConsole({
         <div className="min-w-64 flex-1">
           <AudioPlayer {...audio} />
         </div>
-        <p className="hidden font-mono text-xs text-muted-foreground xl:block">
-          Click a timestamp to play from it
+        <p className="hidden items-center gap-2 text-xs text-muted-foreground xl:flex">
+          <span
+            aria-hidden="true"
+            className="h-[3px] w-4 rounded-full bg-primary"
+          />
+          Audio to re-listen
         </p>
       </div>
     </div>

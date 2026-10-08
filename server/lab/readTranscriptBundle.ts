@@ -12,5 +12,6 @@ export async function readTranscriptBundle(id: string) {
     transcript,
     correction: await readJsonFile(join(folder, 'correction.json')),
     review: await readReviewDecisions(id),
+    peaks: await readJsonFile(join(folder, 'peaks.json')),
   }
 }

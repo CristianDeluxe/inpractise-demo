@@ -35,6 +35,20 @@ describe('review playback and pages', () => {
     ).toBe('true')
   })
 
+  it('plays from the button and seeks from the waveform keyboard', () => {
+    stubLabFetch([])
+    const play = vi.spyOn(HTMLMediaElement.prototype, 'play')
+    render(<ReviewWorkspace bundle={bundleFixture()} />)
+    fireEvent.click(screen.getByRole('button', { name: 'Play' }))
+    expect(play).toHaveBeenCalled()
+    const slider = screen.getByRole('slider', { name: 'Playback position' })
+    fireEvent.keyDown(slider, { key: 'ArrowRight' })
+    const audio = screen.getByLabelText<HTMLAudioElement>('Episode audio')
+    expect(audio.currentTime).toBe(5)
+    fireEvent.keyDown(slider, { key: 'Home' })
+    expect(audio.currentTime).toBe(0)
+  })
+
   it('does not steal shortcut keys from text fields', () => {
     stubLabFetch([])
     render(

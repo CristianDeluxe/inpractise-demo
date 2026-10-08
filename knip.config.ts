@@ -33,7 +33,7 @@ export default {
         'mcp/start.ts',
         'server.js',
         'server/api/createApiListener.ts',
-        'scripts/transcripts/{ingest,build,correct,learn,pairs,exportPair}.ts',
+        'scripts/transcripts/{ingest,build,correct,learn,pairs,exportPair,peaks}.ts',
         'scripts/api/generateOpenApi.ts',
         'scripts/api/measureLatency.ts',
         'scripts/api/fixtureBackend.ts',
