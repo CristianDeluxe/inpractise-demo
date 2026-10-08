@@ -1,5 +1,6 @@
 export type ApiErrorCode =
   | 'invalid_session'
+  | 'invalid_credentials'
   | 'forbidden'
   | 'passage_not_found'
   | 'request_not_found'

@@ -10,7 +10,10 @@ export async function passwordLogin(
 ) {
   const { error } = await runtime.auth.signInWithPassword(credentials)
   if (error)
-    throw new Error('Sign-in failed. Check your provisioned demo credentials.')
+    throw new ApiError(
+      'invalid_credentials',
+      'Sign-in failed. Check your provisioned demo credentials.',
+    )
   if (signal.aborted) throw new ApiError('cancelled', 'Sign-in cancelled.')
   return loadAccess(runtime, undefined, signal)
 }

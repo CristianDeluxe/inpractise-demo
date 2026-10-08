@@ -2,6 +2,8 @@ import type { ApiErrorCode } from '@/api/ApiErrorCode'
 
 export const apiErrorMessages: Record<ApiErrorCode, string> = {
   invalid_session: 'Your session is unavailable. Sign in to continue.',
+  invalid_credentials:
+    'Wrong email or password. Use the demo credentials you were given.',
   forbidden: 'Access denied. This account does not have permission.',
   passage_not_found: 'This source is unavailable.',
   request_not_found: 'No answer was found for this request id.',
