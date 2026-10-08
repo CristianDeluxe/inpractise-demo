@@ -22,8 +22,8 @@ export function LandingHero() {
             className="intro-fade mt-8 max-w-[48ch] text-ink-muted"
             style={animationDelay(760)}
           >
-            Search an authorised corpus of public filings and synthetic
-            interviews, ask a standalone question, and open the exact passage
+            Search an authorised corpus of public podcast interviews with
+            company CEOs, ask a standalone question, and open the exact passage
             behind each claim. Where the corpus cannot establish something, the
             answer says so.
           </p>

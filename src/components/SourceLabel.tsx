@@ -1,11 +1,11 @@
 import type { SourceLabelProps } from './SourceLabelProps'
 
-export function SourceLabel({ origin }: SourceLabelProps) {
-  return (
-    <p className="text-xs font-medium text-muted-foreground">
-      {origin === 'synthetic'
+export function SourceLabel({ origin, kind }: SourceLabelProps) {
+  const label =
+    kind === 'public_interview'
+      ? 'Public podcast - automatic transcript'
+      : origin === 'synthetic'
         ? 'Synthetic interview — fictional company and speaker'
-        : 'Public filing'}
-    </p>
-  )
+        : 'Public filing'
+  return <p className="text-xs font-medium text-muted-foreground">{label}</p>
 }

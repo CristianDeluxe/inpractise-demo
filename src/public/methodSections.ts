@@ -17,7 +17,7 @@ export const methodSections = [
   },
   {
     title: 'Provenance',
-    body: 'The corpus contains four public SEC filings, one public UK annual report and six synthetic interviews about fictional companies and speakers. Public filings are labelled separately. This is an independent demo: everything it searches is public or invented.',
+    body: 'The searchable corpus contains two public podcast interviews with the chief executives of Roche and Novartis, transcribed automatically with speaker labels inferred from the audio and not human-reviewed. Earlier synthetic interviews and public filings remain in the database but are hidden from every reader. This is an independent demo: everything it searches is public.',
   },
   {
     title: 'Local MCP',

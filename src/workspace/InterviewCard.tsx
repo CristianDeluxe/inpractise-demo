@@ -15,7 +15,7 @@ export function InterviewCard({ interview }: InterviewCardProps) {
       aria-label={interview.title}
       className="flex h-full flex-col rounded-lg border border-border bg-card p-5"
     >
-      <SourceLabel origin={interview.origin} />
+      <SourceLabel origin={interview.origin} kind={interview.kind} />
       <p className="mt-4 text-xs uppercase tracking-widest text-primary">
         {name}
       </p>

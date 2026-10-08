@@ -1,4 +1,5 @@
 import { readJson } from './readJson.mjs'
+import { readPodcastRecords } from './readPodcastRecords.mjs'
 import { SYNTHETIC_DOCUMENT_COUNT } from './syntheticDocumentCount.mjs'
 
 /**
@@ -14,9 +15,12 @@ export async function readExpectedCounts(root) {
   )
   const publicSelectorCount =
     sec.selectors.length + annualReports.selectors.length
+  const podcastCount = (await readPodcastRecords(root)).length
   return {
     syntheticDocumentCount: SYNTHETIC_DOCUMENT_COUNT,
     publicSelectorCount,
-    requestedDocumentCount: SYNTHETIC_DOCUMENT_COUNT + publicSelectorCount,
+    podcastCount,
+    requestedDocumentCount:
+      SYNTHETIC_DOCUMENT_COUNT + publicSelectorCount + podcastCount,
   }
 }

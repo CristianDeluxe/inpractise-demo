@@ -23,7 +23,7 @@ export async function createCorpusManifest(root, context) {
     notice:
       documents.length === 6
         ? 'Six synthetic test documents; no public filings loaded. Short fixtures.'
-        : 'Independent demo. Public SEC narrative, one public UK annual report and six short synthetic fixtures; no private In Practise research.',
+        : 'Independent demo. Public SEC narrative, one public UK annual report, two public podcast interviews and six short synthetic fixtures; no private In Practise research.',
     documentCount: documents.length,
     syntheticDocumentCount: counts.syntheticDocumentCount,
     publicDocumentCount: documents.length - counts.syntheticDocumentCount,

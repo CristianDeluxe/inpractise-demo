@@ -7,7 +7,7 @@ import type { CitationCardProps } from '@/research/CitationCardProps'
 export function NoteEvidence({ citation }: CitationCardProps) {
   return (
     <>
-      <SourceLabel origin={citation.origin} />
+      <SourceLabel origin={citation.origin} kind={citation.kind} />
       <blockquote className="source-text my-3 whitespace-pre-wrap break-words border-l-2 border-primary pl-4">
         {citation.quote}
       </blockquote>

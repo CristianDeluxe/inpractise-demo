@@ -8,7 +8,12 @@ export const researchRequestSchema = z.discriminatedUnion('action', [
     action: z.literal('list'),
     company: z.string().max(80).optional(),
     kind: z
-      .enum(['synthetic_interview', 'sec_filing', 'annual_report_pdf'])
+      .enum([
+        'synthetic_interview',
+        'sec_filing',
+        'annual_report_pdf',
+        'public_interview',
+      ])
       .optional(),
   }),
   z.strictObject({

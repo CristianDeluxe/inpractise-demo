@@ -80,7 +80,12 @@
             "schema": {
               "$schema": "https://json-schema.org/draft/2020-12/schema",
               "type": "string",
-              "enum": ["synthetic_interview", "sec_filing", "annual_report_pdf"]
+              "enum": [
+                "synthetic_interview",
+                "sec_filing",
+                "annual_report_pdf",
+                "public_interview"
+              ]
             }
           },
           {
@@ -172,7 +177,8 @@
                             "enum": [
                               "synthetic_interview",
                               "sec_filing",
-                              "annual_report_pdf"
+                              "annual_report_pdf",
+                              "public_interview"
                             ]
                           },
                           "origin": {
@@ -1590,7 +1596,8 @@
                           "enum": [
                             "synthetic_interview",
                             "sec_filing",
-                            "annual_report_pdf"
+                            "annual_report_pdf",
+                            "public_interview"
                           ]
                         },
                         "speaker": {
@@ -3038,7 +3045,8 @@
                             "enum": [
                               "synthetic_interview",
                               "sec_filing",
-                              "annual_report_pdf"
+                              "annual_report_pdf",
+                              "public_interview"
                             ]
                           },
                           "speaker": {
@@ -4466,7 +4474,8 @@
                             "enum": [
                               "synthetic_interview",
                               "sec_filing",
-                              "annual_report_pdf"
+                              "annual_report_pdf",
+                              "public_interview"
                             ]
                           },
                           "speaker": {

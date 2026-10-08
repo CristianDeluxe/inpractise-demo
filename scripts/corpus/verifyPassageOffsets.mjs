@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { passageSpeaker } from './passageSpeaker.mjs'
 
 export function verifyPassageOffsets(document, passage) {
   const turn = document.sourceTurns.find(
@@ -7,14 +8,7 @@ export function verifyPassageOffsets(document, passage) {
   assert.ok(turn)
   assert.equal(passage.speakerKind, turn.speaker)
   assert.equal(passage.speakerRole, turn.speakerRole)
-  assert.equal(
-    passage.speaker,
-    document.origin === 'public'
-      ? document.company
-      : turn.speaker === 'Moderator'
-        ? document.moderatorName
-        : document.operatorName,
-  )
+  assert.equal(passage.speaker, passageSpeaker(document, turn))
   assert.equal(
     passage.text,
     Array.from(turn.text)

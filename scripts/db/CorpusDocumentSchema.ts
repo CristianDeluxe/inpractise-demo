@@ -9,7 +9,12 @@ export const CorpusDocumentSchema = z
     company: z.string(),
     companySlug: z.string(),
     origin: z.enum(['synthetic', 'public']),
-    kind: z.enum(['synthetic_interview', 'sec_filing', 'annual_report_pdf']),
+    kind: z.enum([
+      'synthetic_interview',
+      'sec_filing',
+      'annual_report_pdf',
+      'public_interview',
+    ]),
     requiredTier: z.enum(['basic', 'premium']),
     sourceUrl: z.string().nullable(),
     interviewDate: z.string().nullable(),

@@ -1,10 +1,11 @@
 import { buildAnnualReportDocuments } from './buildAnnualReportDocuments.mjs'
+import { buildPodcastDocuments } from './buildPodcastDocuments.mjs'
 import { buildPublicDocuments } from './buildPublicDocuments.mjs'
 import { buildSyntheticDocuments } from './buildSyntheticDocuments.mjs'
 
 /**
  * Builds every accepted document group (synthetic, SEC filings, annual
- * reports) and merges them into one document list and one excluded-candidate
+ * reports, podcasts) and merges them into one document list and one excluded-candidate
  * list, so buildCorpus.mjs only orchestrates reading, building and writing.
  */
 export async function buildAllDocuments(root, context) {
@@ -23,11 +24,13 @@ export async function buildAllDocuments(root, context) {
     approvals,
     syntheticOnly,
   )
+  const podcastDocuments = await buildPodcastDocuments(root, syntheticOnly)
   return {
     documents: [
       ...synthetic.documents,
       ...publicDocuments.documents,
       ...annualReportDocuments.documents,
+      ...podcastDocuments.documents,
     ],
     excluded: [...publicDocuments.excluded, ...annualReportDocuments.excluded],
     generation: synthetic.generation,

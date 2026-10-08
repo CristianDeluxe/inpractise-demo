@@ -9,9 +9,12 @@ import { documentKind } from './documentKind.mjs'
  */
 export function verifyKindFields(document) {
   assert.ok(
-    ['synthetic_interview', 'sec_filing', 'annual_report_pdf'].includes(
-      document.kind,
-    ),
+    [
+      'synthetic_interview',
+      'sec_filing',
+      'annual_report_pdf',
+      'public_interview',
+    ].includes(document.kind),
   )
   assert.equal(document.kind, documentKind(document))
 }

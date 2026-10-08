@@ -9,7 +9,7 @@ import { SourcePanel } from './SourcePanel'
 export function CitationCard({ citation, question }: CitationCardProps) {
   return (
     <article className="mt-4 rounded-lg border border-border bg-card p-5">
-      <SourceLabel origin={citation.origin} />
+      <SourceLabel origin={citation.origin} kind={citation.kind} />
       <h3 className="mt-3 font-sans text-base">{citation.title}</h3>
       <p className="mt-1 text-xs text-muted-foreground">
         {formatCompanyName(citation.company)} · {citation.speaker}{' '}

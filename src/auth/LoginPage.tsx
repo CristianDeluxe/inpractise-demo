@@ -17,7 +17,7 @@ export function LoginPage() {
             <em className="text-brass">Inspect the source.</em>
           </h1>
           <p className="mt-8 max-w-lg text-ink-muted">
-            Public filings and fictional interviews, with exact passage
+            Public podcast interviews with company CEOs, with exact passage
             citations and explicit limitations.
           </p>
         </div>

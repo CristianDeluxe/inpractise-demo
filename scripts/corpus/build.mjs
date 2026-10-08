@@ -13,7 +13,8 @@ try {
   const counts = await readExpectedCounts(root)
   if (
     !process.argv.includes('--synthetic-only') &&
-    manifest.publicDocumentCount !== counts.publicSelectorCount
+    manifest.publicDocumentCount !==
+      counts.publicSelectorCount + counts.podcastCount
   ) {
     console.error(
       'PUBLIC_INTAKE_NOT_ACCEPTED: use --synthetic-only for the explicit fallback.',

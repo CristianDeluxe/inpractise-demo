@@ -17,6 +17,9 @@ export async function prepareDatabase() {
           'documents',
           'document_revisions',
           'passages',
+          'request_usage',
+          'research_notes',
+          'query_embeddings',
         ].includes(String(row['tablename'])),
     )
   )

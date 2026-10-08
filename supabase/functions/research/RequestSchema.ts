@@ -18,7 +18,12 @@ export const RequestSchema = z.discriminatedUnion('action', [
     viewAs: ViewAsSchema.optional(),
     company: companySchema,
     kind: z
-      .enum(['synthetic_interview', 'sec_filing', 'annual_report_pdf'])
+      .enum([
+        'synthetic_interview',
+        'sec_filing',
+        'annual_report_pdf',
+        'public_interview',
+      ])
       .optional(),
   }),
   z.strictObject({

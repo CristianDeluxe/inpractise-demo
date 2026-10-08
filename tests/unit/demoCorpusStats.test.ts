@@ -4,27 +4,28 @@ import { corpusManifestDocuments } from '../helpers/corpusManifestDocuments.ts'
 import { parseDemoCorpusStats } from '../helpers/parseDemoCorpusStats.ts'
 
 describe('landing page corpus figures', () => {
-  const documents = corpusManifestDocuments()
+  const documents = corpusManifestDocuments().filter(
+    (document) => document.kind === 'public_interview',
+  )
   const shown = parseDemoCorpusStats(
     readFileSync('src/public/demoCorpusStats.ts', 'utf8'),
   )
 
-  it('counts the synthetic interviews the manifest accepts', () => {
-    const interviews = documents.filter(
-      (document) => document.kind === 'synthetic_interview',
+  it('counts the public podcast interviews readers can search', () => {
+    expect(shown.get('Public podcast interviews')).toBe(
+      String(documents.length),
     )
-    expect(shown.get('Synthetic interviews')).toBe(String(interviews.length))
   })
 
-  it('counts the public filings the manifest accepts', () => {
-    const filings = documents.filter(
-      (document) =>
-        document.kind === 'sec_filing' || document.kind === 'annual_report_pdf',
+  it('sums the minutes of audio the interviews cover', () => {
+    const seconds = documents.reduce(
+      (total, document) => total + (document.durationSeconds ?? 0),
+      0,
     )
-    expect(shown.get('Public filings')).toBe(String(filings.length))
+    expect(shown.get('Minutes of audio')).toBe(String(Math.round(seconds / 60)))
   })
 
-  it('sums the passages the corpus actually indexes', () => {
+  it('sums the passages readers can search', () => {
     const passages = documents.reduce(
       (total, document) => total + document.passageCount,
       0,
@@ -32,7 +33,7 @@ describe('landing page corpus figures', () => {
     expect(shown.get('Indexed passages')).toBe(String(passages))
   })
 
-  it('counts the distinct companies the corpus covers', () => {
+  it('counts the distinct companies the interviews cover', () => {
     const companies = new Set(documents.map((document) => document.company))
     expect(shown.get('Companies covered')).toBe(String(companies.size))
   })

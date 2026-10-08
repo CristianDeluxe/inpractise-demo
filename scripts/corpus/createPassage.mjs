@@ -1,14 +1,10 @@
 import { countTokens } from './countTokens.mjs'
+import { passageSpeaker } from './passageSpeaker.mjs'
 import { shortPassageReason } from './shortPassageReason.mjs'
 
 export function createPassage(turn, document, fragment, context) {
   const { fragments, index } = context
-  const speaker =
-    document.origin === 'public'
-      ? document.company
-      : turn.speaker === 'Moderator'
-        ? document.moderatorName
-        : document.operatorName
+  const speaker = passageSpeaker(document, turn)
   const tokenCount = countTokens(fragment.text)
   const metadataTokenCount = countTokens(
     [

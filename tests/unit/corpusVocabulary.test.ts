@@ -4,13 +4,13 @@ import { loadCorpus } from '../../scripts/db/loadCorpus.ts'
 import { loadManifestEntry } from '../../scripts/db/loadManifestEntry.ts'
 
 describe('accepted corpus database vocabulary', () => {
-  it('loads all eleven accepted sources with matching origin and kind', () => {
+  it('loads all thirteen accepted sources with matching origin and kind', () => {
     const documents = loadCorpus()
-    expect(documents).toHaveLength(11)
+    expect(documents).toHaveLength(13)
     expect(
       documents.filter((document) => document.origin === 'public'),
-    ).toHaveLength(5)
-    const publicKinds = ['sec_filing', 'annual_report_pdf']
+    ).toHaveLength(7)
+    const publicKinds = ['sec_filing', 'annual_report_pdf', 'public_interview']
     for (const document of documents) {
       const manifest = loadManifestEntry(document.documentId)
       const expectedKinds =

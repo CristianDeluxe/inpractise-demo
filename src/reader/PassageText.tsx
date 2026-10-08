@@ -11,7 +11,10 @@ export function PassageText({ passage }: PassageViewProps) {
   return (
     <article className="mt-6">
       <div>
-        <SourceLabel origin={passage.citation.origin} />
+        <SourceLabel
+          origin={passage.citation.origin}
+          kind={passage.citation.kind}
+        />
       </div>
       <h2 className="mt-4 text-2xl">{passage.citation.title}</h2>
       <p className="mt-3 text-sm text-muted-foreground">

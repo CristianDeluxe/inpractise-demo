@@ -42,6 +42,7 @@
     "check:quality": "pnpm deps:graph && pnpm type-coverage",
     "test:corpus": "node --test scripts/corpus/checks.test.mjs",
     "corpus:verify": "node scripts/corpus/verify.mjs",
+    "corpus:podcast": "node scripts/corpus/importPodcast.mjs",
     "dupes": "baseline-dupes src scripts tests supabase/functions evals mcp server/api",
     "knip": "knip",
     "deps:graph": "depcruise src scripts tests supabase/functions evals mcp",

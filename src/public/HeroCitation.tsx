@@ -7,7 +7,7 @@ import type { HeroCitationProps } from './HeroCitationProps'
 export function HeroCitation({ citation }: HeroCitationProps) {
   return (
     <figure className="mt-5 border-t border-border pt-4">
-      <SourceLabel origin={citation.origin} />
+      <SourceLabel origin={citation.origin} kind={citation.kind} />
       <blockquote className="source-text mt-3 border-l-2 border-primary pl-4 text-[16px]">
         “{citation.quote}”
       </blockquote>

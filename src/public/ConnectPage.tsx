@@ -33,9 +33,9 @@ export function ConnectPage() {
         <section className="page-shell py-14">
           <h2>Keep the source in view</h2>
           <p className="prose-measure mt-5 text-muted-foreground">
-            Synthetic companies and speakers are fictional. Public sources are
-            filings. Citations retain the exact document, revision and passage
-            across both clients.
+            The searchable sources are public podcast interviews with automatic
+            transcripts. Citations retain the exact document, revision and
+            passage across both clients.
           </p>
           <Link to="/app" className="action mt-8">
             Open the workspace

@@ -1,3 +1,4 @@
+import { isInterviewKind } from '@/contracts/isInterviewKind'
 import type { Library } from '@/contracts/Library'
 import type { LibraryStats } from './LibraryStats'
 
@@ -27,8 +28,7 @@ export function summariseLibrary(
     filings: items.filter(
       (item) => item.kind === 'sec_filing' || item.kind === 'annual_report_pdf',
     ).length,
-    interviews: items.filter((item) => item.kind === 'synthetic_interview')
-      .length,
+    interviews: items.filter((item) => isInterviewKind(item.kind)).length,
     companies: new Set(items.map((item) => item.company)).size,
     passages,
     latestPublished: published.at(-1),

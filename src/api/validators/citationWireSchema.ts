@@ -11,7 +11,12 @@ export const citationWireSchema = z.strictObject({
   title: z.string(),
   company: z.string(),
   origin: z.enum(['synthetic', 'public']),
-  kind: z.enum(['synthetic_interview', 'sec_filing', 'annual_report_pdf']),
+  kind: z.enum([
+    'synthetic_interview',
+    'sec_filing',
+    'annual_report_pdf',
+    'public_interview',
+  ]),
   speaker: z.string().nullable(),
   speakerRole: z.string().nullable(),
   interviewDate: z.string().nullable(),

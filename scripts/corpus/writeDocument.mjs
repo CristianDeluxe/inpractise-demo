@@ -1,4 +1,5 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { documentSourceType } from './documentSourceType.mjs'
 import { normaliseDocument } from './normaliseDocument.mjs'
 import { renderTranscript } from './renderTranscript.mjs'
 import { sha256 } from './sha256.mjs'
@@ -28,7 +29,7 @@ export async function writeDocument(root, source, turns, options = {}) {
     companySlug: source.companySlug,
     origin: source.origin,
     kind: document.kind,
-    sourceType: source.origin === 'synthetic' ? 'synthetic' : 'public_filing',
+    sourceType: documentSourceType(source),
     synthetic: document.synthetic,
     fictional: document.fictional,
     requiredTier: source.requiredTier,

@@ -5,7 +5,12 @@ export const documentSchema = z.strictObject({
   revision_id: z.string().min(1),
   title: z.string(),
   company: z.string(),
-  kind: z.enum(['synthetic_interview', 'sec_filing', 'annual_report_pdf']),
+  kind: z.enum([
+    'synthetic_interview',
+    'sec_filing',
+    'annual_report_pdf',
+    'public_interview',
+  ]),
   origin: z.enum(['synthetic', 'public']),
   interview_date: z.string().nullable(),
   published_at: z.string().min(1),
