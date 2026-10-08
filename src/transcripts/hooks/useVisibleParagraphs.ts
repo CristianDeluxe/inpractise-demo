@@ -1,15 +1,16 @@
 import { useMemo } from 'react'
 import type { TranscriptParagraph } from '../contracts/TranscriptParagraph'
+import type { ParagraphFilterSets } from '../review/ParagraphFilterSets'
 import type { ReviewFilter } from '../review/ReviewFilter'
 
 export function useVisibleParagraphs(
   paragraphs: readonly TranscriptParagraph[],
-  flaggedIds: readonly string[],
+  sets: ParagraphFilterSets,
   filter: ReviewFilter,
 ) {
   return useMemo(() => {
     if (filter === 'all') return paragraphs
-    const flagged = new Set(flaggedIds)
-    return paragraphs.filter((paragraph) => flagged.has(paragraph.id))
-  }, [paragraphs, flaggedIds, filter])
+    const keep = sets[filter]
+    return paragraphs.filter((paragraph) => keep.has(paragraph.id))
+  }, [paragraphs, sets, filter])
 }

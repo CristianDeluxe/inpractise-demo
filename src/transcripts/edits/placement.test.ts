@@ -5,12 +5,13 @@ import { placeEdits } from './placeEdits'
 import { segmentParagraph } from './segmentParagraph'
 
 describe('edit placement', () => {
+  const repeated = 'foo and foo'
+  const spaced = 'hello , world  !'
+
   it('uses the recorded offset when the words repeat', () => {
     const edit = editFixture('e1', 'foo', 'bar', { at: [8] })
-    expect(placeEdits('foo and foo', [edit])).toEqual([
-      { edit, start: 8, end: 11 },
-    ])
-    expect(applyEdits('foo and foo', [edit], () => true)).toBe('foo and bar')
+    expect(placeEdits(repeated, [edit])).toEqual([{ edit, start: 8, end: 11 }])
+    expect(applyEdits(repeated, [edit], () => true)).toBe('foo and bar')
   })
 
   it('falls back to the first whole-word occurrence for an old model edit', () => {
@@ -27,9 +28,17 @@ describe('edit placement', () => {
     ).toBe('Zorbecks met Zorbecks, not Zorbexes')
   })
 
-  it('ignores a recorded offset that no longer holds the words', () => {
-    const edit = editFixture('e1', 'foo', 'bar', { at: [4] })
-    expect(placeEdits('foo and foo', [edit])[0]?.start).toBe(0)
+  it('drops a recorded offset that no longer holds the words', () => {
+    const stale = editFixture('e1', 'foo', 'bar', { at: [4] })
+    expect(placeEdits(repeated, [stale])).toEqual([])
+    const mixed = editFixture('e1', 'foo', 'bar', { at: [4, 8] })
+    expect(placeEdits(repeated, [mixed]).map((item) => item.start)).toEqual([8])
+  })
+
+  it('keeps the raw spacing and punctuation where no edit was removed', () => {
+    const keep = editFixture('e1', 'world', 'World')
+    expect(applyEdits(spaced, [keep], () => false)).toBe(spaced)
+    expect(applyEdits(spaced, [], () => true)).toBe(spaced)
   })
 
   it('leaves out an edit that would overlap an earlier one', () => {

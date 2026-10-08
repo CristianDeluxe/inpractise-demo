@@ -1,9 +1,11 @@
 import { formatTimestamp } from '../formatters/formatTimestamp'
 import type { ReportBodyProps } from './ReportBodyProps'
+import { reportSegmentClass } from './reportSegmentClass'
+import { reportSegmentTitle } from './reportSegmentTitle'
 
 export function ReportBody({ paragraphs }: ReportBodyProps) {
   return (
-    <section aria-label="Corrected transcript" className="mt-12 space-y-6">
+    <section aria-label="Corrected transcript" className="mt-8 space-y-6">
       {paragraphs.map((paragraph) => (
         <div
           key={paragraph.id}
@@ -12,7 +14,17 @@ export function ReportBody({ paragraphs }: ReportBodyProps) {
           <time className="meta-text pt-1.5 text-right print:text-black">
             {formatTimestamp(paragraph.start)}
           </time>
-          <p className="source-text">{paragraph.text}</p>
+          <p className="source-text">
+            {paragraph.segments.map((segment, index) => (
+              <span
+                key={`${String(index)}-${segment.text}`}
+                title={reportSegmentTitle(segment)}
+                className={reportSegmentClass(segment)}
+              >
+                {segment.text}
+              </span>
+            ))}
+          </p>
         </div>
       ))}
     </section>

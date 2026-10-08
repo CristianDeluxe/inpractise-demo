@@ -6,5 +6,11 @@ export function readMarkRect(editId: string): MarkRect | null {
   const mark = document.querySelector(editMarkQuery(editId))
   if (!mark) return null
   const rect = mark.getBoundingClientRect()
-  return { top: rect.top, bottom: rect.bottom, left: rect.left }
+  const column = mark.closest('section')?.getBoundingClientRect() ?? rect
+  return {
+    top: rect.top,
+    bottom: rect.bottom,
+    left: rect.left,
+    columnRight: column.right,
+  }
 }

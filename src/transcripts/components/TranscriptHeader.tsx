@@ -13,7 +13,7 @@ export function TranscriptHeader({
   return (
     <header>
       {nav}
-      <h1 className="mt-4 line-clamp-3 text-balance text-[1.5rem] leading-tight md:mt-6 md:line-clamp-none md:text-[2.35rem]">
+      <h1 className="mt-4 line-clamp-2 text-balance text-[1.5rem] leading-tight md:mt-6 md:line-clamp-none md:text-[2.35rem]">
         {source.title}
       </h1>
       <p className="mt-2 flex flex-wrap gap-x-2 text-sm md:mt-3 text-muted-foreground">

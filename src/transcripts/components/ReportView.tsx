@@ -1,6 +1,7 @@
 import { useRemoteReview } from '../hooks/useRemoteReview'
 import { buildReport } from '../review/buildReport'
 import { collectCorrectedTerms } from '../review/collectCorrectedTerms'
+import { countUnaccepted } from '../review/countUnaccepted'
 import { listEdits } from '../review/listEdits'
 import { toDecisionMap } from '../review/toDecisionMap'
 import { transcriptDisclosure } from '../review/transcriptDisclosure'
@@ -8,6 +9,7 @@ import { DisclosureNotice } from './DisclosureNotice'
 import { ReportAppendix } from './ReportAppendix'
 import { ReportBody } from './ReportBody'
 import { ReportMetrics } from './ReportMetrics'
+import { ReportPendingNote } from './ReportPendingNote'
 import { ReportToolbar } from './ReportToolbar'
 import type { ReportViewProps } from './ReportViewProps'
 
@@ -15,6 +17,7 @@ export function ReportView({ bundle }: ReportViewProps) {
   const { transcript, correction } = bundle
   const { source } = transcript
   const decisions = toDecisionMap(useRemoteReview(transcript.id, bundle.review))
+  const paragraphs = buildReport(transcript, correction, decisions)
   return (
     <main
       id="main-content"
@@ -44,9 +47,10 @@ export function ReportView({ bundle }: ReportViewProps) {
           correction={correction}
           decisions={decisions}
         />
-        <ReportBody
-          paragraphs={buildReport(transcript, correction, decisions)}
+        <ReportPendingNote
+          count={countUnaccepted(listEdits(correction), decisions)}
         />
+        <ReportBody paragraphs={paragraphs} />
         <ReportAppendix
           terms={collectCorrectedTerms(listEdits(correction), decisions)}
         />

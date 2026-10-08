@@ -2,6 +2,7 @@ import type { TranscriptBundle } from '../api/TranscriptBundle'
 import type { ReviewToolbarProps } from '../components/ReviewToolbarProps'
 import type { ReviewWorkspaceState } from '../hooks/ReviewWorkspaceState'
 import { countPending } from './countPending'
+import { countVerdicts } from './countVerdicts'
 import { openReportWindow } from './openReportWindow'
 
 /** Toolbar wiring: view state, counters and the actions the buttons call. */
@@ -20,6 +21,9 @@ export function buildToolbarProps(
     flaggedCount: derived.flaggedIds.length,
     totalCount: transcript.paragraphs.length,
     pending: countPending(derived.edits, controls.decisions),
+    deferredCount: countVerdicts(derived.edits, controls.decisions).deferred,
+    canUndo: controls.canUndo,
+    onUndo: controls.undo,
     saveState: ws.saveState,
     onPrevious: handlers.previous,
     onNext: handlers.next,

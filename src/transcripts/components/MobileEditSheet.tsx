@@ -1,9 +1,9 @@
 import { X } from 'lucide-react'
 import { useDismissedId } from '../hooks/useDismissedId'
+import { EditAudioButtons } from './EditAudioButtons'
 import { EditNavigator } from './EditNavigator'
 import { EditSummary } from './EditSummary'
 import type { MobileEditSheetProps } from './MobileEditSheetProps'
-import { ReplayEditButton } from './ReplayEditButton'
 import { VerdictButtons } from './VerdictButtons'
 
 /** Below the large breakpoint the inspector becomes a sheet; the text scrolls the mark above it. */
@@ -47,12 +47,7 @@ export function MobileEditSheet({
         />
       </div>
       <div className="mt-2">
-        <ReplayEditButton
-          span={span}
-          onReplay={() => {
-            controls.replayEdit(edit.id)
-          }}
-        />
+        <EditAudioButtons editId={edit.id} span={span} controls={controls} />
       </div>
     </section>
   )

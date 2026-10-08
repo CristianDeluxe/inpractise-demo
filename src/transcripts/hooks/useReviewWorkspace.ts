@@ -15,7 +15,7 @@ export function useReviewWorkspace(bundle: TranscriptBundle) {
   const { transcript, correction } = bundle
   const view = useWorkspaceView(correction !== null)
   const derived = useReviewDerived(transcript, correction)
-  const { decisions, decide, saveState } = useReviewDecisions(
+  const { decisions, decide, undo, canUndo, saveState } = useReviewDecisions(
     transcript.id,
     bundle.review,
   )
@@ -37,6 +37,11 @@ export function useReviewWorkspace(bundle: TranscriptBundle) {
     focusNextPending: focusApi.focusNextPending,
     seekTo: audio.seekTo,
     playSpan: audio.playSpan,
+    loopSpan: audio.loopSpan,
+    stopLoop: audio.stopLoop,
+    looping: audio.looping,
+    undo,
+    canUndo,
     spanById: derived.spanById,
     audioRef: audio.audioRef,
     previewEdit: preview.open,

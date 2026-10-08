@@ -92,13 +92,26 @@ describe('pair learning', () => {
     expect(examples).toEqual([
       {
         transcriptId: 'a',
-        paragraphId: 'p0',
+        paragraphId: 'p0001',
         raw: 'um Zorbex grew',
         corrected: 'Zorbecks grew',
       },
     ])
     expect(pairExamples(pair, examples)).toEqual([])
     expect(pairExamples({ ...pair, final: 'Zorbecks grew' }, [])).toEqual([])
+  })
+
+  it('learns the other paragraphs of a transcript that already taught one', () => {
+    const pair = {
+      name: 'a',
+      raw: 'um Zorbex grew\n\nQuill on rose',
+      final: 'Zorbecks grew\n\nQuillon rose',
+    }
+    const [first, second] = pairExamples(pair, [])
+    expect(second?.paragraphId).toBe('p0002')
+    expect(
+      pairExamples(pair, first ? [first] : []).map((item) => item.paragraphId),
+    ).toEqual(['p0002'])
   })
 
   it('writes nothing on a dry run', () => {

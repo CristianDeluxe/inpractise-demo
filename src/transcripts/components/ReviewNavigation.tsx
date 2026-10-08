@@ -1,11 +1,12 @@
 import { ChevronDown, ChevronUp, FileText } from 'lucide-react'
 import type { ReviewNavigationProps } from './ReviewNavigationProps'
 import { SaveIndicator } from './SaveIndicator'
+import { UndoButton } from './UndoButton'
 
-/** Pending count, save state, flagged-paragraph stepping and the report link. */
+/** Pending count, save state, undo, flagged-paragraph stepping and the report link. */
 export function ReviewNavigation(props: ReviewNavigationProps) {
   return (
-    <div className="ml-auto flex items-center gap-2">
+    <div className="ml-auto flex flex-wrap items-center justify-end gap-2">
       <p
         role="status"
         className="whitespace-nowrap font-mono text-xs tabular-nums text-muted-foreground"
@@ -13,6 +14,7 @@ export function ReviewNavigation(props: ReviewNavigationProps) {
         {String(props.pending)} edits pending
       </p>
       <SaveIndicator state={props.saveState} />
+      <UndoButton canUndo={props.canUndo} onUndo={props.onUndo} />
       <div className="flex" role="group" aria-label="Flagged paragraphs">
         <button
           type="button"

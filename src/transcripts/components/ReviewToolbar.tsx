@@ -1,3 +1,4 @@
+import { filterOptions } from './filterOptions'
 import { ReviewNavigation } from './ReviewNavigation'
 import type { ReviewToolbarProps } from './ReviewToolbarProps'
 import { SegmentedControl } from './SegmentedControl'
@@ -27,13 +28,7 @@ export function ReviewToolbar(props: ReviewToolbarProps) {
         label="Paragraphs"
         value={props.filter}
         onChange={props.onFilterChange}
-        options={[
-          {
-            value: 'attention',
-            label: `Needs attention (${String(props.flaggedCount)})`,
-          },
-          { value: 'all', label: `All (${String(props.totalCount)})` },
-        ]}
+        options={filterOptions(props)}
       />
       <ReviewNavigation {...props} />
     </div>

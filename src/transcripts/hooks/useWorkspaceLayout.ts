@@ -1,5 +1,6 @@
 import { useRef, type CSSProperties } from 'react'
 import type { CorrectionEdit } from '../contracts/CorrectionEdit'
+import { consoleStickyTopPx } from '../review/consoleStickyTopPx'
 import { useElementHeight } from './useElementHeight'
 
 /** Where the sticky console ends, so the inspector can stick right under it. */
@@ -10,8 +11,9 @@ export function useWorkspaceLayout(
   const consoleRef = useRef<HTMLDivElement>(null)
   const consoleHeight = useElementHeight(consoleRef)
   const style = {
-    '--lab-console-bottom': `calc(5.6rem + ${String(consoleHeight)}px)`,
+    '--lab-console-bottom': `${String(consoleStickyTopPx + consoleHeight)}px`,
   } as CSSProperties
   const focusedEdit = edits.find((edit) => edit.id === focusedEditId)
-  return { consoleRef, style, focusedEdit }
+  const consoleBottom = consoleStickyTopPx + consoleHeight
+  return { consoleRef, style, focusedEdit, consoleBottom }
 }

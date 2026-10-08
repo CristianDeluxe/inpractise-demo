@@ -23,6 +23,7 @@ describe('review statistics', () => {
     expect(countVerdicts(edits, decisions)).toEqual({
       accepted: 1,
       rejected: 1,
+      deferred: 0,
       pending: 1,
       total: 3,
     })

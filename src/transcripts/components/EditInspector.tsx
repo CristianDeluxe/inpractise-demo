@@ -1,6 +1,7 @@
 import type { EditInspectorProps } from './EditInspectorProps'
 import { FocusedEditCard } from './FocusedEditCard'
 import { InspectorEmptyState } from './InspectorEmptyState'
+import { KeysCard } from './KeysCard'
 import { ParagraphEditList } from './ParagraphEditList'
 import { ReviewProgress } from './ReviewProgress'
 
@@ -35,6 +36,7 @@ export function EditInspector({
           <ParagraphEditList edits={siblings} controls={controls} />
         ) : null}
         <ReviewProgress edits={edits} decisions={controls.decisions} />
+        <KeysCard />
       </div>
     </aside>
   )

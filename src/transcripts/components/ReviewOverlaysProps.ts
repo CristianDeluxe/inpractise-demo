@@ -9,4 +9,5 @@ export type ReviewOverlaysProps = {
   readonly edits: readonly CorrectionEdit[]
   readonly spanById: ReadonlyMap<string, TimeInterval>
   readonly controls: ReviewControls
+  readonly barFloor: number
 }

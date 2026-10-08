@@ -59,8 +59,11 @@ describe('edit layout', () => {
       previous: vi.fn(),
       accept: vi.fn(),
       reject: vi.fn(),
+      defer: vi.fn(),
+      undo: vi.fn(),
       nextPending: vi.fn(),
       replay: vi.fn(),
+      loop: vi.fn(),
       togglePlay: vi.fn(),
       back: vi.fn(),
       forward: vi.fn(),
@@ -70,6 +73,9 @@ describe('edit layout', () => {
     expect(reviewKeyAction(handlers, 'p')).toBe(handlers.togglePlay)
     expect(reviewKeyAction(handlers, '[')).toBe(handlers.back)
     expect(reviewKeyAction(handlers, ']')).toBe(handlers.forward)
+    expect(reviewKeyAction(handlers, 'f')).toBe(handlers.defer)
+    expect(reviewKeyAction(handlers, 'u')).toBe(handlers.undo)
+    expect(reviewKeyAction(handlers, 'l')).toBe(handlers.loop)
     expect(reviewKeyAction(handlers, 'x')).toBeUndefined()
   })
 })

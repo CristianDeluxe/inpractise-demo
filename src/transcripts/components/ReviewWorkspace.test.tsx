@@ -30,7 +30,7 @@ describe('ReviewWorkspace', () => {
       ),
     ).toBeTruthy()
     expect(screen.getByText('3 edits pending')).toBeTruthy()
-    expect(screen.getByText('Needs attention (2)')).toBeTruthy()
+    expect(screen.getByText('Needs attention · 2 passages')).toBeTruthy()
     expect(
       screen.getByRole('button', {
         name: 'entity edit, pending: Northwynd to Northwind',
@@ -38,6 +38,34 @@ describe('ReviewWorkspace', () => {
     ).toBeTruthy()
     fireEvent.click(screen.getByRole('button', { name: 'Side by side' }))
     expect(screen.getByText('Raw machine transcript')).toBeTruthy()
+  })
+
+  it('flags an edit for later, filters to it and undoes the flag', () => {
+    stubLabFetch([])
+    render(<ReviewWorkspace bundle={bundleFixture()} />)
+    const undo = screen.getByRole('button', { name: /Undo last decision/ })
+    expect(undo.hasAttribute('disabled')).toBe(true)
+    fireEvent.click(
+      screen.getByRole('button', { name: /Northwynd to Northwind/ }),
+    )
+    fireEvent.keyDown(window, { key: 'f' })
+    expect(
+      screen.getByRole('button', {
+        name: 'entity edit, flagged for later: Northwynd to Northwind',
+      }),
+    ).toBeTruthy()
+    fireEvent.click(screen.getByRole('button', { name: 'Flagged · 1 edits' }))
+    expect(
+      screen.getAllByRole('region', { name: /Paragraph at/ }),
+    ).toHaveLength(1)
+    fireEvent.click(screen.getByRole('button', { name: /^All/ }))
+    fireEvent.keyDown(window, { key: 'u' })
+    expect(
+      screen.getByRole('button', {
+        name: 'entity edit, pending: Northwynd to Northwind',
+      }),
+    ).toBeTruthy()
+    expect(undo.hasAttribute('disabled')).toBe(true)
   })
 
   it('previews an edit on hover and decides it from the card', () => {

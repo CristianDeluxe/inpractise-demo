@@ -37,7 +37,7 @@ export function ReportMetrics({
         <StatCell
           label="Edits accepted"
           value={`${formatCount(verdicts.accepted)} of ${formatCount(verdicts.total)}`}
-          detail={`${formatCount(verdicts.pending)} pending, ${formatCount(verdicts.rejected)} rejected`}
+          detail={`${formatCount(verdicts.pending)} pending, ${formatCount(verdicts.deferred)} flagged, ${formatCount(verdicts.rejected)} rejected`}
         />
         <StatCell
           label="Memory hits"

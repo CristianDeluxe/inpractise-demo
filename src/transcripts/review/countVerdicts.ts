@@ -6,17 +6,14 @@ export function countVerdicts(
   edits: readonly CorrectionEdit[],
   decisions: DecisionMap,
 ): VerdictCounts {
-  let accepted = 0
-  let rejected = 0
+  const counts = { accepted: 0, rejected: 0, deferred: 0 }
   for (const edit of edits) {
     const verdict = decisions.get(edit.id)
-    if (verdict === 'accepted') accepted += 1
-    if (verdict === 'rejected') rejected += 1
+    if (verdict !== undefined) counts[verdict] += 1
   }
   return {
-    accepted,
-    rejected,
-    pending: edits.length - accepted - rejected,
+    ...counts,
+    pending: edits.length - counts.accepted - counts.rejected - counts.deferred,
     total: edits.length,
   }
 }

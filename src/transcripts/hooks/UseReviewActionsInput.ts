@@ -17,6 +17,11 @@ export type UseReviewActionsInput = {
   readonly focusNextPending: () => void
   readonly seekTo: (seconds: number) => Promise<void>
   readonly playSpan: (span: TimeInterval) => Promise<void>
+  readonly loopSpan: (span: TimeInterval) => Promise<void>
+  readonly stopLoop: () => void
+  readonly looping: boolean
+  readonly undo: () => string | null
+  readonly canUndo: boolean
   readonly spanById: ReadonlyMap<string, TimeInterval>
   readonly audioRef: RefObject<HTMLAudioElement | null>
   readonly previewEdit: (editId: string, element: HTMLElement) => void

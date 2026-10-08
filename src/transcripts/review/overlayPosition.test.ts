@@ -30,19 +30,23 @@ describe('overlay positions', () => {
     ).toEqual({ left: 288, top: 230 })
   })
 
-  it('puts the decision bar above the mark, below it near the top, and hides it off screen', () => {
-    const viewport = { width: 1440, height: 900 }
+  it('puts the decision bar in the margin level with the mark, under the console, and hides it off screen', () => {
+    const viewport = { height: 900, floor: 200 }
+    const mark = { left: 300, columnRight: 1000 }
     expect(
-      decisionBarPosition({ top: 500, bottom: 520, left: 1400 }, 296, viewport),
-    ).toEqual({ left: 1128, bottom: 406 })
+      decisionBarPosition({ ...mark, top: 500, bottom: 520 }, 148, viewport),
+    ).toEqual({ left: 1008, top: 494 })
     expect(
-      decisionBarPosition({ top: 200, bottom: 220, left: 40 }, 296, viewport),
-    ).toEqual({ left: 36, top: 226 })
+      decisionBarPosition({ ...mark, top: 190, bottom: 210 }, 148, viewport),
+    ).toEqual({ left: 1008, top: 200 })
     expect(
-      decisionBarPosition({ top: -60, bottom: -40, left: 20 }, 296, viewport),
+      decisionBarPosition({ ...mark, top: 880, bottom: 898 }, 148, viewport),
+    ).toEqual({ left: 1008, top: 744 })
+    expect(
+      decisionBarPosition({ ...mark, top: 150, bottom: 170 }, 148, viewport),
     ).toBeNull()
     expect(
-      decisionBarPosition({ top: 950, bottom: 970, left: 20 }, 296, viewport),
+      decisionBarPosition({ ...mark, top: 950, bottom: 970 }, 148, viewport),
     ).toBeNull()
   })
 })

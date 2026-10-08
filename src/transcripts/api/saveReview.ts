@@ -7,6 +7,8 @@ export async function saveReview(
 ) {
   await fetchLabJson(`/transcripts/${encodeURIComponent(id)}/review`, {
     method: 'PUT',
+    // Lets the last save finish when the reviewer closes or reloads the tab.
+    keepalive: true,
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(decisions),
   })

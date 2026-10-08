@@ -1,4 +1,5 @@
 import { useAudioProps } from '../hooks/useAudioProps'
+import { useParagraphFilterSets } from '../hooks/useParagraphFilterSets'
 import { useReviewWorkspace } from '../hooks/useReviewWorkspace'
 import { useVisibleParagraphs } from '../hooks/useVisibleParagraphs'
 import { useWorkspaceLayout } from '../hooks/useWorkspaceLayout'
@@ -14,9 +15,14 @@ export function ReviewWorkspace({ bundle, nav }: ReviewWorkspaceProps) {
   const ws = useReviewWorkspace(bundle)
   const layout = useWorkspaceLayout(ws.derived.edits, ws.controls.focusedEditId)
   const audio = useAudioProps(bundle, ws.audioRef)
+  const sets = useParagraphFilterSets(
+    ws.derived.flaggedIds,
+    ws.derived.edits,
+    ws.controls.decisions,
+  )
   const visible = useVisibleParagraphs(
     transcript.paragraphs,
-    ws.derived.flaggedIds,
+    sets,
     ws.view.filter,
   )
   return (

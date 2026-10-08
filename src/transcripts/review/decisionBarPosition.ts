@@ -1,25 +1,20 @@
 import type { CSSProperties } from 'react'
-import { barFlipTop } from './barFlipTop'
+import { barMarginGap } from './barMarginGap'
+import type { BarViewport } from './BarViewport'
 import type { MarkRect } from './MarkRect'
-import type { Viewport } from './Viewport'
 
 /**
- * Just above the mark, so the words that follow stay readable, or below it
- * near the top of the screen; kept inside the viewport sideways and hidden
- * once the mark leaves the screen.
+ * In the margin past the paragraph, level with the mark's line, so no word is
+ * covered; held below the sticky console and inside the viewport, and hidden
+ * once the mark leaves the readable area.
  */
 export function decisionBarPosition(
   rect: MarkRect,
-  width: number,
-  viewport: Viewport,
+  height: number,
+  viewport: BarViewport,
 ): CSSProperties | null {
-  if (rect.bottom < 0 || rect.top > viewport.height) return null
-  const gutter = 16
-  const left = Math.max(
-    gutter,
-    Math.min(rect.left - 4, viewport.width - width - gutter),
-  )
-  return rect.top > barFlipTop
-    ? { left, bottom: viewport.height - rect.top + 6 }
-    : { left, top: rect.bottom + 6 }
+  if (rect.bottom < viewport.floor || rect.top > viewport.height) return null
+  const lowest = viewport.height - height - barMarginGap
+  const top = Math.max(viewport.floor, Math.min(rect.top - 6, lowest))
+  return { left: rect.columnRight + barMarginGap, top }
 }

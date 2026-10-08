@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { formatDuration } from '../formatters/formatDuration'
 import { formatPercent } from '../formatters/formatPercent'
 import { Badge } from './Badge'
+import { ReviewedProgress } from './ReviewedProgress'
 import type { TranscriptRowProps } from './TranscriptRowProps'
 
 export function TranscriptRow({ item }: TranscriptRowProps) {
@@ -33,13 +34,11 @@ export function TranscriptRow({ item }: TranscriptRowProps) {
         </Badge>
       </td>
       <td className="py-4 pr-4 text-sm">
-        <span
-          className={`whitespace-nowrap font-mono ${item.reviewed > 0 ? 'font-semibold text-foreground' : 'text-muted-foreground'}`}
-        >
-          {item.hasCorrection
-            ? `${String(item.reviewed)} / ${String(item.edits)} reviewed`
-            : 'No edits yet'}
-        </span>
+        {item.hasCorrection ? (
+          <ReviewedProgress reviewed={item.reviewed} edits={item.edits} />
+        ) : (
+          <span className="text-muted-foreground">No edits yet</span>
+        )}
       </td>
       <td className="py-4 text-sm">
         <Link

@@ -3,8 +3,9 @@ import { relistenUnplayedAlpha } from './relistenUnplayedAlpha'
 import type { WaveformScene } from './WaveformScene'
 
 /**
- * A continuous faint track with the re-listen windows on it: full strength
- * behind the playhead, dimmed ahead of it.
+ * A continuous track, muted ink behind the playhead and faint ahead of it,
+ * with the re-listen windows on it: full strength behind the playhead, dimmed
+ * ahead of it.
  */
 export function drawRelistenLane(
   context: CanvasRenderingContext2D,
@@ -15,6 +16,9 @@ export function drawRelistenLane(
   const playhead = width * progress
   context.fillStyle = palette.track
   context.fillRect(0, top, width, relistenLaneHeight)
+  context.fillStyle = palette.unplayed
+  if (playhead > 0)
+    context.fillRect(0, top, Math.min(playhead, width), relistenLaneHeight)
   context.fillStyle = palette.relisten
   for (const interval of relisten) {
     const x = (interval.start / duration) * width

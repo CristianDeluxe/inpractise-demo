@@ -22,7 +22,7 @@ export function ReviewConsole({
         <p className="hidden items-center gap-2 text-xs text-muted-foreground xl:flex">
           <span
             aria-hidden="true"
-            className="h-[5px] w-4 rounded-full bg-primary"
+            className="h-1.5 w-4 rounded-full bg-primary"
           />
           Audio to re-listen
         </p>

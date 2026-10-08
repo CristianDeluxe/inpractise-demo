@@ -11,6 +11,9 @@ export type ReviewToolbarProps = {
   readonly flaggedCount: number
   readonly totalCount: number
   readonly pending: number
+  readonly deferredCount: number
+  readonly canUndo: boolean
+  readonly onUndo: () => void
   readonly saveState: SaveState
   readonly onPrevious: () => void
   readonly onNext: () => void

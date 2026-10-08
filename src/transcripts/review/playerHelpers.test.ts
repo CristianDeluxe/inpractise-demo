@@ -8,7 +8,7 @@ import { pointerRatio } from './pointerRatio'
 import { togglePlayback } from './togglePlayback'
 
 describe('player helpers', () => {
-  it('draws played bars in ink, the rest in grey, and the relisten lane on a faint track', () => {
+  it('draws played bars in ink, the rest in grey, and the relisten lane on a played and an unplayed track', () => {
     const { context, fills } = recordingContext()
     drawWaveform(context, {
       width: 9,
@@ -20,7 +20,7 @@ describe('player helpers', () => {
       palette,
     })
     // Playhead at 30%: the window 2-3 s (20-30%) lies fully behind it.
-    expect(fills).toEqual(['ink', 'grey', 'grey', 'faint', 'orange'])
+    expect(fills).toEqual(['ink', 'grey', 'grey', 'faint', 'grey', 'orange'])
   })
 
   it('draws a progress track without peaks and skips the lane without a duration', () => {

@@ -17,4 +17,10 @@ export type ReviewControls = {
   readonly replayEdit: (editId: string) => void
   /** Focuses the next undecided edit after the focused one. */
   readonly nextPending: () => void
+  /** Repeats an edit's audio until called again. */
+  readonly toggleLoop: (editId: string) => void
+  readonly looping: boolean
+  /** Reverts the newest decision and focuses its edit. */
+  readonly undo: () => void
+  readonly canUndo: boolean
 }

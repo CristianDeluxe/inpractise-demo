@@ -1,7 +1,7 @@
+import { EditAudioButtons } from './EditAudioButtons'
 import { EditNavigator } from './EditNavigator'
 import { EditSummary } from './EditSummary'
 import type { FocusedEditCardProps } from './FocusedEditCardProps'
-import { ReplayEditButton } from './ReplayEditButton'
 import { VerdictButtons } from './VerdictButtons'
 
 export function FocusedEditCard({
@@ -28,17 +28,8 @@ export function FocusedEditCard({
           }}
         />
       </div>
-      <div className="mt-3 flex items-center justify-between gap-3">
-        <ReplayEditButton
-          span={span}
-          onReplay={() => {
-            controls.replayEdit(edit.id)
-          }}
-        />
-        <span className="font-mono text-xs text-muted-foreground">
-          <kbd className="kbd">a</kbd> accept <kbd className="kbd">r</kbd>{' '}
-          reject
-        </span>
+      <div className="mt-3">
+        <EditAudioButtons editId={edit.id} span={span} controls={controls} />
       </div>
     </section>
   )

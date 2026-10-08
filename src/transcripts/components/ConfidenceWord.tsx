@@ -8,8 +8,9 @@ export function ConfidenceWord({
   word,
   onSeek,
   struck = false,
+  showFlags = true,
 }: ConfidenceWordProps) {
-  const base = wordClassName(word.band, word.flags.length > 0)
+  const base = wordClassName(word.band, showFlags && word.flags.length > 0)
   return (
     <button
       type="button"

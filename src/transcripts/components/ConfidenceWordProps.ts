@@ -5,4 +5,5 @@ export type ConfidenceWordProps = {
   readonly onSeek: (seconds: number) => void
   /** Raw word that the correction replaced or removed. */
   readonly struck?: boolean
+  readonly showFlags?: boolean
 }

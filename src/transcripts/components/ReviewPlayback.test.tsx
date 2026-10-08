@@ -3,6 +3,7 @@ import { renderRouteFixture } from '@/app/renderRouteFixture'
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { bundleFixture } from '../fixtures/bundleFixture'
+import { paragraphTextMatcher } from '../fixtures/paragraphTextMatcher'
 import { stubBrowserMedia } from '../fixtures/stubBrowserMedia'
 import { stubFetchWith } from '../fixtures/stubFetchWith'
 import { stubLabFetch } from '../fixtures/stubLabFetch'
@@ -47,6 +48,28 @@ describe('review playback and pages', () => {
     expect(audio.currentTime).toBe(5)
     fireEvent.keyDown(slider, { key: 'Home' })
     expect(audio.currentTime).toBe(0)
+  })
+
+  it('loops the selected edit until the loop is stopped', async () => {
+    stubLabFetch([])
+    render(<ReviewWorkspace bundle={bundleFixture()} />)
+    fireEvent.click(
+      screen.getByRole('button', { name: /Northwynd to Northwind/ }),
+    )
+    await act(async () => {
+      fireEvent.keyDown(window, { key: 'l' })
+      await Promise.resolve()
+    })
+    const audio = screen.getByLabelText<HTMLAudioElement>('Episode audio')
+    const start = audio.currentTime
+    expect(
+      screen.getAllByRole('button', { name: /Stop loop/, pressed: true }),
+    ).not.toHaveLength(0)
+    audio.currentTime = 9999
+    fireEvent(audio, new Event('timeupdate'))
+    expect(audio.currentTime).toBe(start)
+    fireEvent.keyDown(window, { key: 'l' })
+    expect(screen.getAllByRole('button', { name: /^Loop/ })).not.toHaveLength(0)
   })
 
   it('does not steal shortcut keys from text fields', () => {
@@ -113,7 +136,9 @@ describe('review playback and pages', () => {
     await renderRouteFixture('/lab/transcripts/synthetic-1/report', null)
     expect(
       await screen.findByText(
-        'Revenue grew twelve percent at Northwind Ledger last year.',
+        paragraphTextMatcher(
+          'Revenue grew twelve percent at Northwind Ledger last year.',
+        ),
       ),
     ).toBeTruthy()
     review = [{ editId: 'e1', verdict: 'rejected', decidedAt: 'now' }]
@@ -122,7 +147,9 @@ describe('review playback and pages', () => {
     })
     expect(
       await screen.findByText(
-        'Revenue grew twelve percent at Northwynd Ledger last year.',
+        paragraphTextMatcher(
+          'Revenue grew twelve percent at Northwynd Ledger last year.',
+        ),
       ),
     ).toBeTruthy()
   })

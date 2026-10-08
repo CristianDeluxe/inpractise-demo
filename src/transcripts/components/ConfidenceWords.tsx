@@ -5,6 +5,7 @@ export function ConfidenceWords({
   words,
   onSeek,
   struck,
+  showFlags = true,
 }: ConfidenceWordsProps) {
   return (
     <p className="source-text">
@@ -14,6 +15,7 @@ export function ConfidenceWords({
             word={word}
             onSeek={onSeek}
             struck={struck?.[index] ?? false}
+            showFlags={showFlags}
           />{' '}
         </span>
       ))}

@@ -10,7 +10,7 @@ export function SegmentedControl<T extends string>({
     <div
       role="group"
       aria-label={label}
-      className="inline-flex rounded-full bg-secondary p-1"
+      className="inline-flex max-w-full overflow-x-auto rounded-full bg-secondary p-1"
     >
       {options.map((option) => (
         <button

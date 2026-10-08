@@ -3,6 +3,7 @@ import { renderRouteFixture } from '@/app/renderRouteFixture'
 import { cleanup, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { bundleFixture } from '../fixtures/bundleFixture'
+import { paragraphTextMatcher } from '../fixtures/paragraphTextMatcher'
 import { stubBrowserMedia } from '../fixtures/stubBrowserMedia'
 import { stubFetchWith } from '../fixtures/stubFetchWith'
 import { stubLabFetch } from '../fixtures/stubLabFetch'
@@ -40,13 +41,17 @@ describe('lab pages', () => {
     await renderRouteFixture('/lab/transcripts/synthetic-1/report', null)
     expect(
       await screen.findByText(
-        'Revenue grew twelve percent at Northwynd Ledger last year.',
+        paragraphTextMatcher(
+          'Revenue grew twelve percent at Northwynd Ledger last year.',
+        ),
       ),
     ).toBeTruthy()
-    expect(screen.getByText('We hired forty people in Q3.')).toBeTruthy()
+    expect(
+      screen.getByText(paragraphTextMatcher('We hired forty people in Q3.')),
+    ).toBeTruthy()
     expect(screen.getByText('01:05')).toBeTruthy()
     expect(screen.getByText('1 of 3')).toBeTruthy()
-    expect(screen.getByText('1 pending, 1 rejected')).toBeTruthy()
+    expect(screen.getByText('1 pending, 0 flagged, 1 rejected')).toBeTruthy()
     expect(screen.getByText('Ledger', { selector: 'strong' })).toBeTruthy()
     expect(screen.queryByText('Northwind', { selector: 'strong' })).toBeNull()
   })

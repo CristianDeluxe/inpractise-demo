@@ -8,7 +8,7 @@ export function ReviewColumns({ paragraphs, ws, layout }: ReviewColumnsProps) {
   const { view, derived, controls } = ws
   return (
     <>
-      <div className="mt-4 grid gap-8 lg:grid-cols-[minmax(0,1fr)_21rem] xl:gap-10">
+      <div className="mt-4 grid gap-8 lg:grid-cols-[minmax(0,1fr)_21rem] lg:gap-14">
         <ReviewList
           paragraphs={paragraphs}
           correctedById={derived.correctedById}
@@ -30,6 +30,7 @@ export function ReviewColumns({ paragraphs, ws, layout }: ReviewColumnsProps) {
         edits={derived.edits}
         spanById={derived.spanById}
         controls={controls}
+        barFloor={layout.consoleBottom}
       />
     </>
   )
