@@ -23,6 +23,8 @@
     "transcripts:build": "node --import tsx scripts/transcripts/build.ts",
     "transcripts:correct": "node --import tsx scripts/transcripts/correct.ts",
     "transcripts:learn": "node --import tsx scripts/transcripts/learn.ts",
+    "transcripts:pairs": "node --import tsx scripts/transcripts/pairs.ts",
+    "transcripts:export": "node --import tsx scripts/transcripts/exportPair.ts",
     "verify": "pnpm check:ci && pnpm check:quality && pnpm test && pnpm corpus:verify && pnpm db:verify && pnpm conformance",
     "test:db": "vitest run tests/integration/database tests/integration/import --no-coverage",
     "type-check": "pnpm type-check:ci && tsc -p tsconfig.evals.json --noEmit",

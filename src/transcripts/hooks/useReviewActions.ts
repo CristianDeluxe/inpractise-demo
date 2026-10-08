@@ -14,6 +14,8 @@ export function useReviewActions(input: UseReviewActionsInput) {
     decide,
     focusedEditId: focus.editId,
     focusEdit: input.focusEdit,
+    previewEdit: input.previewEdit,
+    endPreview: input.endPreview,
   }
   const decideFocused = (verdict: ReviewVerdict) => () => {
     const editId = focus.editId

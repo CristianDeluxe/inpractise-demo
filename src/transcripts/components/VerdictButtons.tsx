@@ -1,16 +1,18 @@
+import { Check, X } from 'lucide-react'
 import type { VerdictButtonsProps } from './VerdictButtonsProps'
 
 export function VerdictButtons({ verdict, onDecide }: VerdictButtonsProps) {
   return (
-    <div className="flex gap-2" role="group" aria-label="Decision">
+    <div className="grid grid-cols-2 gap-2" role="group" aria-label="Decision">
       <button
         type="button"
         aria-pressed={verdict === 'accepted'}
         onClick={() => {
           onDecide(verdict === 'accepted' ? null : 'accepted')
         }}
-        className="quiet-action py-1 aria-pressed:border-success-foreground/40 aria-pressed:bg-success aria-pressed:text-success-foreground"
+        className="verdict-action hover:border-success-foreground/40 aria-pressed:border-transparent aria-pressed:bg-success-foreground aria-pressed:text-success"
       >
+        <Check aria-hidden="true" className="size-4" />
         {verdict === 'accepted' ? 'Accepted' : 'Accept'}
       </button>
       <button
@@ -19,8 +21,9 @@ export function VerdictButtons({ verdict, onDecide }: VerdictButtonsProps) {
         onClick={() => {
           onDecide(verdict === 'rejected' ? null : 'rejected')
         }}
-        className="quiet-action py-1 aria-pressed:border-destructive/50 aria-pressed:bg-destructive/10 aria-pressed:text-destructive"
+        className="verdict-action hover:border-destructive/40 aria-pressed:border-transparent aria-pressed:bg-destructive aria-pressed:text-destructive-foreground"
       >
+        <X aria-hidden="true" className="size-4" />
         {verdict === 'rejected' ? 'Rejected' : 'Reject'}
       </button>
     </div>

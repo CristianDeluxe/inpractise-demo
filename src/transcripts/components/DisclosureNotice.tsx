@@ -1,12 +1,14 @@
+import { Info } from 'lucide-react'
 import type { DisclosureNoticeProps } from './DisclosureNoticeProps'
 
 export function DisclosureNotice({ text }: DisclosureNoticeProps) {
   return (
     <p
       role="note"
-      className="prose-measure mt-6 border-l-4 border-primary bg-accent/50 px-4 py-3 text-sm text-accent-foreground"
+      className="mt-5 flex max-w-3xl items-start gap-2 rounded-xl bg-accent/60 px-4 py-3 text-sm leading-relaxed text-accent-foreground"
     >
-      {text}
+      <Info aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
+      <span>{text}</span>
     </p>
   )
 }

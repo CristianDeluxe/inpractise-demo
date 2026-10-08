@@ -1,7 +1,7 @@
 import type { MemoryEntry } from '@/transcripts/contracts/MemoryEntry.ts'
 import type { GlossaryEdit } from './GlossaryEdit.ts'
 
-/** Same `from` and `to`: one more occurrence. A changed `to` starts the entry over. */
+/** Same `from` and `to` from a new source: one more occurrence. A known source adds nothing; a changed `to` starts over. */
 export function upsertGlossaryEntry(
   entries: readonly MemoryEntry[],
   edit: GlossaryEdit,
@@ -22,11 +22,12 @@ export function upsertGlossaryEntry(
       },
     ]
   const same = existing.to === edit.to
+  const known = same && existing.sources.includes(transcriptId)
   const updated: MemoryEntry = {
     from: edit.from,
     to: edit.to,
     category: edit.category,
-    occurrences: same ? existing.occurrences + 1 : 1,
+    occurrences: same ? existing.occurrences + (known ? 0 : 1) : 1,
     sources: same
       ? [...new Set([...existing.sources, transcriptId])]
       : [transcriptId],

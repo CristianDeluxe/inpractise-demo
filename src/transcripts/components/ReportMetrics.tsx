@@ -3,9 +3,9 @@ import { formatDuration } from '../formatters/formatDuration'
 import { formatPercent } from '../formatters/formatPercent'
 import { countApplied } from '../review/countApplied'
 import { countFlaggedSpans } from '../review/countFlaggedSpans'
-import { estimateReviewMinutes } from '../review/estimateReviewMinutes'
 import { listEdits } from '../review/listEdits'
-import { reviewSecondsPerSpan } from '../review/reviewSecondsPerSpan'
+import { relistenMinutes } from '../review/relistenMinutes'
+import { relistenPaddingSeconds } from '../review/relistenPaddingSeconds'
 import type { ReportMetricsProps } from './ReportMetricsProps'
 import { StatCell } from './StatCell'
 
@@ -42,15 +42,16 @@ export function ReportMetrics({
           value={formatCount(correction?.memory.glossaryHits ?? 0)}
         />
         <StatCell
-          label="Reviewer time (estimate)"
-          value={`~${String(estimateReviewMinutes(spans))} min`}
-          detail={`${String(spans)} flagged spans x ${String(reviewSecondsPerSpan)} s`}
+          label="Audio to re-listen"
+          value={`~${String(relistenMinutes(transcript))} min`}
+          detail={`${String(spans)} flagged spans`}
         />
       </dl>
       <p className="meta-text mt-3">
-        The reviewer-time figure is an estimate, not a measurement: flagged
-        spans (runs of consecutive low-confidence words) times{' '}
-        {String(reviewSecondsPerSpan)} seconds each, rounded to whole minutes.
+        Audio to re-listen is computed, not timed: every low-confidence word
+        that is not a filler, padded by {String(relistenPaddingSeconds)} s on
+        each side, overlapping windows merged. It is the audio a reviewer would
+        still replay instead of the whole episode.
       </p>
     </section>
   )

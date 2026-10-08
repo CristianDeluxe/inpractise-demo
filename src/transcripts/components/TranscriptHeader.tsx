@@ -1,31 +1,40 @@
 import { formatDuration } from '../formatters/formatDuration'
 import { transcriptDisclosure } from '../review/transcriptDisclosure'
-import { ConfidenceLegend } from './ConfidenceLegend'
 import { DisclosureNotice } from './DisclosureNotice'
+import { ReviewFigures } from './ReviewFigures'
 import type { TranscriptHeaderProps } from './TranscriptHeaderProps'
-import { TranscriptStatsGrid } from './TranscriptStatsGrid'
 
 export function TranscriptHeader({
   transcript,
   correction,
+  nav,
 }: TranscriptHeaderProps) {
   const { source } = transcript
   return (
     <header>
-      <p className="eyebrow text-muted-foreground">Transcript review</p>
-      <h1 className="mt-3 text-2xl md:text-3xl">{source.title}</h1>
-      <p className="meta-text mt-3">
-        {source.channel} / {source.uploadDate} /{' '}
-        {formatDuration(source.durationSeconds)} /{' '}
-        <a href={source.url} className="underline" rel="noreferrer noopener">
-          source video
+      {nav}
+      <h1 className="mt-6 max-w-4xl text-balance text-[1.75rem] leading-tight md:text-[2.35rem]">
+        {source.title}
+      </h1>
+      <p className="mt-3 flex flex-wrap gap-x-2 text-sm text-muted-foreground">
+        <span>{source.channel}</span>
+        <span aria-hidden="true">·</span>
+        <span>{source.uploadDate}</span>
+        <span aria-hidden="true">·</span>
+        <span>{formatDuration(source.durationSeconds)}</span>
+        <span aria-hidden="true">·</span>
+        <a
+          href={source.url}
+          className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-foreground md:min-h-0"
+          rel="noreferrer noopener"
+        >
+          Source video
         </a>
       </p>
       <DisclosureNotice
         text={transcriptDisclosure(correction?.model ?? null)}
       />
-      <TranscriptStatsGrid transcript={transcript} correction={correction} />
-      <ConfidenceLegend />
+      <ReviewFigures transcript={transcript} correction={correction} />
     </header>
   )
 }

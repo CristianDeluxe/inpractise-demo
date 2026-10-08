@@ -5,6 +5,7 @@ import {
   render,
   screen,
   waitFor,
+  within,
 } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { bundleFixture } from '../fixtures/bundleFixture'
@@ -20,7 +21,7 @@ afterEach(() => {
 })
 
 describe('ReviewWorkspace', () => {
-  it('shows the disclosure, the counters and raw/corrected columns', () => {
+  it('shows the disclosure, the counters and tracked changes inline', () => {
     stubLabFetch([])
     render(<ReviewWorkspace bundle={bundleFixture()} />)
     expect(
@@ -30,12 +31,63 @@ describe('ReviewWorkspace', () => {
     ).toBeTruthy()
     expect(screen.getByText('3 edits pending')).toBeTruthy()
     expect(screen.getByText('Needs attention (2)')).toBeTruthy()
+    expect(
+      screen.getByRole('button', {
+        name: 'entity edit, pending: Northwynd to Northwind',
+      }),
+    ).toBeTruthy()
+    fireEvent.click(screen.getByRole('button', { name: 'Side by side' }))
     expect(screen.getByText('Raw machine transcript')).toBeTruthy()
+  })
+
+  it('previews an edit on hover and decides it from the card', () => {
+    stubLabFetch([])
+    render(<ReviewWorkspace bundle={bundleFixture()} />)
+    fireEvent.mouseEnter(
+      screen.getByRole('button', { name: /Northwynd to Northwind/ }),
+    )
+    const card = screen.getByRole('dialog', { name: 'Edit preview' })
+    fireEvent.click(within(card).getByRole('button', { name: 'Accept' }))
+    expect(screen.getByText('2 edits pending')).toBeTruthy()
+    expect(
+      screen.getByRole('button', {
+        name: 'entity edit, accepted: Northwynd to Northwind',
+      }),
+    ).toBeTruthy()
+  })
+
+  it('opens a clicked edit in the inspector with the rest of its paragraph', () => {
+    stubLabFetch([])
+    render(<ReviewWorkspace bundle={bundleFixture()} />)
+    fireEvent.click(
+      screen.getByRole('button', { name: /Northwynd to Northwind/ }),
+    )
+    const inspector = screen.getByRole('complementary', {
+      name: 'Edit inspector',
+    })
+    expect(within(inspector).getByText('Synthetic reason')).toBeTruthy()
+    expect(within(inspector).getByText('In this paragraph')).toBeTruthy()
+  })
+
+  it('opens an edit from the keyboard with Enter', () => {
+    stubLabFetch([])
+    render(<ReviewWorkspace bundle={bundleFixture()} />)
+    fireEvent.keyDown(
+      screen.getByRole('button', { name: /Northwynd to Northwind/ }),
+      { key: 'Enter' },
+    )
+    const inspector = screen.getByRole('complementary', {
+      name: 'Edit inspector',
+    })
+    expect(within(inspector).getByText('Synthetic reason')).toBeTruthy()
   })
 
   it('accepts an edit, updates the counter and saves the decision', async () => {
     const fetchSpy = stubLabFetch([])
     render(<ReviewWorkspace bundle={bundleFixture()} />)
+    fireEvent.click(
+      screen.getByRole('button', { name: /Northwynd to Northwind/ }),
+    )
     fireEvent.click(
       screen.getAllByRole('button', { name: 'Accept' })[0] as HTMLElement,
     )
@@ -57,17 +109,31 @@ describe('ReviewWorkspace', () => {
   it('reverts a rejected edit in the corrected column', () => {
     stubLabFetch([])
     render(<ReviewWorkspace bundle={bundleFixture()} />)
-    expect(screen.getByText('Northwind', { selector: 'mark' })).toBeTruthy()
+    fireEvent.click(screen.getByRole('button', { name: 'Side by side' }))
+    const paragraph = screen.getAllByRole('region', {
+      name: /^Paragraph at/,
+    })[0] as HTMLElement
+    expect(
+      within(paragraph).getByText('Northwind', { selector: 'ins' }),
+    ).toBeTruthy()
+    fireEvent.click(
+      screen.getByRole('button', { name: /Northwynd to Northwind/ }),
+    )
     fireEvent.click(
       screen.getAllByRole('button', { name: 'Reject' })[0] as HTMLElement,
     )
-    expect(screen.queryByText('Northwind', { selector: 'mark' })).toBeNull()
+    expect(
+      within(paragraph).queryByText('Northwind', { selector: 'ins' }),
+    ).toBeNull()
     expect(screen.getByText('2 edits pending')).toBeTruthy()
   })
 
   it('accepts every pending edit of a paragraph at once', () => {
     stubLabFetch([])
     render(<ReviewWorkspace bundle={bundleFixture()} />)
+    fireEvent.click(
+      screen.getByRole('button', { name: /Northwynd to Northwind/ }),
+    )
     fireEvent.click(
       screen.getByRole('button', { name: /Accept all 2 pending/ }),
     )
@@ -81,8 +147,12 @@ describe('ReviewWorkspace', () => {
     fireEvent.keyDown(window, { key: 'a' })
     fireEvent.keyDown(window, { key: 'r' })
     expect(screen.getByText('1 edits pending')).toBeTruthy()
-    expect(screen.getByRole('button', { name: 'Accepted' })).toBeTruthy()
-    expect(screen.getByRole('button', { name: 'Rejected' })).toBeTruthy()
+    expect(
+      screen.getByRole('button', { name: /accepted: Northwynd to Northwind/ }),
+    ).toBeTruthy()
+    expect(
+      screen.getByRole('button', { name: /rejected: Ledgar to Ledger/ }),
+    ).toBeTruthy()
   })
 
   it('switches between needs-attention and all paragraphs', () => {
@@ -90,7 +160,7 @@ describe('ReviewWorkspace', () => {
     render(<ReviewWorkspace bundle={bundleFixture()} />)
     expect(screen.queryByText('Thanks')).toBeNull()
     fireEvent.click(screen.getByRole('button', { name: /^All/ }))
-    expect(screen.getByRole('button', { name: 'Thanks' })).toBeTruthy()
+    expect(screen.getByText('Thanks everyone.')).toBeTruthy()
   })
 
   it('opens the report in a named window', () => {

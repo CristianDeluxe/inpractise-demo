@@ -21,6 +21,7 @@ describe('review playback and pages', () => {
     stubLabFetch([])
     const play = vi.spyOn(HTMLMediaElement.prototype, 'play')
     render(<ReviewWorkspace bundle={bundleFixture()} />)
+    fireEvent.click(screen.getByRole('button', { name: 'Confidence' }))
     fireEvent.click(screen.getByRole('button', { name: 'Northwynd' }))
     const audio = screen.getByLabelText<HTMLAudioElement>('Episode audio')
     expect(audio.currentTime).toBe(2.5)
@@ -28,8 +29,10 @@ describe('review playback and pages', () => {
     audio.currentTime = 66
     fireEvent(audio, new Event('timeupdate'))
     expect(
-      screen.getByRole('region', { name: 'Paragraph at 01:05' }).className,
-    ).toContain('border-l-primary')
+      screen.getByRole('region', { name: 'Paragraph at 01:05' }).dataset[
+        'playing'
+      ],
+    ).toBe('true')
   })
 
   it('does not steal shortcut keys from text fields', () => {

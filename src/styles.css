@@ -229,6 +229,17 @@
   animation: fade-rise 0.7s cubic-bezier(0.16, 0.84, 0.44, 1) both;
 }
 
+@keyframes hover-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @keyframes fade-rise {
   from {
     opacity: 0;
@@ -356,6 +367,26 @@
   }
   .quiet-action {
     @apply inline-flex items-center justify-center rounded border border-border bg-card px-3 py-2 text-sm transition-[background-color,scale] duration-150 motion-safe:active:scale-[0.96] hover:bg-secondary;
+  }
+  .icon-action {
+    @apply inline-grid size-11 place-items-center rounded-full md:size-9 border border-border bg-card text-muted-foreground transition-[background-color,color,scale] duration-150 motion-safe:active:scale-[0.96] hover:bg-secondary hover:text-foreground;
+  }
+  .verdict-action {
+    @apply inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-border bg-card px-3 text-sm font-medium transition-[background-color,border-color,color,scale] duration-150 motion-safe:active:scale-[0.96];
+  }
+  .lab-card {
+    @apply rounded-2xl border border-border bg-card;
+  }
+  .kbd {
+    @apply inline-grid min-w-5 place-items-center rounded-sm border border-border bg-secondary px-1 font-mono text-[11px] leading-5 text-secondary-foreground;
+  }
+  .hover-card {
+    box-shadow:
+      0 1px 2px oklch(0.203 0.032 252 / 8%),
+      0 24px 48px -20px oklch(0.203 0.032 252 / 35%);
+    @media (prefers-reduced-motion: no-preference) {
+      animation: hover-card-in 140ms cubic-bezier(0.2, 0, 0, 1) both;
+    }
   }
   .field {
     @apply w-full rounded-md border border-input bg-card px-3 py-3 text-sm outline-offset-2;

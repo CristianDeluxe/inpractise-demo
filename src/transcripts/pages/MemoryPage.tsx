@@ -1,8 +1,8 @@
 import { PublicLayout } from '@/components/PublicLayout'
-import { Link } from '@tanstack/react-router'
 import { loadMemoryOverview } from '../api/loadMemoryOverview'
 import { DisclosureNotice } from '../components/DisclosureNotice'
 import { GlossaryTable } from '../components/GlossaryTable'
+import { LabNav } from '../components/LabNav'
 import { LabResourceView } from '../components/LabResourceView'
 import { MemoryExplainer } from '../components/MemoryExplainer'
 import { useLabResource } from '../hooks/useLabResource'
@@ -15,18 +15,11 @@ export function MemoryPage() {
       <LabResourceView resource={resource} noun="the memory">
         {(memory) => (
           <main id="main-content" className="page-shell py-16">
-            <p className="eyebrow text-muted-foreground">Lab</p>
-            <h1 className="mt-3 text-4xl">Learned memory</h1>
+            <LabNav />
+            <h1 className="mt-6 text-4xl">Learned memory</h1>
             <p className="prose-measure mt-5 text-lg text-muted-foreground">
               Glossary entries: {String(memory.glossary.length)}. Stored
-              examples: {String(memory.examples)}.{' '}
-              <Link
-                to="/lab/transcripts"
-                className="underline underline-offset-4"
-              >
-                Back to transcripts
-              </Link>
-              .
+              examples: {String(memory.examples)}.
             </p>
             <DisclosureNotice text={generalDisclosure} />
             <h2 className="mt-12 text-2xl">How it is applied</h2>

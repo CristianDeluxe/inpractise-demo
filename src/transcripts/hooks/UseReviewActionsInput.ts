@@ -13,4 +13,6 @@ export type UseReviewActionsInput = {
   readonly moveParagraph: (step: 1 | -1) => void
   readonly advance: (afterId: string, decided: DecisionMap) => void
   readonly seekTo: (seconds: number) => Promise<void>
+  readonly previewEdit: (editId: string, element: HTMLElement) => void
+  readonly endPreview: () => void
 }

@@ -3,16 +3,23 @@ import type { ReviewConsoleProps } from './ReviewConsoleProps'
 import { ReviewToolbar } from './ReviewToolbar'
 
 /** Stays below the site header while scrolling, so the audio and counters are always in reach. */
-export function ReviewConsole({ toolbar, audio }: ReviewConsoleProps) {
+export function ReviewConsole({
+  toolbar,
+  audio,
+  consoleRef,
+}: ReviewConsoleProps) {
   return (
-    <div className="md:sticky md:top-[5.1rem] z-30 -mx-3 mt-8 border-y border-border bg-background/95 px-3 py-3 backdrop-blur">
+    <div
+      ref={consoleRef}
+      className="z-30 mt-8 rounded-2xl border border-border bg-background/90 px-3 py-3 backdrop-blur-md md:sticky md:top-[5.6rem] md:px-4"
+    >
       <ReviewToolbar {...toolbar} />
-      <div className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-1">
-        <div className="min-w-72 flex-1">
+      <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1">
+        <div className="min-w-64 flex-1">
           <AudioPlayer {...audio} />
         </div>
-        <p className="meta-text">
-          j / k flagged paragraph, a accept, r reject. Click a word to play it.
+        <p className="hidden font-mono text-xs text-muted-foreground xl:block">
+          Click a timestamp to play from it
         </p>
       </div>
     </div>

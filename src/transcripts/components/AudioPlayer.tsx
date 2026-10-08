@@ -8,7 +8,7 @@ export function AudioPlayer({ src, audioRef }: AudioPlayerProps) {
       controls
       preload="metadata"
       aria-label="Episode audio"
-      className="h-10 w-full"
+      className="h-9 w-full"
     >
       <track kind="captions" />
     </audio>

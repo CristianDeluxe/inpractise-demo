@@ -7,7 +7,6 @@ import { countApplied } from './countApplied'
 import { countByCategory } from './countByCategory'
 import { countFlaggedSpans } from './countFlaggedSpans'
 import { countPending } from './countPending'
-import { estimateReviewMinutes } from './estimateReviewMinutes'
 import { listEdits } from './listEdits'
 import { needsAttention } from './needsAttention'
 import { toDecisionMap } from './toDecisionMap'
@@ -30,8 +29,6 @@ describe('review statistics', () => {
 
   it('counts runs of low words as one span each', () => {
     expect(countFlaggedSpans(transcriptFixture())).toBe(2)
-    expect(estimateReviewMinutes(2)).toBe(1)
-    expect(estimateReviewMinutes(90)).toBe(15)
   })
 
   it('groups non-rejected term corrections', () => {

@@ -1,5 +1,6 @@
 import { PublicLayout } from '@/components/PublicLayout'
 import { loadTranscriptBundle } from '../api/loadTranscriptBundle'
+import { LabNav } from '../components/LabNav'
 import { LabResourceView } from '../components/LabResourceView'
 import { ReviewWorkspace } from '../components/ReviewWorkspace'
 import { useLabResource } from '../hooks/useLabResource'
@@ -11,7 +12,9 @@ export function TranscriptReviewPage() {
   return (
     <PublicLayout>
       <LabResourceView resource={resource} noun="the transcript">
-        {(bundle) => <ReviewWorkspace key={id} bundle={bundle} />}
+        {(bundle) => (
+          <ReviewWorkspace key={id} bundle={bundle} nav={<LabNav />} />
+        )}
       </LabResourceView>
     </PublicLayout>
   )

@@ -11,4 +11,6 @@ export type ReviewControls = {
   ) => void
   readonly focusedEditId: string | null
   readonly focusEdit: (editId: string) => void
+  readonly previewEdit: (editId: string, element: HTMLElement) => void
+  readonly endPreview: () => void
 }

@@ -1,0 +1,32 @@
+{
+  "baseUrl": "http://localhost:5173",
+  "routes": [
+    "/lab/transcripts",
+    "/lab/transcripts/LQ6lAvNMjPE",
+    "/lab/transcripts/LQ6lAvNMjPE/report",
+    "/lab/memory"
+  ],
+  "colorSchemes": ["light"],
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "disable": [
+    {
+      "rule": "text-cramped",
+      "selector": "del",
+      "reason": "Inline track-change highlight inside running prose, like a <mark>: padding would push the words apart and break the line's word spacing."
+    },
+    {
+      "rule": "text-cramped",
+      "selector": "ins",
+      "reason": "Inline track-change highlight inside running prose, like a <mark>: padding would push the words apart and break the line's word spacing."
+    }
+  ]
+}

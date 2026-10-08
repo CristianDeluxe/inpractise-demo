@@ -18,6 +18,15 @@ export function MemoryExplainer() {
         shown to the model as examples, so it fixes new errors the way you fixed
         old ones.
       </li>
+      <li>
+        <strong className="text-foreground">Backfill from history.</strong> An
+        archive of raw machine transcripts and their human-final versions is the
+        same signal at scale.{' '}
+        <code className="font-mono text-sm">pnpm transcripts:pairs</code> aligns
+        each pair word by word, reports the raw word error rate, and adds a
+        substitution to the glossary only once it recurs across pairs, so
+        one-off rewrites stay out.
+      </li>
     </ol>
   )
 }

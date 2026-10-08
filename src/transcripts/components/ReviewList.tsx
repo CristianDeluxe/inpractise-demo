@@ -12,13 +12,13 @@ export function ReviewList({
 }: ReviewListProps) {
   if (paragraphs.length === 0) {
     return (
-      <p role="status" className="rule-top mt-6 py-10 text-muted-foreground">
+      <p role="status" className="lab-card px-5 py-10 text-muted-foreground">
         Nothing in this transcript needs attention. Switch to All to read it.
       </p>
     )
   }
   return (
-    <div>
+    <div className="min-w-0">
       {mode === 'diff' ? <DiffColumnLabels /> : null}
       {paragraphs.map((paragraph) => (
         <ReviewParagraph

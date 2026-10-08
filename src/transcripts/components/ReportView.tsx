@@ -27,7 +27,14 @@ export function ReportView({ bundle }: ReportViewProps) {
         </p>
         <h1 className="mt-3 text-2xl md:text-3xl">{source.title}</h1>
         <p className="meta-text mt-3 print:text-black">
-          {source.channel} / {source.uploadDate} / {source.url}
+          {source.channel} / {source.uploadDate} /{' '}
+          <a
+            href={source.url}
+            className="break-all underline"
+            rel="noreferrer noopener"
+          >
+            {source.url}
+          </a>
         </p>
         <DisclosureNotice
           text={transcriptDisclosure(correction?.model ?? null)}

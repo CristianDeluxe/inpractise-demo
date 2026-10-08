@@ -34,7 +34,7 @@ describe('glossary learning', () => {
     })
   })
 
-  it('does not duplicate a source seen twice', () => {
+  it('counts a source once when the same learn is repeated', () => {
     const entries = upsertGlossaryEntry(
       [
         memoryEntryFixture({
@@ -48,7 +48,7 @@ describe('glossary learning', () => {
       'T',
     )
     expect(entries[0]?.sources).toEqual(['demo0001'])
-    expect(entries[0]?.occurrences).toBe(2)
+    expect(entries[0]?.occurrences).toBe(1)
   })
 
   it('restarts an entry whose replacement changed', () => {

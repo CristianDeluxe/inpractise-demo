@@ -1,7 +1,6 @@
 import { paragraphNote } from '../review/paragraphNote'
-import { ConfidenceWords } from './ConfidenceWords'
-import { DiffBody } from './DiffBody'
 import { ParagraphFrame } from './ParagraphFrame'
+import { ReviewParagraphBody } from './ReviewParagraphBody'
 import type { ReviewParagraphProps } from './ReviewParagraphProps'
 
 export function ReviewParagraph({
@@ -21,15 +20,12 @@ export function ReviewParagraph({
       note={paragraphNote(paragraph, corrected)}
       onSeek={controls.seek}
     >
-      {mode === 'diff' && corrected ? (
-        <DiffBody
-          paragraph={paragraph}
-          corrected={corrected}
-          controls={controls}
-        />
-      ) : (
-        <ConfidenceWords words={paragraph.words} onSeek={controls.seek} />
-      )}
+      <ReviewParagraphBody
+        paragraph={paragraph}
+        corrected={corrected}
+        mode={mode}
+        controls={controls}
+      />
     </ParagraphFrame>
   )
 }

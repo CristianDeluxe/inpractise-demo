@@ -15,7 +15,7 @@ describe('ConfidenceWords', () => {
       />,
     )
     const low = screen.getByRole('button', { name: 'Northwynd' })
-    expect(low.className).toContain('bg-destructive/20')
+    expect(low.className).toContain('bg-destructive/15')
     expect(low.title).toBe('31% confidence, low. Flags: low-confidence, entity')
     expect(screen.getByRole('button', { name: 'twelve' }).className).toContain(
       'bg-warning',

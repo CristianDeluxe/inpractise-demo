@@ -1,6 +1,7 @@
 import type { TranscriptBundle } from '../api/TranscriptBundle'
 import { useActiveParagraph } from './useActiveParagraph'
 import { useAudioPlayer } from './useAudioPlayer'
+import { useEditPreview } from './useEditPreview'
 import { useReviewActions } from './useReviewActions'
 import { useReviewDecisions } from './useReviewDecisions'
 import { useReviewDerived } from './useReviewDerived'
@@ -24,6 +25,7 @@ export function useReviewWorkspace(bundle: TranscriptBundle) {
     decisions,
   })
   const audio = useAudioPlayer()
+  const preview = useEditPreview()
   const activeId = useActiveParagraph(audio.audioRef, transcript.paragraphs)
   const { controls, handlers } = useReviewActions({
     decisions,
@@ -33,6 +35,8 @@ export function useReviewWorkspace(bundle: TranscriptBundle) {
     moveParagraph: focusApi.moveParagraph,
     advance: focusApi.advance,
     seekTo: audio.seekTo,
+    previewEdit: preview.open,
+    endPreview: preview.close,
   })
   useReviewKeys(handlers)
   useScrollToParagraph(focusApi.focus.paragraphId)
@@ -45,5 +49,6 @@ export function useReviewWorkspace(bundle: TranscriptBundle) {
     audioRef: audio.audioRef,
     activeId,
     focusedParagraphId: focusApi.focus.paragraphId,
+    preview,
   }
 }
