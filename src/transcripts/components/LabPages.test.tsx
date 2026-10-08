@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
 import { renderRouteFixture } from '@/app/renderRouteFixture'
+import { uiRuntimeFixture } from '@/app/uiRuntimeFixture'
 import { cleanup, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { bundleFixture } from '../fixtures/bundleFixture'
@@ -16,6 +17,17 @@ afterEach(() => {
 })
 
 describe('lab pages', () => {
+  it('keep the lab behind sign-in and never call its API signed out', async () => {
+    const lab = stubLabFetch([])
+    const { runtime, getSession } = uiRuntimeFixture()
+    getSession.mockResolvedValue({ data: { session: null }, error: null })
+    await renderRouteFixture('/app/transcripts', runtime)
+    expect(
+      await screen.findByRole('heading', { name: 'Sign in to continue' }),
+    ).toBeTruthy()
+    expect(lab).not.toHaveBeenCalled()
+  })
+
   it('say the lab is local-only when the dev API is absent', async () => {
     stubFetchWith(
       () =>
@@ -23,7 +35,7 @@ describe('lab pages', () => {
           headers: { 'content-type': 'text/html' },
         }),
     )
-    await renderRouteFixture('/lab/transcripts', null)
+    await renderRouteFixture('/app/transcripts', uiRuntimeFixture().runtime)
     expect(
       await screen.findByText('This page needs the development server'),
     ).toBeTruthy()
@@ -38,7 +50,10 @@ describe('lab pages', () => {
       ],
     }
     stubLabFetch(bundle)
-    await renderRouteFixture('/lab/transcripts/synthetic-1/report', null)
+    await renderRouteFixture(
+      '/app/transcripts/synthetic-1/report',
+      uiRuntimeFixture().runtime,
+    )
     expect(
       await screen.findByText(
         paragraphTextMatcher(
@@ -68,7 +83,7 @@ describe('lab pages', () => {
         reviewed: 2,
       },
     ])
-    await renderRouteFixture('/lab/transcripts', null)
+    await renderRouteFixture('/app/transcripts', uiRuntimeFixture().runtime)
     expect(await screen.findByText(transcript.source.title)).toBeTruthy()
     expect(screen.getByText('corrected')).toBeTruthy()
     expect(screen.getByText('2 / 3 reviewed')).toBeTruthy()
@@ -88,7 +103,7 @@ describe('lab pages', () => {
       ],
       examples: 4,
     })
-    await renderRouteFixture('/lab/memory', null)
+    await renderRouteFixture('/app/memory', uiRuntimeFixture().runtime)
     expect(await screen.findByText('Ledgar')).toBeTruthy()
     expect(screen.getByText(/Stored examples: 4/)).toBeTruthy()
   })

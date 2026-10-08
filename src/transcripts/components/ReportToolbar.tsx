@@ -8,7 +8,7 @@ export function ReportToolbar({ id }: ReportToolbarProps) {
       className="flex items-center justify-between gap-4 print:hidden"
     >
       <Link
-        to="/lab/transcripts/$id"
+        to="/app/transcripts/$id"
         params={{ id }}
         className="hover-underline text-sm text-muted-foreground"
       >

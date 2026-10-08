@@ -6,13 +6,13 @@ export function LabNav() {
   return (
     <nav aria-label="Lab" className="flex gap-1 text-sm">
       <Link
-        to="/lab/transcripts"
+        to="/app/transcripts"
         activeOptions={{ exact: false }}
         className={labNavLinkClass}
       >
         Transcripts
       </Link>
-      <Link to="/lab/memory" className={labNavLinkClass}>
+      <Link to="/app/memory" className={labNavLinkClass}>
         Learned memory
       </Link>
     </nav>

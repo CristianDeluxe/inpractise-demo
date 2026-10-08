@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
 import { renderRouteFixture } from '@/app/renderRouteFixture'
+import { uiRuntimeFixture } from '@/app/uiRuntimeFixture'
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { bundleFixture } from '../fixtures/bundleFixture'
@@ -88,7 +89,10 @@ describe('review playback and pages', () => {
 
   it('loads the review page from the API', async () => {
     stubLabFetch(bundleFixture())
-    await renderRouteFixture('/lab/transcripts/synthetic-1', null)
+    await renderRouteFixture(
+      '/app/transcripts/synthetic-1',
+      uiRuntimeFixture().runtime,
+    )
     expect(
       await screen.findByRole('heading', {
         name: 'Synthetic briefing about Northwind Ledger',
@@ -104,7 +108,10 @@ describe('review playback and pages', () => {
           headers: { 'content-type': 'application/json' },
         }),
     )
-    await renderRouteFixture('/lab/transcripts/synthetic-1', null)
+    await renderRouteFixture(
+      '/app/transcripts/synthetic-1',
+      uiRuntimeFixture().runtime,
+    )
     expect(
       await screen.findByText(/Could not load the transcript/),
     ).toBeTruthy()
@@ -118,7 +125,7 @@ describe('review playback and pages', () => {
         throw new Error('offline')
       }),
     )
-    await renderRouteFixture('/lab/memory', null)
+    await renderRouteFixture('/app/memory', uiRuntimeFixture().runtime)
     expect(
       await screen.findByText('This page needs the development server'),
     ).toBeTruthy()
@@ -133,7 +140,10 @@ describe('review playback and pages', () => {
           headers: { 'content-type': 'application/json' },
         }),
     )
-    await renderRouteFixture('/lab/transcripts/synthetic-1/report', null)
+    await renderRouteFixture(
+      '/app/transcripts/synthetic-1/report',
+      uiRuntimeFixture().runtime,
+    )
     expect(
       await screen.findByText(
         paragraphTextMatcher(

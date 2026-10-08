@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type RefObject } from 'react'
 import type { MarkRect } from '../review/MarkRect'
 import { readMarkRect } from '../review/readMarkRect'
 import type { MarkRectState } from './MarkRectState'
@@ -7,7 +7,10 @@ import type { MarkRectState } from './MarkRectState'
  * Follows an edit's mark through scrolling, resizing and re-rendering (a mode
  * switch or a decision moves it without a scroll), one read per frame.
  */
-export function useMarkRect(editId: string | null): MarkRect | null {
+export function useMarkRect(
+  editId: string | null,
+  floorRef: RefObject<Element | null>,
+): MarkRect | null {
   const [state, setState] = useState<MarkRectState | null>(null)
   useEffect(() => {
     if (editId === null) return
@@ -15,7 +18,7 @@ export function useMarkRect(editId: string | null): MarkRect | null {
     const update = () => {
       cancelAnimationFrame(frame)
       frame = requestAnimationFrame(() => {
-        setState({ editId, rect: readMarkRect(editId) })
+        setState({ editId, rect: readMarkRect(editId, floorRef.current) })
       })
     }
     update()
@@ -33,6 +36,6 @@ export function useMarkRect(editId: string | null): MarkRect | null {
       window.removeEventListener('scroll', update)
       window.removeEventListener('resize', update)
     }
-  }, [editId])
+  }, [editId, floorRef])
   return state !== null && state.editId === editId ? state.rect : null
 }

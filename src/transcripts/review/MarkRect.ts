@@ -5,4 +5,6 @@ export type MarkRect = {
   readonly left: number
   /** Right edge of the paragraph the mark is in: the margin bar sits past it. */
   readonly columnRight: number
+  /** Viewport offset where the sticky console ends. */
+  readonly floor: number
 }

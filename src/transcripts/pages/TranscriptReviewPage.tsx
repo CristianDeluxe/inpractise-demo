@@ -1,4 +1,3 @@
-import { PublicLayout } from '@/components/PublicLayout'
 import { loadTranscriptBundle } from '../api/loadTranscriptBundle'
 import { LabNav } from '../components/LabNav'
 import { LabResourceView } from '../components/LabResourceView'
@@ -10,12 +9,10 @@ export function TranscriptReviewPage() {
   const id = useTranscriptId()
   const resource = useLabResource(loadTranscriptBundle, id)
   return (
-    <PublicLayout>
-      <LabResourceView resource={resource} noun="the transcript">
-        {(bundle) => (
-          <ReviewWorkspace key={id} bundle={bundle} nav={<LabNav />} />
-        )}
-      </LabResourceView>
-    </PublicLayout>
+    <LabResourceView resource={resource} noun="the transcript">
+      {(bundle) => (
+        <ReviewWorkspace key={id} bundle={bundle} nav={<LabNav />} />
+      )}
+    </LabResourceView>
   )
 }

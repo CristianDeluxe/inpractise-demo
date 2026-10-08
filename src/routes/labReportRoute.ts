@@ -1,9 +1,9 @@
 import { createRoute, lazyRouteComponent } from '@tanstack/react-router'
-import { rootRoute } from './rootRoute'
+import { accessRoute } from './accessRoute'
 
 export const labReportRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/lab/transcripts/$id/report',
+  getParentRoute: () => accessRoute,
+  path: '/app/transcripts/$id/report',
   component: lazyRouteComponent(
     async () => import('@/transcripts/pages/TranscriptReportPage'),
     'TranscriptReportPage',

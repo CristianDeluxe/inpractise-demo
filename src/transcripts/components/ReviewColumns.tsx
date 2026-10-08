@@ -30,7 +30,7 @@ export function ReviewColumns({ paragraphs, ws, layout }: ReviewColumnsProps) {
         edits={derived.edits}
         spanById={derived.spanById}
         controls={controls}
-        barFloor={layout.consoleBottom}
+        consoleRef={layout.consoleRef}
       />
     </>
   )

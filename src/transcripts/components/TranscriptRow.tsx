@@ -11,7 +11,7 @@ export function TranscriptRow({ item }: TranscriptRowProps) {
     <tr className="align-top">
       <th scope="row" className="py-4 pr-4 text-left font-normal">
         <Link
-          to="/lab/transcripts/$id"
+          to="/app/transcripts/$id"
           params={{ id: item.id }}
           className="line-clamp-2 block font-serif text-lg font-semibold underline-offset-4 hover:underline"
         >
@@ -42,7 +42,7 @@ export function TranscriptRow({ item }: TranscriptRowProps) {
       </td>
       <td className="py-4 text-sm">
         <Link
-          to="/lab/transcripts/$id/report"
+          to="/app/transcripts/$id/report"
           params={{ id: item.id }}
           className="underline underline-offset-4"
         >

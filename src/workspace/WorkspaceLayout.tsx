@@ -10,7 +10,7 @@ import { WorkspaceNav } from './WorkspaceNav'
 export function WorkspaceLayout({ children }: PublicLayoutProps) {
   return (
     <div className="min-h-full lg:grid lg:grid-cols-[16rem_minmax(0,1fr)]">
-      <aside className="hidden flex-col bg-sidebar text-sidebar-foreground lg:sticky lg:top-[var(--app-notice-height,0px)] lg:flex lg:h-[calc(100dvh-var(--app-notice-height,0px))] lg:overflow-y-auto">
+      <aside className="hidden flex-col print:hidden bg-sidebar text-sidebar-foreground lg:sticky lg:top-0 lg:flex lg:h-dvh lg:overflow-y-auto">
         <div className="border-b border-sidebar-border p-5">
           <Link to="/">
             <Wordmark />
@@ -23,7 +23,7 @@ export function WorkspaceLayout({ children }: PublicLayoutProps) {
       </aside>
       <div className="min-w-0">
         <WorkspaceMobileNav />
-        <header className="border-b border-border bg-card px-6 py-4 text-xs text-muted-foreground">
+        <header className="border-b border-border bg-card px-6 py-4 print:hidden text-xs text-muted-foreground">
           Workspace / Authorized research
         </header>
         <ViewAsBanner />

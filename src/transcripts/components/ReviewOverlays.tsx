@@ -10,11 +10,15 @@ export function ReviewOverlays({
   edits,
   spanById,
   controls,
-  barFloor,
+  consoleRef,
 }: ReviewOverlaysProps) {
   return (
     <>
-      <FocusedEditBar edit={focusedEdit} controls={controls} floor={barFloor} />
+      <FocusedEditBar
+        edit={focusedEdit}
+        controls={controls}
+        consoleRef={consoleRef}
+      />
       <MobileEditSheet
         edit={focusedEdit}
         edits={edits}

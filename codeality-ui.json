@@ -1,10 +1,10 @@
 {
   "baseUrl": "http://localhost:5173",
   "routes": [
-    "/lab/transcripts",
-    "/lab/transcripts/LQ6lAvNMjPE",
-    "/lab/transcripts/LQ6lAvNMjPE/report",
-    "/lab/memory"
+    "/app/transcripts",
+    "/app/transcripts/LQ6lAvNMjPE",
+    "/app/transcripts/LQ6lAvNMjPE/report",
+    "/app/memory"
   ],
   "colorSchemes": ["light"],
   "viewports": [

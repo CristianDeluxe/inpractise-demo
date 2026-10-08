@@ -32,7 +32,7 @@ describe('overlay positions', () => {
 
   it('puts the decision bar in the margin level with the mark, under the console, and hides it off screen', () => {
     const viewport = { height: 900, floor: 200 }
-    const mark = { left: 300, columnRight: 1000 }
+    const mark = { left: 300, columnRight: 1000, floor: 0 }
     expect(
       decisionBarPosition({ ...mark, top: 500, bottom: 520 }, 148, viewport),
     ).toEqual({ left: 1008, top: 494 })

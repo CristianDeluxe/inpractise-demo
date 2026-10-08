@@ -1,3 +1,4 @@
+import type { RefObject } from 'react'
 import type { CorrectionEdit } from '../contracts/CorrectionEdit'
 import type { EditPreviewApi } from '../hooks/EditPreviewApi'
 import type { ReviewControls } from '../review/ReviewControls'
@@ -9,5 +10,5 @@ export type ReviewOverlaysProps = {
   readonly edits: readonly CorrectionEdit[]
   readonly spanById: ReadonlyMap<string, TimeInterval>
   readonly controls: ReviewControls
-  readonly barFloor: number
+  readonly consoleRef: RefObject<HTMLDivElement | null>
 }

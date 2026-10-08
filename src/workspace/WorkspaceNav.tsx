@@ -1,6 +1,7 @@
 import { useWorkspace } from '@/workspace/hooks/useWorkspace'
 import { Link } from '@tanstack/react-router'
 import {
+  AudioLines,
   BookOpen,
   Bookmark,
   Building2,
@@ -30,6 +31,10 @@ export function WorkspaceNav() {
       <Link to="/app/notes" className="workspace-link">
         <Bookmark size={16} strokeWidth={1.5} aria-hidden="true" /> Notebook
         <NotebookBadge />
+      </Link>
+      <Link to="/app/transcripts" className="workspace-link">
+        <AudioLines size={16} strokeWidth={1.5} aria-hidden="true" />{' '}
+        Transcripts
       </Link>
       {access?.role === 'reviewer' ? (
         <Link to="/inspect" className="workspace-link">

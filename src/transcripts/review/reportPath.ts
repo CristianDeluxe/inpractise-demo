@@ -1,3 +1,3 @@
 export function reportPath(id: string) {
-  return `/lab/transcripts/${encodeURIComponent(id)}/report`
+  return `/app/transcripts/${encodeURIComponent(id)}/report`
 }

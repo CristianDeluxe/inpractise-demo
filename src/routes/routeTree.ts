@@ -31,10 +31,6 @@ export const routeTree = rootRoute.addChildren([
   authAliasRoute,
   resetAliasRoute,
   debugAliasRoute,
-  labTranscriptsRoute,
-  labTranscriptRoute,
-  labReportRoute,
-  labMemoryRoute,
   runtimeRoute.addChildren([
     loginRoute,
     accessRoute.addChildren([
@@ -47,6 +43,10 @@ export const routeTree = rootRoute.addChildren([
       readerRoute,
       inspectionRoute,
       provenanceRoute,
+      labTranscriptsRoute,
+      labTranscriptRoute,
+      labReportRoute,
+      labMemoryRoute,
     ]),
   ]),
 ])

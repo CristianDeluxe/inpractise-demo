@@ -8,12 +8,16 @@ import type { FocusedEditBarProps } from './FocusedEditBarProps'
 import { reviewVerdicts } from './reviewVerdicts'
 
 /** Accept, reject, flag and replay in the margin beside the selected line, off the words themselves. */
-export function FocusedEditBar({ edit, controls, floor }: FocusedEditBarProps) {
-  const rect = useMarkRect(edit?.id ?? null)
+export function FocusedEditBar({
+  edit,
+  controls,
+  consoleRef,
+}: FocusedEditBarProps) {
+  const rect = useMarkRect(edit?.id ?? null, consoleRef)
   if (!edit || !rect) return null
   const style = decisionBarPosition(rect, decisionBarHeight, {
     height: window.innerHeight,
-    floor,
+    floor: rect.floor,
   })
   if (!style) return null
   return createPortal(

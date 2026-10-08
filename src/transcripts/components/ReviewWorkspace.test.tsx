@@ -197,7 +197,7 @@ describe('ReviewWorkspace', () => {
     render(<ReviewWorkspace bundle={bundleFixture()} />)
     fireEvent.click(screen.getByRole('button', { name: 'Open report' }))
     expect(open).toHaveBeenCalledWith(
-      '/lab/transcripts/synthetic-1/report',
+      '/app/transcripts/synthetic-1/report',
       'transcript-report-synthetic-1',
     )
   })
