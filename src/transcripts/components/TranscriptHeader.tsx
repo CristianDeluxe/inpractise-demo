@@ -13,7 +13,7 @@ export function TranscriptHeader({
   return (
     <header>
       {nav}
-      <h1 className="mt-6 max-w-4xl text-balance text-[1.75rem] leading-tight md:text-[2.35rem]">
+      <h1 className="mt-6 text-balance text-[1.75rem] leading-tight md:text-[2.35rem]">
         {source.title}
       </h1>
       <p className="mt-3 flex flex-wrap gap-x-2 text-sm text-muted-foreground">
