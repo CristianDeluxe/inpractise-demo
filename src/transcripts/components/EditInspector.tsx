@@ -4,23 +4,28 @@ import { InspectorEmptyState } from './InspectorEmptyState'
 import { ParagraphEditList } from './ParagraphEditList'
 import { ReviewProgress } from './ReviewProgress'
 
-/** Side panel: the selected edit with its decision, the rest of its paragraph, and episode progress. */
+/** Side panel: the hovered or selected edit with its decision, the rest of its paragraph, and progress. */
 export function EditInspector({
   edits,
-  startById,
+  spanById,
+  previewId,
   controls,
 }: EditInspectorProps) {
+  const previewed = edits.find((edit) => edit.id === previewId)
   const focused = edits.find((edit) => edit.id === controls.focusedEditId)
-  const siblings = focused
-    ? edits.filter((edit) => edit.paragraphId === focused.paragraphId)
+  const shown = previewed ?? focused
+  const siblings = shown
+    ? edits.filter((edit) => edit.paragraphId === shown.paragraphId)
     : []
   return (
     <aside aria-label="Edit inspector" className="hidden lg:block">
       <div className="sticky top-[calc(var(--lab-console-bottom,9rem)+1rem)] space-y-3">
-        {focused ? (
+        {shown ? (
           <FocusedEditCard
-            edit={focused}
-            start={startById.get(focused.paragraphId)}
+            edit={shown}
+            edits={edits}
+            span={spanById.get(shown.id)}
+            previewing={shown !== focused}
             controls={controls}
           />
         ) : (

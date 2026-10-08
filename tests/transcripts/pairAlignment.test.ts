@@ -38,8 +38,9 @@ describe('pair alignment', () => {
 
   it('computes word error rate against the final word count', () => {
     expect(wordErrorRate([], 10)).toBe(0)
+    expect(wordErrorRate([], 0)).toBe(0)
+    expect(wordErrorRate([{ from: 'a', to: '' }], 0)).toBe(1)
     expect(wordErrorRate([{ from: 'a', to: 'b c' }], 10)).toBeCloseTo(0.2)
     expect(wordErrorRate([{ from: 'a b', to: '' }], 4)).toBeCloseTo(0.5)
-    expect(wordErrorRate([{ from: 'a', to: 'b' }], 0)).toBe(0)
   })
 })

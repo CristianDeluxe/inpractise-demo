@@ -51,6 +51,7 @@ export async function correctChunk(
     paragraphs: assembled.map((item) => item.paragraph),
     usage: result.usage,
     dropped: assembled.reduce((sum, item) => sum + item.dropped, 0),
+    unreported: assembled.reduce((sum, item) => sum + item.unreported, 0),
     examplesUsed: examples.length,
     memoryHits: chunk.reduce((sum, item) => sum + item.memoryEdits.length, 0),
   }

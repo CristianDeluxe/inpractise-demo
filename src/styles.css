@@ -377,6 +377,17 @@
   .lab-card {
     @apply rounded-2xl border border-border bg-card;
   }
+  /* A focused edit scrolls clear of the sticky console and of the phone's edit sheet. */
+  [data-edit-id] {
+    scroll-margin-top: 6rem;
+    scroll-margin-bottom: 50vh;
+    @media (width >= 48rem) {
+      scroll-margin-top: calc(var(--lab-console-bottom, 9rem) + 1rem);
+    }
+    @media (width >= 64rem) {
+      scroll-margin-bottom: 4rem;
+    }
+  }
   .kbd {
     @apply inline-grid min-w-5 place-items-center rounded-sm border border-border bg-secondary px-1 font-mono text-[11px] leading-5 text-secondary-foreground;
   }

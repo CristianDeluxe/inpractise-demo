@@ -1,6 +1,7 @@
 import { AudioPlayer } from './AudioPlayer'
 import type { ReviewConsoleProps } from './ReviewConsoleProps'
 import { ReviewToolbar } from './ReviewToolbar'
+import { ShortcutReference } from './ShortcutReference'
 
 /** Stays below the site header while scrolling, so the audio and counters are always in reach. */
 export function ReviewConsole({
@@ -21,11 +22,12 @@ export function ReviewConsole({
         <p className="hidden items-center gap-2 text-xs text-muted-foreground xl:flex">
           <span
             aria-hidden="true"
-            className="h-[3px] w-4 rounded-full bg-primary"
+            className="h-[5px] w-4 rounded-full bg-primary"
           />
           Audio to re-listen
         </p>
       </div>
+      <ShortcutReference />
     </div>
   )
 }

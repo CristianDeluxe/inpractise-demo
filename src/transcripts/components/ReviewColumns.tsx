@@ -19,7 +19,8 @@ export function ReviewColumns({ paragraphs, ws, layout }: ReviewColumnsProps) {
         />
         <EditInspector
           edits={derived.edits}
-          startById={layout.startById}
+          spanById={derived.spanById}
+          previewId={ws.preview.preview?.editId ?? null}
           controls={controls}
         />
       </div>
@@ -27,6 +28,7 @@ export function ReviewColumns({ paragraphs, ws, layout }: ReviewColumnsProps) {
         focusedEdit={layout.focusedEdit}
         preview={ws.preview}
         edits={derived.edits}
+        spanById={derived.spanById}
         controls={controls}
       />
     </>

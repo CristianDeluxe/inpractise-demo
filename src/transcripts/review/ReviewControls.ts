@@ -13,4 +13,8 @@ export type ReviewControls = {
   readonly focusEdit: (editId: string) => void
   readonly previewEdit: (editId: string, element: HTMLElement) => void
   readonly endPreview: () => void
+  /** Plays the audio of the words an edit rewrites, with a little context. */
+  readonly replayEdit: (editId: string) => void
+  /** Focuses the next undecided edit after the focused one. */
+  readonly nextPending: () => void
 }

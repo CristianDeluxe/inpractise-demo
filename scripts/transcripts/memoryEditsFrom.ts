@@ -1,7 +1,7 @@
 import type { CorrectionEditDraft } from './CorrectionEditDraft.ts'
 import type { GlossaryMatch } from './GlossaryMatch.ts'
 
-/** One edit per glossary entry that matched in the paragraph. */
+/** One edit per glossary entry that matched in the paragraph, at every offset it matched. */
 export function memoryEditsFrom(
   paragraphId: string,
   matches: readonly GlossaryMatch[],
@@ -19,6 +19,9 @@ export function memoryEditsFrom(
       origin: 'memory',
       reason: `Learned from ${entry.sources.join(', ')}`,
       confidence: 1,
+      at: matches
+        .filter((match) => match.entry.from === entry.from)
+        .map((match) => match.start),
     })
   }
   return edits

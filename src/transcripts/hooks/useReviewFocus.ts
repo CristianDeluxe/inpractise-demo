@@ -42,5 +42,10 @@ export function useReviewFocus({
     },
     [edits],
   )
-  return { focus, moveParagraph, focusEdit, advance }
+  const focusNextPending = useCallback(() => {
+    const editId = nextPendingEditId(edits, decisions, focus.editId)
+    const edit = edits.find((candidate) => candidate.id === editId)
+    if (edit) setFocus({ paragraphId: edit.paragraphId, editId: edit.id })
+  }, [decisions, edits, focus.editId])
+  return { focus, moveParagraph, focusEdit, advance, focusNextPending }
 }

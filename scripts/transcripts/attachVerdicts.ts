@@ -14,11 +14,7 @@ export function attachVerdicts(
   )
   return run.paragraphs.flatMap((paragraph) =>
     paragraph.edits.map((edit) => ({
-      id: edit.id,
-      paragraphId: edit.paragraphId,
-      from: edit.from,
-      to: edit.to,
-      category: edit.category,
+      ...edit,
       verdict: verdicts.get(edit.id) ?? 'pending',
     })),
   )

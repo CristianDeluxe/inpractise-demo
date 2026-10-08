@@ -29,7 +29,7 @@ export function WaveformSlider({
       aria-valuenow={Math.round(clock.currentTime)}
       aria-valuetext={`${formatTimestamp(clock.currentTime)} of ${formatTimestamp(clock.duration)}`}
       {...seek}
-      className="block h-12 min-w-0 flex-1 cursor-pointer touch-none rounded-sm"
+      className="block h-12 min-w-0 flex-1 max-md:basis-full cursor-pointer touch-none rounded-sm"
     />
   )
 }

@@ -12,7 +12,7 @@ export function TranscriptRow({ item }: TranscriptRowProps) {
         <Link
           to="/lab/transcripts/$id"
           params={{ id: item.id }}
-          className="font-serif text-lg font-semibold underline-offset-4 hover:underline"
+          className="line-clamp-2 block font-serif text-lg font-semibold underline-offset-4 hover:underline"
         >
           {source.title}
         </Link>
@@ -32,7 +32,15 @@ export function TranscriptRow({ item }: TranscriptRowProps) {
           {item.hasCorrection ? 'corrected' : 'raw only'}
         </Badge>
       </td>
-      <td className="py-4 pr-4 font-mono text-sm">{String(item.reviewed)}</td>
+      <td className="py-4 pr-4 text-sm">
+        <span
+          className={`whitespace-nowrap font-mono ${item.reviewed > 0 ? 'font-semibold text-foreground' : 'text-muted-foreground'}`}
+        >
+          {item.hasCorrection
+            ? `${String(item.reviewed)} / ${String(item.edits)} reviewed`
+            : 'No edits yet'}
+        </span>
+      </td>
       <td className="py-4 text-sm">
         <Link
           to="/lab/transcripts/$id/report"

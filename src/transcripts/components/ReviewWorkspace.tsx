@@ -12,11 +12,7 @@ import { TranscriptHeader } from './TranscriptHeader'
 export function ReviewWorkspace({ bundle, nav }: ReviewWorkspaceProps) {
   const { transcript } = bundle
   const ws = useReviewWorkspace(bundle)
-  const layout = useWorkspaceLayout(
-    transcript.paragraphs,
-    ws.derived.edits,
-    ws.controls.focusedEditId,
-  )
+  const layout = useWorkspaceLayout(ws.derived.edits, ws.controls.focusedEditId)
   const audio = useAudioProps(bundle, ws.audioRef)
   const visible = useVisibleParagraphs(
     transcript.paragraphs,

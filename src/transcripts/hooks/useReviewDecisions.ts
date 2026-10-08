@@ -1,32 +1,25 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { saveReview } from '../api/saveReview'
 import type { ReviewDecision } from '../contracts/ReviewDecision'
 import type { ReviewVerdict } from '../contracts/ReviewVerdict'
 import { applyVerdict } from '../review/applyVerdict'
 import { recordsToDecisionMap } from '../review/recordsToDecisionMap'
 import { toDecisionRecords } from '../review/toDecisionRecords'
-import type { SaveState } from './SaveState'
 import { saveDelayMs } from './saveDelayMs'
+import { useOrderedSave } from './useOrderedSave'
 
-/** Optimistic decisions: state updates at once, the PUT follows after a short pause. */
+/** Optimistic decisions: state updates at once, the PUT follows after a short pause, in order. */
 export function useReviewDecisions(
   transcriptId: string,
   initial: readonly ReviewDecision[],
 ) {
   const [records, setRecords] = useState(() => toDecisionRecords(initial))
-  const [saveState, setSaveState] = useState<SaveState>('idle')
   const timer = useRef<number | null>(null)
   const latest = useRef(records)
+  const { save, saveState } = useOrderedSave(transcriptId, latest)
   const flush = useCallback(async () => {
     timer.current = null
-    setSaveState('saving')
-    try {
-      await saveReview(transcriptId, [...latest.current.values()])
-      setSaveState('saved')
-    } catch {
-      setSaveState('error')
-    }
-  }, [transcriptId])
+    await save()
+  }, [save])
   const decide = useCallback(
     (editIds: readonly string[], verdict: ReviewVerdict | null) => {
       latest.current = applyVerdict(

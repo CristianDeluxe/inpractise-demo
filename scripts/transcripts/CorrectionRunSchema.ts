@@ -15,6 +15,8 @@ export const CorrectionRunSchema = z.object({
           from: z.string(),
           to: z.string(),
           category: EditCategorySchema,
+          origin: z.enum(['memory', 'model']).optional(),
+          at: z.array(z.number().int().nonnegative()).optional(),
         }),
       ),
     }),

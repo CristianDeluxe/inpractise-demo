@@ -45,7 +45,8 @@ describe('lab pages', () => {
     ).toBeTruthy()
     expect(screen.getByText('We hired forty people in Q3.')).toBeTruthy()
     expect(screen.getByText('01:05')).toBeTruthy()
-    expect(screen.getByText('2 of 3', { exact: false })).toBeTruthy()
+    expect(screen.getByText('1 of 3')).toBeTruthy()
+    expect(screen.getByText('1 pending, 1 rejected')).toBeTruthy()
     expect(screen.getByText('Ledger', { selector: 'strong' })).toBeTruthy()
     expect(screen.queryByText('Northwind', { selector: 'strong' })).toBeNull()
   })
@@ -58,12 +59,14 @@ describe('lab pages', () => {
         source: transcript.source,
         stats: transcript.stats,
         hasCorrection: true,
+        edits: 3,
         reviewed: 2,
       },
     ])
     await renderRouteFixture('/lab/transcripts', null)
     expect(await screen.findByText(transcript.source.title)).toBeTruthy()
     expect(screen.getByText('corrected')).toBeTruthy()
+    expect(screen.getByText('2 / 3 reviewed')).toBeTruthy()
   })
 
   it('shows the learned glossary', async () => {

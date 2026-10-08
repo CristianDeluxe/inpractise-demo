@@ -7,7 +7,7 @@ import { useReviewDecisions } from './useReviewDecisions'
 import { useReviewDerived } from './useReviewDerived'
 import { useReviewFocus } from './useReviewFocus'
 import { useReviewKeys } from './useReviewKeys'
-import { useScrollToParagraph } from './useScrollToParagraph'
+import { useScrollToFocus } from './useScrollToFocus'
 import { useWorkspaceView } from './useWorkspaceView'
 
 /** All state of the review workspace; the component only lays it out. */
@@ -34,12 +34,16 @@ export function useReviewWorkspace(bundle: TranscriptBundle) {
     focusEdit: focusApi.focusEdit,
     moveParagraph: focusApi.moveParagraph,
     advance: focusApi.advance,
+    focusNextPending: focusApi.focusNextPending,
     seekTo: audio.seekTo,
+    playSpan: audio.playSpan,
+    spanById: derived.spanById,
+    audioRef: audio.audioRef,
     previewEdit: preview.open,
     endPreview: preview.close,
   })
   useReviewKeys(handlers)
-  useScrollToParagraph(focusApi.focus.paragraphId)
+  useScrollToFocus(focusApi.focus)
   return {
     view,
     derived,

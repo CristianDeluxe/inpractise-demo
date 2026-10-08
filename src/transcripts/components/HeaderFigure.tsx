@@ -8,14 +8,14 @@ export function HeaderFigure({
   duration,
 }: HeaderFigureProps) {
   return (
-    <div className="min-w-0 px-5 py-4">
+    <div className="min-w-0 px-3 py-2.5 md:px-5 md:py-4">
       <dt className="text-xs font-medium text-muted-foreground">{label}</dt>
       <dd
-        className={`mt-2 font-serif text-[1.65rem] font-semibold leading-none tabular-nums ${emphasis ? 'text-primary' : ''}`}
+        className={`mt-1 font-serif text-[1.35rem] md:mt-2 md:text-[1.65rem] font-semibold leading-none tabular-nums ${emphasis ? 'text-primary' : ''}`}
       >
         {duration ? <time dateTime={duration}>{value}</time> : value}
       </dd>
-      <dd className="mt-2 text-xs leading-snug text-muted-foreground">
+      <dd className="mt-1 line-clamp-2 text-xs leading-snug text-muted-foreground md:mt-2 md:line-clamp-none">
         {detail}
       </dd>
     </div>

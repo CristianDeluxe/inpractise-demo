@@ -117,7 +117,7 @@ describe('glossary learning', () => {
     ])
   })
 
-  it('learns examples for paragraphs with a counted edit and no rejection, once', () => {
+  it('learns examples only for fully counted paragraphs, rebuilt from raw, once', () => {
     const edits = attachVerdicts(run, [
       reviewDecisionFixture('p1-e1', 'accepted'),
       reviewDecisionFixture('p2-e1', 'accepted'),
@@ -135,12 +135,21 @@ describe('glossary learning', () => {
       existing: [],
     }
     const learned = learnExamples(input)
-    expect(learned.map((item) => item.paragraphId)).toEqual(['p1', 'p2'])
-    expect(learned[0]).toMatchObject({
-      raw: 'Zorbex, grue',
-      corrected: 'Zorbecks grew',
-    })
+    expect(learned).toEqual([
+      {
+        transcriptId: 'demo0002',
+        paragraphId: 'p2',
+        raw: 'Quill on rose',
+        corrected: 'Quillon rose',
+      },
+    ])
     expect(learnExamples({ ...input, existing: learned })).toEqual([])
+    const everything = countedEdits(edits, true)
+    expect(
+      learnExamples({ ...input, counted: everything }).map(
+        (item) => item.corrected,
+      ),
+    ).toEqual(['Zorbecks, grew', 'Quillon rose'])
   })
 
   it('skips an example when one of its edits was rejected', () => {

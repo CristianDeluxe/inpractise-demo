@@ -4,9 +4,9 @@ import { correctedParagraphMap } from './correctedParagraphMap'
 import type { DecisionMap } from './DecisionMap'
 import { paragraphRawText } from './paragraphRawText'
 import type { ReportParagraph } from './ReportParagraph'
-import { revertRejectedEdits } from './revertRejectedEdits'
+import { reviewedParagraphText } from './reviewedParagraphText'
 
-/** Corrected text per paragraph with rejected edits reverted; raw text where no correction exists. */
+/** Raw text per paragraph with every edit not rejected applied in place; raw text where no correction exists. */
 export function buildReport(
   transcript: TranscriptDocument,
   correction: CorrectionRun | null,
@@ -19,7 +19,11 @@ export function buildReport(
       id: paragraph.id,
       start: paragraph.start,
       text: run
-        ? revertRejectedEdits(run.text, run.edits, decisions)
+        ? reviewedParagraphText(
+            paragraphRawText(paragraph),
+            run.edits,
+            decisions,
+          )
         : paragraphRawText(paragraph),
     }
   })

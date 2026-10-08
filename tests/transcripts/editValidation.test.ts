@@ -65,6 +65,32 @@ describe('edit validation', () => {
     ])
   })
 
+  it('rebuilds the text from reported edits and discards unreported changes', () => {
+    const result = assembleParagraph(prepared, {
+      paragraphId: 'p0007',
+      text: 'We met Zorbecks yesterday',
+      edits: [proposedEditFixture('we', 'We')],
+    })
+    expect(result.paragraph.text).toBe('We met Zorbecks today')
+    expect(result.unreported).toBe(2)
+  })
+
+  it('records the raw offset the model rewrote when the words repeat', () => {
+    const repeated = {
+      ...prepared,
+      raw: 'so we said so',
+      text: 'so we said so',
+      memoryEdits: [],
+    }
+    const { paragraph } = assembleParagraph(repeated, {
+      paragraphId: 'p0007',
+      text: 'so we said So.',
+      edits: [proposedEditFixture('so', 'So.')],
+    })
+    expect(paragraph.edits.map((edit) => edit.at)).toEqual([[11]])
+    expect(paragraph.text).toBe('so we said So.')
+  })
+
   it('keeps the post-memory text and memory edits when the model skipped the paragraph', () => {
     const { paragraph, dropped } = assembleParagraph(prepared, undefined)
     expect(paragraph.text).toBe('we met Zorbecks today')

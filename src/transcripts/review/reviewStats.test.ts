@@ -3,10 +3,10 @@ import { correctionFixture } from '../fixtures/correctionFixture'
 import { transcriptFixture } from '../fixtures/transcriptFixture'
 import { collectCorrectedTerms } from './collectCorrectedTerms'
 import { correctedParagraphMap } from './correctedParagraphMap'
-import { countApplied } from './countApplied'
 import { countByCategory } from './countByCategory'
 import { countFlaggedSpans } from './countFlaggedSpans'
 import { countPending } from './countPending'
+import { countVerdicts } from './countVerdicts'
 import { listEdits } from './listEdits'
 import { needsAttention } from './needsAttention'
 import { toDecisionMap } from './toDecisionMap'
@@ -18,9 +18,14 @@ describe('review statistics', () => {
     { editId: 'e3', verdict: 'accepted', decidedAt: 'now' },
   ])
 
-  it('counts pending, applied and categories', () => {
+  it('counts pending, verdicts and categories', () => {
     expect(countPending(edits, decisions)).toBe(1)
-    expect(countApplied(edits, decisions)).toBe(2)
+    expect(countVerdicts(edits, decisions)).toEqual({
+      accepted: 1,
+      rejected: 1,
+      pending: 1,
+      total: 3,
+    })
     expect(countByCategory(edits)).toEqual([
       ['entity', 2],
       ['grammar', 1],

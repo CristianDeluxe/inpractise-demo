@@ -1,8 +1,9 @@
+import { isSeekableWord } from '../review/isSeekableWord'
 import { wordTitle } from '../review/wordTitle'
 import type { ConfidenceWordProps } from './ConfidenceWordProps'
 import { wordClassName } from './wordClassName'
 
-/** Tab stops belong to the timestamp and edit buttons, not to every word. */
+/** Only flagged words take a tab stop; a tab stop on every word would bury the edits. */
 export function ConfidenceWord({
   word,
   onSeek,
@@ -12,7 +13,7 @@ export function ConfidenceWord({
   return (
     <button
       type="button"
-      tabIndex={-1}
+      tabIndex={isSeekableWord(word) ? 0 : -1}
       title={wordTitle(word)}
       onClick={() => {
         onSeek(word.start)

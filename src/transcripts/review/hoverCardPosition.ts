@@ -9,9 +9,10 @@ export function hoverCardPosition(
   viewport: Viewport,
 ): CSSProperties {
   const gutter = 16
-  const left = Math.min(
-    Math.max(gutter, preview.left - 12),
-    viewport.width - width - gutter,
+  const shown = Math.min(width, viewport.width - gutter * 2)
+  const left = Math.max(
+    gutter,
+    Math.min(preview.left - 12, viewport.width - shown - gutter),
   )
   return preview.top > 300
     ? { left, bottom: viewport.height - preview.top + 10 }

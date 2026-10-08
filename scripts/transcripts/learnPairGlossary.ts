@@ -2,7 +2,11 @@ import type { MemoryEntry } from '@/transcripts/contracts/MemoryEntry.ts'
 import type { HunkTally } from './HunkTally.ts'
 import { upsertGlossaryEntry } from './upsertGlossaryEntry.ts'
 
-/** Folds tallies seen at least minOccurrences times into the glossary, one source per pair. */
+/**
+ * Folds tallies seen at least minOccurrences times into the glossary, one
+ * source per pair. A pair is named after its transcript, so a transcript
+ * already learned from its review is not counted a second time.
+ */
 export function learnPairGlossary(
   glossary: readonly MemoryEntry[],
   tallies: readonly HunkTally[],
@@ -19,7 +23,7 @@ export function learnPairGlossary(
             upsertGlossaryEntry(
               current,
               { from: tally.from, to: tally.to, category: tally.category },
-              `pair:${source}`,
+              source,
               now,
             ),
           entries,

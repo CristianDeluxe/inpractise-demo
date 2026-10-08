@@ -5,6 +5,7 @@ export type ChunkOutcome = {
   readonly paragraphs: readonly CorrectedParagraph[]
   readonly usage: CorrectionUsage
   readonly dropped: number
+  readonly unreported: number
   readonly examplesUsed: number
   readonly memoryHits: number
 }

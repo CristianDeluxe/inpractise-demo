@@ -10,7 +10,13 @@ export function ReviewParagraphBody({
   controls,
 }: ReviewParagraphBodyProps) {
   if (corrected && mode === 'inline') {
-    return <InlineBody corrected={corrected} controls={controls} />
+    return (
+      <InlineBody
+        paragraph={paragraph}
+        corrected={corrected}
+        controls={controls}
+      />
+    )
   }
   if (corrected && mode === 'diff') {
     return (

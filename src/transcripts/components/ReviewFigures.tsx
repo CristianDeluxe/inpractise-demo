@@ -14,12 +14,12 @@ export function ReviewFigures({ transcript, correction }: ReviewFiguresProps) {
   const edits = correction ? listEdits(correction) : []
   const learned = edits.filter((edit) => edit.origin === 'memory').length
   return (
-    <dl className="lab-card mt-8 grid grid-cols-2 divide-border overflow-hidden max-md:[&>*:nth-child(n+3)]:border-t md:grid-cols-4 md:divide-x">
+    <dl className="lab-card mt-5 grid md:mt-8 grid-cols-2 divide-border overflow-hidden max-md:[&>*:nth-child(n+3)]:border-t md:grid-cols-4 md:divide-x">
       <HeaderFigure
         label="Full listen"
         value={formatDuration(source.durationSeconds)}
         duration={`PT${String(Math.round(source.durationSeconds))}S`}
-        detail="Every word checked against the audio"
+        detail="Full episode length"
       />
       <HeaderFigure
         label="Audio to re-listen"

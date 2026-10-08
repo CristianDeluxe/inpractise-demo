@@ -47,5 +47,6 @@ export async function correctTranscript(
   return {
     run,
     dropped: outcomes.reduce((sum, outcome) => sum + outcome.dropped, 0),
+    unreported: outcomes.reduce((sum, outcome) => sum + outcome.unreported, 0),
   }
 }

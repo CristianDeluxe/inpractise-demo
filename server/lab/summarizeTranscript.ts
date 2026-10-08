@@ -1,4 +1,5 @@
 import { join } from 'node:path'
+import { countCorrectionEdits } from './countCorrectionEdits.ts'
 import { readJsonFile } from './readJsonFile.ts'
 import { readReviewDecisions } from './readReviewDecisions.ts'
 import { transcriptFolder } from './transcriptFolder.ts'
@@ -10,12 +11,13 @@ export async function summarizeTranscript(id: string) {
     join(folder, 'transcript.json'),
   )) as TranscriptHead | null
   if (transcript === null) return null
+  const correction = await readJsonFile(join(folder, 'correction.json'))
   return {
     id,
     source: transcript.source,
     stats: transcript.stats,
-    hasCorrection:
-      (await readJsonFile(join(folder, 'correction.json'))) !== null,
+    hasCorrection: correction !== null,
+    edits: countCorrectionEdits(correction),
     reviewed: (await readReviewDecisions(id)).length,
   }
 }

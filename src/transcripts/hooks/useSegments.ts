@@ -1,10 +1,16 @@
 import { useMemo } from 'react'
 import type { CorrectedParagraph } from '../contracts/CorrectedParagraph'
-import { segmentCorrectedText } from '../review/segmentCorrectedText'
+import type { TranscriptParagraph } from '../contracts/TranscriptParagraph'
+import { segmentParagraph } from '../edits/segmentParagraph'
+import { paragraphRawText } from '../review/paragraphRawText'
 
-export function useSegments(corrected: CorrectedParagraph) {
+/** The raw paragraph cut at each placed edit; the marks render from the edits themselves. */
+export function useSegments(
+  paragraph: TranscriptParagraph,
+  corrected: CorrectedParagraph,
+) {
   return useMemo(
-    () => segmentCorrectedText(corrected.text, corrected.edits),
-    [corrected],
+    () => segmentParagraph(paragraphRawText(paragraph), corrected.edits),
+    [paragraph, corrected],
   )
 }

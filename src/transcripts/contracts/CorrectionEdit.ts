@@ -11,4 +11,6 @@ export type CorrectionEdit = {
   readonly origin: EditOrigin
   readonly reason: string
   readonly confidence: number
+  /** Character offsets of `from` in the raw paragraph text; absent in runs written before positions were recorded. */
+  readonly at?: readonly number[]
 }

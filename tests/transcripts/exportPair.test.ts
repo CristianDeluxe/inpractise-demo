@@ -45,6 +45,25 @@ describe('exportPairTexts', () => {
     expect(pair.final).toBe('Zorbecks grew fast\n\nQuillon rose')
   })
 
+  it('writes an accepted edit at its recorded position, not the first match', () => {
+    const pair = exportPairTexts(
+      'demo',
+      [{ id: 'p1', raw: 'foo and foo' }],
+      {
+        transcriptId: 'demo',
+        paragraphs: [
+          {
+            paragraphId: 'p1',
+            text: 'foo and bar',
+            edits: [{ ...reviewEditFixture('p1-e1', 'foo', 'bar'), at: [8] }],
+          },
+        ],
+      },
+      [reviewDecisionFixture('p1-e1', 'accepted')],
+    )
+    expect(pair.final).toBe('foo and bar')
+  })
+
   it('exports the raw text when nothing was accepted, whatever the corrector rewrote', () => {
     const pair = exportPairTexts('demo', paragraphs, run, [
       reviewDecisionFixture('p1-e1', 'rejected'),

@@ -14,7 +14,7 @@ describe('memory pre-pass', () => {
     expect(prepared.raw).toBe('Zorbex zorbex Zorbexes and Zorbex,')
   })
 
-  it('emits one memory edit per entry with confidence 1 and the sources as reason', () => {
+  it('emits one memory edit per entry, at every match, with confidence 1 and the sources as reason', () => {
     const entry = memoryEntryFixture({
       from: 'Zorbex',
       to: 'Zorbecks',
@@ -32,6 +32,7 @@ describe('memory pre-pass', () => {
         origin: 'memory',
         reason: 'Learned from aaa, bbb',
         confidence: 1,
+        at: [0, 7],
       },
     ])
   })

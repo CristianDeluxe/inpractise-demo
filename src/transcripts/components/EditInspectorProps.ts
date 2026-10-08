@@ -1,8 +1,11 @@
 import type { CorrectionEdit } from '../contracts/CorrectionEdit'
 import type { ReviewControls } from '../review/ReviewControls'
+import type { TimeInterval } from '../review/TimeInterval'
 
 export type EditInspectorProps = {
   readonly edits: readonly CorrectionEdit[]
-  readonly startById: ReadonlyMap<string, number>
+  readonly spanById: ReadonlyMap<string, TimeInterval>
+  /** The edit under the pointer; the inspector previews it instead of a floating card. */
+  readonly previewId: string | null
   readonly controls: ReviewControls
 }

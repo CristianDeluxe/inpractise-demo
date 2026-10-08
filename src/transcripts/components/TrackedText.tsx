@@ -8,7 +8,7 @@ export function TrackedText({ segments, variant, controls }: TrackedTextProps) {
       {segments.map((segment, index) =>
         segment.edit ? (
           <EditMark
-            key={segment.edit.id}
+            key={`${segment.edit.id}-${String(index)}`}
             edit={segment.edit}
             variant={variant}
             controls={controls}

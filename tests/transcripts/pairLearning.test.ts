@@ -69,7 +69,7 @@ describe('pair learning', () => {
     expect(readGlossary().map((entry) => [entry.from, entry.to])).toEqual([
       ['Zorbex', 'Zorbecks'],
     ])
-    expect(readGlossary()[0]?.sources).toEqual(['pair:a', 'pair:b'])
+    expect(readGlossary()[0]?.sources).toEqual(['a', 'b'])
   })
 
   it('writes everything at a minimum of one, and nothing twice', () => {
@@ -91,7 +91,7 @@ describe('pair learning', () => {
     const examples = pairExamples(pair, [])
     expect(examples).toEqual([
       {
-        transcriptId: 'pair:a',
+        transcriptId: 'a',
         paragraphId: 'p0',
         raw: 'um Zorbex grew',
         corrected: 'Zorbecks grew',
