@@ -6,6 +6,10 @@ import { compareRoute } from './compareRoute'
 import { connectRoute } from './connectRoute'
 import { debugAliasRoute } from './debugAliasRoute'
 import { inspectionRoute } from './inspectionRoute'
+import { labMemoryRoute } from './labMemoryRoute'
+import { labReportRoute } from './labReportRoute'
+import { labTranscriptRoute } from './labTranscriptRoute'
+import { labTranscriptsRoute } from './labTranscriptsRoute'
 import { landingRoute } from './landingRoute'
 import { libraryRoute } from './libraryRoute'
 import { loginRoute } from './loginRoute'
@@ -27,6 +31,10 @@ export const routeTree = rootRoute.addChildren([
   authAliasRoute,
   resetAliasRoute,
   debugAliasRoute,
+  labTranscriptsRoute,
+  labTranscriptRoute,
+  labReportRoute,
+  labMemoryRoute,
   runtimeRoute.addChildren([
     loginRoute,
     accessRoute.addChildren([

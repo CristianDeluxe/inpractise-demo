@@ -33,6 +33,7 @@ export default {
         'mcp/start.ts',
         'server.js',
         'server/api/createApiListener.ts',
+        'scripts/transcripts/{ingest,build,correct,learn}.ts',
         'scripts/api/generateOpenApi.ts',
         'scripts/api/measureLatency.ts',
         'scripts/api/fixtureBackend.ts',
@@ -42,6 +43,7 @@ export default {
       project: [
         'src/**/*.{ts,tsx,css}',
         'scripts/db/**/*.ts',
+        'scripts/transcripts/**/*.ts',
         'tests/**/*.ts',
         'evals/**/*.ts',
         'mcp/**/*.ts',

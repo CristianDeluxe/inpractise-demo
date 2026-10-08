@@ -37,7 +37,9 @@ export default defineConfig([
     files: [
       'scripts/db/**/*.ts',
       'scripts/api/**/*.ts',
+      'scripts/transcripts/**/*.ts',
       'server/api/**/*.ts',
+      'server/lab/**/*.ts',
       'tests/**/*.ts',
       'evals/*.ts',
       'mcp/**/*.ts',
@@ -107,7 +109,18 @@ export default defineConfig([
   // Corpus loaders verify containment and hashes; generated outputs use fixed roots.
   // This syntactic rule cannot follow those checks. Runtime request code stays covered.
   {
-    files: ['scripts/corpus/**/*.mjs', 'scripts/db/**/*.ts', 'evals/**/*.ts'],
+    files: [
+      'scripts/corpus/**/*.mjs',
+      'scripts/db/**/*.ts',
+      'scripts/transcripts/**/*.ts',
+      'evals/**/*.ts',
+    ],
+    rules: { 'security/detect-non-literal-fs-filename': 'off' },
+  },
+  // The lab API joins fixed folders with ids validated by isTranscriptId and
+  // is registered only in `vite serve`.
+  {
+    files: ['server/lab/**/*.ts'],
     rules: { 'security/detect-non-literal-fs-filename': 'off' },
   },
   // The handshake log is an operator-chosen path from the environment, written
