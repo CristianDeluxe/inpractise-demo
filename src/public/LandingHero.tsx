@@ -15,25 +15,27 @@ export function LandingHero() {
             className="eyebrow intro-fade text-brass"
             style={animationDelay(620)}
           >
-            Independent research engineering demo
+            Independent engineering demo · Interview transcripts
           </p>
           <HeroHeading />
           <p
             className="intro-fade mt-8 max-w-[48ch] text-ink-muted"
             style={animationDelay(760)}
           >
-            A working model of an expert-interview workflow: a call becomes a
-            transcript, a person cleans the transcript up, and Ask answers only
-            with literal quotes from it. If no quote supports an answer, there
-            is no answer.
+            In Practise publishes executive interviews for long-term investors.
+            This demo models the production side of an interview library: the
+            recording becomes a machine transcript, an AI pass turns it into
+            readable, client-ready text and marks the words worth a second
+            listen, and an editor reviews only those. Ask then answers only with
+            literal quotes from the finished transcripts.
           </p>
           <p
             className="intro-fade mt-4 max-w-[48ch] text-sm text-ink-muted"
             style={animationDelay(820)}
           >
-            The material here is two public podcast interviews with the CEOs of
-            Roche and Novartis. It is not In Practise content, and the
-            transcripts are automatic and not human-reviewed.
+            The material is two public podcast interviews with the CEOs of Roche
+            and Novartis, processed automatically. It is not In Practise
+            content, and no person has reviewed the transcripts.
           </p>
           <HeroActions />
         </div>

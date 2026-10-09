@@ -1,22 +1,27 @@
 export const workflowSteps = [
   {
-    kicker: '01 · Expert call',
-    title: 'A conversation with an operator.',
-    body: 'In this demo the calls are two public podcast interviews with the CEOs of Roche and Novartis.',
+    kicker: '01 · Interview',
+    title: 'An executive talks to an investor.',
+    body: 'Here the interviews are two public podcast episodes with the CEOs of Roche and Novartis.',
   },
   {
-    kicker: '02 · Transcript',
-    title: 'Transcribed automatically.',
-    body: 'The first pass is a machine transcript. Speaker labels are inferred from the audio and nobody has reviewed them.',
+    kicker: '02 · Machine transcript',
+    title: 'Words, timings and speakers.',
+    body: 'A local speech model writes the first draft with a confidence per word, and speakers are told apart from the audio.',
   },
   {
-    kicker: '03 · AI cleanup',
-    title: 'The AI corrects it and scores its own reliability.',
-    body: 'A second AI pass fixes names and terms, and each transcript gets a reliability score. A person spot-checks only the uncertain words, and can sign in to see them.',
+    kicker: '03 · AI final',
+    title: 'Readable, client-ready text.',
+    body: 'A second AI pass removes fillers and stutters, fixes names, figures and terms, and gives every word a reliability score.',
   },
   {
-    kicker: '04 · Ask',
+    kicker: '04 · Editor',
+    title: 'Review the flagged words, not the hour.',
+    body: 'An editor sees each change against the raw transcript, accepts or rejects it, and plays the audio from any word.',
+  },
+  {
+    kicker: '05 · Ask',
     title: 'Answers are literal quotes.',
-    body: 'Every answer quotes the interview and links to the transcript excerpt it came from. No quote, no answer.',
+    body: 'Every answer quotes the interview and links to the excerpt it came from. No quote, no answer.',
   },
 ] as const

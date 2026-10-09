@@ -37,7 +37,7 @@ describe('landing page', () => {
     const workflow = await screen.findByRole('region', {
       name: 'How the workflow runs',
     })
-    expect(within(workflow).getAllByRole('listitem')).toHaveLength(4)
+    expect(within(workflow).getAllByRole('listitem')).toHaveLength(5)
   })
   it('names the sources and shows an unanswerable question', async () => {
     vi.stubGlobal('IntersectionObserver', undefined)
