@@ -1,4 +1,5 @@
 import { beaconKinds } from './beaconKinds.mjs'
+import { printable } from './printable.mjs'
 
 /** One validated analytics event, or null when the body is not one. */
 export function beaconRecord(body, request) {
@@ -20,10 +21,13 @@ export function beaconRecord(body, request) {
   return {
     at: new Date().toISOString(),
     kind,
-    path: path.slice(0, 300),
+    path: printable(path, 300),
     ms: Number.isFinite(ms) ? Math.round(ms) : null,
-    tab: typeof tab === 'string' ? tab.slice(0, 40) : null,
-    ip: forwarded.split(',')[0].trim() || request.socket.remoteAddress,
-    ua: String(request.headers['user-agent'] ?? '').slice(0, 200),
+    tab: typeof tab === 'string' ? printable(tab, 40) : null,
+    ip: printable(
+      forwarded.split(',')[0].trim() || request.socket.remoteAddress,
+      64,
+    ),
+    ua: printable(request.headers['user-agent'] ?? '', 200),
   }
 }
