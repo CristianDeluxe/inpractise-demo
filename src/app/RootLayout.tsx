@@ -1,6 +1,8 @@
 import { Outlet } from '@tanstack/react-router'
+import { usePageBeacon } from './hooks/usePageBeacon'
 
 export function RootLayout() {
+  usePageBeacon()
   return (
     <>
       <a className="skip-link" href="#main-content">

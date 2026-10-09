@@ -1,3 +1,4 @@
+import { beaconListener } from './beaconListener.mjs'
 import { requestListener } from './requestListener.mjs'
 
 export function originListener(apiListener) {
@@ -7,6 +8,10 @@ export function originListener(apiListener) {
       pathname = new URL(request.url ?? '/', 'http://localhost').pathname
     } catch {
       void apiListener(request, response)
+      return
+    }
+    if (pathname === '/beacon' && request.method === 'POST') {
+      beaconListener(request, response)
       return
     }
     if (pathname === '/api/v1' || pathname.startsWith('/api/v1/')) {
