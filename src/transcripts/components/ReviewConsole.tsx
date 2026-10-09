@@ -12,7 +12,7 @@ export function ReviewConsole({
   return (
     <div
       ref={consoleRef}
-      className="z-30 mt-8 rounded-2xl border border-border bg-background/90 px-3 py-3 backdrop-blur-md md:sticky md:top-4 md:px-4"
+      className="z-30 mt-0 rounded-2xl border border-border bg-background/90 px-3 py-3 backdrop-blur-md md:sticky md:top-4 md:px-4"
     >
       <ReviewToolbar {...toolbar} />
       <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1">

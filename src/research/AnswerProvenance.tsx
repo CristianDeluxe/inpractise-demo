@@ -1,11 +1,12 @@
+import { useMediaQuery } from '@/transcripts/hooks/useMediaQuery'
 import type { AnswerProvenanceProps } from './AnswerProvenanceProps'
 import { EvidenceInspector } from './EvidenceInspector'
 import { InvestigationInspector } from './InvestigationInspector'
 
 /**
- * Search stages and diagnostics, kept whole but
- * collapsed and below the answer: they are for checking a result, not for
- * reading it.
+ * Search stages and diagnostics, kept whole. Collapsed below the answer on
+ * narrow screens, open in a side rail on wide ones: they are for checking a
+ * result, not for reading it.
  */
 export function AnswerProvenance({ research }: AnswerProvenanceProps) {
   const answer =
@@ -16,8 +17,12 @@ export function AnswerProvenance({ research }: AnswerProvenanceProps) {
     research.investigation.state.status === 'success'
       ? research.investigation.state.data.data
       : undefined
+  const wide = useMediaQuery('(min-width: 1280px)')
   return (
-    <details className="mt-10 rounded-lg border border-border bg-card p-4">
+    <details
+      open={wide ? true : undefined}
+      className="mt-10 rounded-lg border border-border bg-card p-4 xl:mt-0"
+    >
       <summary className="cursor-pointer font-sans text-base">
         How this answer was found
       </summary>

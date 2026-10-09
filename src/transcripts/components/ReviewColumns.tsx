@@ -4,30 +4,38 @@ import { ReviewList } from './ReviewList'
 import { ReviewOverlays } from './ReviewOverlays'
 
 /** The transcript on the left, the inspector on the right, and what floats over both. */
-export function ReviewColumns({ paragraphs, ws, layout }: ReviewColumnsProps) {
+export function ReviewColumns({
+  paragraphs,
+  ws,
+  layout,
+  inspectorInRail,
+}: ReviewColumnsProps) {
   const { view, derived, controls } = ws
   const reading = view.mode === 'final'
+  const inspectorHere = !reading && !inspectorInRail
   return (
     <>
       <div
-        className={`mt-4 grid gap-8 ${reading ? '' : 'lg:grid-cols-[minmax(0,1fr)_21rem] lg:gap-14'}`}
+        className={`mt-4 grid gap-8 ${inspectorHere ? 'lg:grid-cols-[minmax(0,1fr)_21rem] lg:gap-14' : ''}`}
       >
-        <ReviewList
-          paragraphs={paragraphs}
-          correctedById={derived.correctedById}
-          mode={view.mode}
-          controls={controls}
-          activeId={ws.activeId}
-          focusedParagraphId={ws.focusedParagraphId}
-        />
-        {reading ? null : (
+        <div className={view.mode === 'diff' ? 'min-w-0' : 'min-w-0 max-w-4xl'}>
+          <ReviewList
+            paragraphs={paragraphs}
+            correctedById={derived.correctedById}
+            mode={view.mode}
+            controls={controls}
+            activeId={ws.activeId}
+            focusedParagraphId={ws.focusedParagraphId}
+          />
+        </div>
+        {inspectorHere ? (
           <EditInspector
             edits={ws.activeEdits}
             spanById={derived.spanById}
             previewId={ws.preview.preview?.editId ?? null}
             controls={controls}
           />
-        )}
+        ) : null}
       </div>
       <ReviewOverlays
         focusedEdit={reading ? undefined : layout.focusedEdit}

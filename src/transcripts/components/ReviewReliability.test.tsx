@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, screen, within } from '@testing-library/react'
+import { cleanup, fireEvent, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { reliabilityHeadlineText } from '../fixtures/reliabilityHeadlineText'
 import { renderReviewWorkspace } from '../fixtures/renderReviewWorkspace'
 import { reviewSaverFixture } from '../fixtures/reviewSaverFixture'
 import { stubBrowserMedia } from '../fixtures/stubBrowserMedia'
@@ -16,9 +17,9 @@ afterEach(() => {
 describe('AI-final view', () => {
   it('opens on the corrected text with its reliability and no mandatory review', () => {
     renderReviewWorkspace(reviewSaverFixture(), false)
-    expect(
-      screen.getByText('AI final · 94.1% reliable · 1 word to spot-check'),
-    ).toBeTruthy()
+    expect(reliabilityHeadlineText()).toContain(
+      'AI final · 94.1% reliable · 1 word to spot-check',
+    )
     expect(
       screen
         .getByRole('button', { name: 'AI final' })
@@ -51,9 +52,9 @@ describe('AI-final view', () => {
 describe('spot-check', () => {
   it('leaves an uncertain edit unapplied and walks only the uncertain edits', () => {
     renderReviewWorkspace(reviewSaverFixture(), false, uncertainBundleFixture())
-    expect(
-      screen.getByText('AI final · 88.2% reliable · 2 words to spot-check'),
-    ).toBeTruthy()
+    expect(reliabilityHeadlineText()).toContain(
+      'AI final · 88.2% reliable · 2 words to spot-check',
+    )
     expect(screen.getByText('Ledgar')).toBeTruthy()
     fireEvent.click(screen.getByRole('button', { name: 'Spot-check' }))
     expect(screen.getByText('1 edits pending')).toBeTruthy()
@@ -64,9 +65,9 @@ describe('spot-check', () => {
     fireEvent.keyDown(window, { key: 'a' })
     expect(screen.getByText('0 edits pending')).toBeTruthy()
     fireEvent.click(screen.getByRole('button', { name: 'AI final' }))
-    expect(
-      screen.getByText('AI final · 94.1% reliable · 1 word to spot-check'),
-    ).toBeTruthy()
+    expect(reliabilityHeadlineText()).toContain(
+      'AI final · 94.1% reliable · 1 word to spot-check',
+    )
     expect(screen.getByText('Ledger')).toBeTruthy()
   })
 
@@ -76,12 +77,9 @@ describe('spot-check', () => {
     fireEvent.keyDown(window, { key: 'j' })
     fireEvent.keyDown(window, { key: 'r' })
     fireEvent.click(screen.getByRole('button', { name: 'AI final' }))
-    const header = screen.getByRole('region', { name: 'AI-final reliability' })
-    expect(
-      within(header).getByText(
-        'AI final · 94.1% reliable · 1 word to spot-check',
-      ),
-    ).toBeTruthy()
+    expect(reliabilityHeadlineText()).toContain(
+      'AI final · 94.1% reliable · 1 word to spot-check',
+    )
     expect(screen.getByText('Ledgar')).toBeTruthy()
   })
 })

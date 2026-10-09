@@ -1,5 +1,6 @@
 import { formatCompanyName } from '@/components/formatters/formatCompanyName'
 import { SourceLabel } from '@/components/SourceLabel'
+import { transcriptIdForDocument } from '@/transcripts/episodes/transcriptIdForDocument'
 import { Link } from '@tanstack/react-router'
 import type { InterviewCardProps } from './InterviewCardProps'
 import { InterviewFacts } from './InterviewFacts'
@@ -14,10 +15,12 @@ import { interviewProfiles } from './interviewProfiles'
 export function InterviewCard({ interview }: InterviewCardProps) {
   const name = formatCompanyName(interview.company)
   const profile = interviewProfiles[interview.document_id]
+  const transcriptId = transcriptIdForDocument(interview.document_id)
   return (
     <article
       aria-label={interview.title}
-      className="flex h-full flex-col rounded-lg border border-border bg-card p-5"
+      id={interview.document_id}
+      className="flex h-full scroll-mt-6 flex-col rounded-lg border border-border bg-card p-5"
     >
       <SourceLabel origin={interview.origin} kind={interview.kind} />
       <p className="mt-4 text-xs uppercase tracking-widest text-primary">
@@ -43,6 +46,16 @@ export function InterviewCard({ interview }: InterviewCardProps) {
         >
           Ask about {name}
         </Link>
+        {transcriptId === undefined ? null : (
+          <Link
+            to="/app/transcripts/$id"
+            params={{ id: transcriptId }}
+            aria-label={`Transcript quality: ${interview.title}`}
+            className="quiet-action"
+          >
+            Transcript quality
+          </Link>
+        )}
       </div>
     </article>
   )

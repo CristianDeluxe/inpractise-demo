@@ -1,3 +1,4 @@
+import { displayTitle } from '../episodes/displayTitle'
 import { useReportView } from '../hooks/useReportView'
 import { collectCorrectedTerms } from '../review/collectCorrectedTerms'
 import { listEdits } from '../review/listEdits'
@@ -24,7 +25,9 @@ export function ReportView({ bundle }: ReportViewProps) {
         <p className="eyebrow text-muted-foreground print:text-black">
           Transcript report
         </p>
-        <h1 className="mt-3 text-2xl md:text-3xl">{source.title}</h1>
+        <h1 className="mt-3 text-2xl md:text-3xl">
+          {displayTitle(transcript.id, source.title)}
+        </h1>
         <p className="meta-text mt-3 print:text-black">
           {source.channel} / {source.uploadDate} /{' '}
           <a

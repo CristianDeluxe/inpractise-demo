@@ -5,7 +5,7 @@ import { useRuntime } from '@/runtime/hooks/useRuntime'
 import { useEffect } from 'react'
 
 /**
- * Invalidate outstanding research when the token or viewing mode changes.
+ * Invalidate outstanding research when the token changes.
  * Repeated notifications for the same token preserve workspace state.
  * Leave the synchronous Auth callback before reading its session again.
  */
@@ -20,10 +20,6 @@ export function useAccess() {
       cancelRequests(runtime)
       cancel()
     }
-    const changeMode = () => {
-      invalidate()
-      void run(undefined)
-    }
     const { data } = runtime.auth.onAuthStateChange((_event, session) => {
       const token = session?.access_token ?? null
       if (observedSession.has(token)) return
@@ -35,13 +31,11 @@ export function useAccess() {
       })
     })
     runtime.events.addEventListener('invalid-session', invalidate)
-    runtime.events.addEventListener('view-mode-changed', changeMode)
     void run(undefined)
     return () => {
       mounted = false
       data.subscription.unsubscribe()
       runtime.events.removeEventListener('invalid-session', invalidate)
-      runtime.events.removeEventListener('view-mode-changed', changeMode)
       cancelRequests(runtime)
     }
   }, [runtime, run, cancel])

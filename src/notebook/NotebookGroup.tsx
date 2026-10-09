@@ -10,7 +10,7 @@ export function NotebookGroup({ group, onChange }: NotebookGroupProps) {
   return (
     <section aria-label={title} className="mt-8">
       <h2 className="font-sans text-xl">{title}</h2>
-      <ul className="mt-4 space-y-4">
+      <ul className="mt-4 grid gap-4 xl:grid-cols-2">
         {group.notes.map((note) => (
           <NoteCard key={note.noteId} note={note} onDeleted={onChange} />
         ))}

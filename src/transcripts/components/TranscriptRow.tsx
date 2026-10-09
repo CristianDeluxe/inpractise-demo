@@ -1,8 +1,10 @@
 import { Link } from '@tanstack/react-router'
+import { displayTitle } from '../episodes/displayTitle'
 import { formatCount } from '../formatters/formatCount'
 import { formatDuration } from '../formatters/formatDuration'
 import { formatReliability } from '../formatters/formatReliability'
 import { Badge } from './Badge'
+import { ReadExcerptsLink } from './ReadExcerptsLink'
 import { ReviewedProgress } from './ReviewedProgress'
 import type { TranscriptRowProps } from './TranscriptRowProps'
 
@@ -16,9 +18,8 @@ export function TranscriptRow({ item }: TranscriptRowProps) {
           params={{ id: item.id }}
           className="line-clamp-2 block font-serif text-lg font-semibold underline-offset-4 hover:underline"
         >
-          {source.title}
+          {displayTitle(item.id, source.title)}
         </Link>
-        <p className="meta-text">{source.channel}</p>
       </th>
       <td className="py-4 pr-4 font-mono text-sm">
         {formatDuration(source.durationSeconds)}
@@ -42,13 +43,16 @@ export function TranscriptRow({ item }: TranscriptRowProps) {
         )}
       </td>
       <td className="py-4 text-sm">
-        <Link
-          to="/app/transcripts/$id/report"
-          params={{ id: item.id }}
-          className="underline underline-offset-4"
-        >
-          Report
-        </Link>
+        <div className="flex flex-wrap gap-x-4 gap-y-1">
+          <Link
+            to="/app/transcripts/$id/report"
+            params={{ id: item.id }}
+            className="underline underline-offset-4"
+          >
+            Report
+          </Link>
+          <ReadExcerptsLink id={item.id} />
+        </div>
       </td>
     </tr>
   )

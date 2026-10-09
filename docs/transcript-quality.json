@@ -1,0 +1,2990 @@
+{
+  "measuredOn": "2026-10-09",
+  "episodes": {
+    "LQ6lAvNMjPE": {
+      "edits": 333,
+      "applied": 310,
+      "styleOnly": 273,
+      "agreement": {
+        "youtube": {
+          "raw": {
+            "wer": 0.0369,
+            "substitutions": 148,
+            "deletions": 106,
+            "insertions": 48,
+            "referenceWords": 8174
+          },
+          "final": {
+            "wer": 0.0351,
+            "substitutions": 135,
+            "deletions": 111,
+            "insertions": 41,
+            "referenceWords": 8174
+          }
+        },
+        "whisper": {
+          "raw": {
+            "wer": 0.0336,
+            "substitutions": 88,
+            "deletions": 110,
+            "insertions": 76,
+            "referenceWords": 8150
+          },
+          "final": {
+            "wer": 0.0274,
+            "substitutions": 69,
+            "deletions": 100,
+            "insertions": 54,
+            "referenceWords": 8150
+          }
+        }
+      },
+      "contentEdits": {
+        "applied": {
+          "confirmed": 29,
+          "contradicted": 5,
+          "contested": 14
+        },
+        "notApplied": {
+          "contradicted": 5,
+          "contested": 7
+        }
+      },
+      "rows": [
+        {
+          "id": "p0001-e1",
+          "from": "Nikola Tangen,",
+          "to": "Nicolai Tangen,",
+          "confidence": 0.9,
+          "category": "entity",
+          "applied": true,
+          "start": 2.08,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.05,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0001-e2",
+          "from": "Norwegian Sober Wealth Fund.",
+          "to": "Norwegian Sovereign Wealth Fund.",
+          "confidence": 0.95,
+          "category": "entity",
+          "applied": true,
+          "start": 3.6,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 2.57,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0001-e3",
+          "from": "Thomas Schinneker,",
+          "to": "Thomas Schinecker,",
+          "confidence": 0.95,
+          "category": "entity",
+          "applied": true,
+          "start": 5.84,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.11,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0003-e4",
+          "from": "The Emperor of All Melodies,",
+          "to": "The Emperor of All Maladies,",
+          "confidence": 0.95,
+          "category": "entity",
+          "applied": true,
+          "start": 96.56,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -5.53,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0005-e4",
+          "from": "Chenantech,",
+          "to": "Genentech,",
+          "confidence": 0.95,
+          "category": "entity",
+          "applied": true,
+          "start": 214.52,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 5.11,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0006-e1",
+          "from": "about50% of our global RD budget,",
+          "to": "about 50% of our global R&D budget,",
+          "confidence": 0.9,
+          "category": "number",
+          "applied": true,
+          "start": 232.56,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 15.95,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0006-e4",
+          "from": "we are a leader in a healthcare overall.",
+          "to": "we are a leader in healthcare overall.",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 251.44,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "undecided"
+          },
+          "acousticMargin": 0.86,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0008-e2",
+          "from": "this is not a ROSH-specific number,",
+          "to": "this is not a Roche-specific number,",
+          "confidence": 0.9,
+          "category": "entity",
+          "applied": true,
+          "start": 323.2,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 7.47,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0008-e6",
+          "from": "but there's always nutrition, and so you have to work on many things to get just two out of the out of the door at the end.",
+          "to": "but there's always attrition, and so you have to work on many things to get just two out the door at the end.",
+          "confidence": 0.85,
+          "category": "term",
+          "applied": true,
+          "start": 342.12,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -13.19,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0009-e3",
+          "from": "in2010,2011,",
+          "to": "in 2010, 2011,",
+          "confidence": 0.85,
+          "category": "number",
+          "applied": true,
+          "start": 371.32,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 12.36,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0013-e1",
+          "from": "by28,29",
+          "to": "by 28, 29",
+          "confidence": 0.8,
+          "category": "number",
+          "applied": true,
+          "start": 565,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 10.35,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0013-e3",
+          "from": "RD",
+          "to": "R&D",
+          "confidence": 0.8,
+          "category": "term",
+          "applied": true,
+          "start": 595.96,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 9.48,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0014-e1",
+          "from": "RD.",
+          "to": "R&D.",
+          "confidence": 0.8,
+          "category": "term",
+          "applied": true,
+          "start": 607.32,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 9.41,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0014-e2",
+          "from": "last10,15",
+          "to": "last 10, 15",
+          "confidence": 0.85,
+          "category": "number",
+          "applied": true,
+          "start": 639.16,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 9.61,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0015-e1",
+          "from": "It's13 years",
+          "to": "It's 13 years",
+          "confidence": 0.85,
+          "category": "number",
+          "applied": true,
+          "start": 655.76,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 6.26,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0016-e3",
+          "from": "you do actually uh NPV calculation.",
+          "to": "you do actually do NPV calculation.",
+          "confidence": 0.6,
+          "category": "grammar",
+          "applied": false,
+          "start": 718.72,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -12.76,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0017-e1",
+          "from": "beds,",
+          "to": "bets,",
+          "confidence": 0.7,
+          "category": "term",
+          "applied": false,
+          "start": 781.72,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -8.28,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0017-e2",
+          "from": "beds,",
+          "to": "bets,",
+          "confidence": 0.7,
+          "category": "term",
+          "applied": false,
+          "start": 784.04,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -5.26,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0017-e3",
+          "from": "RD.",
+          "to": "R&D.",
+          "confidence": 0.85,
+          "category": "term",
+          "applied": true,
+          "start": 789.08,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 10.21,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0018-e2",
+          "from": "RD",
+          "to": "R&D",
+          "confidence": 0.85,
+          "category": "term",
+          "applied": true,
+          "start": 795.08,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 7.28,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0020-e3",
+          "from": "flat iron,",
+          "to": "Flatiron,",
+          "confidence": 0.85,
+          "category": "entity",
+          "applied": true,
+          "start": 908.4,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 3.1,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0023-e4",
+          "from": "then to become to reality.",
+          "to": "then to become reality.",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 1069.28,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "undecided"
+          },
+          "acousticMargin": -0.94,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0025-e1",
+          "from": "GRET,",
+          "to": "gRED,",
+          "confidence": 0.75,
+          "category": "entity",
+          "applied": false,
+          "start": 1150.4,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -2.82,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0026-e2",
+          "from": "So if you if we do speed",
+          "to": "So if we do speed",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 1223.96,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -2.65,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0026-e3",
+          "from": "we we set goals uh for RD uh by40%",
+          "to": "we set goals for R&D by 40%",
+          "confidence": 0.85,
+          "category": "term",
+          "applied": true,
+          "start": 1227.4,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 30.95,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0028-e3",
+          "from": "are800,900",
+          "to": "are 800, 900",
+          "confidence": 0.9,
+          "category": "number",
+          "applied": true,
+          "start": 1298.8,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 12.63,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0028-e6",
+          "from": "there will be also a shifts",
+          "to": "there will be also a shift",
+          "confidence": 0.85,
+          "category": "grammar",
+          "applied": true,
+          "start": 1323.28,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 4.63,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0029-e1",
+          "from": "now one one out of ten",
+          "to": "now one out of ten",
+          "confidence": 0.85,
+          "category": "grammar",
+          "applied": true,
+          "start": 1328,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 3.25,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0030-e2",
+          "from": "if you use one medicine, you the virus will change,",
+          "to": "if you use one medicine, the virus will change,",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 1410.12,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 4.03,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0032-e4",
+          "from": "there are probably four areas regions",
+          "to": "there are probably four regions",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 1497.76,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.29,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0034-e1",
+          "from": "If it takes you a year for from the time",
+          "to": "If it takes you a year from the time",
+          "confidence": 0.85,
+          "category": "grammar",
+          "applied": true,
+          "start": 1583.84,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "undecided"
+          },
+          "acousticMargin": 0.78,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0034-e2",
+          "from": "apply for clinical trial",
+          "to": "apply for a clinical trial",
+          "confidence": 0.75,
+          "category": "grammar",
+          "applied": false,
+          "start": 1587.76,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -1.93,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0034-e5",
+          "from": "Is it G are these GDPR related uh issues or what are they?",
+          "to": "Is it GDPR related issues, or what are they?",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 1608.92,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 6.75,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0035-e1",
+          "from": "um taking over here. What could you",
+          "to": "taking over here. Could you",
+          "confidence": 0.75,
+          "category": "filler",
+          "applied": false,
+          "start": 1626.28,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 7.41,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0035-e4",
+          "from": "uh you I mean",
+          "to": "I mean",
+          "confidence": 0.8,
+          "category": "filler",
+          "applied": true,
+          "start": 1645,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 7.2,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0035-e5",
+          "from": "uh have opened",
+          "to": "and have opened",
+          "confidence": 0.7,
+          "category": "grammar",
+          "applied": false,
+          "start": 1652.28,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -7.78,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0035-e7",
+          "from": "um one has to say,",
+          "to": "And one has to say,",
+          "confidence": 0.75,
+          "category": "filler",
+          "applied": false,
+          "start": 1658.6,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -11.41,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0037-e7",
+          "from": "that is there, and second, if you have strong RD presence, you also can tap more much more easily into the biotext",
+          "to": "that is there, and second, if you have strong R&D presence, you also can tap much more easily into the biotechs",
+          "confidence": 0.85,
+          "category": "entity",
+          "applied": true,
+          "start": 1752.32,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 12.8,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0038-e1",
+          "from": "I think we're in uh in a pretty good shape.",
+          "to": "I think we're in pretty good shape.",
+          "confidence": 0.85,
+          "category": "filler",
+          "applied": true,
+          "start": 1776.72,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "undecided"
+          },
+          "acousticMargin": 0.04,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0040-e2",
+          "from": "biosimilus,",
+          "to": "biosimilars,",
+          "confidence": 0.8,
+          "category": "term",
+          "applied": true,
+          "start": 1898.2,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 9.6,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0041-e1",
+          "from": "biosimular",
+          "to": "biosimilar",
+          "confidence": 0.9,
+          "category": "term",
+          "applied": true,
+          "start": 1952.16,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 8.25,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0045-e1",
+          "from": "So now you'll um uh five years hence,",
+          "to": "So now, five years hence,",
+          "confidence": 0.85,
+          "category": "filler",
+          "applied": true,
+          "start": 2131.68,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 5.98,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0045-e2",
+          "from": "RD",
+          "to": "R&D",
+          "confidence": 0.9,
+          "category": "term",
+          "applied": true,
+          "start": 2135.36,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 9.04,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0045-e5",
+          "from": "you know, have one out of five",
+          "to": "you have one out of five",
+          "confidence": 0.8,
+          "category": "filler",
+          "applied": true,
+          "start": 2142.4,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -1.51,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0045-e7",
+          "from": "next10 uh,15,20 years goes down,",
+          "to": "next 10, 15, 20 years, goes down,",
+          "confidence": 0.85,
+          "category": "number",
+          "applied": true,
+          "start": 2168.24,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 23.92,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0050-e4",
+          "from": "lived uh in a total of12 years",
+          "to": "lived a total of 12 years",
+          "confidence": 0.85,
+          "category": "number",
+          "applied": true,
+          "start": 2369.2,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 18.37,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0052-e1",
+          "from": "So to I think",
+          "to": "So I think",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 2461,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 2.02,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0054-e1",
+          "from": "Um and uh I think that's important to come to decision um because uh",
+          "to": "And I think that's important to come to a decision because",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 2539.28,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 12.02,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0054-e2",
+          "from": "Now, what one of the things",
+          "to": "Now, one of the things",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 2563.04,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 4.12,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0056-e2",
+          "from": "educated at Rush.",
+          "to": "educated at Roche.",
+          "confidence": 0.6,
+          "category": "entity",
+          "applied": false,
+          "start": 2632.16,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 6.35,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0056-e3",
+          "from": "You have COO of Beer Marine, uh Bayer, Gilliard, uh, AstraZeneca.",
+          "to": "You have COO of Bayer, Marine, Bayer, Gilead, AstraZeneca.",
+          "confidence": 0.5,
+          "category": "entity",
+          "applied": false,
+          "start": 2633.44,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.11,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0057-e3",
+          "from": "S<unk>P500,",
+          "to": "S&P 500,",
+          "confidence": 0.95,
+          "category": "entity",
+          "applied": true,
+          "start": 2693.8,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 62.43,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0059-e3",
+          "from": "the the Hoffman family",
+          "to": "the Hoffmann family",
+          "confidence": 0.9,
+          "category": "entity",
+          "applied": true,
+          "start": 2784.16,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -3.01,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0059-e4",
+          "from": "What are the what kind of advantages",
+          "to": "What kind of advantages",
+          "confidence": 0.85,
+          "category": "grammar",
+          "applied": true,
+          "start": 2787.68,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.57,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0060-e5",
+          "from": "A part again with delivering short-term performance.",
+          "to": "In part again with delivering short-term performance.",
+          "confidence": 0.6,
+          "category": "grammar",
+          "applied": false,
+          "start": 2815.2,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -3.11,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0060-e7",
+          "from": "Um Thomas, being ahead of the uh uh an incredible pharma company",
+          "to": "Thomas, being ahead of an incredible pharma company",
+          "confidence": 0.85,
+          "category": "filler",
+          "applied": true,
+          "start": 2823.68,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.18,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0061-e2",
+          "from": "Um, so it's at home we hardly eat any uh carbohydrates, uh, we eat uh quite uh a little amount of meat, uh, etc.",
+          "to": "So at home we hardly eat any carbohydrates, we eat quite a little amount of meat, etc.",
+          "confidence": 0.85,
+          "category": "filler",
+          "applied": true,
+          "start": 2857.16,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 8.95,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0061-e3",
+          "from": "So uh, but I have to admit",
+          "to": "But I have to admit",
+          "confidence": 0.85,
+          "category": "filler",
+          "applied": true,
+          "start": 2865.56,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "undecided"
+          },
+          "acousticMargin": -0.65,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0062-e1",
+          "from": "You're only a49, super young.",
+          "to": "You're only 49, super young.",
+          "confidence": 0.9,
+          "category": "number",
+          "applied": true,
+          "start": 2905,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 13.13,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0064-e2",
+          "from": "um you know actually still uh reads uh publications uh because I just find it very fascinating",
+          "to": "You know, actually, I still read publications because I just find it very fascinating",
+          "confidence": 0.75,
+          "category": "grammar",
+          "applied": false,
+          "start": 2987.92,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -14.3,
+          "verdict": "contested"
+        }
+      ]
+    },
+    "A_z4Jow0c7A": {
+      "edits": 338,
+      "applied": 257,
+      "styleOnly": 218,
+      "agreement": {
+        "youtube": {
+          "raw": {
+            "wer": 0.0343,
+            "substitutions": 138,
+            "deletions": 63,
+            "insertions": 93,
+            "referenceWords": 8559
+          },
+          "final": {
+            "wer": 0.0325,
+            "substitutions": 119,
+            "deletions": 78,
+            "insertions": 81,
+            "referenceWords": 8559
+          }
+        },
+        "whisper": {
+          "raw": {
+            "wer": 0.0435,
+            "substitutions": 97,
+            "deletions": 62,
+            "insertions": 208,
+            "referenceWords": 8443
+          },
+          "final": {
+            "wer": 0.0355,
+            "substitutions": 77,
+            "deletions": 52,
+            "insertions": 171,
+            "referenceWords": 8443
+          }
+        }
+      },
+      "contentEdits": {
+        "applied": {
+          "contested": 29,
+          "confirmed": 36,
+          "contradicted": 7
+        },
+        "notApplied": {
+          "contradicted": 14,
+          "confirmed": 11,
+          "contested": 23
+        }
+      },
+      "rows": [
+        {
+          "id": "p0001-e1",
+          "from": "Nikola Tangen,",
+          "to": "Nicolai Tangen,",
+          "confidence": 0.9,
+          "category": "entity",
+          "applied": true,
+          "start": 2.16,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "raw",
+            "acoustic": "undecided"
+          },
+          "acousticMargin": -0.24,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0001-e2",
+          "from": "Norwegian Soviet Wealth Fund.",
+          "to": "Norwegian Sovereign Wealth Fund.",
+          "confidence": 0.95,
+          "category": "entity",
+          "applied": true,
+          "start": 3.92,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 5.0,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0001-e3",
+          "from": "Vas Narasieman,",
+          "to": "Vas Narasimhan,",
+          "confidence": 0.9,
+          "category": "entity",
+          "applied": true,
+          "start": 7.28,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 4.04,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0001-e4",
+          "from": "Voss has",
+          "to": "Vas has",
+          "confidence": 0.85,
+          "category": "entity",
+          "applied": true,
+          "start": 11.04,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 10.05,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0001-e5",
+          "from": "world largest",
+          "to": "world's largest",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 23.12,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "undecided"
+          },
+          "acousticMargin": 0.1,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0001-e8",
+          "from": "growner",
+          "to": "kroner",
+          "confidence": 0.85,
+          "category": "term",
+          "applied": true,
+          "start": 33.28,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 8.81,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0001-e9",
+          "from": "So, Voss,",
+          "to": "So, Vas,",
+          "confidence": 0.85,
+          "category": "entity",
+          "applied": true,
+          "start": 35.28,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.1,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0001-e10",
+          "from": "Nikolai.",
+          "to": "Nicolai.",
+          "confidence": 0.85,
+          "category": "entity",
+          "applied": true,
+          "start": 37.68,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.78,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0001-e12",
+          "from": "in10 uh seconds, just uh what",
+          "to": "in 10 seconds, what",
+          "confidence": 0.85,
+          "category": "filler",
+          "applied": true,
+          "start": 43.44,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 11.49,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0002-e6",
+          "from": "being coming from uh being a physician",
+          "to": "coming from being a physician",
+          "confidence": 0.85,
+          "category": "grammar",
+          "applied": true,
+          "start": 74.08,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -2.26,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0002-e7",
+          "from": "RD",
+          "to": "R&D",
+          "confidence": 0.9,
+          "category": "term",
+          "applied": true,
+          "start": 80.56,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 11.12,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0003-e2",
+          "from": "capital allocations",
+          "to": "capital allocation",
+          "confidence": 0.6,
+          "category": "grammar",
+          "applied": false,
+          "start": 107.12,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -6.35,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0003-e3",
+          "from": "PLs,",
+          "to": "P&Ls,",
+          "confidence": 0.9,
+          "category": "term",
+          "applied": true,
+          "start": 109.28,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 9.86,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0003-e7",
+          "from": "Now you were you were running the uh the RD efforts",
+          "to": "Now you were running the R&D efforts",
+          "confidence": 0.85,
+          "category": "grammar",
+          "applied": true,
+          "start": 123.72,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 6.59,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0003-e8",
+          "from": "as a CEO.",
+          "to": "as CEO.",
+          "confidence": 0.7,
+          "category": "grammar",
+          "applied": false,
+          "start": 129.08,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -5.04,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0004-e4",
+          "from": "RD engine",
+          "to": "R&D engine",
+          "confidence": 0.9,
+          "category": "term",
+          "applied": true,
+          "start": 144.44,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 8.46,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0005-e1",
+          "from": "It took about around five, six years",
+          "to": "It took around five, six years",
+          "confidence": 0.75,
+          "category": "grammar",
+          "applied": false,
+          "start": 168.6,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "undecided"
+          },
+          "acousticMargin": 0.74,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0005-e2",
+          "from": "So we did uh we we got rid of our consumer or moved out of our consumer health business.",
+          "to": "So we got rid of our consumer health business, or moved out of our consumer health business.",
+          "confidence": 0.75,
+          "category": "grammar",
+          "applied": false,
+          "start": 171.96,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -11.52,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0005-e3",
+          "from": "spun Sando's,",
+          "to": "spun Sandoz,",
+          "confidence": 0.9,
+          "category": "entity",
+          "applied": true,
+          "start": 177.56,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 5.01,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0005-e7",
+          "from": "Now you are as more uh uh a pure streamlined pharma company.",
+          "to": "Now you are more a pure streamlined pharma company.",
+          "confidence": 0.8,
+          "category": "filler",
+          "applied": true,
+          "start": 204.44,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 2.64,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0006-e1",
+          "from": "I mean, it it there was this belief",
+          "to": "I mean, there was this belief",
+          "confidence": 0.85,
+          "category": "grammar",
+          "applied": true,
+          "start": 212.2,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 6.81,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0006-e2",
+          "from": "RD productivity",
+          "to": "R&D productivity",
+          "confidence": 0.9,
+          "category": "term",
+          "applied": true,
+          "start": 219.56,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 6.03,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0007-e1",
+          "from": "patent expertise, major patent expertise,",
+          "to": "patent expiries, major patent expiries,",
+          "confidence": 0.8,
+          "category": "term",
+          "applied": true,
+          "start": 260.72,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 7.15,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0007-e2",
+          "from": "RD differently",
+          "to": "R&D differently",
+          "confidence": 0.9,
+          "category": "term",
+          "applied": true,
+          "start": 276.64,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 8.57,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0007-e4",
+          "from": "strategy uh in growth,",
+          "to": "strategy and growth,",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 283.68,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -2.79,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0008-e1",
+          "from": "RD.",
+          "to": "R&D.",
+          "confidence": 0.9,
+          "category": "term",
+          "applied": true,
+          "start": 311.76,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 8.59,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0008-e2",
+          "from": "deep expertise and of our people",
+          "to": "deep expertise of our people",
+          "confidence": 0.75,
+          "category": "grammar",
+          "applied": false,
+          "start": 328.08,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "undecided"
+          },
+          "acousticMargin": 0.34,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0009-e3",
+          "from": "uh of course, uh there's",
+          "to": "And of course, there's",
+          "confidence": 0.85,
+          "category": "filler",
+          "applied": true,
+          "start": 372.84,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -2.98,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0010-e4",
+          "from": "RD",
+          "to": "R&D",
+          "confidence": 0.9,
+          "category": "term",
+          "applied": true,
+          "start": 419.24,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 10.06,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0011-e1",
+          "from": "over200,200",
+          "to": "over 200",
+          "confidence": 0.75,
+          "category": "number",
+          "applied": false,
+          "start": 451.84,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 13.47,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0012-e1",
+          "from": "Well we're we're living",
+          "to": "We're living",
+          "confidence": 0.8,
+          "category": "filler",
+          "applied": true,
+          "start": 462.56,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.94,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0012-e5",
+          "from": "on the on one part",
+          "to": "on one part",
+          "confidence": 0.85,
+          "category": "grammar",
+          "applied": true,
+          "start": 483.12,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -3.11,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0012-e6",
+          "from": "late later stages,",
+          "to": "later stages,",
+          "confidence": 0.85,
+          "category": "grammar",
+          "applied": true,
+          "start": 492.64,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -3.56,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0015-e2",
+          "from": "we can micro basically target",
+          "to": "we can basically target",
+          "confidence": 0.8,
+          "category": "filler",
+          "applied": true,
+          "start": 622.6,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -2.11,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0017-e2",
+          "from": "so",
+          "to": "so...",
+          "confidence": 0.4,
+          "category": "punctuation",
+          "applied": false,
+          "start": 681.92,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -9.38,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0017-e4",
+          "from": "how many people",
+          "to": "many people",
+          "confidence": 0.55,
+          "category": "grammar",
+          "applied": false,
+          "start": 683.12,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -6.56,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0018-e2",
+          "from": "RD.",
+          "to": "R&D.",
+          "confidence": 0.8,
+          "category": "term",
+          "applied": true,
+          "start": 760.6,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 8.5,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0019-e1",
+          "from": "Vals,",
+          "to": "Vas,",
+          "confidence": 0.6,
+          "category": "entity",
+          "applied": false,
+          "start": 761.64,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "undecided"
+          },
+          "acousticMargin": 0.31,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0019-e2",
+          "from": "no",
+          "to": "",
+          "confidence": 0.5,
+          "category": "filler",
+          "applied": false,
+          "start": 762.36,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -18.64,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0019-e3",
+          "from": "your",
+          "to": "your...",
+          "confidence": 0.4,
+          "category": "other",
+          "applied": false,
+          "start": 762.6,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -6.4,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0019-e5",
+          "from": "Novarte's",
+          "to": "Novartis's",
+          "confidence": 0.85,
+          "category": "entity",
+          "applied": true,
+          "start": 764.12,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "undecided"
+          },
+          "acousticMargin": -0.46,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0019-e7",
+          "from": "Uh, you know, once, you know, uh I've given you200 pages to read beforehand, and and here I come, Nicola Tanyan, the great uh cancer guy.",
+          "to": "You know, once, you know, I've given you 200 pages to read beforehand, and here I come, Nicolas Tanyan, the great cancer guy.",
+          "confidence": 0.6,
+          "category": "number",
+          "applied": false,
+          "start": 769.24,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 10.63,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0019-e8",
+          "from": "I I come in there, I do I present, or you just go straight to questions, or what happens? Uh we've evolved this over the years. We used to have long presentations. Now we assume the pre-read is read, and we ask the person, the the leader to give us, you know, just a three-minute summary um of the case. And then um, we usually try to also put up a slide that has from the team's view what were the reasons to do the project or what were the reasons not to do the project.",
+          "to": "I come in there, do I present, or you just go straight to questions, or what happens? We've evolved this over the years. We used to have long presentations. Now we assume the pre-read is read, and we ask the person, the leader to give us, you know, just a three-minute summary of the case. And then we usually try to also put up a slide that has from the team's view what were the reasons to do the project or what were the reasons not to do the project.",
+          "confidence": 0.6,
+          "category": "filler",
+          "applied": false,
+          "start": 779,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 11.72,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0020-e2",
+          "from": "that the room",
+          "to": "the room",
+          "confidence": 0.55,
+          "category": "grammar",
+          "applied": false,
+          "start": 814.28,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -2.56,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0020-e5",
+          "from": "RD",
+          "to": "R&D",
+          "confidence": 0.8,
+          "category": "term",
+          "applied": true,
+          "start": 832.04,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 10.14,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0021-e4",
+          "from": "meetings at the in the fund,",
+          "to": "meetings in the fund,",
+          "confidence": 0.5,
+          "category": "grammar",
+          "applied": false,
+          "start": 869.6,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 2.3,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0021-e5",
+          "from": "Yeah, our six can get a little tough.",
+          "to": "Yeah, ours can get a little tough.",
+          "confidence": 0.6,
+          "category": "grammar",
+          "applied": false,
+          "start": 871.92,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -7.65,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0023-e2",
+          "from": "isomorphic labs, uh, the Google Deep Mind Company,",
+          "to": "Isomorphic Labs, the Google DeepMind company,",
+          "confidence": 0.85,
+          "category": "entity",
+          "applied": true,
+          "start": 940.72,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 3.98,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0023-e3",
+          "from": "AI get takes",
+          "to": "AI takes",
+          "confidence": 0.6,
+          "category": "grammar",
+          "applied": false,
+          "start": 948.32,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.58,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0024-e3",
+          "from": "isomorphic labs, which is Hassabe's uh venture, right?",
+          "to": "Isomorphic Labs, which is Hassabis's venture, right?",
+          "confidence": 0.75,
+          "category": "entity",
+          "applied": false,
+          "start": 991.96,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -1.33,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0024-e5",
+          "from": "Just what how do you work with them?",
+          "to": "Just how do you work with them?",
+          "confidence": 0.55,
+          "category": "grammar",
+          "applied": false,
+          "start": 1001.72,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 3.29,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0025-e1",
+          "from": "Can AI can their capabilities uh ultimately enable us",
+          "to": "Can AI capabilities ultimately enable us",
+          "confidence": 0.7,
+          "category": "grammar",
+          "applied": false,
+          "start": 1027.48,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -6.62,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0029-e1",
+          "from": "And the and the many CEOs",
+          "to": "And then and many CEOs",
+          "confidence": 0.5,
+          "category": "grammar",
+          "applied": false,
+          "start": 1166.96,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.88,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0029-e4",
+          "from": "RD",
+          "to": "R&D",
+          "confidence": 0.9,
+          "category": "term",
+          "applied": true,
+          "start": 1207.16,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 7.25,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0030-e2",
+          "from": "Europe population",
+          "to": "Europe's population",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 1235.24,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -3.83,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0032-e4",
+          "from": "get to a unfortunately to a crisis,",
+          "to": "get to unfortunately to a crisis,",
+          "confidence": 0.6,
+          "category": "grammar",
+          "applied": false,
+          "start": 1350.48,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.19,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0033-e3",
+          "from": "I think I think that",
+          "to": "I think the",
+          "confidence": 0.85,
+          "category": "grammar",
+          "applied": true,
+          "start": 1374.24,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -4.78,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0033-e6",
+          "from": "a27-member block,",
+          "to": "a 27-member bloc,",
+          "confidence": 0.85,
+          "category": "number",
+          "applied": true,
+          "start": 1385.56,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 8.5,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0033-e7",
+          "from": "the just this the disparate",
+          "to": "just the disparate",
+          "confidence": 0.75,
+          "category": "grammar",
+          "applied": false,
+          "start": 1395.08,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -1.75,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0034-e1",
+          "from": "What would what would you take",
+          "to": "What would it take",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 1406.36,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "raw",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.78,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0034-e5",
+          "from": "they've got around get figure out the pharmaceutical sector.",
+          "to": "they've got to figure out the pharmaceutical sector.",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 1426.68,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 9.15,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0036-e3",
+          "from": "Uh I think uh and I think while the talk has been you know high ultimately,",
+          "to": "I think while the talk has been high, ultimately,",
+          "confidence": 0.75,
+          "category": "grammar",
+          "applied": false,
+          "start": 1498.96,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -2.73,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0036-e4",
+          "from": "the U did put out new pharmaceutical, proposed pharmaceutical legislation,",
+          "to": "the EU did put out new proposed pharmaceutical legislation,",
+          "confidence": 0.85,
+          "category": "entity",
+          "applied": true,
+          "start": 1507.84,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -1.73,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0036-e5",
+          "from": "Um so I you know,",
+          "to": "So, you know,",
+          "confidence": 0.8,
+          "category": "filler",
+          "applied": true,
+          "start": 1529.2,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.34,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0037-e1",
+          "from": "I would say the that we should have uh European-wide uh list price system that then the countries",
+          "to": "I would say that we should have a European-wide list price system that then countries",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 1539.52,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 16.44,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0037-e2",
+          "from": "there should be no allow allowance",
+          "to": "there should be no allowance",
+          "confidence": 0.85,
+          "category": "grammar",
+          "applied": true,
+          "start": 1553.84,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "undecided"
+          },
+          "acousticMargin": -0.8,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0038-e5",
+          "from": "We talked wrote about it",
+          "to": "We wrote about it",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 1596.12,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 2.46,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0038-e8",
+          "from": "focus on our finding",
+          "to": "focus on finding",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 1610.52,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -1.63,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0039-e4",
+          "from": "flexibilize our RD clinical trial ability so we can uh obviously adapt.",
+          "to": "flexibilize our R&D clinical trial ability so we can obviously adapt.",
+          "confidence": 0.85,
+          "category": "term",
+          "applied": true,
+          "start": 1641.48,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 25.74,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0040-e2",
+          "from": "talk about staggering pace",
+          "to": "talk about the staggering pace",
+          "confidence": 0.75,
+          "category": "grammar",
+          "applied": false,
+          "start": 1661.8,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -1.76,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0040-e3",
+          "from": "Just um tell us what um why are they getting it right there?",
+          "to": "Just tell us why are they getting it right there?",
+          "confidence": 0.8,
+          "category": "filler",
+          "applied": true,
+          "start": 1665.64,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 4.98,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0041-e1",
+          "from": "BBP.",
+          "to": "VBP.",
+          "confidence": 0.85,
+          "category": "term",
+          "applied": true,
+          "start": 1701.6,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 5.17,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0042-e2",
+          "from": "outpacing your Europe,",
+          "to": "outpacing Europe,",
+          "confidence": 0.85,
+          "category": "grammar",
+          "applied": true,
+          "start": 1742.32,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.24,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0042-e6",
+          "from": "led, I think now to the for the first time",
+          "to": "led, I think, now to for the first time",
+          "confidence": 0.75,
+          "category": "grammar",
+          "applied": false,
+          "start": 1761.2,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "undecided",
+            "acoustic": "undecided"
+          },
+          "acousticMargin": 0.32,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0044-e6",
+          "from": "efforts in tropical diseases, where malaria, leprosy, and related conditions,",
+          "to": "efforts in tropical diseases, malaria, leprosy, and related conditions,",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 1863.56,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.31,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0045-e3",
+          "from": "Novartis's uh hematology",
+          "to": "Novartis hematology",
+          "confidence": 0.8,
+          "category": "entity",
+          "applied": true,
+          "start": 1897.72,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 5.61,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0045-e5",
+          "from": "And we've we figure out",
+          "to": "And we figure out",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 1905.52,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.58,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0045-e7",
+          "from": "interacting with people or all around",
+          "to": "interacting with people all around",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 1916.24,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 5.03,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0046-e1",
+          "from": "the most fun of part of my job",
+          "to": "the most fun part of my job",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 1933.6,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 4.64,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0047-e2",
+          "from": "how do you learn how do you learn to be how how do you learn to be an energy officer?",
+          "to": "how do you learn how do you learn to be an energy officer?",
+          "confidence": 0.75,
+          "category": "grammar",
+          "applied": false,
+          "start": 1966.64,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 4.18,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0048-e2",
+          "from": "Um, and I think that was a certainly",
+          "to": "And I think that was certainly",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 2013.96,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 4.47,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0048-e3",
+          "from": "a pick particular moment,",
+          "to": "a particular moment,",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 2022.84,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 7.12,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0049-e2",
+          "from": "I led RD organizations",
+          "to": "I led R&D organizations",
+          "confidence": 0.9,
+          "category": "entity",
+          "applied": true,
+          "start": 2048.76,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 7.94,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0049-e5",
+          "from": "I think of myself as an always as being a student",
+          "to": "I think of myself as always being a student",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 2064.76,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -2.83,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0052-e3",
+          "from": "our people gives me a tremendous uh energy",
+          "to": "our people give me tremendous energy",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 2133.92,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -4.09,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0052-e5",
+          "from": "I I always still I still, when I see",
+          "to": "I always still, when I see",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 2142.32,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -2.89,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0052-e6",
+          "from": "fortunate to be with the one of the first ones to see,",
+          "to": "fortunate to be one of the first ones to see,",
+          "confidence": 0.75,
+          "category": "grammar",
+          "applied": false,
+          "start": 2147.44,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.2,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0052-e7",
+          "from": "and it ultimately a medicine",
+          "to": "and ultimately a medicine",
+          "confidence": 0.7,
+          "category": "grammar",
+          "applied": false,
+          "start": 2150.16,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -1.38,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0052-e8",
+          "from": "phase three clinical trials,",
+          "to": "phase three clinical trial,",
+          "confidence": 0.6,
+          "category": "number",
+          "applied": false,
+          "start": 2152.64,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -6.94,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0053-e2",
+          "from": "patients who are our medicines",
+          "to": "patients who are on medicines",
+          "confidence": 0.65,
+          "category": "grammar",
+          "applied": false,
+          "start": 2180.4,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -7.19,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0053-e3",
+          "from": "But you mentioned also your own you had you mentioned also your own physical health",
+          "to": "But you mentioned also your own, you mentioned also your own physical health",
+          "confidence": 0.7,
+          "category": "grammar",
+          "applied": false,
+          "start": 2191.28,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 6.4,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0053-e4",
+          "from": "and so on, just uh and nutrition",
+          "to": "and so on, just nutrition",
+          "confidence": 0.75,
+          "category": "filler",
+          "applied": false,
+          "start": 2195.36,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "undecided"
+          },
+          "acousticMargin": -0.01,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0053-e5",
+          "from": "particularly in.",
+          "to": "particularly into.",
+          "confidence": 0.6,
+          "category": "grammar",
+          "applied": false,
+          "start": 2198.24,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.94,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0054-e2",
+          "from": "from my uh a coach",
+          "to": "from a coach",
+          "confidence": 0.8,
+          "category": "filler",
+          "applied": true,
+          "start": 2202.24,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -3.75,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0055-e1",
+          "from": "When you're a more balanced, parasitic, sympathetic,",
+          "to": "When you're more balanced, parasympathetic, sympathetic,",
+          "confidence": 0.85,
+          "category": "term",
+          "applied": true,
+          "start": 2258.84,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "undecided"
+          },
+          "acousticMargin": -0.43,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0056-e1",
+          "from": "I wake up at530 every day.",
+          "to": "I wake up at 5:30 every day.",
+          "confidence": 0.85,
+          "category": "number",
+          "applied": true,
+          "start": 2292.84,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 9.84,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0056-e3",
+          "from": "a lot of vegetarian, you know.",
+          "to": "a lot of vegetarians, you know.",
+          "confidence": 0.75,
+          "category": "grammar",
+          "applied": false,
+          "start": 2316.52,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -1.72,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0056-e4",
+          "from": "Your parent will be able to do that.",
+          "to": "Your parents would be able to relate to that.",
+          "confidence": 0.3,
+          "category": "other",
+          "applied": false,
+          "start": 2320.04,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -9.96,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0057-e7",
+          "from": "Ashwaganda",
+          "to": "Ashwagandha",
+          "confidence": 0.8,
+          "category": "entity",
+          "applied": true,
+          "start": 2342.56,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 4.22,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0058-e2",
+          "from": "understood for that for knowledge workers,",
+          "to": "understood that for knowledge workers,",
+          "confidence": 0.75,
+          "category": "grammar",
+          "applied": false,
+          "start": 2367.36,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 8.05,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0058-e5",
+          "from": "set up to do out to do.",
+          "to": "set out to do.",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 2388.16,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "undecided"
+          },
+          "acousticMargin": -0.46,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0059-e3",
+          "from": "Happen to the idea is but the idea is um, you know, can you it's more of a servant leader empowered culture.",
+          "to": "The idea is, but the idea is, you know, can you, it's more of a servant leader empowered culture.",
+          "confidence": 0.6,
+          "category": "grammar",
+          "applied": false,
+          "start": 2418.4,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 17.51,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0061-e3",
+          "from": "raised uh kind of very full in a very philosophical",
+          "to": "raised kind of very fully in a very philosophical",
+          "confidence": 0.65,
+          "category": "grammar",
+          "applied": false,
+          "start": 2486.44,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -7.16,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0061-e4",
+          "from": "my parents uh all all deeply Hindu,",
+          "to": "my parents were all deeply Hindu,",
+          "confidence": 0.7,
+          "category": "grammar",
+          "applied": false,
+          "start": 2492.04,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -5.77,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0061-e6",
+          "from": "The Tao Teaching,",
+          "to": "The Tao Te Ching,",
+          "confidence": 0.85,
+          "category": "entity",
+          "applied": true,
+          "start": 2503.88,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 6.6,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0063-e4",
+          "from": "Yeah, it's uh I agree.",
+          "to": "Yeah, it's a I agree.",
+          "confidence": 0.4,
+          "category": "other",
+          "applied": false,
+          "start": 2597.36,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 5.64,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0064-e3",
+          "from": "Um, you know, I think uh very interesting author and often you know great great uh insights from from those books.",
+          "to": "You know, I think a very interesting author and often, you know, great insights from those books.",
+          "confidence": 0.8,
+          "category": "filler",
+          "applied": true,
+          "start": 2614.8,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -4.2,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0064-e4",
+          "from": "Um so I yeah, I I love I love you know science uh and nonfiction books.",
+          "to": "So I love, you know, science and nonfiction books.",
+          "confidence": 0.8,
+          "category": "filler",
+          "applied": true,
+          "start": 2622.08,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "undecided"
+          },
+          "acousticMargin": -0.38,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0064-e6",
+          "from": "keep building on that on a science-based way,",
+          "to": "keep building on that in a science-based way,",
+          "confidence": 0.6,
+          "category": "grammar",
+          "applied": false,
+          "start": 2644.76,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -4.26,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0065-e3",
+          "from": "Yeah, I I think uh which",
+          "to": "I think",
+          "confidence": 0.85,
+          "category": "filler",
+          "applied": true,
+          "start": 2659.64,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 6.62,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0065-e4",
+          "from": "build range, build breath",
+          "to": "build range, build breadth",
+          "confidence": 0.85,
+          "category": "term",
+          "applied": true,
+          "start": 2664.12,
+          "votes": {
+            "youtube": "raw",
+            "whisper": "raw",
+            "acoustic": "undecided"
+          },
+          "acousticMargin": -0.74,
+          "verdict": "contradicted"
+        },
+        {
+          "id": "p0065-e5",
+          "from": "it's such a and Novartis",
+          "to": "Novartis",
+          "confidence": 0.75,
+          "category": "grammar",
+          "applied": false,
+          "start": 2674.68,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 3.3,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0065-e6",
+          "from": "ended ended up pushing me to into",
+          "to": "ended up pushing me into",
+          "confidence": 0.85,
+          "category": "grammar",
+          "applied": true,
+          "start": 2676.92,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 5.77,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0065-e7",
+          "from": "in RD,",
+          "to": "in R&D,",
+          "confidence": 0.9,
+          "category": "entity",
+          "applied": true,
+          "start": 2681.32,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 7.53,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0065-e8",
+          "from": "where though",
+          "to": "though",
+          "confidence": 0.7,
+          "category": "grammar",
+          "applied": false,
+          "start": 2689.08,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 5.09,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0066-e3",
+          "from": "there's not it's not a race",
+          "to": "it's not a race",
+          "confidence": 0.8,
+          "category": "grammar",
+          "applied": true,
+          "start": 2704.04,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.09,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0066-e4",
+          "from": "they went up going in a different direction",
+          "to": "they went in a different direction",
+          "confidence": 0.75,
+          "category": "grammar",
+          "applied": false,
+          "start": 2719.4,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "raw"
+          },
+          "acousticMargin": -9.18,
+          "verdict": "contested"
+        },
+        {
+          "id": "p0066-e6",
+          "from": "You gotta, you've got it's",
+          "to": "You gotta, you've got it",
+          "confidence": 0.7,
+          "category": "grammar",
+          "applied": false,
+          "start": 2724.36,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 2.21,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0067-e2",
+          "from": "uh Voss,",
+          "to": "Vas,",
+          "confidence": 0.6,
+          "category": "entity",
+          "applied": false,
+          "start": 2743.08,
+          "votes": {
+            "youtube": "ai",
+            "whisper": "ai",
+            "acoustic": "undecided"
+          },
+          "acousticMargin": -0.38,
+          "verdict": "confirmed"
+        },
+        {
+          "id": "p0067-e8",
+          "from": "Nicolai.",
+          "to": "Nikolai.",
+          "confidence": 0.5,
+          "category": "entity",
+          "applied": false,
+          "start": 2758.88,
+          "votes": {
+            "youtube": "undecided",
+            "whisper": "undecided",
+            "acoustic": "ai"
+          },
+          "acousticMargin": 1.21,
+          "verdict": "contested"
+        }
+      ]
+    }
+  }
+}

@@ -1,10 +1,9 @@
 import { ChevronDown, ChevronUp } from 'lucide-react'
-import { ReportLinkButton } from './ReportLinkButton'
 import type { ReviewNavigationProps } from './ReviewNavigationProps'
 import { SaveIndicator } from './SaveIndicator'
 import { UndoButton } from './UndoButton'
 
-/** Pending count, save state, undo, flagged-paragraph stepping and the report link. */
+/** Pending count, save state, undo, flagged-paragraph stepping. */
 export function ReviewNavigation(props: ReviewNavigationProps) {
   return (
     <div className="ml-auto flex flex-wrap items-center justify-end gap-2">
@@ -34,7 +33,6 @@ export function ReviewNavigation(props: ReviewNavigationProps) {
           <ChevronDown aria-hidden="true" className="size-4" />
         </button>
       </div>
-      <ReportLinkButton onOpenReport={props.onOpenReport} />
     </div>
   )
 }

@@ -10,14 +10,17 @@ import { tokensLabel } from './tokensLabel'
 export function CostTableRow({ row }: CostTableRowProps) {
   return (
     <tr className="align-top">
-      <th scope="row" className="py-4 pr-4 text-left font-normal">
+      <th scope="row" className="py-4 pr-4 text-left font-serif font-semibold">
         {row.title}
       </th>
       <td className="py-4 pr-4 font-mono text-sm">
         {formatDuration(row.audioSeconds)}
       </td>
       <td className="py-4 pr-4 font-mono text-sm">
-        {row.asrModel}, {row.asrSeconds} s, USD 0
+        {row.asrSeconds} s
+        <span className="block break-all text-xs text-muted-foreground">
+          {row.asrModel}
+        </span>
       </td>
       <td className="py-4 pr-4 font-mono text-sm">{tokensLabel(row)}</td>
       <td className="py-4 pr-4 font-mono text-sm">

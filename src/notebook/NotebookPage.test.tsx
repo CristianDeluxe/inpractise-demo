@@ -22,7 +22,7 @@ describe('NotebookPage', () => {
     const { runtime, requests } = uiRuntimeFixture()
     await renderRouteFixture('/app/notes', runtime)
     expect(
-      await screen.findByRole('heading', { name: 'Your saved citations' }),
+      await screen.findByRole('heading', { name: 'Notebook' }),
     ).toBeTruthy()
     const northstar = await screen.findByRole('region', { name: 'Northstar' })
     expect(within(northstar).getByText('Switching cost argument.')).toBeTruthy()

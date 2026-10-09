@@ -1,59 +1,57 @@
-import { useAudioProps } from '../hooks/useAudioProps'
-import { useParagraphFilterSets } from '../hooks/useParagraphFilterSets'
-import { useReliabilitySummary } from '../hooks/useReliabilitySummary'
-import { useReviewWorkspace } from '../hooks/useReviewWorkspace'
-import { useVisibleParagraphs } from '../hooks/useVisibleParagraphs'
-import { useWorkspaceLayout } from '../hooks/useWorkspaceLayout'
+import { WorkspacePage } from '@/workspace/WorkspacePage'
+import { displayTitle } from '../episodes/displayTitle'
+import { useMediaQuery } from '../hooks/useMediaQuery'
+import { useReviewScreen } from '../hooks/useReviewScreen'
 import { buildToolbarProps } from '../review/buildToolbarProps'
-import { effectiveFilter } from '../review/effectiveFilter'
+import { RailInspector } from './RailInspector'
 import { ReadOnlyNotice } from './ReadOnlyNotice'
+import { ReliabilityRail } from './ReliabilityRail'
 import { ReviewColumns } from './ReviewColumns'
 import { ReviewConsole } from './ReviewConsole'
-import { ReviewLegend } from './ReviewLegend'
 import type { ReviewWorkspaceProps } from './ReviewWorkspaceProps'
-import { TranscriptHeader } from './TranscriptHeader'
+import { TranscriptNote } from './TranscriptNote'
 
-export function ReviewWorkspace({ bundle, nav, onSave }: ReviewWorkspaceProps) {
-  const { transcript } = bundle
-  const ws = useReviewWorkspace(bundle, onSave)
-  const layout = useWorkspaceLayout(ws.activeEdits, ws.controls.focusedEditId)
-  const audio = useAudioProps(bundle, ws.audioRef)
-  const sets = useParagraphFilterSets(
-    ws.derived.flaggedIds,
-    ws.derived.edits,
-    ws.controls.decisions,
-    ws.derived.spotCheckIds,
+export function ReviewWorkspace({ bundle, onSave }: ReviewWorkspaceProps) {
+  const { transcript, correction } = bundle
+  const { ws, layout, audio, visible, reliability } = useReviewScreen(
+    bundle,
+    onSave,
   )
-  const visible = useVisibleParagraphs(
-    transcript.paragraphs,
-    sets,
-    effectiveFilter(ws.view.mode, ws.view.filter),
-  )
-  const reliability = useReliabilitySummary(
-    transcript,
-    bundle.correction,
-    ws.controls.decisions,
-  )
+  const toolbar = buildToolbarProps(bundle, ws)
+  const railHoldsInspector =
+    useMediaQuery('(min-width: 1280px)') && ws.view.mode !== 'final'
   return (
-    <main
-      id="main-content"
-      className="page-shell py-10 md:py-12"
-      style={layout.style}
+    <WorkspacePage
+      eyebrow="Production"
+      title={displayTitle(transcript.id, transcript.source.title)}
+      note={<TranscriptNote transcript={transcript} correction={correction} />}
     >
-      <TranscriptHeader
-        transcript={transcript}
-        correction={bundle.correction}
-        reliability={reliability}
-        nav={nav}
-      />
       {onSave === null ? <ReadOnlyNotice /> : null}
-      <ReviewConsole
-        consoleRef={layout.consoleRef}
-        audio={audio}
-        toolbar={buildToolbarProps(bundle, ws)}
-      />
-      <ReviewLegend mode={ws.view.mode} />
-      <ReviewColumns paragraphs={visible} ws={ws} layout={layout} />
-    </main>
+      <div
+        style={layout.style}
+        className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_24rem] xl:gap-10"
+      >
+        <ReliabilityRail
+          transcript={transcript}
+          reliability={reliability}
+          mode={ws.view.mode}
+          onOpenReport={toolbar.onOpenReport}
+          inspector={railHoldsInspector ? <RailInspector ws={ws} /> : null}
+        />
+        <div className="min-w-0 xl:col-start-1 xl:row-start-1">
+          <ReviewConsole
+            consoleRef={layout.consoleRef}
+            audio={audio}
+            toolbar={toolbar}
+          />
+          <ReviewColumns
+            paragraphs={visible}
+            ws={ws}
+            layout={layout}
+            inspectorInRail={railHoldsInspector}
+          />
+        </div>
+      </div>
+    </WorkspacePage>
   )
 }

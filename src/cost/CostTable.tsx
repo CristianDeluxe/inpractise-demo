@@ -5,18 +5,22 @@ import { CostTableRow } from './CostTableRow'
 export function CostTable({ rows }: CostRowsProps) {
   if (rows.length === 0)
     return (
-      <p className="mt-10 text-muted-foreground">
+      <p className="text-muted-foreground">
         No transcripts yet, so there is nothing to measure.
       </p>
     )
   return (
-    <div className="mt-6 overflow-x-auto">
-      <table className="w-full min-w-240 border-collapse text-left">
+    <div className="overflow-x-auto">
+      <table className="w-full min-w-208 border-collapse text-left">
         <caption className="sr-only">Cleanup cost per transcript</caption>
         <thead className="eyebrow border-b border-border text-muted-foreground">
           <tr>
             {costTableHeadings.map((heading) => (
-              <th key={heading} scope="col" className="py-2 pr-4 font-normal">
+              <th
+                key={heading}
+                scope="col"
+                className="py-2 pr-4 font-normal align-bottom"
+              >
                 {heading}
               </th>
             ))}

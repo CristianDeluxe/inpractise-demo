@@ -11,6 +11,7 @@ export function EditInspector({
   spanById,
   previewId,
   controls,
+  inRail = false,
 }: EditInspectorProps) {
   const previewed = edits.find((edit) => edit.id === previewId)
   const focused = edits.find((edit) => edit.id === controls.focusedEditId)
@@ -20,7 +21,9 @@ export function EditInspector({
     : []
   return (
     <aside aria-label="Edit inspector" className="hidden lg:block">
-      <div className="sticky top-[calc(var(--lab-console-bottom,9rem)+1rem)] space-y-3">
+      <div
+        className={`space-y-3 ${inRail ? '' : 'sticky top-[calc(var(--lab-console-bottom,9rem)+1rem)]'}`}
+      >
         {shown ? (
           <FocusedEditCard
             edit={shown}

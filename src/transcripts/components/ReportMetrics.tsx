@@ -47,7 +47,9 @@ export function ReportMetrics({
           value={formatCount(correction?.memory.glossaryHits ?? 0)}
         />
       </dl>
-      <p className="meta-text mt-3">{reliabilityDefinition()}</p>
+      <p className="mt-3 text-sm text-muted-foreground print:text-black">
+        {reliabilityDefinition()}
+      </p>
     </section>
   )
 }

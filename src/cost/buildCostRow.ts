@@ -1,4 +1,5 @@
 import type { ReviewDecision } from '@/transcripts/contracts/ReviewDecision'
+import { displayTitle } from '@/transcripts/episodes/displayTitle'
 import { reliabilityForDecisions } from '@/transcripts/reliability/reliabilityForDecisions'
 import type { CostRecord } from './CostRecord'
 import type { CostRow } from './CostRow'
@@ -15,7 +16,7 @@ export function buildCostRow(
   )
   return {
     id: record.transcript_id,
-    title: record.source.title,
+    title: displayTitle(record.transcript_id, record.source.title),
     audioSeconds,
     asrModel: record.asr_model,
     asrSeconds: record.asr_seconds,

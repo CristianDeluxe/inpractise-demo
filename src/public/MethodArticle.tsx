@@ -1,4 +1,4 @@
-import { methodSections } from './methodSections'
+import { MethodSectionList } from './MethodSectionList'
 
 export function MethodArticle() {
   return (
@@ -9,15 +9,8 @@ export function MethodArticle() {
         Where the material comes from, what an answer can establish, and what
         the interviews do not cover.
       </p>
-      <div className="mt-12 space-y-12">
-        {methodSections.map((section) => (
-          <section key={section.title} className="rule-top pt-6">
-            <h2 className="text-2xl">{section.title}</h2>
-            <p className="prose-measure mt-4 text-muted-foreground">
-              {section.body}
-            </p>
-          </section>
-        ))}
+      <div className="mt-12">
+        <MethodSectionList />
       </div>
     </main>
   )

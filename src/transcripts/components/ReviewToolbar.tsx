@@ -1,5 +1,4 @@
 import { filterOptions } from './filterOptions'
-import { ReportLinkButton } from './ReportLinkButton'
 import { ReviewNavigation } from './ReviewNavigation'
 import type { ReviewToolbarProps } from './ReviewToolbarProps'
 import { SegmentedControl } from './SegmentedControl'
@@ -44,13 +43,7 @@ export function ReviewToolbar(props: ReviewToolbarProps) {
           options={filterOptions(props)}
         />
       ) : null}
-      {props.mode === 'final' ? (
-        <div className="ml-auto">
-          <ReportLinkButton onOpenReport={props.onOpenReport} />
-        </div>
-      ) : (
-        <ReviewNavigation {...props} />
-      )}
+      {props.mode === 'final' ? null : <ReviewNavigation {...props} />}
     </div>
   )
 }

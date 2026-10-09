@@ -4,6 +4,6 @@ export const transcriptTableHeadings = [
   'AI final',
   'Reliability',
   'Words to spot-check',
-  'Spot-checked (optional)',
-  'Report',
+  'Edits checked',
+  'Open',
 ]

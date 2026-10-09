@@ -8,4 +8,6 @@ export type EditInspectorProps = {
   /** The edit under the pointer; the inspector previews it instead of a floating card. */
   readonly previewId: string | null
   readonly controls: ReviewControls
+  /** In the side rail, which already sticks as a whole. */
+  readonly inRail?: boolean
 }

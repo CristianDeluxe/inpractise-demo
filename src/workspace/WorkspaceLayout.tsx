@@ -2,31 +2,30 @@ import type { PublicLayoutProps } from '@/components/PublicLayoutProps'
 import { Wordmark } from '@/components/Wordmark'
 import { AskBubble } from '@/research/AskBubble'
 import { Link } from '@tanstack/react-router'
-import { ViewAsBanner } from './ViewAsBanner'
 import { WorkspaceAccount } from './WorkspaceAccount'
+import { WorkspaceBreadcrumb } from './WorkspaceBreadcrumb'
 import { WorkspaceMobileNav } from './WorkspaceMobileNav'
 import { WorkspaceNav } from './WorkspaceNav'
 
 export function WorkspaceLayout({ children }: PublicLayoutProps) {
   return (
     <div className="min-h-full lg:grid lg:grid-cols-[16rem_minmax(0,1fr)]">
-      <aside className="hidden flex-col print:hidden bg-sidebar text-sidebar-foreground lg:sticky lg:top-0 lg:flex lg:h-dvh lg:overflow-y-auto">
-        <div className="border-b border-sidebar-border p-5">
-          <Link to="/">
-            <Wordmark />
-          </Link>
-        </div>
-        <div className="flex-1 p-3">
-          <WorkspaceNav />
-        </div>
-        <WorkspaceAccount />
-      </aside>
+      <div className="hidden bg-sidebar text-sidebar-foreground print:hidden lg:block">
+        <aside className="sticky top-0 flex h-dvh flex-col overflow-y-auto">
+          <div className="border-b border-sidebar-border p-5">
+            <Link to="/">
+              <Wordmark />
+            </Link>
+          </div>
+          <div className="flex-1 p-3">
+            <WorkspaceNav />
+          </div>
+          <WorkspaceAccount />
+        </aside>
+      </div>
       <div className="min-w-0">
         <WorkspaceMobileNav />
-        <header className="border-b border-border bg-card px-6 py-4 print:hidden text-xs text-muted-foreground">
-          Workspace / Authorized research
-        </header>
-        <ViewAsBanner />
+        <WorkspaceBreadcrumb />
         {children}
         <AskBubble />
       </div>

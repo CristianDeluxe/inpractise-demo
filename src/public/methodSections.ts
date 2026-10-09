@@ -21,7 +21,7 @@ export const methodSections = [
   },
   {
     title: 'A small sample',
-    body: 'Two interviews with the chief executives of two companies. That is enough to show the workflow and the quote checking, not enough to judge coverage or accuracy. No measured accuracy figure is claimed for this sample.',
+    body: 'Two interviews with the chief executives of two companies. That is enough to show the workflow and the quote checking, not enough to judge coverage or accuracy. The transcripts were checked against two independent recognisers (Whisper large-v3 and YouTube captions): the AI final differs from Whisper on 18% fewer words than the raw pass. That is agreement between machines, not a human-verified accuracy figure.',
   },
   {
     title: 'Local MCP',
