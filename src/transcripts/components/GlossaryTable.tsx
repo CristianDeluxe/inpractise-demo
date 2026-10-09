@@ -14,21 +14,21 @@ export function GlossaryTable({ entries }: GlossaryTableProps) {
     <div className="mt-6 overflow-x-auto">
       <table className="w-full min-w-144 border-collapse text-left">
         <caption className="sr-only">Learned substitutions</caption>
-        <thead className="eyebrow border-b border-border text-muted-foreground">
+        <thead className="border-b border-border">
           <tr>
-            <th scope="col" className="py-2 pr-4 font-normal">
+            <th scope="col" className="py-2 pr-4 font-medium">
               Raw heard
             </th>
-            <th scope="col" className="py-2 pr-4 font-normal">
+            <th scope="col" className="py-2 pr-4 font-medium">
               Corrected to
             </th>
-            <th scope="col" className="py-2 pr-4 font-normal">
+            <th scope="col" className="py-2 pr-4 font-medium">
               Category
             </th>
-            <th scope="col" className="py-2 pr-4 font-normal">
+            <th scope="col" className="py-2 pr-4 font-medium">
               Seen
             </th>
-            <th scope="col" className="py-2 font-normal">
+            <th scope="col" className="py-2 font-medium">
               Sources
             </th>
           </tr>

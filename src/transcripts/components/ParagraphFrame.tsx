@@ -1,10 +1,12 @@
 import { formatTimestamp } from '../formatters/formatTimestamp'
 import { paragraphElementId } from '../review/paragraphElementId'
 import type { ParagraphFrameProps } from './ParagraphFrameProps'
+import { ParagraphGutter } from './ParagraphGutter'
 
 export function ParagraphFrame({
   paragraphId,
   start,
+  wide = false,
   active,
   focused,
   note,
@@ -15,34 +17,22 @@ export function ParagraphFrame({
   return (
     <section
       id={paragraphElementId(paragraphId)}
+      data-paragraph-id={paragraphId}
+      data-start={start}
       aria-label={`Paragraph at ${time}`}
       data-playing={active ? 'true' : undefined}
-      className={`relative grid scroll-mt-64 gap-2 rounded-2xl px-4 py-5 transition-[background-color,box-shadow] duration-200 md:grid-cols-[4.5rem_minmax(0,1fr)] md:gap-6 md:px-5 ${focused ? 'bg-card shadow-[0_0_0_1px_var(--color-border),0_18px_40px_-28px_oklch(0.203_0.032_252/45%)]' : ''}`}
+      className={`relative grid scroll-mt-64 gap-1 rounded-lg border px-3 py-4 transition-colors duration-200 md:grid-cols-[4.5rem_minmax(0,1fr)] md:gap-5 md:px-4 ${focused ? 'border-border bg-card' : 'border-transparent'}`}
     >
       {active ? (
         <span
           aria-hidden="true"
-          className="absolute inset-y-5 left-0 w-[3px] rounded-full bg-primary"
+          className="absolute inset-y-4 left-0 w-[3px] rounded-full bg-primary"
         />
       ) : null}
-      <div className="flex flex-row items-baseline gap-3 md:flex-col md:gap-2">
-        <button
-          type="button"
-          onClick={() => {
-            onSeek(start)
-          }}
-          aria-label={`Play from ${time}`}
-          className="inline-flex min-h-11 items-center font-mono text-xs tabular-nums md:min-h-0 text-muted-foreground underline-offset-4 hover:text-primary hover:underline"
-        >
-          {time}
-        </button>
-        {note ? (
-          <span className="font-mono text-xs leading-snug text-muted-foreground">
-            {note}
-          </span>
-        ) : null}
+      <ParagraphGutter start={start} note={note} onSeek={onSeek} />
+      <div className={wide ? 'min-w-0' : 'min-w-0 max-w-[70ch]'}>
+        {children}
       </div>
-      <div className="min-w-0">{children}</div>
     </section>
   )
 }

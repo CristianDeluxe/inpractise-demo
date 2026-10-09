@@ -6,8 +6,8 @@ export function WorkspaceNavSection({
 }: WorkspaceNavSectionProps) {
   return (
     <div role="group" aria-label={label}>
-      <p className="eyebrow mb-2 px-3 text-sidebar-foreground/60">{label}</p>
-      <div className="flex flex-wrap gap-2 lg:flex-col">{children}</div>
+      <p className="nav-label mb-1.5">{label}</p>
+      <div className="flex flex-wrap gap-1 lg:flex-col">{children}</div>
     </div>
   )
 }

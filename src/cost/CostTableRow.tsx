@@ -10,32 +10,32 @@ import { tokensLabel } from './tokensLabel'
 export function CostTableRow({ row }: CostTableRowProps) {
   return (
     <tr className="align-top">
-      <th scope="row" className="py-4 pr-4 text-left font-serif font-semibold">
+      <th scope="row" className="py-2.5 pr-4 text-left text-sm font-medium">
         {row.title}
       </th>
-      <td className="py-4 pr-4 font-mono text-sm">
+      <td className="py-2.5 pr-4 font-mono text-sm">
         {formatDuration(row.audioSeconds)}
       </td>
-      <td className="py-4 pr-4 font-mono text-sm">
+      <td className="py-2.5 pr-4 font-mono text-sm">
         {row.asrSeconds} s
         <span className="block break-all text-xs text-muted-foreground">
           {row.asrModel}
         </span>
       </td>
-      <td className="py-4 pr-4 font-mono text-sm">{tokensLabel(row)}</td>
-      <td className="py-4 pr-4 font-mono text-sm">
+      <td className="py-2.5 pr-4 font-mono text-sm">{tokensLabel(row)}</td>
+      <td className="py-2.5 pr-4 font-mono text-sm">
         {row.correctionModel === null ? noAiPassLabel : cleanupApiCostLabel}
       </td>
-      <td className="py-4 pr-4 font-mono text-sm">{reliabilityLabel(row)}</td>
-      <td className="py-4 pr-4 font-mono text-sm">
+      <td className="py-2.5 pr-4 font-mono text-sm">{reliabilityLabel(row)}</td>
+      <td className="py-2.5 pr-4 font-mono text-sm">
         {row.decidedEdits} of {row.proposedEdits}
       </td>
-      <td className="py-4 pr-4 font-mono text-sm">
+      <td className="py-2.5 pr-4 font-mono text-sm">
         {row.reviewerSeconds === undefined
           ? notMeasuredLabel
           : formatReviewerMinutes(row.reviewerSeconds / 60)}
       </td>
-      <td className="py-4 font-mono text-sm">
+      <td className="py-2.5 font-mono text-sm">
         {row.minutesPerAudioHour === undefined
           ? notMeasuredLabel
           : formatReviewerMinutes(row.minutesPerAudioHour)}

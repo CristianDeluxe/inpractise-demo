@@ -5,6 +5,7 @@ import { ReviewOverlays } from './ReviewOverlays'
 
 /** The transcript on the left, the inspector on the right, and what floats over both. */
 export function ReviewColumns({
+  listRef,
   paragraphs,
   ws,
   layout,
@@ -18,7 +19,7 @@ export function ReviewColumns({
       <div
         className={`mt-4 grid gap-8 ${inspectorHere ? 'lg:grid-cols-[minmax(0,1fr)_21rem] lg:gap-14' : ''}`}
       >
-        <div className={view.mode === 'diff' ? 'min-w-0' : 'min-w-0 max-w-4xl'}>
+        <div ref={listRef} className="min-w-0">
           <ReviewList
             paragraphs={paragraphs}
             correctedById={derived.correctedById}

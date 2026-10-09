@@ -48,7 +48,7 @@ export function useReviewWorkspace(
     endPreview: preview.close,
   })
   useReviewKeys(handlers)
-  useScrollToFocus(focusApi.focus)
+  useScrollToFocus(focusApi.focus, `${view.mode}:${view.filter}`)
   return {
     view,
     derived,

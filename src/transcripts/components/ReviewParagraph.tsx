@@ -15,6 +15,7 @@ export function ReviewParagraph({
     <ParagraphFrame
       paragraphId={paragraph.id}
       start={paragraph.start}
+      wide={mode === 'diff'}
       active={active}
       focused={focused}
       note={mode === 'final' ? null : paragraphNote(paragraph, corrected)}

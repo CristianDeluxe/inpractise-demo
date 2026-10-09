@@ -23,6 +23,7 @@
     "transcripts:ingest": "tsx --tsconfig tsconfig.node.json scripts/transcripts/ingest.ts",
     "transcripts:build": "tsx --tsconfig tsconfig.node.json scripts/transcripts/build.ts",
     "transcripts:correct": "tsx --tsconfig tsconfig.node.json scripts/transcripts/correct.ts",
+    "transcripts:fillers": "tsx --tsconfig tsconfig.node.json scripts/transcripts/fillers.ts",
     "transcripts:learn": "tsx --tsconfig tsconfig.node.json scripts/transcripts/learn.ts",
     "transcripts:pairs": "tsx --tsconfig tsconfig.node.json scripts/transcripts/pairs.ts",
     "transcripts:export": "tsx --tsconfig tsconfig.node.json scripts/transcripts/exportPair.ts",

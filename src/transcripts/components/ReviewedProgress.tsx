@@ -4,7 +4,7 @@ import type { ReviewedProgressProps } from './ReviewedProgressProps'
 export function ReviewedProgress({ reviewed, edits }: ReviewedProgressProps) {
   return (
     <div className="min-w-36">
-      <p className="whitespace-nowrap font-mono text-base font-semibold">
+      <p className="whitespace-nowrap text-sm tabular-nums">
         {reviewed} / {edits} reviewed
       </p>
       <div

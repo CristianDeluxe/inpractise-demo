@@ -3,6 +3,7 @@ import type { EpisodeCorrection } from './EpisodeCorrection.ts'
 import type { EpisodeTranscript } from './EpisodeTranscript.ts'
 import type { LabTranscriptRow } from './LabTranscriptRow.ts'
 import { readEpisodeJson } from './readEpisodeJson.ts'
+import { speakerTimeline } from './speakerTimeline.ts'
 
 /** The row for one organisation, built from the episode folder's files. */
 export function buildTranscriptRow(
@@ -23,7 +24,7 @@ export function buildTranscriptRow(
     duration_seconds: transcript.source.durationSeconds,
     asr_model: transcript.asrModel,
     asr_seconds: transcript.asrSeconds,
-    transcript,
+    transcript: { ...transcript, speakers: speakerTimeline(id) },
     correction,
     correction_model: correction?.model ?? null,
     correction_input_tokens: correction?.usage.inputTokens ?? null,

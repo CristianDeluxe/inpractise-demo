@@ -7,7 +7,7 @@ export function NotebookBadge() {
   return (
     <span
       aria-label={`${String(count)} saved notes`}
-      className="ml-auto rounded-full bg-sidebar-accent px-2 py-0.5 font-mono text-xs"
+      className="ml-auto rounded-full bg-secondary px-2 font-mono text-xs leading-5 text-muted-foreground"
     >
       {count}
     </span>

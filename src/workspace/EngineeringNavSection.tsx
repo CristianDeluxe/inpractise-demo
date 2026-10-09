@@ -7,10 +7,8 @@ export function EngineeringNavSection() {
   const { access } = useWorkspace()
   return (
     <details aria-label="Engineering">
-      <summary className="eyebrow cursor-pointer px-3 text-sidebar-foreground/60">
-        Engineering
-      </summary>
-      <div className="mt-2 flex flex-wrap gap-2 lg:flex-col">
+      <summary className="nav-label cursor-pointer">Engineering</summary>
+      <div className="mt-1.5 flex flex-wrap gap-1 lg:flex-col">
         {access?.role === 'reviewer' ? (
           <Link to="/inspect" className="workspace-link">
             <FlaskConical size={16} strokeWidth={1.5} aria-hidden="true" />{' '}

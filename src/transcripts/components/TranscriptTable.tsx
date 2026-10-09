@@ -16,10 +16,10 @@ export function TranscriptTable({ items }: TranscriptTableProps) {
         <caption className="sr-only">
           Transcripts and their AI-final reliability
         </caption>
-        <thead className="eyebrow border-b border-border text-muted-foreground">
+        <thead className="border-b border-border">
           <tr>
             {transcriptTableHeadings.map((heading) => (
-              <th key={heading} scope="col" className="py-2 pr-4 font-normal">
+              <th key={heading} scope="col" className="py-2 pr-4 font-medium">
                 {heading}
               </th>
             ))}

@@ -26,7 +26,7 @@ export function FocusedEditBar({
       aria-label="Decide this edit"
       aria-orientation="vertical"
       style={style}
-      className="hover-card fixed z-40 hidden w-10 flex-col items-center gap-1 rounded-full border border-border bg-popover p-1 lg:flex"
+      className="app-shell hover-card fixed z-40 hidden w-10 flex-col items-center gap-1 rounded-full border border-border bg-popover p-1 lg:flex"
     >
       {reviewVerdicts.map((target) => (
         <BarVerdictButton

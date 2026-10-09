@@ -39,18 +39,20 @@ Agreement (word error rate against each reference, clean-verbatim):
 | Novartis | Whisper large-v3 | 4.35%          | 3.55%    | -18%   |
 | Novartis | YouTube captions | 3.43%          | 3.25%    | -5%    |
 
-Edits (the AI final applies edits scored 0.8 or more):
+Edits (the AI final applies edits scored 0.8 or more; the counts include the
+filler edits added by `pnpm transcripts:fillers`, 54 and 40, which are style
+only):
 
 | Episode  | Edits | Style only | Content, applied: confirmed / contradicted / contested | Content, not applied: confirmed / contradicted / contested |
 | -------- | ----- | ---------- | ------------------------------------------------------ | ---------------------------------------------------------- |
-| Roche    | 333   | 273        | 29 / 5 / 14                                            | 0 / 5 / 7                                                  |
-| Novartis | 338   | 218        | 36 / 7 / 29                                            | 11 / 14 / 23                                               |
+| Roche    | 387   | 327        | 29 / 5 / 14                                            | 0 / 5 / 7                                                  |
+| Novartis | 378   | 258        | 36 / 7 / 29                                            | 11 / 14 / 23                                               |
 
 ## What it says
 
 - The AI final is closer to both independent recognisers than the raw pass on
   both episodes.
-- Most edits (82% and 64%) are clean-verbatim style: fillers, stutters, number
+- Most edits (84% and 68%) are clean-verbatim style: fillers, stutters, number
   and acronym formatting ("RD" to "R&D", "in2010" to "in 2010").
 - Among applied content edits with a decision, 85% (Roche) and 84% (Novartis)
   are confirmed. On Novartis the 0.8 threshold leaves out 11 edits the signals

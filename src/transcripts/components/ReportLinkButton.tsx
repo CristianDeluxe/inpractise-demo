@@ -5,7 +5,7 @@ export function ReportLinkButton({ onOpenReport }: ReportLinkButtonProps) {
   return (
     <button
       type="button"
-      className="quiet-action min-h-11 gap-2 whitespace-nowrap rounded-full md:min-h-0"
+      className="quiet-action min-h-11 w-full gap-2 whitespace-nowrap md:min-h-9"
       onClick={onOpenReport}
     >
       <FileText aria-hidden="true" className="size-4" />

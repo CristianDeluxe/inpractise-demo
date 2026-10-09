@@ -23,7 +23,7 @@ describe('ReviewWorkspace', () => {
     renderReviewWorkspace()
     expect(
       screen.getByText(
-        'Public podcast audio processed locally for an engineering demo: automatic Parakeet TDT v3 transcript, second AI pass by synthetic-model. Not human-verified. Not In Practise content.',
+        'Public podcast audio processed locally for an engineering demo: automatic Parakeet TDT v3 transcript, second AI pass by synthetic-model, speakers inferred from the audio. Not human-verified. Not In Practise content.',
       ),
     ).toBeTruthy()
     expect(screen.getByText('3 edits pending')).toBeTruthy()

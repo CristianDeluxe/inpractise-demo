@@ -2,8 +2,9 @@ import { AudioPlayer } from './AudioPlayer'
 import type { ReviewConsoleProps } from './ReviewConsoleProps'
 import { ReviewToolbar } from './ReviewToolbar'
 import { ShortcutReference } from './ShortcutReference'
+import { SpotCheckAudioKey } from './SpotCheckAudioKey'
 
-/** Stays below the site header while scrolling, so the audio and counters are always in reach. */
+/** One sticky block at the top of the transcript: views, player, and the key to the waveform's orange lane. */
 export function ReviewConsole({
   toolbar,
   audio,
@@ -12,21 +13,11 @@ export function ReviewConsole({
   return (
     <div
       ref={consoleRef}
-      className="z-30 mt-0 rounded-2xl border border-border bg-background/90 px-3 py-3 backdrop-blur-md md:sticky md:top-4 md:px-4"
+      className="z-30 sm:sticky sm:top-4 sm:before:absolute sm:before:-inset-x-px sm:before:-top-[17px] sm:before:h-4 sm:before:bg-background sm:before:content-[''] space-y-2 rounded-lg border border-border bg-card px-3 py-3 md:px-4"
     >
       <ReviewToolbar {...toolbar} />
-      <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1">
-        <div className="min-w-64 flex-1">
-          <AudioPlayer {...audio} />
-        </div>
-        <p className="hidden items-center gap-2 text-xs text-muted-foreground xl:flex">
-          <span
-            aria-hidden="true"
-            className="h-1.5 w-4 rounded-full bg-primary"
-          />
-          Optional spot-check audio
-        </p>
-      </div>
+      <AudioPlayer {...audio} />
+      <SpotCheckAudioKey />
       <ShortcutReference />
     </div>
   )

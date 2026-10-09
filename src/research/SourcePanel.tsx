@@ -10,8 +10,8 @@ export function SourcePanel({ citation }: CitationCardProps) {
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-40 bg-ink/65" />
-        <Dialog.Content className="source-dialog">
-          <Dialog.Title className="text-2xl">Source excerpt</Dialog.Title>
+        <Dialog.Content className="source-dialog app-shell">
+          <Dialog.Title className="text-lg">Source excerpt</Dialog.Title>
           <Dialog.Description className="mt-2 text-sm text-muted-foreground">
             This excerpt is reauthorized before it is displayed.
           </Dialog.Description>

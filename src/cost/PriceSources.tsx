@@ -14,18 +14,18 @@ export function PriceSources() {
       <div className="mt-6 overflow-x-auto">
         <table className="w-full border-collapse text-left text-sm">
           <caption className="sr-only">Model prices and their sources</caption>
-          <thead className="eyebrow border-b border-border text-muted-foreground">
+          <thead className="border-b border-border">
             <tr>
-              <th scope="col" className="py-2 pr-4 font-normal">
+              <th scope="col" className="py-2 pr-4 font-medium">
                 Model
               </th>
-              <th scope="col" className="py-2 pr-4 font-normal">
+              <th scope="col" className="py-2 pr-4 font-medium">
                 Input
               </th>
-              <th scope="col" className="py-2 pr-4 font-normal">
+              <th scope="col" className="py-2 pr-4 font-medium">
                 Output
               </th>
-              <th scope="col" className="py-2 font-normal">
+              <th scope="col" className="py-2 font-medium">
                 Source, read on
               </th>
             </tr>

@@ -25,7 +25,7 @@ export function EditHoverCard({
       onPointerEnter={onHold}
       onPointerLeave={onRelease}
       style={style}
-      className="hover-card fixed z-50 w-[22rem] max-w-[calc(100vw-2rem)] rounded-2xl border border-border bg-popover p-4 text-popover-foreground"
+      className="app-shell hover-card fixed z-50 w-[22rem] max-w-[calc(100vw-2rem)] rounded-lg border border-border bg-popover p-4 text-popover-foreground"
     >
       <EditSummary edit={edit} />
       <div className="mt-4">

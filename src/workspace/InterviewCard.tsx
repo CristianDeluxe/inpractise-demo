@@ -23,10 +23,8 @@ export function InterviewCard({ interview }: InterviewCardProps) {
       className="flex h-full scroll-mt-6 flex-col rounded-lg border border-border bg-card p-5"
     >
       <SourceLabel origin={interview.origin} kind={interview.kind} />
-      <p className="mt-4 text-xs uppercase tracking-widest text-primary">
-        {name}
-      </p>
-      <h3 className="mt-2 font-sans text-lg leading-snug">{interview.title}</h3>
+      <p className="mt-4 text-xs font-medium text-primary">{name}</p>
+      <h3 className="mt-2 text-base">{interview.title}</h3>
       <InterviewFacts interview={interview} />
       <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-border pt-4">
         {profile === undefined ? null : (

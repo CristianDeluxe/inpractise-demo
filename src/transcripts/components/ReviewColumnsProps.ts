@@ -1,8 +1,11 @@
+import type { RefObject } from 'react'
 import type { TranscriptParagraph } from '../contracts/TranscriptParagraph'
 import type { ReviewWorkspaceState } from '../hooks/ReviewWorkspaceState'
 import type { WorkspaceLayout } from '../hooks/WorkspaceLayout'
 
 export type ReviewColumnsProps = {
+  /** The element that holds the rendered paragraphs. */
+  readonly listRef: RefObject<HTMLDivElement | null>
   readonly paragraphs: readonly TranscriptParagraph[]
   readonly ws: ReviewWorkspaceState
   readonly layout: WorkspaceLayout

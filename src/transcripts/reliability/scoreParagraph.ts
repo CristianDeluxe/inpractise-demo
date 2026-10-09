@@ -6,6 +6,7 @@ import { wordOffsets } from '@/transcripts/edits/wordOffsets'
 import type { DecisionMap } from '@/transcripts/review/DecisionMap'
 import { paragraphRawText } from '@/transcripts/review/paragraphRawText'
 import { appliesInFinal } from './appliesInFinal'
+import { cleanVerbatim } from './cleanVerbatim'
 import { groupScoredWords } from './groupScoredWords'
 import type { ScoredParagraph } from './ScoredParagraph'
 import { scoreSegments } from './scoreSegments'
@@ -29,6 +30,8 @@ export function scoreParagraph(
   return {
     id: paragraph.id,
     start: paragraph.start,
-    words: groupScoredWords(paragraph, text, scoreSegments(context, segments)),
+    words: cleanVerbatim(
+      groupScoredWords(paragraph, text, scoreSegments(context, segments)),
+    ),
   }
 }

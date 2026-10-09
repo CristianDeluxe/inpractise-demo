@@ -2,7 +2,7 @@ import { reliabilityDefinition } from './reliabilityDefinition'
 
 export function ReliabilityExplainer() {
   return (
-    <details className="text-sm text-muted-foreground">
+    <details className="px-4 pt-2 text-sm text-muted-foreground">
       <summary className="cursor-pointer text-foreground">
         How reliability is computed
       </summary>

@@ -10,7 +10,7 @@ export function SegmentedControl<T extends string>({
     <div
       role="group"
       aria-label={label}
-      className="inline-flex max-w-full overflow-x-auto rounded-full bg-secondary p-1"
+      className="inline-flex max-w-full gap-0.5 overflow-x-auto rounded-md border border-border bg-secondary p-0.5"
     >
       {options.map((option) => (
         <button
@@ -21,7 +21,7 @@ export function SegmentedControl<T extends string>({
           onClick={() => {
             onChange(option.value)
           }}
-          className="min-h-11 whitespace-nowrap md:min-h-8 rounded-full px-3 py-1 text-sm text-muted-foreground transition-[background-color,color,box-shadow] duration-150 hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40 aria-pressed:bg-card aria-pressed:font-medium aria-pressed:text-foreground aria-pressed:shadow-[0_1px_2px_oklch(0.203_0.032_252/12%),0_0_0_1px_var(--color-border)]"
+          className="min-h-11 whitespace-nowrap rounded border border-transparent px-3 py-1 text-sm text-muted-foreground transition-[background-color,color] duration-150 hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40 md:min-h-8 aria-pressed:border-border aria-pressed:bg-card aria-pressed:font-medium aria-pressed:text-primary"
         >
           {option.label}
         </button>

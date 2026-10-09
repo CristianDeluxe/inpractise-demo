@@ -5,12 +5,10 @@ import { AskChat } from './AskChat'
 
 export function AskBubblePanel() {
   return (
-    <Dialog.Content className="fixed bottom-4 right-4 top-4 z-50 flex w-[calc(100vw-2rem)] max-w-[26rem] flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-2xl data-[state=closed]:duration-200 data-[state=open]:duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-bottom-4 data-[state=open]:slide-in-from-bottom-4">
+    <Dialog.Content className="app-shell fixed bottom-4 right-4 top-4 z-50 flex w-[calc(100vw-2rem)] max-w-[26rem] flex-col overflow-hidden rounded-lg border border-border bg-background data-[state=closed]:duration-200 data-[state=open]:duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-bottom-4 data-[state=open]:slide-in-from-bottom-4">
       <div className="flex items-start justify-between gap-4 border-b border-border px-4 py-3">
         <div>
-          <Dialog.Title className="font-sans text-base">
-            Ask the interviews
-          </Dialog.Title>
+          <Dialog.Title className="text-base">Ask the interviews</Dialog.Title>
           <Dialog.Description className="mt-0.5 text-[11px] text-muted-foreground">
             The Roche and Novartis CEO interviews.{' '}
             <Link to="/app/ask" className="underline underline-offset-4">

@@ -1,3 +1,4 @@
+import type { SpeakerTimeline } from './SpeakerTimeline'
 import type { TranscriptParagraph } from './TranscriptParagraph'
 import type { TranscriptSource } from './TranscriptSource'
 import type { TranscriptStats } from './TranscriptStats'
@@ -11,4 +12,6 @@ export type TranscriptDocument = {
   readonly asrSeconds: number
   readonly paragraphs: readonly TranscriptParagraph[]
   readonly stats: TranscriptStats
+  /** Attached at publish time from speakers.json when the episode was diarized. */
+  readonly speakers?: SpeakerTimeline
 }

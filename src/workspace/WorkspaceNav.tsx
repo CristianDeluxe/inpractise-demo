@@ -4,7 +4,7 @@ import { ResearchNavSection } from './ResearchNavSection'
 
 export function WorkspaceNav() {
   return (
-    <nav aria-label="Workspace" className="flex flex-col gap-5">
+    <nav aria-label="Workspace" className="flex flex-col gap-6">
       <ResearchNavSection />
       <ProductionNavSection />
       <EngineeringNavSection />

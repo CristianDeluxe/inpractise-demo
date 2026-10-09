@@ -6,7 +6,7 @@ import { showsParagraphFilter } from './showsParagraphFilter'
 
 export function ReviewToolbar(props: ReviewToolbarProps) {
   return (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+    <div className="flex min-h-11 flex-wrap items-center gap-x-3 gap-y-2 md:min-h-9">
       <SegmentedControl
         label="View"
         value={props.mode}

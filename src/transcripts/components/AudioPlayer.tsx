@@ -4,6 +4,7 @@ import { usePlaybackRate } from '../hooks/usePlaybackRate'
 import { togglePlayback } from '../review/togglePlayback'
 import type { AudioPlayerProps } from './AudioPlayerProps'
 import { PlaybackControls } from './PlaybackControls'
+import { PlaybackRateButton } from './PlaybackRateButton'
 import { PlayToggle } from './PlayToggle'
 import { WaveformSlider } from './WaveformSlider'
 
@@ -21,7 +22,7 @@ export function AudioPlayer({
   )
   const { rate, cycle, back, forward } = usePlaybackRate(audioRef)
   return (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 md:flex-nowrap">
       <audio
         ref={audioRef}
         src={src ?? undefined}
@@ -37,13 +38,8 @@ export function AudioPlayer({
           void togglePlayback(audioRef.current)
         }}
       />
-      <PlaybackControls
-        rate={rate}
-        onBack={back}
-        onForward={forward}
-        onCycleRate={cycle}
-      />
-      <span className="w-[6.5rem] shrink-0 font-mono text-xs tabular-nums text-muted-foreground">
+      <PlaybackControls onBack={back} onForward={forward} />
+      <span className="shrink-0 max-md:mr-auto md:w-[6.5rem] font-mono text-xs tabular-nums text-muted-foreground">
         {formatTimestamp(clock.currentTime)} / {formatTimestamp(clock.duration)}
       </span>
       <WaveformSlider
@@ -52,6 +48,7 @@ export function AudioPlayer({
         waveform={waveform}
         relisten={relisten}
       />
+      <PlaybackRateButton rate={rate} onCycleRate={cycle} />
     </div>
   )
 }

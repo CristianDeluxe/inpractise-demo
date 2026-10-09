@@ -5,13 +5,13 @@ import type { ReliabilityHeadlineProps } from './ReliabilityHeadlineProps'
 /** The figure that replaces mandatory review: how far the AI-final text can be trusted. */
 export function ReliabilityHeadline({ summary }: ReliabilityHeadlineProps) {
   return (
-    <section aria-label="AI-final reliability" className="lab-card px-4 py-4">
+    <section aria-label="AI-final reliability" className="px-4 pb-2">
       <p className="tabular-nums">
         <span className="block font-mono text-xs uppercase tracking-wide text-muted-foreground">
           AI final
         </span>
         <span className="hidden"> · </span>
-        <span className="mt-1 block font-serif text-3xl font-semibold">
+        <span className="mt-1 block font-sans text-3xl font-semibold leading-tight">
           {`${formatReliability(summary.reliability)} reliable`}
         </span>
         <span className="hidden"> · </span>

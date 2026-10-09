@@ -7,9 +7,9 @@ import type { StatTileProps } from './StatTileProps'
  */
 export function StatTile({ label, value, note }: StatTileProps) {
   return (
-    <div className="rounded border border-border bg-card p-4">
+    <div className="rounded-lg border border-border bg-card p-4">
       <p className="eyebrow text-muted-foreground">{label}</p>
-      <p className="mt-2 font-mono text-2xl">
+      <p className="mt-2 font-mono text-xl">
         {value === undefined ? (
           <span className="text-base text-muted-foreground">unknown</span>
         ) : (

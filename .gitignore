@@ -13,7 +13,7 @@ coverage/
 reports/
 
 server/build/
-scripts/api/__pycache__/
+__pycache__/
 TODO_HISTORY_INDEX.jsonl
 TODO.md
 TODO_LOG.md

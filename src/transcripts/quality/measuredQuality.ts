@@ -5,8 +5,8 @@ export const measuredQuality: Readonly<Record<string, EpisodeQuality>> = {
   LQ6lAvNMjPE: {
     rawWer: 0.0336,
     finalWer: 0.0274,
-    edits: 333,
-    styleOnly: 273,
+    edits: 387,
+    styleOnly: 327,
     confirmed: 29,
     contradicted: 5,
     contested: 14,
@@ -14,8 +14,8 @@ export const measuredQuality: Readonly<Record<string, EpisodeQuality>> = {
   A_z4Jow0c7A: {
     rawWer: 0.0435,
     finalWer: 0.0355,
-    edits: 338,
-    styleOnly: 218,
+    edits: 378,
+    styleOnly: 258,
     confirmed: 36,
     contradicted: 7,
     contested: 29,

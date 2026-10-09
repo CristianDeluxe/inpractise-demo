@@ -7,9 +7,9 @@ export function WorkspaceBreadcrumb() {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="border-b border-border bg-card text-xs text-muted-foreground print:hidden"
+      className="border-b border-border bg-card text-[13px] text-muted-foreground print:hidden"
     >
-      <ol className="mx-auto flex w-full max-w-[1600px] flex-wrap items-center gap-x-2 px-6 py-3 lg:px-10 xl:px-14">
+      <ol className="mx-auto flex w-full max-w-[1600px] flex-wrap items-center gap-x-2 min-h-12 px-6 py-2 lg:px-10 xl:px-14">
         {trail.map((part, index) => (
           <li key={part} className="flex items-center gap-x-2">
             {index > 0 ? <span aria-hidden="true">/</span> : null}

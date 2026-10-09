@@ -1,5 +1,7 @@
 import json
 
+from edit_positions import edit_positions
+
 
 def locate_edits(transcript_dir, threshold):
     """Raw and AI-final paragraph texts, plus every edit with its audio span and whether it is applied."""
@@ -15,9 +17,8 @@ def locate_edits(transcript_dir, threshold):
             starts.append(pos)
             pos += len(word['text']) + 1
         out, cursor = [], 0
-        for edit in edits_by_paragraph.get(paragraph['id'], []):
-            i = text.find(edit['from'], cursor)
-            if i < 0:
+        for i, edit in edit_positions(text, edits_by_paragraph.get(paragraph['id'], [])):
+            if i < cursor or not text.startswith(edit['from'], i):
                 continue
             j = i + len(edit['from'])
             covered = [k for k, s in enumerate(starts) if s < j and s + len(words[k]['text']) > i]

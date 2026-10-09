@@ -12,37 +12,37 @@ export function TranscriptRow({ item }: TranscriptRowProps) {
   const { source, reliability } = item
   return (
     <tr className="align-top">
-      <th scope="row" className="py-4 pr-4 text-left font-normal">
+      <th scope="row" className="py-2.5 pr-4 text-left font-normal">
         <Link
           to="/app/transcripts/$id"
           params={{ id: item.id }}
-          className="line-clamp-2 block font-serif text-lg font-semibold underline-offset-4 hover:underline"
+          className="line-clamp-2 block text-sm font-medium underline-offset-4 hover:underline"
         >
           {displayTitle(item.id, source.title)}
         </Link>
       </th>
-      <td className="py-4 pr-4 font-mono text-sm">
+      <td className="py-2.5 pr-4 font-mono text-sm">
         {formatDuration(source.durationSeconds)}
       </td>
-      <td className="py-4 pr-4">
+      <td className="py-2.5 pr-4">
         <Badge tone={reliability ? 'success' : 'neutral'}>
           {reliability ? 'AI final ready' : 'AI pass not run'}
         </Badge>
       </td>
-      <td className="py-4 pr-4 font-mono text-sm">
+      <td className="py-2.5 pr-4 font-mono text-sm">
         {reliability ? formatReliability(reliability.reliability) : '-'}
       </td>
-      <td className="py-4 pr-4 font-mono text-sm">
+      <td className="py-2.5 pr-4 font-mono text-sm">
         {reliability ? formatCount(reliability.spotCheckWords) : '-'}
       </td>
-      <td className="py-4 pr-4 text-sm">
+      <td className="py-2.5 pr-4 text-sm">
         {item.hasCorrection ? (
           <ReviewedProgress reviewed={item.reviewed} edits={item.edits} />
         ) : (
           <span className="text-muted-foreground">Nothing to check yet</span>
         )}
       </td>
-      <td className="py-4 text-sm">
+      <td className="py-2.5 text-sm">
         <div className="flex flex-wrap gap-x-4 gap-y-1">
           <Link
             to="/app/transcripts/$id/report"

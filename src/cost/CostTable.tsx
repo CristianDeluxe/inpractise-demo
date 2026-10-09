@@ -13,13 +13,13 @@ export function CostTable({ rows }: CostRowsProps) {
     <div className="overflow-x-auto">
       <table className="w-full min-w-208 border-collapse text-left">
         <caption className="sr-only">Cleanup cost per transcript</caption>
-        <thead className="eyebrow border-b border-border text-muted-foreground">
+        <thead className="border-b border-border">
           <tr>
             {costTableHeadings.map((heading) => (
               <th
                 key={heading}
                 scope="col"
-                className="py-2 pr-4 font-normal align-bottom"
+                className="py-2 pr-4 font-medium align-bottom"
               >
                 {heading}
               </th>
