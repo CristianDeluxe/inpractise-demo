@@ -32,7 +32,7 @@ describe('protected route session presentation', () => {
       expect(screen.getByText(path)).toBeTruthy()
       expect(
         screen.getByRole('link', { name: 'Sign in' }).getAttribute('href'),
-      ).toBe('/login')
+      ).toBe(`/login?next=${encodeURIComponent(path)}`)
       expect(screen.queryByRole('alert')).toBeNull()
       expect(requests).toHaveLength(0)
     },

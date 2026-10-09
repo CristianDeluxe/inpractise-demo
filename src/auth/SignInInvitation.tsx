@@ -9,7 +9,7 @@ export function SignInInvitation() {
         Sign in with your demo account to open{' '}
         <span className="break-all font-mono text-sm">{destination}</span>.
       </p>
-      <Link to="/login" className="action mt-8">
+      <Link to="/login" search={{ next: destination }} className="action mt-8">
         Sign in
       </Link>
     </main>
