@@ -1,14 +1,17 @@
-import { ConfidenceWords } from './ConfidenceWords'
+import { ConfidenceBody } from './ConfidenceBody'
 import { DiffBody } from './DiffBody'
 import { FinalBody } from './FinalBody'
 import { InlineBody } from './InlineBody'
 import type { ReviewParagraphBodyProps } from './ReviewParagraphBodyProps'
 
+/** Picks the view's text; every view lays the paragraph out as the same speaker-turn rows. */
 export function ReviewParagraphBody({
   paragraph,
   corrected,
   mode,
   controls,
+  active,
+  note,
 }: ReviewParagraphBodyProps) {
   if (mode === 'final') {
     return (
@@ -16,26 +19,22 @@ export function ReviewParagraphBody({
         paragraph={paragraph}
         corrected={corrected}
         controls={controls}
+        active={active}
       />
     )
   }
-  if (corrected && (mode === 'inline' || mode === 'spotcheck')) {
-    return (
-      <InlineBody
-        paragraph={paragraph}
-        corrected={corrected}
-        controls={controls}
-      />
-    )
-  }
-  if (corrected && mode === 'diff') {
-    return (
-      <DiffBody
-        paragraph={paragraph}
-        corrected={corrected}
-        controls={controls}
-      />
-    )
-  }
-  return <ConfidenceWords words={paragraph.words} onSeek={controls.seek} />
+  const shared = { paragraph, controls, note, active }
+  if (corrected && (mode === 'inline' || mode === 'spotcheck'))
+    return <InlineBody {...shared} corrected={corrected} />
+  if (corrected && mode === 'diff')
+    return <DiffBody {...shared} corrected={corrected} />
+  return (
+    <ConfidenceBody
+      paragraph={paragraph}
+      corrected={corrected}
+      note={note}
+      active={active}
+      onSeek={controls.seek}
+    />
+  )
 }

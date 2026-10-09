@@ -15,17 +15,15 @@ export function ReviewParagraph({
     <ParagraphFrame
       paragraphId={paragraph.id}
       start={paragraph.start}
-      wide={mode === 'diff'}
-      active={active}
       focused={focused}
-      note={mode === 'final' ? null : paragraphNote(paragraph, corrected)}
-      onSeek={controls.seek}
     >
       <ReviewParagraphBody
         paragraph={paragraph}
         corrected={corrected}
         mode={mode}
         controls={controls}
+        active={active}
+        note={mode === 'final' ? null : paragraphNote(paragraph, corrected)}
       />
     </ParagraphFrame>
   )

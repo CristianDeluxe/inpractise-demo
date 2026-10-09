@@ -6,7 +6,7 @@ import { UndoButton } from './UndoButton'
 /** Pending count, save state, undo, flagged-paragraph stepping. */
 export function ReviewNavigation(props: ReviewNavigationProps) {
   return (
-    <div className="ml-auto flex flex-wrap items-center justify-end gap-2">
+    <div className="flex flex-wrap items-center gap-2">
       <p
         role="status"
         className="whitespace-nowrap font-mono text-xs tabular-nums text-muted-foreground"

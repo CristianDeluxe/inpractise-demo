@@ -1,15 +1,30 @@
-import { useSegments } from '../hooks/useSegments'
-import type { InlineBodyProps } from './InlineBodyProps'
+import { ParagraphTurns } from './ParagraphTurns'
 import { TrackedText } from './TrackedText'
+import type { TurnBodyProps } from './TurnBodyProps'
 
-/** One column of corrected text with every proposed change tracked in place. */
+/** Corrected text with every proposed change tracked in place, one row per speaker turn. */
 export function InlineBody({
   paragraph,
   corrected,
   controls,
-}: InlineBodyProps) {
-  const segments = useSegments(paragraph, corrected)
+  note,
+  active,
+}: TurnBodyProps) {
   return (
-    <TrackedText segments={segments} variant="inline" controls={controls} />
+    <ParagraphTurns
+      paragraph={paragraph}
+      corrected={corrected}
+      note={note}
+      active={active}
+      onSeek={controls.seek}
+      renderTurn={(turn) => (
+        <TrackedText
+          segments={turn.segments}
+          words={turn.words}
+          variant="inline"
+          controls={controls}
+        />
+      )}
+    />
   )
 }

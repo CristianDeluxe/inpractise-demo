@@ -28,25 +28,25 @@ export function ReviewWorkspace({ bundle, onSave }: ReviewWorkspaceProps) {
       note={<TranscriptNote transcript={transcript} correction={correction} />}
     >
       {onSave === null ? <ReadOnlyNotice /> : null}
-      <div
-        style={layout.style}
-        className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_20rem] xl:gap-10"
-      >
-        <ReliabilityRail
-          transcript={transcript}
-          reliability={reliability}
-          mode={ws.view.mode}
-          wide={wide}
-          onOpenReport={toolbar.onOpenReport}
-          inspector={railHoldsInspector ? <RailInspector ws={ws} /> : null}
-        />
-        <div className="min-w-0 xl:col-start-1 xl:row-start-1">
-          <ReviewConsole
-            consoleRef={layout.consoleRef}
-            audio={audio}
-            toolbar={toolbar}
+      <SpeakerProvider transcript={transcript}>
+        <div
+          style={layout.style}
+          className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_20rem] xl:gap-10"
+        >
+          <ReliabilityRail
+            transcript={transcript}
+            reliability={reliability}
+            mode={ws.view.mode}
+            wide={wide}
+            onOpenReport={toolbar.onOpenReport}
+            inspector={railHoldsInspector ? <RailInspector ws={ws} /> : null}
           />
-          <SpeakerProvider transcript={transcript}>
+          <div className="min-w-0 xl:col-start-1 xl:row-start-1">
+            <ReviewConsole
+              consoleRef={layout.consoleRef}
+              audio={audio}
+              toolbar={toolbar}
+            />
             <ReviewColumns
               listRef={listRef}
               paragraphs={visible}
@@ -54,9 +54,9 @@ export function ReviewWorkspace({ bundle, onSave }: ReviewWorkspaceProps) {
               layout={layout}
               inspectorInRail={railHoldsInspector}
             />
-          </SpeakerProvider>
+          </div>
         </div>
-      </div>
+      </SpeakerProvider>
     </WorkspacePage>
   )
 }

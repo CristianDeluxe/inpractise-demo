@@ -1,29 +1,27 @@
-import { useDiffRows } from '../hooks/useDiffRows'
 import { useParagraphDiff } from '../hooks/useParagraphDiff'
-import { useSegments } from '../hooks/useSegments'
-import type { DiffBodyProps } from './DiffBodyProps'
-import { DiffRowView } from './DiffRowView'
+import { DiffTurn } from './DiffTurn'
+import { ParagraphTurns } from './ParagraphTurns'
+import type { TurnBodyProps } from './TurnBodyProps'
 
-/** Sentence rows: raw words on the left, the corrected text (honouring rejections) on the right. */
-export function DiffBody({ paragraph, corrected, controls }: DiffBodyProps) {
+/** Raw words on the left, the corrected text (honouring rejections) on the right, one block per speaker turn. */
+export function DiffBody({
+  paragraph,
+  corrected,
+  controls,
+  note,
+  active,
+}: TurnBodyProps) {
   const struck = useParagraphDiff(paragraph, corrected, controls.decisions)
-  const segments = useSegments(paragraph, corrected)
-  const rows = useDiffRows(segments, paragraph.words)
   return (
-    <div className="space-y-1">
-      {rows.map((row) => (
-        <DiffRowView
-          key={row.firstWord}
-          row={row}
-          struck={struck}
-          focused={row.segments.some(
-            (segment) =>
-              segment.edit !== null &&
-              segment.edit.id === controls.focusedEditId,
-          )}
-          controls={controls}
-        />
-      ))}
-    </div>
+    <ParagraphTurns
+      paragraph={paragraph}
+      corrected={corrected}
+      note={note}
+      active={active}
+      onSeek={controls.seek}
+      renderTurn={(turn) => (
+        <DiffTurn turn={turn} struck={struck} controls={controls} />
+      )}
+    />
   )
 }

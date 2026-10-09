@@ -1,7 +1,14 @@
 // @vitest-environment jsdom
 import { renderRouteFixture } from '@/app/renderRouteFixture'
 import { uiRuntimeFixture } from '@/app/uiRuntimeFixture'
-import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
+import {
+  act,
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { bundleFixture } from '../fixtures/bundleFixture'
 import { episodeAudio } from '../fixtures/episodeAudio'
@@ -34,10 +41,10 @@ describe('review playback and pages', () => {
     audio.currentTime = 66
     fireEvent(audio, new Event('timeupdate'))
     expect(
-      screen.getByRole('region', { name: 'Paragraph at 01:05' }).dataset[
-        'playing'
-      ],
-    ).toBe('true')
+      within(
+        screen.getByRole('region', { name: 'Paragraph at 01:05' }),
+      ).getByRole('group', { current: true }),
+    ).toBeTruthy()
   })
 
   it('plays from the button and seeks from the waveform keyboard', () => {

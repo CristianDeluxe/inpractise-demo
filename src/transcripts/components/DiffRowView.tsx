@@ -22,6 +22,7 @@ export function DiffRowView({
       />
       <TrackedText
         segments={row.segments}
+        words={words}
         variant="corrected"
         controls={controls}
       />

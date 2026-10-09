@@ -7,6 +7,7 @@ import {
   within,
 } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { paragraphTextMatcher } from '../fixtures/paragraphTextMatcher'
 import { renderReviewWorkspace } from '../fixtures/renderReviewWorkspace'
 import { reviewSaverFixture } from '../fixtures/reviewSaverFixture'
 import { stubBrowserMedia } from '../fixtures/stubBrowserMedia'
@@ -186,7 +187,9 @@ describe('ReviewWorkspace', () => {
     renderReviewWorkspace()
     expect(screen.queryByText('Thanks')).toBeNull()
     fireEvent.click(screen.getByRole('button', { name: /^All/ }))
-    expect(screen.getByText('Thanks everyone.')).toBeTruthy()
+    expect(
+      screen.getByText(paragraphTextMatcher('Thanks everyone.')),
+    ).toBeTruthy()
   })
 
   it('opens the report in a named window', () => {

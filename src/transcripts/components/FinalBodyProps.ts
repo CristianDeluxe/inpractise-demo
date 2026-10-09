@@ -2,5 +2,5 @@ import type { ReviewParagraphProps } from './ReviewParagraphProps'
 
 export type FinalBodyProps = Pick<
   ReviewParagraphProps,
-  'paragraph' | 'corrected' | 'controls'
+  'paragraph' | 'corrected' | 'controls' | 'active'
 >

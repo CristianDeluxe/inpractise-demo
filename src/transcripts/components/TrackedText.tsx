@@ -1,8 +1,17 @@
-import { Fragment } from 'react'
+import { segmentOffsets } from '../edits/segmentOffsets'
+import { wordsByOffset } from '../review/wordsByOffset'
 import { EditMark } from './EditMark'
+import { PlainSegment } from './PlainSegment'
 import type { TrackedTextProps } from './TrackedTextProps'
 
-export function TrackedText({ segments, variant, controls }: TrackedTextProps) {
+export function TrackedText({
+  segments,
+  words,
+  variant,
+  controls,
+}: TrackedTextProps) {
+  const byOffset = wordsByOffset(words)
+  const offsets = segmentOffsets(segments)
   return (
     <p className="source-text">
       {segments.map((segment, index) =>
@@ -14,7 +23,13 @@ export function TrackedText({ segments, variant, controls }: TrackedTextProps) {
             controls={controls}
           />
         ) : (
-          <Fragment key={`plain-${String(index)}`}>{segment.text}</Fragment>
+          <PlainSegment
+            key={`plain-${String(index)}`}
+            text={segment.text}
+            offset={offsets[index] ?? 0}
+            words={byOffset}
+            onSeek={controls.seek}
+          />
         ),
       )}
     </p>

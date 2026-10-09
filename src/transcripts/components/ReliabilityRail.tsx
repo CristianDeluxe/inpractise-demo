@@ -4,6 +4,7 @@ import { QualitySection } from './QualitySection'
 import { RailFooter } from './RailFooter'
 import { RailSummary } from './RailSummary'
 import type { ReliabilityRailProps } from './ReliabilityRailProps'
+import { SpeakersSection } from './SpeakersSection'
 
 /** Reliability, its figures and the report: beside the text on wide screens, a collapsible card above it otherwise. */
 export function ReliabilityRail({
@@ -30,6 +31,7 @@ export function ReliabilityRail({
             transcript={transcript}
             reliability={reliability}
           />
+          <SpeakersSection />
           <MeasuredQuality transcriptId={transcript.id} />
           <RailFooter mode={mode} onOpenReport={onOpenReport} />
         </div>

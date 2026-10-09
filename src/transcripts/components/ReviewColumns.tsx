@@ -1,3 +1,4 @@
+import { AudioRefContext } from '../review/AudioRefContext'
 import { EditInspector } from './EditInspector'
 import type { ReviewColumnsProps } from './ReviewColumnsProps'
 import { ReviewList } from './ReviewList'
@@ -20,14 +21,16 @@ export function ReviewColumns({
         className={`mt-4 grid gap-8 ${inspectorHere ? 'lg:grid-cols-[minmax(0,1fr)_21rem] lg:gap-14' : ''}`}
       >
         <div ref={listRef} className="min-w-0">
-          <ReviewList
-            paragraphs={paragraphs}
-            correctedById={derived.correctedById}
-            mode={view.mode}
-            controls={controls}
-            activeId={ws.activeId}
-            focusedParagraphId={ws.focusedParagraphId}
-          />
+          <AudioRefContext.Provider value={ws.audioRef}>
+            <ReviewList
+              paragraphs={paragraphs}
+              correctedById={derived.correctedById}
+              mode={view.mode}
+              controls={controls}
+              activeId={ws.activeId}
+              focusedParagraphId={ws.focusedParagraphId}
+            />
+          </AudioRefContext.Provider>
         </div>
         {inspectorHere ? (
           <EditInspector

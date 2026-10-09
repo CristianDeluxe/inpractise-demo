@@ -1,4 +1,5 @@
 import { displayTitle } from '../episodes/displayTitle'
+import { useEpisodeSpeakers } from '../hooks/useEpisodeSpeakers'
 import { useReportView } from '../hooks/useReportView'
 import { collectCorrectedTerms } from '../review/collectCorrectedTerms'
 import { listEdits } from '../review/listEdits'
@@ -15,10 +16,11 @@ export function ReportView({ bundle }: ReportViewProps) {
   const { transcript, correction } = bundle
   const { source } = transcript
   const { decisions, paragraphs, summary } = useReportView(bundle)
+  const speakers = useEpisodeSpeakers(transcript)
   return (
     <main
       id="main-content"
-      className="mx-auto w-full max-w-4xl px-4 py-10 md:px-8 print:max-w-none print:bg-white print:p-0 print:text-black"
+      className="mx-auto w-full max-w-6xl px-4 py-10 md:px-8 print:max-w-none print:bg-white print:p-0 print:text-black"
     >
       <ReportToolbar id={transcript.id} />
       <article className="mt-10">
@@ -51,7 +53,7 @@ export function ReportView({ bundle }: ReportViewProps) {
             <ReportPendingNote count={summary.spotCheckWords} />
           </>
         ) : null}
-        <ReportBody paragraphs={paragraphs} />
+        <ReportBody paragraphs={paragraphs} speakers={speakers} />
         <ReportAppendix
           terms={collectCorrectedTerms(listEdits(correction), decisions)}
         />

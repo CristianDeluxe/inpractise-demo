@@ -1,25 +1,36 @@
+import { useActiveRun } from '../hooks/useActiveRun'
 import { useScoredParagraph } from '../hooks/useScoredParagraph'
 import { useSpeakerLabels } from '../hooks/useSpeakerLabels'
-import { speakerChangeName } from '../speakers/speakerChangeName'
+import { turnStarts } from '../review/turnStarts'
+import { speakerRuns } from '../speakers/speakerRuns'
 import type { FinalBodyProps } from './FinalBodyProps'
-import { ScoredWordButton } from './ScoredWordButton'
-import { SpeakerChange } from './SpeakerChange'
+import { ScoredWords } from './ScoredWords'
+import { TurnRow } from './TurnRow'
 
-/** The accepted AI-final text; only words scoring below the reliable threshold are marked. */
-export function FinalBody({ paragraph, corrected, controls }: FinalBodyProps) {
+/** The accepted AI-final text, one row per speaker turn; only words scoring below the reliable threshold are marked. */
+export function FinalBody({
+  paragraph,
+  corrected,
+  controls,
+  active,
+}: FinalBodyProps) {
   const { words } = useScoredParagraph(paragraph, corrected, controls.decisions)
-  const labels = useSpeakerLabels()
+  const runs = speakerRuns(useSpeakerLabels(), words)
+  const starts = turnStarts(paragraph.start, runs)
+  const playing = useActiveRun(active, starts)
   return (
-    <p className="source-text">
-      {words.map((word, index) => {
-        const speaker = speakerChangeName(labels, words, index)
-        return (
-          <span key={`${String(index)}-${word.text}`}>
-            {speaker === null ? null : <SpeakerChange name={speaker} />}
-            <ScoredWordButton word={word} onSeek={controls.seek} />{' '}
-          </span>
-        )
-      })}
-    </p>
+    <div>
+      {runs.map((run, index) => (
+        <TurnRow
+          key={`${String(index)}-${String(starts[index])}`}
+          start={starts[index] ?? paragraph.start}
+          note={null}
+          active={playing === index}
+          onSeek={controls.seek}
+        >
+          <ScoredWords words={run.words} onSeek={controls.seek} />
+        </TurnRow>
+      ))}
+    </div>
   )
 }
