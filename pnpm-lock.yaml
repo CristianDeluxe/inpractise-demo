@@ -228,8 +228,8 @@ importers:
         specifier: ^0.9.0
         version: 0.9.0(97c8e2a840cb0f5b8241ccceb9a35949)
       '@syntopica/prettier-config':
-        specifier: 0.2.0
-        version: 0.2.0(prettier-plugin-css-order@2.2.0(postcss@8.5.28)(prettier@3.9.6))(prettier-plugin-organize-imports@4.3.0(prettier@3.9.6)(typescript@6.0.3))(prettier@3.9.6)
+        specifier: ^0.3.0
+        version: 0.3.0(prettier-plugin-css-order@2.2.0(postcss@8.5.28)(prettier@3.9.6))(prettier-plugin-organize-imports@4.3.0(prettier@3.9.6)(typescript@6.0.3))(prettier@3.9.6)
       '@syntopica/quality-config':
         specifier: 0.11.0
         version: 0.11.0(@commitlint/config-conventional@21.2.2)(dependency-cruiser@18.2.0)(knip@6.35.1)(oxlint@1.82.0)(typescript@6.0.3)
@@ -1651,8 +1651,8 @@ packages:
       vue-eslint-parser:
         optional: true
 
-  '@syntopica/prettier-config@0.2.0':
-    resolution: {integrity: sha512-/ORTmzDnVwRIbaUo6+dFYR3FRkGRwhp600hZD3soQm3nSW6t7LcZxgJpsCC0mlkRU3ndxuME17WN5Xc9FzqAtA==}
+  '@syntopica/prettier-config@0.3.0':
+    resolution: {integrity: sha512-iWXfgAPMSjW37ncjoWUiIFcQ4ysMhkBIKZD1dRbvAMu+IrpWR2PZy1+KnLAbDTg360dM/W+IEmLw2O6S0nH6BA==}
     engines: {node: '>=20'}
     peerDependencies:
       prettier: '>=3.0.0'
@@ -6038,7 +6038,7 @@ snapshots:
       - eslint-plugin-import-x
       - supports-color
 
-  '@syntopica/prettier-config@0.2.0(prettier-plugin-css-order@2.2.0(postcss@8.5.28)(prettier@3.9.6))(prettier-plugin-organize-imports@4.3.0(prettier@3.9.6)(typescript@6.0.3))(prettier@3.9.6)':
+  '@syntopica/prettier-config@0.3.0(prettier-plugin-css-order@2.2.0(postcss@8.5.28)(prettier@3.9.6))(prettier-plugin-organize-imports@4.3.0(prettier@3.9.6)(typescript@6.0.3))(prettier@3.9.6)':
     dependencies:
       prettier: 3.9.6
       prettier-plugin-css-order: 2.2.0(postcss@8.5.28)(prettier@3.9.6)
