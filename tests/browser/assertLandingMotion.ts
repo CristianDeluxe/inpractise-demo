@@ -20,7 +20,7 @@ export async function assertLandingMotion(page: Page) {
     .getAttribute('data-probe-canvas-contexts')
   expect(Number(contextCount)).toBe(reducedMotion ? 0 : 1)
   await assertLandingGeometry(page)
-  await expect(page.locator('#workflow').getByRole('listitem')).toHaveCount(4)
+  await expect(page.locator('#workflow').getByRole('listitem')).toHaveCount(5)
   await expect(page.locator('#evidence')).toContainText(
     'A question the interviews cannot answer',
   )

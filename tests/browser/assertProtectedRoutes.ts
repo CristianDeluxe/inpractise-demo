@@ -14,7 +14,7 @@ export async function assertProtectedRoutes(page: Page) {
     await expect(page.locator('main')).toContainText(path)
     await expect(page.getByRole('link', { name: 'Sign in' })).toHaveAttribute(
       'href',
-      '/login',
+      `/login?next=${encodeURIComponent(path)}`,
     )
     await page.reload()
     await expect(
