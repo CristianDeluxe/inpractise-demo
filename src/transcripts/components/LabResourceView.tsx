@@ -7,8 +7,10 @@ export function LabResourceView<T>({
   children,
 }: LabResourceViewProps<T>) {
   if (resource.status === 'ready') return <>{children(resource.data)}</>
+  // A full-height placeholder keeps what follows below the fold, so the
+  // loaded page replacing it does not shift visible content.
   return (
-    <main id="main-content" className="page-shell py-20">
+    <main id="main-content" className="page-shell min-h-dvh py-20">
       <div role="status" className="flex items-center gap-3">
         {resource.status === 'loading' ? <Spinner /> : null}
         <p>
