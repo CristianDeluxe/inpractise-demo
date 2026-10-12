@@ -13,7 +13,7 @@ export function LoopEditButton({
       type="button"
       aria-pressed={looping}
       onClick={onToggle}
-      className="inline-flex min-h-9 items-center gap-2 rounded-full px-2 text-xs text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground aria-pressed:bg-primary aria-pressed:text-primary-foreground"
+      className="inline-flex min-h-9 items-center gap-2 rounded-full px-2 text-xs text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground aria-pressed:bg-primary-strong aria-pressed:text-primary-foreground"
     >
       <Repeat1 aria-hidden="true" className="size-3.5" />
       {looping ? 'Stop loop' : 'Loop'}

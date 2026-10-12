@@ -25,6 +25,7 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-strong: var(--primary-strong);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -76,6 +77,8 @@
   --popover-foreground: oklch(0.203 0.032 252);
   --primary: oklch(0.64 0.176 43);
   --primary-foreground: oklch(0.99 0.004 85);
+  /* The brand orange darkened until white button text reaches 4.5:1 (4.87). */
+  --primary-strong: oklch(0.56 0.176 43);
   --secondary: oklch(0.967 0.01 250);
   --secondary-foreground: oklch(0.28 0.034 250);
   --muted: oklch(0.967 0.01 250);
@@ -440,7 +443,7 @@
 
 @layer components {
   .action {
-    @apply inline-flex items-center justify-center gap-2 bg-primary px-6 py-3 text-xs font-semibold uppercase tracking-widest text-primary-foreground transition-[background-color,scale] duration-150 motion-safe:active:scale-[0.96] hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100;
+    @apply inline-flex items-center justify-center gap-2 bg-primary-strong px-6 py-3 text-xs font-semibold uppercase tracking-widest text-primary-foreground transition-[background-color,scale] duration-150 motion-safe:active:scale-[0.96] hover:bg-primary-strong/90 disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100;
   }
   .quiet-action {
     @apply inline-flex items-center justify-center rounded border border-border bg-card px-3 py-2 text-sm transition-[background-color,scale] duration-150 motion-safe:active:scale-[0.96] hover:bg-secondary;
