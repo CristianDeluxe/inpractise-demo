@@ -6,6 +6,7 @@ export async function runAnswerScenario(
   handler: ResearchHandler,
   completion: () => Promise<Response>,
   environment: Record<string, string> = {},
+  expectedCompletions = 1,
 ) {
   const original = globalThis.fetch
   const { fetcher, requests } = answerTransportFixture(completion)
@@ -41,8 +42,10 @@ export async function runAnswerScenario(
   if (!response) throw new Error('Handler did not respond')
   if (
     requests.filter((request) => request.url.endsWith('/chat/completions'))
-      .length !== 1
+      .length !== expectedCompletions
   )
-    throw new Error('Scenario did not reach exactly one stubbed generation')
+    throw new Error(
+      `Scenario did not reach exactly ${String(expectedCompletions)} stubbed generations`,
+    )
   return { response, requests }
 }
