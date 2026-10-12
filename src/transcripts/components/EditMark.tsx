@@ -5,7 +5,7 @@ import { editMarkLabel } from './editMarkLabel'
 
 /**
  * One proposed change in the running text: hover previews it, click opens it in
- * the inspector. A span with a button role, because a native button is an
+ * the inspector and plays the words it rewrites, as a click on any word plays. A span with a button role, because a native button is an
  * atomic inline box and would stop a multi-word change from wrapping.
  */
 export function EditMark({ edit, variant, controls }: EditMarkProps) {
@@ -28,11 +28,13 @@ export function EditMark({ edit, variant, controls }: EditMarkProps) {
       onBlur={controls.endPreview}
       onClick={() => {
         controls.focusEdit(edit.id)
+        controls.replayEdit(edit.id)
       }}
       onKeyDown={(event) => {
         if (!isActivationKey(event.key)) return
         event.preventDefault()
         controls.focusEdit(edit.id)
+        controls.replayEdit(edit.id)
       }}
       className={`-mx-0.5 cursor-pointer rounded-sm px-0.5 [box-decoration-break:clone] transition-[background-color,box-shadow] duration-150 hover:bg-primary/10 ${focused ? 'bg-primary/10 shadow-[0_0_0_2px_var(--color-primary)]' : ''}`}
     >

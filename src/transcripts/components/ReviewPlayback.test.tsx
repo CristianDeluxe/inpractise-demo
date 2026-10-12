@@ -12,6 +12,7 @@ import {
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { bundleFixture } from '../fixtures/bundleFixture'
 import { episodeAudio } from '../fixtures/episodeAudio'
+import { episodeAudioLabel } from '../fixtures/episodeAudioLabel'
 import { jsonResponse } from '../fixtures/jsonResponse'
 import { labFetchFixture } from '../fixtures/labFetchFixture'
 import { labTranscriptRowFixture } from '../fixtures/labTranscriptRowFixture'
@@ -35,7 +36,7 @@ describe('review playback and pages', () => {
     renderReviewWorkspace()
     fireEvent.click(screen.getByRole('button', { name: 'Confidence' }))
     fireEvent.click(screen.getByRole('button', { name: 'Northwynd' }))
-    const audio = screen.getByLabelText<HTMLAudioElement>('Episode audio')
+    const audio = screen.getByLabelText<HTMLAudioElement>(episodeAudioLabel)
     expect(audio.currentTime).toBe(2.5)
     expect(play).toHaveBeenCalled()
     audio.currentTime = 66
@@ -47,6 +48,21 @@ describe('review playback and pages', () => {
     ).toBeTruthy()
   })
 
+  it('plays the rewritten words when a corrected edit is clicked', () => {
+    const play = vi.spyOn(HTMLMediaElement.prototype, 'play')
+    renderReviewWorkspace()
+    fireEvent.click(screen.getByRole('button', { name: 'Side by side' }))
+    const [mark] = screen.getAllByRole('button', {
+      name: /Northwynd to Northwind/,
+    })
+    if (!mark) throw new Error('The corrected edit was not rendered')
+    fireEvent.click(mark)
+    const audio = screen.getByLabelText<HTMLAudioElement>(episodeAudioLabel)
+    expect(audio.currentTime).toBe(1.75)
+    expect(play).toHaveBeenCalled()
+    expect(mark.getAttribute('aria-current')).toBe('true')
+  })
+
   it('plays from the button and seeks from the waveform keyboard', () => {
     const play = vi.spyOn(HTMLMediaElement.prototype, 'play')
     renderReviewWorkspace()
@@ -54,7 +70,7 @@ describe('review playback and pages', () => {
     expect(play).toHaveBeenCalled()
     const slider = screen.getByRole('slider', { name: 'Playback position' })
     fireEvent.keyDown(slider, { key: 'ArrowRight' })
-    const audio = screen.getByLabelText<HTMLAudioElement>('Episode audio')
+    const audio = screen.getByLabelText<HTMLAudioElement>(episodeAudioLabel)
     expect(audio.currentTime).toBe(5)
     fireEvent.keyDown(slider, { key: 'Home' })
     expect(audio.currentTime).toBe(0)
@@ -69,7 +85,7 @@ describe('review playback and pages', () => {
       fireEvent.keyDown(window, { key: 'l' })
       await Promise.resolve()
     })
-    const audio = screen.getByLabelText<HTMLAudioElement>('Episode audio')
+    const audio = screen.getByLabelText<HTMLAudioElement>(episodeAudioLabel)
     const start = audio.currentTime
     expect(
       screen.getAllByRole('button', { name: /Stop loop/, pressed: true }),
