@@ -1,5 +1,6 @@
 import type { ReviewSaver } from '../api/ReviewSaver'
 import type { TranscriptBundle } from '../api/TranscriptBundle'
+import { undoRevealing } from '../review/undoRevealing'
 import { useActiveParagraph } from './useActiveParagraph'
 import { useAudioPlayer } from './useAudioPlayer'
 import { useEditPreview } from './useEditPreview'
@@ -40,7 +41,7 @@ export function useReviewWorkspace(
     loopSpan: audio.loopSpan,
     stopLoop: audio.stopLoop,
     looping: audio.looping,
-    undo: saved.undo,
+    undo: undoRevealing(saved.undo, view),
     canUndo: saved.canUndo,
     spanById: derived.spanById,
     audioRef: audio.audioRef,
