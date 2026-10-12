@@ -3,7 +3,7 @@ import type { CostCellProps } from './CostCellProps'
 /** One figure, with the detail that qualifies it on a quieter second line. */
 export function CostCell({ primary, secondary, title }: CostCellProps) {
   return (
-    <td className="py-3 pr-6 align-top">
+    <td className="py-3 pr-4 align-top last:pr-0">
       <span className="block whitespace-nowrap text-sm tabular-nums">
         {primary}
       </span>

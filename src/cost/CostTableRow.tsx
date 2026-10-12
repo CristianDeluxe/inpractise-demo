@@ -14,7 +14,7 @@ export function CostTableRow({ row }: CostTableRowProps) {
     <tr>
       <th
         scope="row"
-        className="py-3 pr-6 text-left align-top text-sm font-medium"
+        className="w-52 py-3 pr-4 text-left align-top text-sm font-medium"
       >
         {row.title}
       </th>
