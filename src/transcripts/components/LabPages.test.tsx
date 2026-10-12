@@ -129,6 +129,7 @@ describe('lab pages', () => {
               occurrences: 3,
               sources: ['synthetic-1'],
               lastSeenAt: 'now',
+              basis: 'references',
             },
           ],
           example_count: 4,
@@ -138,6 +139,10 @@ describe('lab pages', () => {
     await renderRouteFixture('/app/memory', uiRuntimeFixture(fetcher).runtime)
     expect(await screen.findByText('Ledgar')).toBeTruthy()
     expect(screen.getByText(/Stored examples: 4/)).toBeTruthy()
+    expect(screen.getByText('References')).toBeTruthy()
+    expect(
+      screen.getByText(/No one has reviewed these episodes yet/),
+    ).toBeTruthy()
   })
 
   it('shows an empty memory for an organisation with no row', async () => {

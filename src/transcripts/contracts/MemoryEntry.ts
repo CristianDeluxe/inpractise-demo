@@ -1,4 +1,5 @@
 import type { EditCategory } from './EditCategory'
+import type { MemoryBasis } from './MemoryBasis'
 
 /** One learned substitution: work/transcripts/memory/glossary.json is an array of these. */
 export type MemoryEntry = {
@@ -8,4 +9,5 @@ export type MemoryEntry = {
   readonly occurrences: number
   readonly sources: readonly string[]
   readonly lastSeenAt: string
+  readonly basis: MemoryBasis
 }

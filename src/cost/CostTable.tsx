@@ -11,7 +11,7 @@ export function CostTable({ rows }: CostRowsProps) {
     )
   return (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-208 border-collapse text-left">
+      <table className="w-full min-w-192 border-collapse text-left">
         <caption className="sr-only">Cleanup cost per transcript</caption>
         <thead className="border-b border-border">
           <tr>
@@ -19,7 +19,7 @@ export function CostTable({ rows }: CostRowsProps) {
               <th
                 key={heading}
                 scope="col"
-                className="py-2 pr-4 font-medium align-bottom"
+                className="py-2 pr-6 align-bottom text-xs font-medium text-muted-foreground"
               >
                 {heading}
               </th>

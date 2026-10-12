@@ -62,8 +62,13 @@ read episodes, saved decisions and learned memory through row-level security
 under the signed-in member's session, and play audio from a private bucket via
 short-lived signed URLs. Only a reviewer can record decisions; a member reads
 the transcript and the report. Publish the gitignored episodes with
-`pnpm lab:publish` (add `--dry-run` to transcode and list what would be
-written); see [docs/deploy.md](docs/deploy.md).
+`pnpm lab:publish` (add `--dry-run` to transcode and list what would be written,
+or `--memory-only` to refresh just the learned memory); see
+[docs/deploy.md](docs/deploy.md). Until a person has reviewed an episode,
+`pnpm transcripts:learn <id> --confirmed-by-references` fills the memory from
+the edits that the independent references in
+[docs/transcript-quality.md](docs/transcript-quality.md) confirm, and marks
+those entries References rather than Reviewer.
 
 The [notebook](https://inpractise.cristiandeluxe.dev/app/notes) holds passages
 the reviewer has saved from any citation and reads from the same database

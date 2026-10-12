@@ -17,14 +17,12 @@ describe('glossary learning', () => {
     const first = upsertGlossaryEntry(
       [],
       reviewEditFixture('a', 'Zorbex', 'Zorbecks'),
-      'demo0001',
-      'T1',
+      { transcriptId: 'demo0001', seenAt: 'T1', basis: 'human' },
     )
     const second = upsertGlossaryEntry(
       first,
       reviewEditFixture('a', 'Zorbex', 'Zorbecks'),
-      'demo0002',
-      'T2',
+      { transcriptId: 'demo0002', seenAt: 'T2', basis: 'human' },
     )
     expect(second).toHaveLength(1)
     expect(second[0]).toMatchObject({
@@ -44,8 +42,7 @@ describe('glossary learning', () => {
         }),
       ],
       reviewEditFixture('a', 'Zorbex', 'Zorbecks'),
-      'demo0001',
-      'T',
+      { transcriptId: 'demo0001', seenAt: 'T', basis: 'human' },
     )
     expect(entries[0]?.sources).toEqual(['demo0001'])
     expect(entries[0]?.occurrences).toBe(1)
@@ -55,14 +52,35 @@ describe('glossary learning', () => {
     const entries = upsertGlossaryEntry(
       [memoryEntryFixture({ from: 'Zorbex', to: 'Old', occurrences: 5 })],
       reviewEditFixture('a', 'Zorbex', 'Zorbecks'),
-      'demo0003',
-      'T',
+      { transcriptId: 'demo0003', seenAt: 'T', basis: 'human' },
     )
     expect(entries[0]).toMatchObject({
       to: 'Zorbecks',
       occurrences: 1,
       sources: ['demo0003'],
     })
+  })
+
+  it('keeps a reference-confirmed entry until a person vouches for it', () => {
+    const edit = reviewEditFixture('a', 'Zorbex', 'Zorbecks')
+    const machine = upsertGlossaryEntry([], edit, {
+      transcriptId: 'demo0001',
+      seenAt: 'T1',
+      basis: 'references',
+    })
+    expect(machine[0]?.basis).toBe('references')
+    const human = upsertGlossaryEntry(machine, edit, {
+      transcriptId: 'demo0002',
+      seenAt: 'T2',
+      basis: 'human',
+    })
+    expect(human[0]?.basis).toBe('human')
+    const again = upsertGlossaryEntry(human, edit, {
+      transcriptId: 'demo0003',
+      seenAt: 'T3',
+      basis: 'references',
+    })
+    expect(again[0]?.basis).toBe('human')
   })
 
   it('learns only entity, term and number edits of one to three words that change', () => {
@@ -111,7 +129,11 @@ describe('glossary learning', () => {
       attachVerdicts(run, [reviewDecisionFixture('p1-e1', 'accepted')]),
       false,
     )
-    const glossary = learnGlossary([], counted, 'demo0002', 'T')
+    const glossary = learnGlossary([], counted, {
+      transcriptId: 'demo0002',
+      seenAt: 'T',
+      basis: 'human',
+    })
     expect(glossary.map((entry) => [entry.from, entry.to])).toEqual([
       ['Zorbex', 'Zorbecks'],
     ])

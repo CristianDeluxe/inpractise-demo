@@ -1,45 +1,42 @@
 import { formatDuration } from '@/transcripts/formatters/formatDuration'
-import { cleanupApiCostLabel } from './cleanupApiCostLabel'
+import { asrSpeedLabel } from './asrSpeedLabel'
+import { CostCell } from './CostCell'
 import type { CostTableRowProps } from './CostTableRowProps'
-import { formatReviewerMinutes } from './formatters/formatReviewerMinutes'
-import { noAiPassLabel } from './noAiPassLabel'
-import { notMeasuredLabel } from './notMeasuredLabel'
 import { reliabilityLabel } from './reliabilityLabel'
+import { shortModelName } from './shortModelName'
+import { spotCheckTimeLabel } from './spotCheckTimeLabel'
+import { spotCheckWordsLabel } from './spotCheckWordsLabel'
+import { tokensDetailLabel } from './tokensDetailLabel'
 import { tokensLabel } from './tokensLabel'
 
 export function CostTableRow({ row }: CostTableRowProps) {
   return (
-    <tr className="align-top">
-      <th scope="row" className="py-2.5 pr-4 text-left text-sm font-medium">
+    <tr>
+      <th
+        scope="row"
+        className="py-3 pr-6 text-left align-top text-sm font-medium"
+      >
         {row.title}
       </th>
-      <td className="py-2.5 pr-4 font-mono text-sm">
-        {formatDuration(row.audioSeconds)}
-      </td>
-      <td className="py-2.5 pr-4 font-mono text-sm">
-        {row.asrSeconds} s
-        <span className="block break-all text-xs text-muted-foreground">
-          {row.asrModel}
-        </span>
-      </td>
-      <td className="py-2.5 pr-4 font-mono text-sm">{tokensLabel(row)}</td>
-      <td className="py-2.5 pr-4 font-mono text-sm">
-        {row.correctionModel === null ? noAiPassLabel : cleanupApiCostLabel}
-      </td>
-      <td className="py-2.5 pr-4 font-mono text-sm">{reliabilityLabel(row)}</td>
-      <td className="py-2.5 pr-4 font-mono text-sm">
-        {row.decidedEdits} of {row.proposedEdits}
-      </td>
-      <td className="py-2.5 pr-4 font-mono text-sm">
-        {row.reviewerSeconds === undefined
-          ? notMeasuredLabel
-          : formatReviewerMinutes(row.reviewerSeconds / 60)}
-      </td>
-      <td className="py-2.5 font-mono text-sm">
-        {row.minutesPerAudioHour === undefined
-          ? notMeasuredLabel
-          : formatReviewerMinutes(row.minutesPerAudioHour)}
-      </td>
+      <CostCell primary={formatDuration(row.audioSeconds)} />
+      <CostCell
+        primary={asrSpeedLabel(row)}
+        secondary={`${shortModelName(row.asrModel)}, local`}
+        title={row.asrModel}
+      />
+      <CostCell
+        primary={tokensLabel(row)}
+        secondary={tokensDetailLabel(row)}
+        title={row.correctionModel ?? undefined}
+      />
+      <CostCell
+        primary={reliabilityLabel(row)}
+        secondary={spotCheckWordsLabel(row)}
+      />
+      <CostCell
+        primary={`${String(row.decidedEdits)} of ${String(row.proposedEdits)} edits`}
+        secondary={spotCheckTimeLabel(row)}
+      />
     </tr>
   )
 }

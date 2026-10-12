@@ -23,10 +23,15 @@ describe('cost page', () => {
     expect(screen.getByText('288.0 min per audio hour')).toBeTruthy()
     expect(screen.queryByText('USD 13.25 per audio hour')).toBeNull()
     const row = screen.getByRole('row', { name: /Synthetic briefing/ })
-    expect(within(row).getByText('30,000 in, 40,000 out')).toBeTruthy()
-    expect(within(row).getByText('USD 0')).toBeTruthy()
-    expect(within(row).getByText('94.1%, 1 word to spot-check')).toBeTruthy()
-    expect(within(row).getByText('10.0 min')).toBeTruthy()
+    expect(within(row).getByText('70,000 tokens')).toBeTruthy()
+    expect(
+      within(row).getByText('30,000 in, 40,000 out, USD 0 API'),
+    ).toBeTruthy()
+    expect(within(row).getByText('94.1%')).toBeTruthy()
+    expect(within(row).getByText('1 word to spot-check')).toBeTruthy()
+    expect(
+      within(row).getByText(/^10\.0 min, \d+\.\d min per audio hour$/),
+    ).toBeTruthy()
     expect(
       screen.getByText('120,000 tokens, USD 0.0720, 7 requests'),
     ).toBeTruthy()

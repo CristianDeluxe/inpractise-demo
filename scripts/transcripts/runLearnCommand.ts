@@ -1,10 +1,11 @@
 import { assertYoutubeId } from './assertYoutubeId.ts'
+import { learnModeFromFlags } from './learnModeFromFlags.ts'
 import { learnTranscript } from './learnTranscript.ts'
 
 export function runLearnCommand(argv: readonly string[]): void {
   const result = learnTranscript(
     assertYoutubeId(argv.find((arg) => !arg.startsWith('--'))),
-    argv.includes('--accept-pending'),
+    learnModeFromFlags(argv),
   )
   console.log(
     `counted edits: ${String(result.counted)}; glossary entries: ${String(result.glossaryEntries)} ` +
@@ -12,6 +13,6 @@ export function runLearnCommand(argv: readonly string[]): void {
   )
   for (const entry of result.learned)
     console.log(
-      `  "${entry.from}" -> "${entry.to}" (${entry.category}, x${String(entry.occurrences)})`,
+      `  "${entry.from}" -> "${entry.to}" (${entry.category}, x${String(entry.occurrences)}, ${entry.basis})`,
     )
 }

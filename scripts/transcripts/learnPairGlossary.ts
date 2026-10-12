@@ -23,8 +23,7 @@ export function learnPairGlossary(
             upsertGlossaryEntry(
               current,
               { from: tally.from, to: tally.to, category: tally.category },
-              source,
-              now,
+              { transcriptId: source, seenAt: now, basis: 'human' },
             ),
           entries,
         ),
