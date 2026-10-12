@@ -74,7 +74,7 @@
     "test:db:local": "pnpm db:local:up && vitest run --config vitest.local.config.ts --no-coverage"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.30.0",
+    "@modelcontextprotocol/sdk": "^1.31.0",
     "@radix-ui/react-dialog": "1.1.15",
     "@supabase/supabase-js": "2.116.0",
     "@tailwindcss/vite": "4.2.1",

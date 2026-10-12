@@ -1,0 +1,6 @@
+{
+  "GHSA-vfj7-8cjw-p6xm": {
+    "reason": "braces stack exhaustion on deeply nested patterns; no patched release exists (latest 3.0.3). Reached only through dev tooling (type-coverage and eslint-plugin-boundaries via micromatch) on patterns written in this repository, never on user input or in the deployed bundle.",
+    "expires": "2026-11-30"
+  }
+}
