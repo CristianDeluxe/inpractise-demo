@@ -29,7 +29,7 @@ All direct dependencies are exactly pinned in `package.json`; the root
 | React / React DOM                | 19.3.0 / 19.3.0          |
 | Vite / React plugin              | 8.3.0 / 6.1.1            |
 | Node / pnpm / Deno               | 24.20.0 / 12.4.1 / 2.9.6 |
-| Supabase CLI / JavaScript client | 2.75.0 / 2.116.0         |
+| Supabase CLI / JavaScript client | 2.75.0 / 2.117.3         |
 
 `@cristiandeluxe/max-lane` is unpublished and declared as the sibling
 `file:../max-lane`, so it sits in `optionalDependencies`: pnpm skips it when the
