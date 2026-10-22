@@ -3,7 +3,7 @@
   "private": true,
   "description": "Dependency manifest for the Deno Edge functions: Supabase resolves npm specifiers from this directory's node_modules, and the root workspace install does not reach here.",
   "dependencies": {
-    "@supabase/supabase-js": "2.117.3",
-    "zod": "4.6.5"
+    "@supabase/supabase-js": "2.118.0",
+    "zod": "4.6.7"
   }
 }

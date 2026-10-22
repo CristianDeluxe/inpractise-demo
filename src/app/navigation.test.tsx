@@ -67,6 +67,8 @@ describe('workspace navigation', () => {
     )
     cleanup()
     await renderRouteFixture('/app/library', runtime)
-    expect(await screen.findByText(/not found/i)).toBeTruthy()
+    expect(
+      await screen.findByRole('heading', { name: 'Page unavailable' }),
+    ).toBeTruthy()
   })
 })
